@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  api:
+    container_name: noice-api
+    image: noice/nest-api
+    build:
+        context: .
+        dockerfile: ./Dockerfile
+    depends_on: 
+        - postgres
+    command: npm run start:dev
+    ports:
+        - 3000:3000
+        - 9229:9229
+    environment: 
+        DATABASE_URL: postgres://elusion:elusion@postgres:5432/noice
+        NODE_ENV: development
+    networks:
+        - noice-network
+    volumes:
+        - .:/app
+        - /app/node_modules
+    restart: unless-stopped
+  postgres:
+    container_name: noice-postgres
+    image: postgres:13.3
+    ports:
+        - "5432:5432"
+    environment: 
+        POSTGRES_USER: elusion
+        POSTGRES_PASSWORD: elusion
+        POSTGRES_DB: noice
+    volumes:
+      - ./docker-volumes/postgresql:/var/lib/postgresql
+    restart: unless-stopped
+    networks:
+      - noice-network
+networks:
+    noice-network:
