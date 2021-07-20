@@ -2,6 +2,9 @@
 /dist
 /node_modules
 
+# Env
+.env
+
 # Logs
 logs
 *.log
@@ -34,4 +37,4 @@ lerna-debug.log*
 !.vscode/extensions.json
 
 # Docker volumes
-/docker-volumes
+/volumes
