@@ -5,7 +5,7 @@ import { UserDto } from '../users/dto/user.dto';
 import { CreateUserDto } from '../users/dto/create-user.dto';
 import { LoginUserDto } from 'src/users/dto/login-user-dto';
 import { RegistrationStatus } from './interfaces/registrationStatus.interface';
-import { JwtPayload } from './interfaces/jwtPayload.interface';
+import { TokenPayload } from './interfaces/tokenPayload.interface';
 
 
 @Injectable()
@@ -15,25 +15,25 @@ export class AuthService {
     private jwtService: JwtService
     ) {}
     
-  async signUp(userDto: CreateUserDto): Promise<RegistrationStatus> {
+  async signUp(registrationData: CreateUserDto): Promise<RegistrationStatus> {
     let status: RegistrationStatus = {
       success: true,
       message: 'Congratulations, your account has been successfully created.'
     };
 
     try {
-      await this.usersService.create(userDto);
-    } catch (err) {
+      await this.usersService.create(registrationData);
+    } catch (error) {
       status = {
         success: false,
-        message: err,
+        message: error,
       };
     }
     return status;
   }
 
-  async validateUser(payload: JwtPayload): Promise<UserDto> {
-    const user = await this.usersService.findByPayload(payload);    
+  async validateUser(userId: TokenPayload): Promise<UserDto> {
+    const user = await this.usersService.findByPayload(userId);    
     if (!user) {
         throw new HttpException('Invalid token', HttpStatus.UNAUTHORIZED);    
     }
@@ -41,17 +41,18 @@ export class AuthService {
     return user;  
   }
 
-  async login(loginUserDto: LoginUserDto): Promise<any> {
-    const user = await this.usersService.authenticate(loginUserDto);
+  async login(userData: LoginUserDto): Promise<{user: UserDto, token: string}> {
+    const user = await this.usersService.validateLoginInformation(userData);
 
-    const token = this._createToken(user);
+    const { id: userId } = user;
+
+    const token = this._createToken({ userId });
     
-    return { username: user.username, ...token }
+    return { user, ...token };
   }
 
-  private _createToken({ username }: UserDto): any {
-    const user: JwtPayload = { username };
-    const accessToken = this.jwtService.sign(user);
+  private _createToken({ userId }: TokenPayload): any {
+    const accessToken = this.jwtService.sign(userId);
     return {
       expiresIn: process.env.EXPIRES_IN,
       accessToken,

@@ -18,7 +18,9 @@ export class AuthController {
   }
 
   @Post('login')
-  public async login(@Body() loginUserDto: LoginUserDto): Promise<LoginUserDto> {
-    return await this.authService.login(loginUserDto);
+  public async login(@Body() userData: LoginUserDto): Promise<any> {
+    // returns access token and expiration time
+    // todo: set cookie with access token
+    return await this.authService.login(userData);
   }
 }

@@ -7,6 +7,7 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UserDto } from './dto/user.dto';
 import { User } from './user.entity';
 import { LoginUserDto } from './dto/login-user-dto';
+import { TokenPayload } from 'src/auth/interfaces/tokenPayload.interface';
 
 @Injectable()
 export class UsersService {
@@ -15,10 +16,7 @@ export class UsersService {
     private usersRepository: Repository<User>,
   ) {}
 
-  async create(userDto: CreateUserDto): Promise<string> {
-    const { username, password, email } = userDto;
-    const userInDb = await this.usersRepository.findOne({
-      where: { username }
+  async create(userDto: CreateUserDto): Promise<string> { const { username, password, email } = userDto; const userInDb = await this.usersRepository.findOne({ where: { username }
     });
     if (userInDb) {
       throw new HttpException('User already exists', HttpStatus.BAD_REQUEST);
@@ -39,8 +37,8 @@ export class UsersService {
     return toUserDto(user);
   }
 
-  async authenticate({ username, password }: LoginUserDto): Promise<UserDto> {
-    const user = await this.usersRepository.findOne({ where: { username }});
+  async validateLoginInformation({ email, password }: LoginUserDto): Promise<UserDto> {
+    const user = await this.usersRepository.findOne({ where: { email }});
 
     if (!user) {
       throw new HttpException('User not found', HttpStatus.UNAUTHORIZED);
@@ -57,8 +55,8 @@ export class UsersService {
     }
   }
 
-  async findByPayload({ username }: any): Promise<UserDto> {
-    return await this.findOne({ where: { username }});
+  async findByPayload({ userId }: TokenPayload): Promise<UserDto> {
+    return await this.findOne({ where: { userId }});
   }
 
   async remove(id: string): Promise<void> {
