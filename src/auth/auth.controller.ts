@@ -1,26 +1,28 @@
-import { Body, Controller, HttpException, HttpStatus, Post } from '@nestjs/common';
+import { Body, Request, Controller, HttpException, HttpStatus, Post, UseGuards } from '@nestjs/common';
 import { CreateUserDto } from 'src/users/dto/create-user.dto';
-import { LoginUserDto } from 'src/users/dto/login-user-dto';
 import { AuthService } from './auth.service';
 import { RegistrationStatus } from './interfaces/registrationStatus.interface';
+import { LocalAuthGuard } from './guards/local-auth.guard';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly authService: AuthService) {}
+  constructor(
+    private authService: AuthService,
+  ) {}
+
+  @UseGuards(LocalAuthGuard)
+  @Post('login')
+  async login(@Request() req) {
+    console.log((req.user))
+    return this.authService.login(req.user);
+  }
 
   @Post('signup')
-  public async signup(@Body() createUserDto: CreateUserDto): Promise<RegistrationStatus> {
+  async signup(@Body() createUserDto: CreateUserDto): Promise<RegistrationStatus> {
     const result: RegistrationStatus = await this.authService.signUp(createUserDto);
     if (!result.success) {
       throw new HttpException(result.message, HttpStatus.BAD_REQUEST);
     }
     return result;
-  }
-
-  @Post('login')
-  public async login(@Body() userData: LoginUserDto): Promise<any> {
-    // returns access token and expiration time
-    // todo: set cookie with access token
-    return await this.authService.login(userData);
   }
 }

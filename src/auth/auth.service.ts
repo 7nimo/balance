@@ -3,26 +3,26 @@ import { UsersService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
 import { UserDto } from '../users/dto/user.dto';
 import { CreateUserDto } from '../users/dto/create-user.dto';
-import { LoginUserDto } from 'src/users/dto/login-user-dto';
 import { RegistrationStatus } from './interfaces/registrationStatus.interface';
-import { TokenPayload } from './interfaces/tokenPayload.interface';
+import * as argon2 from 'argon2';
+import { toUserDto } from 'src/common/shared/mapper';
 
 
 @Injectable()
 export class AuthService {
   constructor(
-    private usersService: UsersService,
-    private jwtService: JwtService
-    ) {}
-    
-  async signUp(registrationData: CreateUserDto): Promise<RegistrationStatus> {
+    private readonly usersService: UsersService,
+    private jwtService: JwtService,
+  ) { }
+
+  async signUp(userData: CreateUserDto): Promise<RegistrationStatus> {
     let status: RegistrationStatus = {
       success: true,
       message: 'Congratulations, your account has been successfully created.'
     };
 
     try {
-      await this.usersService.create(registrationData);
+      await this.usersService.create(userData);
     } catch (error) {
       status = {
         success: false,
@@ -32,30 +32,41 @@ export class AuthService {
     return status;
   }
 
-  async validateUser(userId: TokenPayload): Promise<UserDto> {
-    const user = await this.usersService.findByPayload(userId);    
+  async validateUser(email: string, password: string): Promise<UserDto> {
+    const user = await this.usersService.findByEmail(email);
+
     if (!user) {
-        throw new HttpException('Invalid token', HttpStatus.UNAUTHORIZED);    
+      throw new HttpException('User not found', HttpStatus.UNAUTHORIZED);
     }
 
-    return user;  
+    try {
+      if (await argon2.verify(user.password, password)) {
+        const userDto = toUserDto(user)
+        return userDto;
+      }
+    } catch (err) {
+      throw new HttpException('', HttpStatus.UNAUTHORIZED);
+    }
   }
 
-  async login(userData: LoginUserDto): Promise<{user: UserDto, token: string}> {
-    const user = await this.usersService.validateLoginInformation(userData);
+  async login(user: UserDto) {
+    const payload = { email: user.email, sub: user.id };
 
-    const { id: userId } = user;
-
-    const token = this._createToken({ userId });
+    //to do: error handling
+    console.log('siema')
+    let token;
     
-    return { user, ...token };
-  }
+    try {
+      token = this.jwtService.sign(payload);
+      console.log('Token: ', token);
+      
+    } catch (error) {
+      console.log(error)  
+    }
+    
 
-  private _createToken({ userId }: TokenPayload): any {
-    const accessToken = this.jwtService.sign(userId);
     return {
-      expiresIn: process.env.EXPIRES_IN,
-      accessToken,
+      access_token: token,
     };
   }
 }

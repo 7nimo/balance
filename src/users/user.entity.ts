@@ -9,22 +9,15 @@ export class User {
   @Column({
     type: 'varchar',
     nullable: false,
-  })
-  username: string;
-
-  @Column({
-    type: 'varchar',
-    nullable: false,
     unique: true
   })
-  
   email: string;
+  
   @Column({
     type: 'varchar',
     nullable: false,
   })
   password: string;
-
 
   @BeforeInsert() async hashPassword() {
     this.password = await argon2.hash(this.password);

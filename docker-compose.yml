@@ -1,39 +1,35 @@
-version: '3.8'
+version: "3.8"
 
 services:
-  api:
-    container_name: noice-api
-    image: noice/nest-api
+  main:
+    container_name: main
     build:
-        context: .
-        dockerfile: ./Dockerfile
-    depends_on: 
-        - postgres
-    command: npm run start:dev
-    env_file:
-      - .env
-    ports:
-        - 3000:3000
-        - 9229:9229
-    networks:
-        - noice-network
+      context: .
+      target: development
+    command: npm run start:debug
     volumes:
-        - .:/app
-        - /app/node_modules
+      - .:/app
+      - /app/node_modules
+    ports:
+      - ${SERVER_PORT}:${SERVER_PORT}
+      - 9229:9229
     restart: unless-stopped
+    depends_on:
+      - postgres
+
   postgres:
-    container_name: noice-postgres
+    container_name: postgres
     image: postgres:13.3
-    ports:
-        - "5432:5432"
-    environment: 
-        POSTGRES_USER: elusion
-        POSTGRES_PASSWORD: elusion
-        POSTGRES_DB: noice
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      PG_DATA: /var/lib/postgresql/data
     volumes:
-      - ./volumes/postgresql:/var/lib/postgresql
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
     restart: unless-stopped
-    networks:
-      - noice-network
-networks:
-    noice-network:
+
+volumes:
+  pgdata:
