@@ -3,9 +3,9 @@ import { UsersService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
 import { UserDto } from '../users/dto/user.dto';
 import { CreateUserDto } from '../users/dto/create-user.dto';
-import { RegistrationStatus } from './interfaces/registrationStatus.interface';
 import * as argon2 from 'argon2';
 import { toUserDto } from 'src/common/shared/mapper';
+import { LoginUserDto } from 'src/users/dto/login-user-dto';
 
 
 @Injectable()
@@ -15,58 +15,33 @@ export class AuthService {
     private jwtService: JwtService,
   ) { }
 
-  async signUp(userData: CreateUserDto): Promise<RegistrationStatus> {
-    let status: RegistrationStatus = {
-      success: true,
-      message: 'Congratulations, your account has been successfully created.'
-    };
+  async signUp(userData: CreateUserDto): Promise<UserDto['id']> {
+      return await this.usersService.create(userData);
+  }
 
+  async validateUser(credentials: LoginUserDto): Promise<UserDto> {
+    const { email, password } = credentials;
     try {
-      await this.usersService.create(userData);
-    } catch (error) {
-      status = {
-        success: false,
-        message: error,
+      const user = await this.usersService.findByEmail(email);
+
+      if (user && this.verifyPassword(password, user.password)) {
+        return toUserDto(user);
       };
-    }
-    return status;
-  }
-
-  async validateUser(email: string, password: string): Promise<UserDto> {
-    const user = await this.usersService.findByEmail(email);
-
-    if (!user) {
-      throw new HttpException('User not found', HttpStatus.UNAUTHORIZED);
-    }
-
-    try {
-      if (await argon2.verify(user.password, password)) {
-        const userDto = toUserDto(user)
-        return userDto;
-      }
-    } catch (err) {
-      throw new HttpException('', HttpStatus.UNAUTHORIZED);
+    } catch(error) {
+      throw new HttpException('Incorrect username or password', HttpStatus.UNAUTHORIZED);
     }
   }
 
-  async login(user: UserDto) {
-    const payload = { email: user.email, sub: user.id };
+  async verifyPassword(password: string, userPassword: string): Promise<boolean> {
+    return argon2.verify(password, userPassword);
+  }
 
-    //to do: error handling
-    console.log('siema')
-    let token;
-    
+  async login({ id, email }: UserDto): Promise<string> {
     try {
-      token = this.jwtService.sign(payload);
-      console.log('Token: ', token);
-      
+      return this.jwtService.sign({ email: email, sub: id});
     } catch (error) {
-      console.log(error)  
+      throw new HttpException(error, HttpStatus.UNAUTHORIZED) 
     }
-    
-
-    return {
-      access_token: token,
-    };
   }
 }
+

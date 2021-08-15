@@ -1,5 +1,7 @@
 import * as argon2 from 'argon2';
-import { Entity, Column, PrimaryGeneratedColumn, BeforeInsert } from 'typeorm';
+import { Exclude } from 'class-transformer';
+import { Transaction } from 'src/transactions/entities/transaction.entity';
+import { Entity, Column, PrimaryGeneratedColumn, BeforeInsert, OneToMany } from 'typeorm';
 
 @Entity()
 export class User {
@@ -12,12 +14,16 @@ export class User {
     unique: true
   })
   email: string;
-  
+
+  @Exclude()
   @Column({
     type: 'varchar',
     nullable: false,
   })
   password: string;
+
+  @OneToMany(type => Transaction, transaction => transaction.user)
+  transactions: Transaction[];
 
   @BeforeInsert() async hashPassword() {
     this.password = await argon2.hash(this.password);

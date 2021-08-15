@@ -1,9 +1,11 @@
 import { Body, Request, Controller, HttpException, HttpStatus, Post, UseGuards } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { CreateUserDto } from 'src/users/dto/create-user.dto';
+import { UserDto } from 'src/users/dto/user.dto';
 import { AuthService } from './auth.service';
-import { RegistrationStatus } from './interfaces/registrationStatus.interface';
 import { LocalAuthGuard } from './guards/local-auth.guard';
 
+@ApiTags('auth')
 @Controller('auth')
 export class AuthController {
   constructor(
@@ -13,16 +15,15 @@ export class AuthController {
   @UseGuards(LocalAuthGuard)
   @Post('login')
   async login(@Request() req) {
-    console.log((req.user))
     return this.authService.login(req.user);
   }
 
   @Post('signup')
-  async signup(@Body() createUserDto: CreateUserDto): Promise<RegistrationStatus> {
-    const result: RegistrationStatus = await this.authService.signUp(createUserDto);
-    if (!result.success) {
-      throw new HttpException(result.message, HttpStatus.BAD_REQUEST);
+  async signup(@Body() data: CreateUserDto): Promise<UserDto['id']> {
+    try {
+     return await this.authService.signUp(data);
+    } catch (error) {
+      throw new HttpException(error, HttpStatus.BAD_REQUEST);
     }
-    return result;
   }
 }

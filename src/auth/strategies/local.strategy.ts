@@ -2,6 +2,8 @@ import { Strategy } from 'passport-local';
 import { PassportStrategy } from '@nestjs/passport';
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { AuthService } from '../auth.service';
+import { UserDto } from 'src/users/dto/user.dto';
+import { LoginUserDto } from 'src/users/dto/login-user-dto';
 
 @Injectable()
 export class LocalStrategy extends PassportStrategy(Strategy) {
@@ -15,13 +17,7 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
     });
   }
 
-  async validate(email: string, password: string): Promise<any> {
-
-    const user = await this.authService.validateUser(email, password);
-
-    if (!user) {
-      throw new HttpException('Wrong credentials provided', HttpStatus.UNAUTHORIZED);
-    }
-    return user;
+  async validate(credentials: LoginUserDto): Promise<UserDto> {
+      return this.authService.validateUser(credentials);
   }
 }
