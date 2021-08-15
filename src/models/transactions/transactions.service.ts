@@ -17,7 +17,6 @@ export class TransactionsService {
     return 'This action adds a new transaction';
   }
 
-
   async createMany(transactions: CreateTransactionDto[]) {
     const queryRunner = this.connection.createQueryRunner();
 
@@ -36,7 +35,6 @@ export class TransactionsService {
       await queryRunner.release();
     }
   }
-
 
   findAll() {
     return `This action returns all transactions`;

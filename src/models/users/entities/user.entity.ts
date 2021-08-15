@@ -1,6 +1,7 @@
 import * as argon2 from 'argon2';
 import { Exclude } from 'class-transformer';
-import { Transaction } from 'src/transactions/entities/transaction.entity';
+import { IsString } from 'class-validator';
+import { Transaction } from 'src/models/transactions/entities/transaction.entity';
 import { Entity, Column, PrimaryGeneratedColumn, BeforeInsert, OneToMany } from 'typeorm';
 
 @Entity()
@@ -16,6 +17,7 @@ export class User {
   email: string;
 
   @Exclude()
+  @IsString()
   @Column({
     type: 'varchar',
     nullable: false,
