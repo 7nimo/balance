@@ -17,11 +17,7 @@ export class UsersController {
 
   @Get()
   async findAll(): Promise<User[]> { 
-    try {
-      return await this.usersService.findAll();
-    } catch (error) {
-      throw new HttpException(error, HttpStatus.BAD_REQUEST);
-    }
+    return await this.usersService.findAll();
   }
 
   @Get(':id')
@@ -29,8 +25,8 @@ export class UsersController {
     return this.usersService.findById(id);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string): Promise<void> {
-    return this.usersService.delete(id);
-  }
+  // @Delete(':id')
+  // remove(@Param('id') id: string): Promise<void> {
+  //   return this.usersService.delete(id);
+  // }
 }
