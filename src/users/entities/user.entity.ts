@@ -8,6 +8,9 @@ export class User {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
+  @Column()
+  username: string;
+
   @Column({
     type: 'varchar',
     unique: true
@@ -29,5 +32,9 @@ export class User {
 
   @BeforeInsert() async hashPassword() {
     this.password = await argon2.hash(this.password);
+  }
+
+  constructor(partial: Partial<User>) {
+    Object.assign(this, partial);
   }
 }
