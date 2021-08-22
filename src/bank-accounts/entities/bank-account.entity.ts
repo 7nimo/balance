@@ -1,5 +1,4 @@
 import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
-import { Length } from "class-validator";
 import { Transaction } from "src/transactions/entities/transaction.entity";
 import { User } from "src/users/entities/user.entity";
 import { Bank } from "src/banks/entities/bank.entity";
@@ -19,12 +18,6 @@ export class BankAccount {
   @Column()
   accountNumber?: number;
   
-  @CreateDateColumn({ type: 'timestamptz' })
-  createdAt: string;
-
-  @UpdateDateColumn({ type: 'timestamptz' })
-  updatedAt: string;
-
   @OneToOne(() => Bank)
   @JoinColumn()
   bank: Bank;
@@ -38,4 +31,10 @@ export class BankAccount {
 
   @ManyToOne(type => User, user => user.bankAccounts)
   user: User[];
+  
+  @CreateDateColumn({ type: 'timestamptz' })
+  createdAt: string;
+
+  @UpdateDateColumn({ type: 'timestamptz' })
+  updatedAt: string;
 }

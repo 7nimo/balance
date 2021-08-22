@@ -8,10 +8,12 @@ import { LoggerMiddleware } from './common/middleware/logger.middleware';
 import { TransactionsModule } from './transactions/transactions.module';
 import { BanksModule } from './banks/banks.module';
 import { BankAccountsModule } from './bank-accounts/bank-accounts.module';
+import { EventEmitterModule } from '@nestjs/event-emitter';
 
 @Module({
   imports: [
     ConfigModule.forRoot(),
+    EventEmitterModule.forRoot(),
     UsersModule,
     DatabaseModule,
     AuthModule,
