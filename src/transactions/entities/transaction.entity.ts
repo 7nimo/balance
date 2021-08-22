@@ -1,5 +1,5 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
-import { BankAccount } from "src/bank-accounts/entities/bank-account.entity";
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { BankAccount } from 'src/bank-accounts/entities/bank-account.entity';
 
 @Entity()
 export class Transaction {
@@ -14,7 +14,7 @@ export class Transaction {
 
   @Column()
   transactionType: string;
-  
+
   @Column()
   debitAmount: number;
 
@@ -24,6 +24,6 @@ export class Transaction {
   @Column()
   balance: number;
 
-  @ManyToOne(type => BankAccount, bankAccount => bankAccount.transactions)
+  @ManyToOne(() => BankAccount, (bankAccount) => bankAccount.transactions)
   bankAccount: BankAccount;
 }

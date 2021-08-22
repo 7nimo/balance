@@ -13,7 +13,7 @@ export class LoggerMiddleware implements NestMiddleware {
 
     let errorMessage = null;
 
-    request.on("error", error => {
+    request.on('error', (error) => {
       errorMessage = error.message;
     });
 
@@ -21,7 +21,7 @@ export class LoggerMiddleware implements NestMiddleware {
       const { statusCode, statusMessage } = response;
 
       this.logger.log(
-        `${method} ${url} ${statusCode} ${statusMessage} | ${errorMessage} - ${userAgent} ${ip}`
+        `${method} ${url} ${statusCode} ${statusMessage} | ${errorMessage} - ${userAgent} ${ip}`,
       );
     });
 

@@ -1,6 +1,6 @@
-import { Body, Controller, Delete, Get, HttpException, HttpStatus, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import { CreateUserDto }from './dto/create-user.dto';
+import { CreateUserDto } from './dto/create-user.dto';
 import { UserDto } from './dto/user.dto';
 import { User } from './entities/user.entity';
 import { UsersService } from './users.service';
@@ -16,7 +16,7 @@ export class UsersController {
   }
 
   @Get()
-  async findAll(): Promise<User[]> { 
+  async findAll(): Promise<User[]> {
     return await this.usersService.findAll();
   }
 

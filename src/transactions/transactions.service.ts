@@ -4,7 +4,6 @@ import { Connection, Repository } from 'typeorm';
 import { CreateTransactionDto } from './dto/create-transaction.dto';
 import { UpdateTransactionDto } from './dto/update-transaction.dto';
 import { Transaction } from './entities/transaction.entity';
-// import { Readable } from '.'
 
 @Injectable()
 export class TransactionsService {
@@ -13,9 +12,9 @@ export class TransactionsService {
   constructor(
     @InjectRepository(Transaction)
     private transactionsRepository: Repository<Transaction>,
-    private connection: Connection
-    ) {}
-  
+    private connection: Connection,
+  ) {}
+
   create(createTransactionDto: CreateTransactionDto) {
     return 'This action adds a new transaction';
   }
@@ -57,8 +56,8 @@ export class TransactionsService {
   }
 
   test(file): string {
-    console.log('objectt')
-    this.logger.log(typeof file)
-    return 'siema'
+    console.log('objectt');
+    this.logger.log(typeof file);
+    return 'siema';
   }
 }

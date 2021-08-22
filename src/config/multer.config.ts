@@ -10,12 +10,18 @@ export const multerConfig = {
 };
 
 export const multerOptions: MulterOptions = {
-  limits: {fileSize: 1024*1024},
+  limits: { fileSize: 1024 * 1024 },
   fileFilter: (req: any, file: any, cb: any) => {
     if (file.originalname.match(/\.(csv)$/)) {
       cb(null, true);
     } else {
-      cb(new HttpException(`Unsupported file type ${extname(file.originalname)}`, HttpStatus.UNPROCESSABLE_ENTITY), false);
+      cb(
+        new HttpException(
+          `Unsupported file type ${extname(file.originalname)}`,
+          HttpStatus.UNPROCESSABLE_ENTITY,
+        ),
+        false,
+      );
     }
   },
   storage: diskStorage({

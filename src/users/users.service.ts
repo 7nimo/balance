@@ -10,11 +10,11 @@ export class UsersService {
   constructor(
     @InjectRepository(User)
     private usersRepository: Repository<User>,
-  ) { }
+  ) {}
 
   async create({ email, password }: CreateUserDto): Promise<UserDto> {
     try {
-      this.findByEmail(email)
+      this.findByEmail(email);
     } catch (error) {
       // to refactor
       throw new HttpException(error, HttpStatus.BAD_REQUEST);
@@ -27,16 +27,16 @@ export class UsersService {
   async findByEmail(email: string): Promise<User> {
     return this.usersRepository.findOne({
       where: {
-        email: email
-      }
+        email: email,
+      },
     });
   }
 
   async findById(id: string): Promise<User> {
     return this.usersRepository.findOne({
       where: {
-        id: id
-      }
+        id: id,
+      },
     });
   }
 

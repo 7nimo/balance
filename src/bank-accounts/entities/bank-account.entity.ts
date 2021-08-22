@@ -1,8 +1,18 @@
-import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
-import { Transaction } from "src/transactions/entities/transaction.entity";
-import { User } from "src/users/entities/user.entity";
-import { Bank } from "src/banks/entities/bank.entity";
-import { Currency } from "./currency.entity";
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  OneToMany,
+  OneToOne,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm';
+import { Transaction } from 'src/transactions/entities/transaction.entity';
+import { User } from 'src/users/entities/user.entity';
+import { Bank } from 'src/banks/entities/bank.entity';
+import { Currency } from 'src/currency/entities/currency.entity';
 
 @Entity()
 export class BankAccount {
@@ -16,8 +26,8 @@ export class BankAccount {
   sortCode?: number;
 
   @Column()
-  accountNumber?: number;
-  
+  accountNumber: number;
+
   @OneToOne(() => Bank)
   @JoinColumn()
   bank: Bank;
@@ -26,12 +36,12 @@ export class BankAccount {
   @JoinColumn()
   currency: Currency;
 
-  @OneToMany(type => Transaction, transaction => transaction.bankAccount)
+  @OneToMany(() => Transaction, (transaction) => transaction.bankAccount)
   transactions: Transaction[];
 
-  @ManyToOne(type => User, user => user.bankAccounts)
+  @ManyToOne(() => User, (user) => user.bankAccounts)
   user: User[];
-  
+
   @CreateDateColumn({ type: 'timestamptz' })
   createdAt: string;
 

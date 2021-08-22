@@ -1,1 +1,3 @@
-export class CreateBankDto {}
+export class CreateBankDto {
+  name: string;
+}

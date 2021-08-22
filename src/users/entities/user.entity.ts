@@ -1,7 +1,15 @@
 import * as argon2 from 'argon2';
 import { Exclude } from 'class-transformer';
 import { BankAccount } from 'src/bank-accounts/entities/bank-account.entity';
-import { Entity, Column, PrimaryGeneratedColumn, BeforeInsert, OneToMany, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  BeforeInsert,
+  OneToMany,
+  CreateDateColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 
 @Entity()
 export class User {
@@ -13,7 +21,7 @@ export class User {
 
   @Column({
     type: 'varchar',
-    unique: true
+    unique: true,
   })
   email: string;
 
@@ -27,7 +35,7 @@ export class User {
   @UpdateDateColumn({ type: 'timestamptz' })
   updatedAt: string;
 
-  @OneToMany(type => BankAccount, bankAccount => bankAccount.user)
+  @OneToMany(() => BankAccount, (bankAccount) => bankAccount.user)
   bankAccounts: BankAccount[];
 
   @BeforeInsert() async hashPassword() {

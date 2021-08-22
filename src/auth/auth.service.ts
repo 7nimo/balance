@@ -7,16 +7,15 @@ import * as argon2 from 'argon2';
 import { toUserDto } from 'src/common/shared/mapper';
 import { LoginUserDto } from 'src/users/dto/login-user-dto';
 
-
 @Injectable()
 export class AuthService {
   constructor(
     private readonly usersService: UsersService,
     private jwtService: JwtService,
-  ) { }
+  ) {}
 
   async signUp(userData: CreateUserDto): Promise<UserDto> {
-      return await this.usersService.create(userData);
+    return await this.usersService.create(userData);
   }
 
   async validateUser(credentials: LoginUserDto): Promise<UserDto> {
@@ -26,22 +25,27 @@ export class AuthService {
 
       if (user && this.verifyPassword(password, user.password)) {
         return toUserDto(user);
-      };
-    } catch(error) {
-      throw new HttpException('Incorrect username or password', HttpStatus.UNAUTHORIZED);
+      }
+    } catch (error) {
+      throw new HttpException(
+        'Incorrect username or password',
+        HttpStatus.UNAUTHORIZED,
+      );
     }
   }
 
-  async verifyPassword(password: string, userPassword: string): Promise<boolean> {
+  async verifyPassword(
+    password: string,
+    userPassword: string,
+  ): Promise<boolean> {
     return argon2.verify(password, userPassword);
   }
 
   async login({ id, email }: UserDto): Promise<string> {
     try {
-      return this.jwtService.sign({ email: email, sub: id});
+      return this.jwtService.sign({ email: email, sub: id });
     } catch (error) {
-      throw new HttpException(error, HttpStatus.UNAUTHORIZED) 
+      throw new HttpException(error, HttpStatus.UNAUTHORIZED);
     }
   }
 }
-

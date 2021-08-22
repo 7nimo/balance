@@ -3,11 +3,10 @@ import { BankAccountsService } from './bank-accounts.service';
 import { BankAccountsController } from './bank-accounts.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { BankAccount } from './entities/bank-account.entity';
-import { Currency } from './entities/currency.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([BankAccount, Currency])],
+  imports: [TypeOrmModule.forFeature([BankAccount])],
   controllers: [BankAccountsController],
-  providers: [BankAccountsService]
+  providers: [BankAccountsService],
 })
 export class BankAccountsModule {}

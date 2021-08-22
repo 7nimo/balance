@@ -7,10 +7,7 @@ import { LoginUserDto } from 'src/users/dto/login-user-dto';
 
 @Injectable()
 export class LocalStrategy extends PassportStrategy(Strategy) {
-
-  constructor(
-      private readonly authService: AuthService,
-    ) {
+  constructor(private readonly authService: AuthService) {
     super({
       usernameField: 'email',
       passwordField: 'password',
@@ -18,6 +15,6 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
   }
 
   async validate(credentials: LoginUserDto): Promise<UserDto> {
-      return this.authService.validateUser(credentials);
+    return this.authService.validateUser(credentials);
   }
 }

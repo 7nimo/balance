@@ -1,4 +1,14 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, UploadedFile } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  UseInterceptors,
+  UploadedFile,
+} from '@nestjs/common';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { ApiTags } from '@nestjs/swagger';
@@ -14,11 +24,23 @@ export class BankAccountsController {
   constructor(
     private readonly bankAccountsService: BankAccountsService,
     private eventEmitter: EventEmitter2,
-  ) { }
+  ) {}
 
   @Post()
   create(@Body() createBankAccountDto: CreateBankAccountDto) {
     return this.bankAccountsService.create(createBankAccountDto);
+  }
+
+  @Post()
+  @UseInterceptors(FileInterceptor('statement', multerOptions))
+  async uploadFile(
+    @Body() body: number,
+    @UploadedFile() file: Express.Multer.File,
+  ) {
+    const statementSavedEvent = new StatementSavedEvent();
+    statementSavedEvent.path = file.path;
+
+    this.eventEmitter.emit('statement.saved', statementSavedEvent);
   }
 
   @Get()
@@ -32,24 +54,15 @@ export class BankAccountsController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateBankAccountDto: UpdateBankAccountDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateBankAccountDto: UpdateBankAccountDto,
+  ) {
     return this.bankAccountsService.update(+id, updateBankAccountDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.bankAccountsService.remove(+id);
-  }
-
-  @Post()
-  @UseInterceptors(FileInterceptor('statement', multerOptions))
-  async uploadFile(
-    @Body() body: number,
-    @UploadedFile() file: Express.Multer.File
-  ) {
-    const statementSavedEvent = new StatementSavedEvent();
-    statementSavedEvent.path = file.path;
-
-    this.eventEmitter.emit('statement.saved', statementSavedEvent);
   }
 }
