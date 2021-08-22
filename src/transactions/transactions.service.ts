@@ -1,12 +1,15 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Connection, Repository } from 'typeorm';
 import { CreateTransactionDto } from './dto/create-transaction.dto';
 import { UpdateTransactionDto } from './dto/update-transaction.dto';
 import { Transaction } from './entities/transaction.entity';
+// import { Readable } from '.'
 
 @Injectable()
 export class TransactionsService {
+  private readonly logger = new Logger(TransactionsService.name);
+
   constructor(
     @InjectRepository(Transaction)
     private transactionsRepository: Repository<Transaction>,
@@ -23,6 +26,7 @@ export class TransactionsService {
     await queryRunner.connect();
     await queryRunner.startTransaction();
     try {
+      // to do
       await queryRunner.manager.save(transactions[0]);
       await queryRunner.manager.save(transactions[1]);
 
@@ -50,5 +54,11 @@ export class TransactionsService {
 
   remove(id: number) {
     return `This action removes a #${id} transaction`;
+  }
+
+  test(file): string {
+    console.log('objectt')
+    this.logger.log(typeof file)
+    return 'siema'
   }
 }

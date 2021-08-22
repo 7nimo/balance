@@ -38,3 +38,9 @@ lerna-debug.log*
 
 # Docker volumes
 /volumes
+
+# Multer storage
+tmp
+# tmp/*
+# !tmp/uploads
+# tmp/uploads/*

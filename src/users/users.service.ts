@@ -1,5 +1,4 @@
-import * as argon2 from 'argon2';
-import { HttpException, HttpStatus, Injectable, InternalServerErrorException } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UserDto } from './dto/user.dto';
@@ -13,7 +12,7 @@ export class UsersService {
     private usersRepository: Repository<User>,
   ) { }
 
-  async create({ email, password }: CreateUserDto): Promise<User['id']> {
+  async create({ email, password }: CreateUserDto): Promise<UserDto> {
     try {
       this.findByEmail(email)
     } catch (error) {
@@ -21,8 +20,8 @@ export class UsersService {
       throw new HttpException(error, HttpStatus.BAD_REQUEST);
     }
     const user = this.usersRepository.create({ email, password });
-    const { id } = await this.usersRepository.save(user);
-    return id;
+    const result = await this.usersRepository.save(user);
+    return result;
   }
 
   async findByEmail(email: string): Promise<User> {
@@ -33,7 +32,7 @@ export class UsersService {
     });
   }
 
-  async findById(id: UserDto['id']): Promise<User> {
+  async findById(id: string): Promise<User> {
     return this.usersRepository.findOne({
       where: {
         id: id

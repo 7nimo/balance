@@ -1,7 +1,7 @@
 import { Logger, MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { UsersModule } from './users/users.module';
-import { DatabaseModule } from './database/database.module';
+import { DatabaseModule } from './config/database/database.module';
 import { AuthModule } from './auth/auth.module';
 import { AppController } from './app.controller';
 import { LoggerMiddleware } from './common/middleware/logger.middleware';
@@ -25,6 +25,6 @@ import { BankAccountsModule } from './bank-accounts/bank-accounts.module';
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer): void {
     consumer.apply(LoggerMiddleware)
-    .forRoutes('*');
+      .forRoutes('*');
   }
 }
