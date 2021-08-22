@@ -1,5 +1,7 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, UploadedFile } from '@nestjs/common';
+import { FileInterceptor } from '@nestjs/platform-express';
 import { ApiTags } from '@nestjs/swagger';
+import { multerOptions } from 'src/config/multer.config';
 import { BankAccountsService } from './bank-accounts.service';
 import { CreateBankAccountDto } from './dto/create-bank-account.dto';
 import { UpdateBankAccountDto } from './dto/update-bank-account.dto';
@@ -32,5 +34,14 @@ export class BankAccountsController {
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.bankAccountsService.remove(+id);
+  }
+
+  @Post()
+  @UseInterceptors(FileInterceptor('statement', multerOptions))
+  async uploadFile(
+    @Body() body: number,
+    @UploadedFile() file: Express.Multer.File
+  ) { 
+    
   }
 }

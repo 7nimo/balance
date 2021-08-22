@@ -1,10 +1,8 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, UploadedFile, HttpException, HttpService, HttpStatus } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
 import { TransactionsService } from './transactions.service';
 import { CreateTransactionDto } from './dto/create-transaction.dto';
 import { UpdateTransactionDto } from './dto/update-transaction.dto';
 import { ApiTags } from '@nestjs/swagger';
-import { FileInterceptor } from '@nestjs/platform-express';
-import { multerOptions } from 'src/config/multer.config';
 
 @ApiTags('transactions')
 @Controller('transactions')
@@ -34,13 +32,5 @@ export class TransactionsController {
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.transactionsService.remove(+id);
-  }
-  @Post('upload')
-  @UseInterceptors(FileInterceptor('statement', multerOptions))
-  async uploadFile(
-    @Body() body: number,
-    @UploadedFile() file: Express.Multer.File
-  ) { 
-    
   }
 }

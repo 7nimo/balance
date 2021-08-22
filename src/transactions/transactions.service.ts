@@ -20,13 +20,13 @@ export class TransactionsService {
     return 'This action adds a new transaction';
   }
 
+  // is this needed?
   async createMany(transactions: CreateTransactionDto[]) {
     const queryRunner = this.connection.createQueryRunner();
 
     await queryRunner.connect();
     await queryRunner.startTransaction();
     try {
-      // to do
       await queryRunner.manager.save(transactions[0]);
       await queryRunner.manager.save(transactions[1]);
 
