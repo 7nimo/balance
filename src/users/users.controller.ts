@@ -28,6 +28,6 @@ export class UsersController {
 
   @Delete(':uuid')
   remove(@Param('uuid', new ParseUUIDPipe({ version: '4' })) uuid: string): Promise<void> {
-    return this.usersService.delete(uuid);
+    return this.usersService.remove(uuid);
   }
 }

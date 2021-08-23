@@ -37,18 +37,14 @@ export class BankAccount {
   @JoinColumn()
   bank: Bank;
 
-  @OneToOne(() => Currency, {
-    nullable: false,
-  })
+  @OneToOne(() => Currency, { nullable: false })
   @JoinColumn()
   currency: Currency;
 
   @OneToMany(() => Transaction, (transaction) => transaction.bankAccount)
   transactions: Transaction[];
 
-  @ManyToOne(() => User, (user) => user.bankAccounts, {
-    nullable: false,
-  })
+  @ManyToOne(() => User, (user) => user.bankAccounts, { nullable: false })
   user: User[];
 
   @CreateDateColumn({ type: 'timestamptz' })

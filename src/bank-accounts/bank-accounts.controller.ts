@@ -8,6 +8,8 @@ import {
   Delete,
   UseInterceptors,
   UploadedFile,
+  ParseUUIDPipe,
+  HttpCode,
 } from '@nestjs/common';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 import { FileInterceptor } from '@nestjs/platform-express';
@@ -16,13 +18,14 @@ import { multerOptions } from 'src/config/multer.config';
 import { BankAccountsService } from './bank-accounts.service';
 import { CreateBankAccountDto } from './dto/create-bank-account.dto';
 import { UpdateBankAccountDto } from './dto/update-bank-account.dto';
+import { BankAccount } from './entities/bank-account.entity';
 import { StatementSavedEvent } from './events/statement-saved.event';
 
 @ApiTags('bank-accounts')
 @Controller('bank-accounts')
 export class BankAccountsController {
   constructor(
-    private readonly bankAccountsService: BankAccountsService,
+    private bankAccountsService: BankAccountsService,
     private eventEmitter: EventEmitter2,
   ) {}
 
@@ -32,6 +35,7 @@ export class BankAccountsController {
   }
 
   @Post()
+  @HttpCode(202)
   @UseInterceptors(FileInterceptor('statement', multerOptions))
   async uploadFile(
     @Body() body: number,
@@ -44,25 +48,26 @@ export class BankAccountsController {
   }
 
   @Get()
-  findAll() {
+  findAll(): Promise<BankAccount[]> {
     return this.bankAccountsService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.bankAccountsService.findOne(+id);
+  @Get(':uuid')
+  findOne(@Param('uuid', new ParseUUIDPipe({ version: '4' })) uuid: string) {
+    return this.bankAccountsService.findOne(uuid);
   }
 
-  @Patch(':id')
-  update(
-    @Param('id') id: string,
+  @HttpCode(204)
+  @Patch(':uuid')
+  async update(
+    @Param('uuid', new ParseUUIDPipe({ version: '4' })) uuid: string,
     @Body() updateBankAccountDto: UpdateBankAccountDto,
-  ) {
-    return this.bankAccountsService.update(+id, updateBankAccountDto);
+  ): Promise<void> {
+    return this.bankAccountsService.update(uuid, updateBankAccountDto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.bankAccountsService.remove(+id);
+  @Delete(':uuid')
+  async remove(@Param('uuid', new ParseUUIDPipe({ version: '4' })) uuid: string): Promise<void> {
+    this.bankAccountsService.remove(uuid);
   }
 }
