@@ -14,7 +14,7 @@ export class UsersService {
 
   async create(createUserDto: CreateUserDto): Promise<UserDto> {
     try {
-      this.findByEmail(createUserDto.email);
+      this.findByUsername(createUserDto.username);
     } catch (error) {
       // to refactor
       throw new HttpException(error, HttpStatus.BAD_REQUEST);
@@ -24,10 +24,10 @@ export class UsersService {
     return result;
   }
 
-  async findByEmail(email: string): Promise<User> {
+  async findByUsername(username: string): Promise<User> {
     return this.usersRepository.findOne({
       where: {
-        email: email,
+        username: username,
       },
     });
   }
