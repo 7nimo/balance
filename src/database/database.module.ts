@@ -6,8 +6,7 @@ import { getConnectionOptions } from 'typeorm';
   imports: [
     TypeOrmModule.forRootAsync({
       useFactory: async () =>
-        Object.assign(await getConnectionOptions(), {
-          synchronize: true,
+        Object.assign(await getConnectionOptions(), { 
           autoLoadEntities: true,
         }),
     }),
