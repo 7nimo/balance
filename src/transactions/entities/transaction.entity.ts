@@ -15,15 +15,17 @@ export class Transaction {
   @Column()
   transactionType: string;
 
-  @Column()
-  debitAmount: number;
+  @Column({ type: 'numeric', precision: 15, scale: 6 })
+  debitAmount: string;
 
-  @Column()
-  creditAmount: number;
+  @Column({ type: 'numeric', precision: 15, scale: 6 })
+  creditAmount: string;
 
-  @Column()
+  @Column({ type: 'numeric', precision: 15, scale: 6 })
   balance: number;
 
-  @ManyToOne(() => BankAccount, (bankAccount) => bankAccount.transactions)
+  @ManyToOne(() => BankAccount, (bankAccount) => bankAccount.transactions, {
+    nullable: false,
+  })
   bankAccount: BankAccount;
 }
