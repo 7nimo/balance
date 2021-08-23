@@ -12,14 +12,14 @@ export class UsersService {
     private usersRepository: Repository<User>,
   ) {}
 
-  async create({ email, password }: CreateUserDto): Promise<UserDto> {
+  async create(createUserDto: CreateUserDto): Promise<UserDto> {
     try {
-      this.findByEmail(email);
+      this.findByEmail(createUserDto.email);
     } catch (error) {
       // to refactor
       throw new HttpException(error, HttpStatus.BAD_REQUEST);
     }
-    const user = this.usersRepository.create({ email, password });
+    const user = this.usersRepository.create(createUserDto);
     const result = await this.usersRepository.save(user);
     return result;
   }
