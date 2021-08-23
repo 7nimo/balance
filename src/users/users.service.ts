@@ -12,22 +12,23 @@ export class UsersService {
     private usersRepository: Repository<User>,
   ) {}
 
-  async create(createUserDto: CreateUserDto): Promise<UserDto> {
-    try {
-      this.findByUsername(createUserDto.username);
-    } catch (error) {
-      // to refactor
-      throw new HttpException(error, HttpStatus.BAD_REQUEST);
+  async create({ email, password }: CreateUserDto): Promise<UserDto> {
+    if (await this.findByEmail(email)) {
+      throw new HttpException('Email is invalid or already taken', HttpStatus.UNPROCESSABLE_ENTITY);
     }
-    const user = this.usersRepository.create(createUserDto);
-    const result = await this.usersRepository.save(user);
-    return result;
+    try {
+      const user = this.usersRepository.create({ email, password });
+      const result = await this.usersRepository.save(user);
+      return result;
+    } catch (error) {
+      throw new HttpException(error, HttpStatus.UNPROCESSABLE_ENTITY);
+    }
   }
 
-  async findByUsername(username: string): Promise<User> {
+  async findByEmail(email: string): Promise<User> {
     return this.usersRepository.findOne({
       where: {
-        username: username,
+        email: email,
       },
     });
   }
@@ -38,10 +39,6 @@ export class UsersService {
         id: id,
       },
     });
-  }
-
-  async findAll(): Promise<User[]> {
-    return this.usersRepository.find();
   }
 
   async delete(id: string): Promise<void> {

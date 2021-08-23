@@ -18,17 +18,17 @@ export class AuthService {
     return await this.usersService.create(userData);
   }
 
-  async validateUser(credentials: LoginUserDto): Promise<UserDto> {
-    const { username, password } = credentials;
+  async validateUser(loginUserDto: LoginUserDto): Promise<UserDto> {
+    const { email, password } = loginUserDto;
     try {
-      const user = await this.usersService.findByUsername(username);
+      const user = await this.usersService.findByEmail(email);
 
       if (user && this.verifyPassword(password, user.password)) {
         return toUserDto(user);
       }
     } catch (error) {
       throw new HttpException(
-        'Incorrect username or password',
+        'Incorrect  or password',
         HttpStatus.UNAUTHORIZED,
       );
     }
