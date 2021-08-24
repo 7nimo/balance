@@ -30,7 +30,7 @@ export class BankAccountsController {
   ) {}
 
   @Post()
-  create(@Body() createBankAccountDto: CreateBankAccountDto) {
+  create(@Body() createBankAccountDto: CreateBankAccountDto): Promise<BankAccount> {
     return this.bankAccountsService.create(createBankAccountDto);
   }
 
