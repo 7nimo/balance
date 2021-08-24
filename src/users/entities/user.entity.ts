@@ -23,7 +23,8 @@ export class User {
   @Column({ type: 'varchar' })
   password: string;
 
-  @Column({ nullable: true })
+  // this should be linked to currency column in the future
+  @Column({ default: 'PLN' })
   baseCurrency: string;
 
   @CreateDateColumn({ type: 'timestamptz' })
