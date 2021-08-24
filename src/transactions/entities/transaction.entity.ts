@@ -1,17 +1,19 @@
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
-import { BankAccount } from 'src/bank-accounts/entities/bank-account.entity';
+import { Account } from 'src/accounts/entities/account.entity';
 
 @Entity()
 export class Transaction {
   @PrimaryGeneratedColumn()
   id: number;
 
+  // verify whether this is accurate
   @Column({ type: 'timestamptz' })
   transactionDate: string;
 
   @Column()
   transactionDesc: string;
 
+  //this should be a relation
   @Column()
   transactionType: string;
 
@@ -24,8 +26,8 @@ export class Transaction {
   @Column({ type: 'numeric', precision: 15, scale: 6 })
   balance: number;
 
-  @ManyToOne(() => BankAccount, (bankAccount) => bankAccount.transactions, {
+  @ManyToOne(() => Account, (account) => account.transactions, {
     nullable: false,
   })
-  bankAccount: BankAccount;
+  account: Account;
 }

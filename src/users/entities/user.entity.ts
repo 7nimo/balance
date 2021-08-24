@@ -1,6 +1,6 @@
 import * as argon2 from 'argon2';
 import { Exclude } from 'class-transformer';
-import { BankAccount } from 'src/bank-accounts/entities/bank-account.entity';
+import { Account } from 'src/accounts/entities/account.entity';
 import {
   Entity,
   Column,
@@ -23,14 +23,17 @@ export class User {
   @Column({ type: 'varchar' })
   password: string;
 
+  @Column({ nullable: true })
+  baseCurrency: string;
+
   @CreateDateColumn({ type: 'timestamptz' })
   createdAt: string;
 
   @UpdateDateColumn({ type: 'timestamptz' })
   updatedAt: string;
 
-  @OneToMany(() => BankAccount, (bankAccount) => bankAccount.user)
-  bankAccounts: BankAccount[];
+  @OneToMany(() => Account, (account) => account.user)
+  accounts: Account[];
 
   @BeforeInsert() async hashPassword() {
     this.password = await argon2.hash(this.password);

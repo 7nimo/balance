@@ -15,7 +15,7 @@ import { Bank } from 'src/banks/entities/bank.entity';
 import { Currency } from 'src/currency/entities/currency.entity';
 
 @Entity()
-export class BankAccount {
+export class Account {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
@@ -28,12 +28,10 @@ export class BankAccount {
   @Column()
   accountNumber: number;
 
-  @Column({ type: "numeric", precision: 15, scale: 6 , default: 0 })
+  @Column({ type: 'numeric', precision: 15, scale: 6, default: 0 })
   balance: string;
 
-  @OneToOne(() => Bank, {
-    nullable: false,
-  })
+  @OneToOne(() => Bank, { nullable: false })
   @JoinColumn()
   bank: Bank;
 
@@ -41,10 +39,10 @@ export class BankAccount {
   @JoinColumn()
   currency: Currency;
 
-  @OneToMany(() => Transaction, (transaction) => transaction.bankAccount)
+  @OneToMany(() => Transaction, (transaction) => transaction.account)
   transactions: Transaction[];
 
-  @ManyToOne(() => User, (user) => user.bankAccounts, { nullable: false })
+  @ManyToOne(() => User, (user) => user.accounts, { nullable: false })
   user: User[];
 
   @CreateDateColumn({ type: 'timestamptz' })

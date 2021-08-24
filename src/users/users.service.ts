@@ -14,7 +14,10 @@ export class UsersService {
 
   async create({ email, password }: CreateUserDto): Promise<UserDto> {
     if (await this.findByEmail(email)) {
-      throw new HttpException('Email is invalid or already taken', HttpStatus.UNPROCESSABLE_ENTITY);
+      throw new HttpException(
+        'Email is invalid or already taken',
+        HttpStatus.UNPROCESSABLE_ENTITY,
+      );
     }
     try {
       const user = this.usersRepository.create({ email, password });

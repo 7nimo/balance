@@ -17,5 +17,5 @@ export class Currency {
     enum: CurrencyType,
     default: CurrencyType.FIAT,
   })
-  type?: CurrencyType;
+  type: CurrencyType;
 }

@@ -7,7 +7,7 @@ import { AppController } from './app.controller';
 import { LoggerMiddleware } from './common/middleware/logger.middleware';
 import { TransactionsModule } from './transactions/transactions.module';
 import { BanksModule } from './banks/banks.module';
-import { BankAccountsModule } from './bank-accounts/bank-accounts.module';
+import { AccountsModule } from './accounts/accounts.module';
 import { EventEmitterModule } from '@nestjs/event-emitter';
 import { CurrencyModule } from './currency/currency.module';
 
@@ -20,7 +20,7 @@ import { CurrencyModule } from './currency/currency.module';
     AuthModule,
     TransactionsModule,
     BanksModule,
-    BankAccountsModule,
+    AccountsModule,
     CurrencyModule,
   ],
   controllers: [AppController],
