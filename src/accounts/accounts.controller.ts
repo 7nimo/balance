@@ -35,14 +35,15 @@ export class AccountsController {
     return this.accountsService.create(createAccountDto);
   }
 
-  @Post()
+  @Post(':uuid')
   @HttpCode(202)
   @UseInterceptors(FileInterceptor('statement', multerOptions))
   async uploadFile(
-    @Body() body: number,
     @UploadedFile() file: Express.Multer.File,
+    @Param('uuid', new ParseUUIDPipe({ version: '4' })) uuid: string
   ) {
     const statementSavedEvent = new StatementSavedEvent();
+    statementSavedEvent.id = uuid;
     statementSavedEvent.path = file.path;
 
     this.eventEmitter.emit('statement.saved', statementSavedEvent);

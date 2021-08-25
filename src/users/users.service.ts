@@ -21,7 +21,6 @@ export class UsersService {
     }
     const user = this.usersRepository.create(createUserDto);
     const result = this.usersRepository.save(user);
-    console.log(await result);
     return result;
   }
 

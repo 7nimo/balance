@@ -7,6 +7,6 @@ export class StatementSavedListener {
   @OnEvent('statement.saved')
   handleStatementSavedEvent(event: StatementSavedEvent) {
     // code
-    console.log(event);
+    console.log('EVENT!');
   }
 }

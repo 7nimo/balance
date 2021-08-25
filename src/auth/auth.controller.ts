@@ -24,12 +24,12 @@ export class AuthController {
     return this.authService.login(req.user);
   }
 
-  @Post('signup')
-  async signup(@Body() data: CreateUserDto): Promise<UserDto> {
-    try {
-      return await this.authService.signUp(data);
-    } catch (error) {
-      throw new HttpException(error, HttpStatus.BAD_REQUEST);
-    }
-  }
+  // @Post('signup')
+  // async signup(@Body() data: CreateUserDto): Promise<UserDto> {
+  //   try {
+  //     return await this.authService.signUp(data);
+  //   } catch (error) {
+  //     throw new HttpException(error, HttpStatus.BAD_REQUEST);
+  //   }
+  // }
 }

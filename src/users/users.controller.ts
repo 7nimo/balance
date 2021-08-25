@@ -3,6 +3,7 @@ import {
   Controller,
   Delete,
   Get,
+  HttpCode,
   Param,
   ParseUUIDPipe,
   Post,
@@ -40,6 +41,7 @@ export class UsersController {
     return this.usersService.findAll();
   }
 
+  @HttpCode(204)
   @Delete(':uuid')
   remove(
     @Param('uuid', new ParseUUIDPipe({ version: '4' })) uuid: string,

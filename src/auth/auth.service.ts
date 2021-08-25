@@ -13,28 +13,15 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
-  async signUp(userData: CreateUserDto): Promise<UserDto> {
-    return await this.usersService.create(userData);
-  }
-
-  async validateUser(loginUserDto: LoginUserDto): Promise<UserDto> {
-    const { email, password } = loginUserDto;
-    try {
-      const user = await this.usersService.findByEmail(email);
-
-      if (user && this.verifyPassword(password, user.password)) {
-        return user;
-      }
-    } catch (error) {
-      throw new HttpException(error, HttpStatus.UNAUTHORIZED);
-    }
-  }
+  // async signUp(createUserDto: CreateUserDto): Promise<UserDto> {
+  //   return await this.usersService.create(createUserDto);
+  // }
 
   async verifyPassword(
+    hash: string,
     password: string,
-    userPassword: string,
   ): Promise<boolean> {
-    return argon2.verify(password, userPassword);
+    return argon2.verify(hash, password);
   }
 
   async login({ id, email }: UserDto): Promise<string> {
