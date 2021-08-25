@@ -9,6 +9,6 @@ export const validationPipeOptions: ValidationPipeOptions = {
   // validationError: {
   //   target: true,
   // },
-  // this should map errors 
+  // this should map errors
   // exceptionFactory: (errors) => new UnprocessableEntityException(errors),
 };

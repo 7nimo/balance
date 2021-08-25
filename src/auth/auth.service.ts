@@ -2,9 +2,7 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
 import { UserDto } from '../users/dto/user.dto';
-import { CreateUserDto } from '../users/dto/create-user.dto';
 import * as argon2 from 'argon2';
-import { LoginUserDto } from 'src/users/dto/login-user-dto';
 
 @Injectable()
 export class AuthService {
@@ -17,10 +15,7 @@ export class AuthService {
   //   return await this.usersService.create(createUserDto);
   // }
 
-  async verifyPassword(
-    hash: string,
-    password: string,
-  ): Promise<boolean> {
+  async verifyPassword(hash: string, password: string): Promise<boolean> {
     return argon2.verify(hash, password);
   }
 

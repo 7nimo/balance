@@ -1,9 +1,7 @@
 import * as dotenv from 'dotenv';
 dotenv.config();
 import { HttpAdapterHost, NestFactory } from '@nestjs/core';
-import {
-  SwaggerModule,
-} from '@nestjs/swagger';
+import { SwaggerModule } from '@nestjs/swagger';
 import { AppModule } from './app.module';
 import * as helmet from 'helmet';
 import { ValidationPipe } from '@nestjs/common';
@@ -16,7 +14,11 @@ async function bootstrap() {
     logger: ['log'],
   });
 
-  const document = SwaggerModule.createDocument(app, swaggerConfig, swaggerOptions);
+  const document = SwaggerModule.createDocument(
+    app,
+    swaggerConfig,
+    swaggerOptions,
+  );
   SwaggerModule.setup('swagger', app, document);
 
   app.use(helmet());

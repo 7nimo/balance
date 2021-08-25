@@ -40,7 +40,7 @@ export class AccountsController {
   @UseInterceptors(FileInterceptor('statement', multerOptions))
   async uploadFile(
     @UploadedFile() file: Express.Multer.File,
-    @Param('uuid', new ParseUUIDPipe({ version: '4' })) uuid: string
+    @Param('uuid', new ParseUUIDPipe({ version: '4' })) uuid: string,
   ) {
     const statementSavedEvent = new StatementSavedEvent();
     statementSavedEvent.id = uuid;
