@@ -1,14 +1,11 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Connection, Repository } from 'typeorm';
 import { CreateTransactionDto } from './dto/create-transaction.dto';
-import { UpdateTransactionDto } from './dto/update-transaction.dto';
 import { Transaction } from './entities/transaction.entity';
 
 @Injectable()
 export class TransactionsService {
-  private readonly logger = new Logger(TransactionsService.name);
-
   constructor(
     @InjectRepository(Transaction)
     private transactionsRepository: Repository<Transaction>,
@@ -45,19 +42,5 @@ export class TransactionsService {
 
   findOne(id: number) {
     return `This action returns a #${id} transaction`;
-  }
-
-  update(id: number, updateTransactionDto: UpdateTransactionDto) {
-    return `This action updates a #${id} transaction`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} transaction`;
-  }
-
-  test(file): string {
-    console.log('objectt');
-    this.logger.log(typeof file);
-    return 'siema';
   }
 }

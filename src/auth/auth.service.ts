@@ -4,7 +4,6 @@ import { JwtService } from '@nestjs/jwt';
 import { UserDto } from '../users/dto/user.dto';
 import { CreateUserDto } from '../users/dto/create-user.dto';
 import * as argon2 from 'argon2';
-import { toUserDto } from 'src/common/shared/mapper';
 import { LoginUserDto } from 'src/users/dto/login-user-dto';
 
 @Injectable()
@@ -24,13 +23,10 @@ export class AuthService {
       const user = await this.usersService.findByEmail(email);
 
       if (user && this.verifyPassword(password, user.password)) {
-        return toUserDto(user);
+        return user;
       }
     } catch (error) {
-      throw new HttpException(
-        'Incorrect  or password',
-        HttpStatus.UNAUTHORIZED,
-      );
+      throw new HttpException(error, HttpStatus.UNAUTHORIZED);
     }
   }
 

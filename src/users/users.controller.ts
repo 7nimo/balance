@@ -1,13 +1,11 @@
 import {
   Body,
-  ClassSerializerInterceptor,
   Controller,
   Delete,
   Get,
   Param,
   ParseUUIDPipe,
   Post,
-  UseInterceptors,
 } from '@nestjs/common';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -27,15 +25,19 @@ export class UsersController {
   })
   @Post()
   async create(@Body() createUserDto: CreateUserDto): Promise<UserDto> {
-    return await this.usersService.create(createUserDto);
+    return this.usersService.create(createUserDto);
   }
 
-  @UseInterceptors(ClassSerializerInterceptor)
   @Get(':uuid')
   findById(
     @Param('uuid', new ParseUUIDPipe({ version: '4' })) uuid: string,
   ): Promise<User> {
     return this.usersService.findById(uuid);
+  }
+
+  @Get()
+  async findAll(): Promise<User[]> {
+    return this.usersService.findAll();
   }
 
   @Delete(':uuid')

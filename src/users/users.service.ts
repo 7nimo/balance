@@ -1,9 +1,9 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { Injectable, UnprocessableEntityException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreateUserDto } from './dto/create-user.dto';
-import { UserDto } from './dto/user.dto';
 import { User } from './entities/user.entity';
 import { Repository } from 'typeorm';
+import { UserDto } from './dto/user.dto';
 
 @Injectable()
 export class UsersService {
@@ -12,36 +12,29 @@ export class UsersService {
     private usersRepository: Repository<User>,
   ) {}
 
-  async create({ email, password }: CreateUserDto): Promise<UserDto> {
-    if (await this.findByEmail(email)) {
-      throw new HttpException(
-        'Email is invalid or already taken',
-        HttpStatus.UNPROCESSABLE_ENTITY,
+  async create(createUserDto: CreateUserDto): Promise<UserDto> {
+    const userExists = await this.findByEmail(createUserDto.email);
+    if (userExists) {
+      throw new UnprocessableEntityException(
+        'User with this email already exists',
       );
     }
-    try {
-      const user = this.usersRepository.create({ email, password });
-      const result = await this.usersRepository.save(user);
-      return result;
-    } catch (error) {
-      throw new HttpException(error, HttpStatus.UNPROCESSABLE_ENTITY);
-    }
+    const user = this.usersRepository.create(createUserDto);
+    const result = this.usersRepository.save(user);
+    console.log(await result);
+    return result;
+  }
+
+  async findAll(): Promise<User[]> {
+    return this.usersRepository.find();
   }
 
   async findByEmail(email: string): Promise<User> {
-    return this.usersRepository.findOne({
-      where: {
-        email: email,
-      },
-    });
+    return this.usersRepository.findOne({ where: { email: email } });
   }
 
   async findById(id: string): Promise<User> {
-    return this.usersRepository.findOne({
-      where: {
-        id: id,
-      },
-    });
+    return this.usersRepository.findOne({ where: { id: id } });
   }
 
   async remove(id: string): Promise<void> {
