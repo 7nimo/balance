@@ -38,7 +38,7 @@ export class AccountsController {
   @Post(':uuid')
   @HttpCode(202)
   @UseInterceptors(FileInterceptor('statement', multerOptions))
-  async uploadFile(
+  uploadFile(
     @UploadedFile() file: Express.Multer.File,
     @Param('uuid', new ParseUUIDPipe({ version: '4' })) uuid: string,
   ) {
@@ -55,23 +55,24 @@ export class AccountsController {
   }
 
   @Get(':uuid')
-  findOne(@Param('uuid', new ParseUUIDPipe({ version: '4' })) uuid: string) {
+  findOne(@Param('uuid', new ParseUUIDPipe({ version: '4' })) uuid: string): Promise<Account> {
     return this.accountsService.findOne(uuid);
   }
 
   @HttpCode(204)
   @Patch(':uuid')
-  async update(
+  update(
     @Param('uuid', new ParseUUIDPipe({ version: '4' })) uuid: string,
     @Body() updateAccountDto: UpdateAccountDto,
-  ): Promise<UpdateResult> {
+  ): Promise<void> {
     return this.accountsService.update(uuid, updateAccountDto);
   }
 
+  @HttpCode(204)
   @Delete(':uuid')
-  async remove(
+  remove(
     @Param('uuid', new ParseUUIDPipe({ version: '4' })) uuid: string,
-  ): Promise<DeleteResult> {
+  ): Promise<void> {
     return this.accountsService.remove(uuid);
   }
 }

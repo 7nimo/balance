@@ -23,7 +23,7 @@ export class Account {
   name: string;
 
   @Column({ nullable: true })
-  sortCode: number;
+  sortCode: string;
 
   @Column()
   accountNumber: number;
@@ -31,19 +31,17 @@ export class Account {
   @Column({ type: 'numeric', precision: 15, scale: 6, default: 0 })
   balance: string;
 
-  @OneToOne(() => Bank, { nullable: false })
-  @JoinColumn()
-  bank: Bank;
+  @OneToMany(() => Bank, (bank) => bank.account)
+  banks: Bank[];
 
-  @OneToOne(() => Currency, { nullable: false })
-  @JoinColumn()
-  currency: Currency;
+  @OneToMany(() => Currency, (currency) => currency.account)
+  currencies: Currency[];
 
   @OneToMany(() => Transaction, (transaction) => transaction.account)
   transactions: Transaction[];
 
   @ManyToOne(() => User, (user) => user.accounts, { nullable: false })
-  user: User[];
+  user: User;
 
   @CreateDateColumn({ type: 'timestamptz' })
   createdAt: string;

@@ -17,7 +17,7 @@ import { UsersService } from './users.service';
 @ApiTags('users')
 @Controller('users')
 export class UsersController {
-  constructor(private readonly usersService: UsersService) {}
+  constructor(private readonly usersService: UsersService) { }
 
   @ApiResponse({
     status: 201,
@@ -25,7 +25,7 @@ export class UsersController {
     type: User,
   })
   @Post()
-  async create(@Body() createUserDto: CreateUserDto): Promise<UserDto> {
+  create(@Body() createUserDto: CreateUserDto): Promise<UserDto> {
     return this.usersService.create(createUserDto);
   }
 
@@ -37,7 +37,7 @@ export class UsersController {
   }
 
   @Get()
-  async findAll(): Promise<User[]> {
+  findAll(): Promise<User[]> {
     return this.usersService.findAll();
   }
 

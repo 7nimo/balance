@@ -7,7 +7,7 @@ export class CurrencyController {
   constructor(private readonly currencyService: CurrencyService) {}
 
   @Get()
-  async findAll(): Promise<Currency[]> {
-    return await this.currencyService.findAll();
+  findAll(): Promise<Currency[]> {
+    return this.currencyService.findAll();
   }
 }

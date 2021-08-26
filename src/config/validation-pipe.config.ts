@@ -4,11 +4,12 @@ import { HttpStatus, ValidationPipeOptions } from '@nestjs/common';
 export const validationPipeOptions: ValidationPipeOptions = {
   stopAtFirstError: true,
   forbidUnknownValues: true,
+  whitelist: true,
+  forbidNonWhitelisted: true,
   errorHttpStatusCode: HttpStatus.UNPROCESSABLE_ENTITY,
-  // transform: true,
-  // validationError: {
-  //   target: true,
-  // },
-  // this should map errors
+  transform: true,
+  validationError: {
+    target: true,
+  },
   // exceptionFactory: (errors) => new UnprocessableEntityException(errors),
 };

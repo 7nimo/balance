@@ -12,26 +12,26 @@ export class AccountsService {
     private accountsRepository: Repository<Account>,
   ) {}
 
-  async create(createAccountDto: CreateAccountDto): Promise<Account> {
+  create(createAccountDto: CreateAccountDto): Promise<Account> {
     return this.accountsRepository.save(createAccountDto);
   }
 
-  async findAll(): Promise<Account[]> {
+  findAll(): Promise<Account[]> {
     return this.accountsRepository.find();
   }
 
-  async findOne(uuid: string): Promise<Account> {
+  findOne(uuid: string): Promise<Account> {
     return this.accountsRepository.findOne(uuid);
   }
 
   async update(
     uuid: string,
     updateAccountDto: UpdateAccountDto,
-  ): Promise<UpdateResult> {
-    return this.accountsRepository.update(uuid, updateAccountDto);
+  ): Promise<void> {
+    await this.accountsRepository.update(uuid, updateAccountDto);
   }
 
-  async remove(uuid: string): Promise<DeleteResult> {
-    return this.accountsRepository.delete(uuid);
+  async remove(uuid: string): Promise<void> {
+    await this.accountsRepository.delete(uuid);
   }
 }

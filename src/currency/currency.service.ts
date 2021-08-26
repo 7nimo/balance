@@ -10,7 +10,7 @@ export class CurrencyService {
     private currencyRepository: Repository<Currency>,
   ) {}
 
-  async findAll(): Promise<Currency[]> {
+  findAll(): Promise<Currency[]> {
     return this.currencyRepository.find();
   }
 }

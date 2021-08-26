@@ -9,4 +9,5 @@ module.exports = {
   seeds: ['dist/database/seeds/*.seed{.ts,.js}'],
   synchronize: process.env.NODE_ENV === 'development' ? true : false,
   logging: false,
+  logger: "advanced-console",
 }

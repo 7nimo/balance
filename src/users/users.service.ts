@@ -20,23 +20,22 @@ export class UsersService {
       );
     }
     const user = this.usersRepository.create(createUserDto);
-    const result = this.usersRepository.save(user);
-    return result;
+    return this.usersRepository.save(user);
   }
 
-  async findAll(): Promise<User[]> {
+  findAll(): Promise<User[]> {
     return this.usersRepository.find();
   }
 
-  async findByEmail(email: string): Promise<User> {
+  findByEmail(email: string): Promise<User> {
     return this.usersRepository.findOne({ where: { email: email } });
   }
 
-  async findById(id: string): Promise<User> {
+  findById(id: string): Promise<User> {
     return this.usersRepository.findOne({ where: { id: id } });
   }
 
   async remove(id: string): Promise<void> {
-    this.usersRepository.delete(id);
+    await this.usersRepository.delete(id);
   }
 }
