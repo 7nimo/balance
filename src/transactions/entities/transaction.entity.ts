@@ -6,22 +6,22 @@ export class Transaction {
   @PrimaryGeneratedColumn()
   id: number;
 
-  // verify whether this is accurate
-  @Column({ type: 'timestamptz' })
+  // @Column({ type: 'date' })
+  @Column({ type: 'varchar' })
   transactionDate: string;
 
   @Column()
   transactionDesc: string;
 
-  //this should be a relation
+  // to do: extract transaction types
   @Column()
   transactionType: string;
 
-  @Column({ type: 'numeric', precision: 15, scale: 6 })
-  debitAmount: string;
+  @Column({ type: 'numeric', precision: 15, scale: 6, nullable: true })
+  debitAmount: number;
 
-  @Column({ type: 'numeric', precision: 15, scale: 6 })
-  creditAmount: string;
+  @Column({ type: 'numeric', precision: 15, scale: 6, nullable: true })
+  creditAmount: number;
 
   @Column({ type: 'numeric', precision: 15, scale: 6 })
   balance: number;
