@@ -1,11 +1,12 @@
-import { IsEmail, IsString, Length } from 'class-validator';
+import { IsEmail, IsString, MaxLength, MinLength } from 'class-validator';
 
 export class CreateUserDto {
   @IsEmail()
   email: string;
 
   @IsString()
-  @Length(8, 255)
+  @MinLength(8)
+  @MaxLength(255)
   // to do: Implement Proper Password Strength Controls
   // @Matches(pattern: RegExp, modifiers?: string)
   password: string;
@@ -13,5 +14,6 @@ export class CreateUserDto {
 
 export class AdditionalUserInfo {
   // to do: currency code enum
+  @IsString()
   baseCurrency: string;
 }
