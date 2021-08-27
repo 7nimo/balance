@@ -15,7 +15,6 @@ import { EventEmitter2 } from '@nestjs/event-emitter';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { ApiTags } from '@nestjs/swagger';
 import { multerOptions } from 'src/config/multer.config';
-import { DeleteResult, UpdateResult } from 'typeorm';
 import { AccountsService } from './accounts.service';
 import { CreateAccountDto } from './dto/create-account.dto';
 import { UpdateAccountDto } from './dto/update-account.dto';
@@ -55,7 +54,9 @@ export class AccountsController {
   }
 
   @Get(':uuid')
-  findOne(@Param('uuid', new ParseUUIDPipe({ version: '4' })) uuid: string): Promise<Account> {
+  findOne(
+    @Param('uuid', new ParseUUIDPipe({ version: '4' })) uuid: string,
+  ): Promise<Account> {
     return this.accountsService.findOne(uuid);
   }
 
