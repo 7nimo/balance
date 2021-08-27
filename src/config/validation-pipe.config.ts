@@ -1,15 +1,26 @@
-import { HttpStatus, ValidationPipeOptions } from '@nestjs/common';
+import {
+  HttpStatus,
+  UnprocessableEntityException,
+  ValidationError,
+  ValidationPipeOptions,
+} from '@nestjs/common';
 
-// https://github.com/typestack/class-validator/issues/169
 export const validationPipeOptions: ValidationPipeOptions = {
-  stopAtFirstError: true,
   forbidUnknownValues: true,
   whitelist: true,
   forbidNonWhitelisted: true,
   errorHttpStatusCode: HttpStatus.UNPROCESSABLE_ENTITY,
   transform: true,
-  validationError: {
-    target: true,
-  },
-  // exceptionFactory: (errors) => new UnprocessableEntityException(errors),
+  exceptionFactory: (errors: ValidationError[]) =>
+    new UnprocessableEntityException(errors.map((error) => mapError(error))),
+};
+
+const mapError = (error: ValidationError) => {
+  const mappedError = {
+    field: error.property,
+    errors: error.constraints,
+    children: (children?: ValidationError[]) =>
+      children.map((child: ValidationError) => mapError(child)),
+  };
+  return mappedError;
 };
