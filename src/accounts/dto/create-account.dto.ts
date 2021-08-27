@@ -1,4 +1,11 @@
-import { IsInt, IsNotEmpty, IsOptional, IsString, Matches } from 'class-validator';
+import {
+  IsInt,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+  IsUUID,
+  Matches,
+} from 'class-validator';
 import { Bank } from 'src/banks/entities/bank.entity';
 import { User } from 'src/users/entities/user.entity';
 
@@ -20,6 +27,6 @@ export class CreateAccountDto {
   @IsInt()
   currency: number;
 
-  @IsString()
+  @IsUUID('4')
   user: User;
 }
