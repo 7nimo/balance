@@ -40,7 +40,4 @@ lerna-debug.log*
 /volumes
 
 # Multer storage
-/tmp
-# tmp/*
-# !tmp/uploads
-# tmp/uploads/*
+/tmp/*
