@@ -10,7 +10,6 @@ services:
     volumes:
       - .:/app
       - /app/node_modules
-      - shared:/app/tmp/uploads
     ports:
       - ${SERVER_PORT}:${SERVER_PORT}
       - 9229:9229
@@ -28,11 +27,10 @@ services:
       PG_DATA: /var/lib/postgresql/data
     volumes:
       - pgdata:/var/lib/postgresql/data
-      - shared:/var/tmp/uploads
+      - ./tmp/uploads:/var/tmp/uploads
     ports:
       - ${POSTGRES_PORT}:${POSTGRES_PORT}
     restart: unless-stopped
 
 volumes:
   pgdata:
-  shared:
