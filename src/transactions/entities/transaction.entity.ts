@@ -6,8 +6,7 @@ export class Transaction {
   @PrimaryGeneratedColumn()
   id: number;
 
-  // @Column({ type: 'date' })
-  @Column({ type: 'varchar' })
+  @Column({ type: 'date' })
   transactionDate: string;
 
   @Column()

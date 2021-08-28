@@ -3,11 +3,19 @@ import { TransactionsService } from './transactions.service';
 import { TransactionsController } from './transactions.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Transaction } from './entities/transaction.entity';
+import { StatementSavedListener } from 'src/transactions/listeners/statement-saved.listener';
+import { AccountsModule } from 'src/accounts/accounts.module';
+import { AccountsService } from 'src/accounts/accounts.service';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Transaction])],
+  imports: [
+    TypeOrmModule.forFeature([Transaction]),
+    AccountsModule,
+  ],
   controllers: [TransactionsController],
-  providers: [TransactionsService],
-  exports: [TransactionsService],
+  providers: [
+    TransactionsService, 
+    StatementSavedListener,
+  ],
 })
 export class TransactionsModule {}

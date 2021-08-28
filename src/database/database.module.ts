@@ -9,6 +9,7 @@ import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
       useFactory: async () =>
         Object.assign(await getConnectionOptions(), {
           autoLoadEntities: true,
+          // does not run on new db init?
           namingStrategy: new SnakeNamingStrategy(),
         }),
     }),
