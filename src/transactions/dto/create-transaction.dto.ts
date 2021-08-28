@@ -1,9 +1,4 @@
-import {
-  IsDecimal,
-  IsString,
-  IsUUID,
-  ValidateIf,
-} from 'class-validator';
+import { IsDecimal, IsString, IsUUID, ValidateIf } from 'class-validator';
 import { Account } from 'src/accounts/entities/account.entity';
 
 export class CreateTransactionDto {

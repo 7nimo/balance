@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Connection, Repository } from 'typeorm';
 import { Transaction } from './entities/transaction.entity';
-import { CreateTransactionDto, TransactionDto } from './dto';
+import { CreateTransactionDto } from './dto';
 import { TransactionRO } from './transaction.interface';
 import { copyLloydsCsv } from './queries/copy-lloyds-csv.query';
 
@@ -14,9 +14,13 @@ export class TransactionsService {
     private readonly connection: Connection,
   ) {}
 
-  async create(createTransactionDto: CreateTransactionDto): Promise<TransactionRO> {
+  async create(
+    createTransactionDto: CreateTransactionDto,
+  ): Promise<TransactionRO> {
     // to do: error handling
-    const response = await this.transactionsRepository.save(createTransactionDto);
+    const response = await this.transactionsRepository.save(
+      createTransactionDto,
+    );
 
     return response;
   }
@@ -63,7 +67,6 @@ export class TransactionsService {
 
     try {
       await queryRunner.query(copyLloydsCsv(accountId, filePath));
-      
     } catch (error) {
       await queryRunner.release();
       throw new Error(error);

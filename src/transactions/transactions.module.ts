@@ -7,14 +7,8 @@ import { StatementSavedListener } from 'src/transactions/listeners/statement-sav
 import { AccountsModule } from 'src/accounts/accounts.module';
 
 @Module({
-  imports: [
-    TypeOrmModule.forFeature([Transaction]),
-    AccountsModule,
-  ],
+  imports: [TypeOrmModule.forFeature([Transaction]), AccountsModule],
   controllers: [TransactionsController],
-  providers: [
-    TransactionsService, 
-    StatementSavedListener,
-  ],
+  providers: [TransactionsService, StatementSavedListener],
 })
 export class TransactionsModule {}

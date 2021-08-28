@@ -1,4 +1,16 @@
-import { Controller, Get, Post, Body, Param, Delete, HttpCode, ParseUUIDPipe, UseInterceptors, UploadedFile, HttpException, HttpStatus, Inject, forwardRef, NotFoundException } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Param,
+  Delete,
+  HttpCode,
+  ParseUUIDPipe,
+  UseInterceptors,
+  UploadedFile,
+  NotFoundException,
+} from '@nestjs/common';
 import { TransactionsService } from './transactions.service';
 import { ApiTags } from '@nestjs/swagger';
 import { FileInterceptor } from '@nestjs/platform-express';
@@ -16,7 +28,7 @@ export class TransactionsController {
     private readonly transactionsService: TransactionsService,
     private readonly accountsService: AccountsService,
     private readonly eventEmitter: EventEmitter2,
-  ) { }
+  ) {}
 
   @Post()
   create(@Body() createTransactionDto: CreateTransactionDto) {
@@ -38,12 +50,12 @@ export class TransactionsController {
     statementSavedEvent.path = file.path;
 
     this.eventEmitter.emit('statement.saved', statementSavedEvent);
-    return this.transactionsService.handleCsvImport(uuid, file.path)
+    return this.transactionsService.handleCsvImport(uuid, file.path);
   }
 
   @Get()
   findAll(@Param() uuid: string): Promise<Transaction[]> {
-    console.log(uuid)
+    console.log(uuid);
     return this.transactionsService.findAll();
   }
 

@@ -1,5 +1,5 @@
-export const copyLloydsCsv = (accountId: string, filePath: string) => 
-`
+export const copyLloydsCsv = (accountId: string, filePath: string) =>
+  `
   CREATE TEMPORARY TABLE temp
   (
     transaction_date date,

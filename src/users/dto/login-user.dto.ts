@@ -4,6 +4,7 @@ export class LoginUserDto {
   @IsEmail()
   readonly email: string;
 
-  @IsString() @IsNotEmpty()
+  @IsString()
+  @IsNotEmpty()
   readonly password: string;
 }

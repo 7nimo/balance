@@ -17,9 +17,7 @@ import { Account } from './entities/account.entity';
 @ApiTags('accounts')
 @Controller('accounts')
 export class AccountsController {
-  constructor(
-    private readonly accountsService: AccountsService,
-  ) {}
+  constructor(private readonly accountsService: AccountsService) {}
 
   @Post()
   create(@Body() createAccountDto: CreateAccountDto): Promise<Account> {

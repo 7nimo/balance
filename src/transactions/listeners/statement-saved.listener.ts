@@ -5,14 +5,14 @@ import { TransactionsService } from 'src/transactions/transactions.service';
 
 @Injectable()
 export class StatementSavedListener {
-  constructor(
-    private readonly transactionsService: TransactionsService
-    ) {}
+  constructor(private readonly transactionsService: TransactionsService) {}
 
   @OnEvent('statement.saved')
   async handleStatementSavedEvent(event: StatementSavedEvent) {
-
-    const result = await this.transactionsService.copyFromCsv(event.id, event.path);
+    const result = await this.transactionsService.copyFromCsv(
+      event.id,
+      event.path,
+    );
 
     console.log(result);
   }
