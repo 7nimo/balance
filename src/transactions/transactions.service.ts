@@ -2,7 +2,9 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Connection, Repository } from 'typeorm';
 import { CreateTransactionDto } from './dto/create-transaction.dto';
+import { TransactionDto } from './dto/transaction.dto';
 import { Transaction } from './entities/transaction.entity';
+import { copyLloydsCsv } from './queries/copy-lloyds-csv.query';
 
 @Injectable()
 export class TransactionsService {
@@ -13,7 +15,8 @@ export class TransactionsService {
   ) {}
 
   create(createTransactionDto: CreateTransactionDto) {
-    return 'This action adds a new transaction';
+    // to do: error handling
+    return this.transactionsRepository.save(createTransactionDto);
   }
 
   // is this needed?
@@ -36,11 +39,32 @@ export class TransactionsService {
     }
   }
 
-  findAll() {
-    return `This action returns all transactions`;
+  handleCsvImport(uuid: string, path: string): Promise<void> {
+    // to do
+    return;
+  }
+
+  findAll(): Promise<TransactionDto[]> {
+    return this.transactionsRepository.find();
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} transaction`;
+    return this.transactionsRepository.findOne({ where: { id } });
+  }
+
+  async clear(): Promise<void> {
+    await this.transactionsRepository.clear();
+  }
+
+  async copyFromCsv(accountId: string, filePath: string): Promise<void> {
+    const queryRunner = this.connection.createQueryRunner();
+
+    try {
+      await queryRunner.query(copyLloydsCsv(accountId, filePath));
+      
+    } catch (error) {
+      await queryRunner.release();
+      throw new Error(error);
+    }
   }
 }
