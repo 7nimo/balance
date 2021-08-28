@@ -50,8 +50,14 @@ export class TransactionsService {
     return;
   }
 
-  findAll(): Promise<Transaction[]> {
-    return this.transactionsRepository.find();
+  async findAll(accountId: string): Promise<Transaction[]> {
+    const transactions = this.transactionsRepository
+      .createQueryBuilder('transaction')
+      .leftJoin('transaction.account', 'account')
+      .where('account.id = :id', { id : `${accountId}`})
+      .getMany();
+
+    return transactions;
   }
 
   findOne(id: number): Promise<TransactionRO> {

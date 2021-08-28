@@ -16,7 +16,7 @@ import { BanksModule } from './banks/banks.module';
 import { AccountsModule } from './accounts/accounts.module';
 import { EventEmitterModule } from '@nestjs/event-emitter';
 import { CurrencyModule } from './currency/currency.module';
-import { APP_INTERCEPTOR } from '@nestjs/core';
+import { APP_INTERCEPTOR, RouterModule } from '@nestjs/core';
 
 @Module({
   imports: [
@@ -29,6 +29,12 @@ import { APP_INTERCEPTOR } from '@nestjs/core';
     BanksModule,
     AccountsModule,
     CurrencyModule,
+    RouterModule.register([
+      {
+        path: '/accounts/:accountId',
+        module: TransactionsModule,
+      },
+    ]),
   ],
   controllers: [AppController],
   providers: [

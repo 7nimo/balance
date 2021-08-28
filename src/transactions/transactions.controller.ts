@@ -50,13 +50,12 @@ export class TransactionsController {
     statementSavedEvent.path = file.path;
 
     this.eventEmitter.emit('statement.saved', statementSavedEvent);
-    return this.transactionsService.handleCsvImport(uuid, file.path);
+    // return this.transactionsService.handleCsvImport(uuid, file.path);
   }
 
   @Get()
-  findAll(@Param() uuid: string): Promise<Transaction[]> {
-    console.log(uuid);
-    return this.transactionsService.findAll();
+  findAll(@Param() params: any): Promise<Transaction[]> {
+    return this.transactionsService.findAll(params.accountId);
   }
 
   @Get(':id')
