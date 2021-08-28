@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateAccountDto, UpdateAccountDto } from './dto';
@@ -19,15 +19,22 @@ export class AccountsService {
     return this.accountsRepository.find();
   }
 
-  findOne(uuid: string): Promise<Account> {
-    return this.accountsRepository.findOne(uuid);
+  async findOne(id: string): Promise<Account> {
+    const result = await this.accountsRepository.findOne({ where: { id } });
+    if (result === undefined) {
+      throw new NotFoundException(`Account with id ${id} does not exist`);
+    }
+    return result;
   }
 
   async update(
     uuid: string,
     updateAccountDto: UpdateAccountDto,
   ): Promise<void> {
-    await this.accountsRepository.update(uuid, updateAccountDto);
+    const result = await this.accountsRepository.update(uuid, updateAccountDto);
+    if (result.affected === 0) {
+      throw new NotFoundException(`Account with id ${uuid} does not exist`);
+    }
   }
 
   async remove(uuid: string): Promise<void> {
