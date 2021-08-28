@@ -5,7 +5,6 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Transaction } from './entities/transaction.entity';
 import { StatementSavedListener } from 'src/transactions/listeners/statement-saved.listener';
 import { AccountsModule } from 'src/accounts/accounts.module';
-import { AccountsService } from 'src/accounts/accounts.service';
 
 @Module({
   imports: [

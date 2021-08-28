@@ -1,7 +1,7 @@
 import { Factory, Seeder } from 'typeorm-seeding';
 import { Connection } from 'typeorm';
 import { Bank } from 'src/banks/entities/bank.entity';
-import { CreateBankDto } from 'src/banks/dto/create-bank.dto';
+import { CreateBankDto } from 'src/banks/dto';
 
 export default class CreateBanks implements Seeder {
   banksData: CreateBankDto[] = [{ name: 'mBank' }, { name: 'Lloyds' }];

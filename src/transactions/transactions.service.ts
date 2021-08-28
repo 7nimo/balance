@@ -1,22 +1,24 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Connection, Repository } from 'typeorm';
-import { CreateTransactionDto } from './dto/create-transaction.dto';
-import { TransactionDto } from './dto/transaction.dto';
 import { Transaction } from './entities/transaction.entity';
+import { CreateTransactionDto, TransactionDto } from './dto';
+import { TransactionRO } from './transaction.interface';
 import { copyLloydsCsv } from './queries/copy-lloyds-csv.query';
 
 @Injectable()
 export class TransactionsService {
   constructor(
     @InjectRepository(Transaction)
-    private transactionsRepository: Repository<Transaction>,
-    private connection: Connection,
+    private readonly transactionsRepository: Repository<Transaction>,
+    private readonly connection: Connection,
   ) {}
 
-  create(createTransactionDto: CreateTransactionDto) {
+  async create(createTransactionDto: CreateTransactionDto): Promise<TransactionRO> {
     // to do: error handling
-    return this.transactionsRepository.save(createTransactionDto);
+    const response = await this.transactionsRepository.save(createTransactionDto);
+
+    return response;
   }
 
   // is this needed?
@@ -44,11 +46,11 @@ export class TransactionsService {
     return;
   }
 
-  findAll(): Promise<TransactionDto[]> {
+  findAll(): Promise<Transaction[]> {
     return this.transactionsRepository.find();
   }
 
-  findOne(id: number) {
+  findOne(id: number): Promise<TransactionRO> {
     return this.transactionsRepository.findOne({ where: { id } });
   }
 

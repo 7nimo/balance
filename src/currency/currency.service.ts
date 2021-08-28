@@ -7,7 +7,7 @@ import { Currency } from './entities/currency.entity';
 export class CurrencyService {
   constructor(
     @InjectRepository(Currency)
-    private currencyRepository: Repository<Currency>,
+    private readonly currencyRepository: Repository<Currency>,
   ) {}
 
   findAll(): Promise<Currency[]> {

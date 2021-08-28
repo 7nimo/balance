@@ -1,7 +1,13 @@
+import { IsEnum, IsString } from 'class-validator';
 import { CurrencyType } from 'src/common/enums/currency-type.enum';
 
 export class CreateCurrencyDto {
-  code: string;
-  name: string;
-  type?: CurrencyType;
+  @IsString()
+  readonly code: string;
+
+  @IsString()
+  readonly name: string;
+
+  @IsEnum(CurrencyType)
+  readonly type?: CurrencyType;
 }

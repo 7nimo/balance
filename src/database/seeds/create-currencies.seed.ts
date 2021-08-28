@@ -2,9 +2,10 @@ import { CurrencyType } from 'src/common/enums/currency-type.enum';
 import { Factory, Seeder } from 'typeorm-seeding';
 import { Connection } from 'typeorm';
 import { Currency } from 'src/currency/entities/currency.entity';
-import { CreateCurrencyDto } from 'src/currency/dto/create-currency.dto';
+import { CreateCurrencyDto } from 'src/currency/dto';
 
 export default class CreateCurrencies implements Seeder {
+  // to do: migrations?
   currencyData: CreateCurrencyDto[] = [
     {
       code: 'GBP',

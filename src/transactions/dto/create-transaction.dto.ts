@@ -1,7 +1,5 @@
 import {
   IsDecimal,
-  IsISO8601,
-  IsPositive,
   IsString,
   IsUUID,
   ValidateIf,
@@ -10,37 +8,34 @@ import { Account } from 'src/accounts/entities/account.entity';
 
 export class CreateTransactionDto {
   @IsUUID('4')
-  account: Account;
+  readonly account: Account;
 
   @IsString()
-  // @IsISO8601()
-  transactionDate: string;
+  readonly transactionDate: string;
 
   @IsString()
-  transactionDesc: string;
+  readonly transactionDesc: string;
 
   @IsString()
-  transactionType: string;
+  readonly transactionType: string;
 
-  // @Optional()
   @ValidateIf((o) => o.creditAmount === undefined)
   @IsDecimal({
     force_decimal: true,
     decimal_digits: '2',
   })
-  debitAmount: number;
+  readonly debitAmount: number;
 
-  // @Optional()
   @ValidateIf((o) => o.debitAmount === undefined)
   @IsDecimal({
     force_decimal: true,
     decimal_digits: '2',
   })
-  creditAmount: number;
+  readonly creditAmount: number;
 
   @IsDecimal({
     force_decimal: true,
     decimal_digits: '2',
   })
-  balance: number;
+  readonly balance: number;
 }

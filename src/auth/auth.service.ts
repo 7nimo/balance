@@ -1,11 +1,11 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { UserDto } from '../users/dto/user.dto';
 import * as argon2 from 'argon2';
+import { UserDto } from 'src/users/dto';
 
 @Injectable()
 export class AuthService {
-  constructor(private jwtService: JwtService) {}
+  constructor(private readonly jwtService: JwtService) {}
 
   verifyPassword(hash: string, password: string): Promise<boolean> {
     return argon2.verify(hash, password);

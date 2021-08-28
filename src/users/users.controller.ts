@@ -9,8 +9,7 @@ import {
   Post,
 } from '@nestjs/common';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
-import { CreateUserDto } from './dto/create-user.dto';
-import { UserDto } from './dto/user.dto';
+import { CreateUserDto, UserDto } from './dto';
 import { User } from './entities/user.entity';
 import { UsersService } from './users.service';
 

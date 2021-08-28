@@ -6,7 +6,7 @@ import { TransactionsService } from 'src/transactions/transactions.service';
 @Injectable()
 export class StatementSavedListener {
   constructor(
-    private transactionsService: TransactionsService
+    private readonly transactionsService: TransactionsService
     ) {}
 
   @OnEvent('statement.saved')

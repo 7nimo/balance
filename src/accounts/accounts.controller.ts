@@ -11,15 +11,14 @@ import {
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { AccountsService } from './accounts.service';
-import { CreateAccountDto } from './dto/create-account.dto';
-import { UpdateAccountDto } from './dto/update-account.dto';
+import { CreateAccountDto, UpdateAccountDto } from './dto';
 import { Account } from './entities/account.entity';
 
 @ApiTags('accounts')
 @Controller('accounts')
 export class AccountsController {
   constructor(
-    private accountsService: AccountsService,
+    private readonly accountsService: AccountsService,
   ) {}
 
   @Post()

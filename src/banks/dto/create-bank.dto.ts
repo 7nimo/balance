@@ -1,3 +1,6 @@
+import { IsString } from 'class-validator';
+
 export class CreateBankDto {
-  name: string;
+  @IsString()
+  readonly name: string;
 }

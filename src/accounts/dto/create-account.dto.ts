@@ -12,21 +12,21 @@ import { User } from 'src/users/entities/user.entity';
 export class CreateAccountDto {
   @IsNotEmpty()
   @IsString()
-  name: string;
+  readonly name: string;
 
   @IsOptional()
   @Matches(/(\d{2}-){2}(\d{2})/)
-  sortCode: string;
+  readonly sortCode: string;
 
   @IsInt()
-  accountNumber: number;
+  readonly accountNumber: number;
 
   @IsInt()
-  bank: Bank;
+  readonly bank: Bank;
 
   @IsInt()
-  currency: number;
+  readonly currency: number;
 
   @IsUUID('4')
-  user: User;
+  readonly user: User;
 }

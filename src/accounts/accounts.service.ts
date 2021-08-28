@@ -1,15 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { CreateAccountDto } from './dto/create-account.dto';
-import { UpdateAccountDto } from './dto/update-account.dto';
+import { CreateAccountDto, UpdateAccountDto } from './dto';
 import { Account } from './entities/account.entity';
 
 @Injectable()
 export class AccountsService {
   constructor(
     @InjectRepository(Account)
-    private accountsRepository: Repository<Account>,
+    private readonly accountsRepository: Repository<Account>,
   ) {}
 
   create(createAccountDto: CreateAccountDto): Promise<Account> {
