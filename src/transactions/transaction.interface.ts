@@ -3,7 +3,7 @@ export class TransactionRO {
   transactionDate: string;
   transactionDesc: string;
   transactionType: string;
-  debitAmount: number;
-  creditAmount: number;
+  debitAmount?: number;
+  creditAmount?: number;
   balance: number;
 }

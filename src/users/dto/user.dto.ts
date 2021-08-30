@@ -1,12 +1,9 @@
-import { IsEmail, IsInt, IsString } from 'class-validator';
+import { IsEmail, IsUUID } from 'class-validator';
 
 export class UserDto {
-  @IsInt()
-  id: string;
+  @IsUUID('4')
+  readonly id: string;
 
   @IsEmail()
-  email: string;
-
-  @IsString()
-  baseCurrency: string;
+  readonly email: string;
 }

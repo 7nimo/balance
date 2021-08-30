@@ -1,3 +1,4 @@
+import { ApiProperty } from '@nestjs/swagger';
 import { Account } from 'src/accounts/entities/account.entity';
 import { CurrencyType } from 'src/common/enums/currency-type.enum';
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
@@ -13,13 +14,10 @@ export class Currency {
   @Column()
   name: string;
 
-  @Column({
-    type: 'enum',
-    enum: CurrencyType,
-    default: CurrencyType.FIAT,
-  })
-  type: CurrencyType;
+  @Column()
+  type: CurrencyType = CurrencyType.FIAT;
 
   @OneToMany(() => Account, (account) => account.currencies)
+  @ApiProperty({ type: [Account], isArray: true })
   account: Account[];
 }

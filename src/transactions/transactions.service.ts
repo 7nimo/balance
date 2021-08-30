@@ -50,18 +50,20 @@ export class TransactionsService {
     return;
   }
 
-  async findAll(accountId: string): Promise<Transaction[]> {
+  findAll(accountId: string, userId: string): Promise<Transaction[]> {
     const transactions = this.transactionsRepository
       .createQueryBuilder('transaction')
       .leftJoin('transaction.account', 'account')
-      .where('account.id = :id', { id : `${accountId}`})
+      .leftJoin('account.user', 'user')
+      .where('account.id = :accountId', { accountId: accountId })
+      .andWhere('user.id = :userId', { userId: userId })
       .getMany();
 
     return transactions;
   }
 
   findOne(id: number): Promise<TransactionRO> {
-    return this.transactionsRepository.findOne({ where: { id } });
+    return this.transactionsRepository.findOne(id);
   }
 
   async clear(): Promise<void> {

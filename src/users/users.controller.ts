@@ -8,7 +8,8 @@ import {
   ParseUUIDPipe,
   Post,
 } from '@nestjs/common';
-import { ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiTags } from '@nestjs/swagger';
+import { Public } from 'src/common/decorators/public.decorator';
 import { CreateUserDto, UserDto } from './dto';
 import { User } from './entities/user.entity';
 import { UsersService } from './users.service';
@@ -18,11 +19,7 @@ import { UsersService } from './users.service';
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
-  @ApiResponse({
-    status: 201,
-    description: 'The record has been successfully created.',
-    type: User,
-  })
+  @Public()
   @Post()
   create(@Body() createUserDto: CreateUserDto): Promise<UserDto> {
     return this.usersService.create(createUserDto);

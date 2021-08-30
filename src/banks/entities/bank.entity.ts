@@ -11,6 +11,6 @@ export class Bank {
   name: string;
 
   @OneToMany(() => Account, (account) => account.banks)
-  @ApiProperty({ type: () => Account })
+  @ApiProperty({ type: [Account], isArray: true })
   account: Account[];
 }

@@ -1,5 +1,6 @@
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { Account } from 'src/accounts/entities/account.entity';
+import { ApiProperty } from '@nestjs/swagger';
 
 @Entity()
 export class Transaction {
@@ -28,5 +29,6 @@ export class Transaction {
   @ManyToOne(() => Account, (account) => account.transactions, {
     nullable: false,
   })
+  @ApiProperty({ type: Account })
   account: Account;
 }

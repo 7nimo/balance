@@ -27,11 +27,11 @@ export class UsersService {
   }
 
   findByEmail(email: string): Promise<User> {
-    return this.usersRepository.findOne({ where: { email: email } });
+    return this.usersRepository.findOne({ email });
   }
 
   findById(id: string): Promise<User> {
-    return this.usersRepository.findOne({ where: { id: id } });
+    return this.usersRepository.findOne(id);
   }
 
   async remove(id: string): Promise<void> {
