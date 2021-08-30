@@ -3,7 +3,7 @@ import { Account } from 'src/accounts/entities/account.entity';
 
 export class CreateTransactionDto {
   @IsUUID('4')
-  readonly account: Account;
+  readonly accountId: string;
 
   @IsString()
   readonly transactionDate: string;

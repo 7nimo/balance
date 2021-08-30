@@ -14,10 +14,9 @@ export class Currency {
   @Column()
   name: string;
 
-  @Column()
-  type: CurrencyType = CurrencyType.FIAT;
+  @Column({ default: CurrencyType.FIAT })
+  type: CurrencyType;
 
   @OneToMany(() => Account, (account) => account.currencies)
-  @ApiProperty({ type: [Account], isArray: true })
   account: Account[];
 }

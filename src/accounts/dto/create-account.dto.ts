@@ -6,8 +6,6 @@ import {
   IsUUID,
   Matches,
 } from 'class-validator';
-import { Bank } from 'src/banks/entities/bank.entity';
-import { User } from 'src/users/entities/user.entity';
 
 export class CreateAccountDto {
   @IsNotEmpty()
@@ -16,17 +14,17 @@ export class CreateAccountDto {
 
   @IsOptional()
   @Matches(/(\d{2}-){2}(\d{2})/)
-  readonly sortCode: string;
+  readonly sortCode?: string;
 
   @IsInt()
   readonly accountNumber: number;
 
   @IsInt()
-  readonly bank: Bank;
+  readonly bankId: number;
 
   @IsInt()
-  readonly currency: number;
+  readonly currencyId: number;
 
   @IsUUID('4')
-  readonly user: User;
+  readonly userId: string;
 }

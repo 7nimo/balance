@@ -29,6 +29,5 @@ export class Transaction {
   @ManyToOne(() => Account, (account) => account.transactions, {
     nullable: false,
   })
-  @ApiProperty({ type: Account })
   account: Account;
 }
