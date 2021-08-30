@@ -1,6 +1,6 @@
 import { Catch, ArgumentsHost, Logger, HttpException } from '@nestjs/common';
 import { BaseExceptionFilter } from '@nestjs/core';
-import { Request, Response } from 'express';
+import { Request } from 'express';
 
 @Catch(HttpException)
 export class InternalExceptionsFilter extends BaseExceptionFilter {
@@ -8,7 +8,6 @@ export class InternalExceptionsFilter extends BaseExceptionFilter {
     super.catch(exception, host);
 
     const ctx = host.switchToHttp();
-    const response = ctx.getResponse<Response>();
     const request = ctx.getRequest<Request>();
     const message = (exception as any).message;
 

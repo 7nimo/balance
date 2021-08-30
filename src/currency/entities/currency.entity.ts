@@ -1,4 +1,3 @@
-import { ApiProperty } from '@nestjs/swagger';
 import { Account } from 'src/accounts/entities/account.entity';
 import { CurrencyType } from 'src/common/enums/currency-type.enum';
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';

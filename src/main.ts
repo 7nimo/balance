@@ -11,11 +11,11 @@ import { ValidationPipe } from './common/pipes/validation.pipe';
 // import { validationPipeOptions } from './config/validation-pipe.config';
 
 async function bootstrap() {
+  const app = await NestFactory.create(AppModule);
 
-  const appOptions = { cors: true };
-
-  const app = await NestFactory.create(AppModule, appOptions);
   app.setGlobalPrefix('api');
+  app.use(helmet());
+  app.enableCors();
 
   const document = SwaggerModule.createDocument(
     app,
@@ -31,7 +31,6 @@ async function bootstrap() {
   // app.useGlobalPipes(new ValidationPipe(validationPipeOptions));
   app.useGlobalPipes(new ValidationPipe());
 
-  app.use(helmet());
 
   await app.listen(process.env.SERVER_PORT || 3000);
   console.log(`Application is running on: ${await app.getUrl()}`);

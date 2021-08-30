@@ -1,4 +1,3 @@
-import { ApiProperty } from '@nestjs/swagger';
 import { Account } from 'src/accounts/entities/account.entity';
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
