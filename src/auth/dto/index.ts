@@ -1,1 +1,1 @@
-export { TokenPayloadDto } from './token-payload.dto';
+export { JwtPayloadDto } from './jwt-payload.dto';

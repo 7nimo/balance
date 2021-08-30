@@ -1,16 +1,17 @@
-import { Request, Controller, Post, UseGuards } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { Controller, Post, UseGuards } from '@nestjs/common';
+import { Public } from 'src/common/decorators/public.decorator';
+import { Usr } from 'src/common/decorators/usr.decorator';
 import { AuthService } from './auth.service';
 import { LocalAuthGuard } from './guards/local-auth.guard';
 
-@ApiTags('auth')
-@Controller('auth')
+@Controller()
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
+  @Public()
   @UseGuards(LocalAuthGuard)
   @Post('login')
-  login(@Request() req) {
-    return this.authService.login(req.user);
+  login(@Usr('id') userId: string): string {
+    return this.authService.login(userId);
   }
 }

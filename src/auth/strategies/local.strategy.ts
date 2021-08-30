@@ -20,18 +20,19 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
   async validate(email: string, password: string): Promise<UserDto> {
     const user = await this.usersService.findByEmail(email);
 
-    if (user) {
-      const isMatch = await this.authService.verifyPassword(
-        user.password,
-        password,
-      );
-      if (isMatch) {
-        return user;
-      } else {
-        throw new UnauthorizedException('Incorrect username or password');
-      }
-    } else {
+    if (user === undefined) {
       throw new UnauthorizedException('Incorrect username or password');
     }
+
+    const isMatch = await this.authService.verifyPassword(
+      user.password,
+      password,
+    );
+
+    if (!isMatch) {
+      throw new UnauthorizedException('Incorrect username or password');
+    }
+
+    return user;
   }
 }

@@ -1,5 +1,5 @@
 module.exports = {
-  type: process.env.DATABASE,
+  type: 'postgres',
   host: process.env.POSTGRES_HOST,
   port: process.env.POSTGRES_PORT,
   username: process.env.POSTGRES_USER,

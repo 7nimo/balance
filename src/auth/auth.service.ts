@@ -1,7 +1,7 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import * as argon2 from 'argon2';
-import { UserDto } from 'src/users/dto';
+import { JwtPayload } from './jwt-payload.interface';
 
 @Injectable()
 export class AuthService {
@@ -11,11 +11,12 @@ export class AuthService {
     return argon2.verify(hash, password);
   }
 
-  login({ id, email }: UserDto): string {
-    try {
-      return this.jwtService.sign({ email: email, sub: id });
-    } catch (error) {
-      throw new HttpException(error, HttpStatus.UNAUTHORIZED);
-    }
+  login(userId: string): string {
+    const payload: JwtPayload = {
+      user_id: userId,
+    };
+
+    // error validation?
+    return this.jwtService.sign(payload);
   }
 }

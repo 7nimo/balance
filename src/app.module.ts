@@ -1,22 +1,15 @@
-import {
-  ClassSerializerInterceptor,
-  Logger,
-  MiddlewareConsumer,
-  Module,
-  NestModule,
-} from '@nestjs/common';
+import { Logger, MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { UsersModule } from './users/users.module';
 import { DatabaseModule } from './database/database.module';
 import { AuthModule } from './auth/auth.module';
-import { AppController } from './app.controller';
 import { LoggerMiddleware } from './common/middleware/logger.middleware';
 import { TransactionsModule } from './transactions/transactions.module';
 import { BanksModule } from './banks/banks.module';
 import { AccountsModule } from './accounts/accounts.module';
 import { EventEmitterModule } from '@nestjs/event-emitter';
 import { CurrencyModule } from './currency/currency.module';
-import { APP_INTERCEPTOR, RouterModule } from '@nestjs/core';
+import { RouterModule } from '@nestjs/core';
 
 @Module({
   imports: [
@@ -36,14 +29,7 @@ import { APP_INTERCEPTOR, RouterModule } from '@nestjs/core';
       },
     ]),
   ],
-  controllers: [AppController],
-  providers: [
-    Logger,
-    {
-      provide: APP_INTERCEPTOR,
-      useClass: ClassSerializerInterceptor,
-    },
-  ],
+  providers: [Logger],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer): void {
