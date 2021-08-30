@@ -4,6 +4,8 @@ import { HttpAdapterHost, NestFactory, Reflector } from '@nestjs/core';
 import { SwaggerModule } from '@nestjs/swagger';
 import { AppModule } from './app.module';
 import * as helmet from 'helmet';
+// import * as csurf from 'csurf';
+import * as cookieParser from 'cookie-parser';
 import { ClassSerializerInterceptor } from '@nestjs/common';
 import { InternalExceptionsFilter } from './common/filters/internal-exceptions-filter.filter';
 import { swaggerConfig, swaggerOptions } from './config/swagger.config';
@@ -14,8 +16,10 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   app.setGlobalPrefix('api');
-  app.use(helmet());
   app.enableCors();
+  app.use(helmet());
+  app.use(cookieParser());
+  // app.use(csurf());
 
   const document = SwaggerModule.createDocument(
     app,
