@@ -11,7 +11,8 @@ export class AuthController {
   @Public()
   @UseGuards(LocalAuthGuard)
   @Post('login')
-  login(@Usr('id') userId: string): string {
+  login(@Usr() userId: any): string {
+    console.log(userId)
     return this.authService.login(userId);
   }
 }

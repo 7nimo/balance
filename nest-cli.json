@@ -3,18 +3,20 @@
   "sourceRoot": "src",
   "compilerOptions": {
     "plugins": [
-      "@nestjs/swagger/plugin"
-    ],
-    "options": {
-      "classValidatorShim": true,
-      "introspectComments": true,
-      "dtoFileNameSuffix": [
-        ".entity.ts",
-        ".dto.ts"
-      ],
-      "controllerFileNameSuffix": [
-        ".controller.ts"
-      ]
-    }
+      {
+        "name": "@nestjs/swagger",
+        "options": {
+          "classValidatorShim": true,
+          "introspectComments": true,
+          "dtoFileNameSuffix": [
+            ".entity.ts",
+            ".dto.ts"
+          ],
+          "controllerFileNameSuffix": [
+            ".controller.ts"
+          ]
+        }
+      }
+    ]
   }
 }
