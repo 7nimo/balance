@@ -11,6 +11,7 @@ export const validationPipeOptions: ValidationPipeOptions = {
   forbidNonWhitelisted: true,
   errorHttpStatusCode: HttpStatus.UNPROCESSABLE_ENTITY,
   transform: true,
+  validateCustomDecorators: true,
   exceptionFactory: (errors: ValidationError[]) =>
     new UnprocessableEntityException(errors.map((error) => mapError(error))),
 };

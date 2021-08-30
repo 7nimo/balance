@@ -3,22 +3,22 @@ import { extname } from 'path';
 import { existsSync, mkdirSync } from 'fs';
 import { diskStorage } from 'multer';
 import { v4 as uuid } from 'uuid';
-import { HttpException, HttpStatus } from '@nestjs/common';
+import { UnprocessableEntityException } from '@nestjs/common';
 
 export const multerConfig = {
-  dest: process.env.UPLOAD_LOCATION,
+  path: process.env.MULTER_DEST,
+  limit: process.env.MULTER_LIMIT,
 };
 
 export const multerOptions: MulterOptions = {
-  limits: { fileSize: 1024 * 1024 },
+  limits: { fileSize: +multerConfig.limit },
   fileFilter: (req: any, file: any, cb: any) => {
     if (file.originalname.match(/\.(csv)$/)) {
       cb(null, true);
     } else {
       cb(
-        new HttpException(
+        new UnprocessableEntityException(
           `Unsupported file type ${extname(file.originalname)}`,
-          HttpStatus.UNPROCESSABLE_ENTITY,
         ),
         false,
       );
@@ -26,7 +26,7 @@ export const multerOptions: MulterOptions = {
   },
   storage: diskStorage({
     destination: (req: any, file: any, cb: any) => {
-      const uploadPath = multerConfig.dest;
+      const uploadPath = multerConfig.path;
       if (!existsSync(uploadPath)) {
         mkdirSync(uploadPath);
       }

@@ -1,11 +1,11 @@
 version: "3.8"
 
 services:
-  main:
-    container_name: main
+  balance_api:
+    container_name: balance_api
     build:
       context: .
-      target: development
+      target: ${NODE_ENV}
     command: npm run start:debug
     volumes:
       - .:/app
@@ -15,10 +15,10 @@ services:
       - 9229:9229
     restart: unless-stopped
     depends_on:
-      - postgres
+      - balance_db
  
-  postgres:
-    container_name: postgres
+  balance_db:
+    container_name: balance_db
     image: postgres:13.3
     environment:
       POSTGRES_DB: ${POSTGRES_DB}
@@ -26,11 +26,11 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       PG_DATA: /var/lib/postgresql/data
     volumes:
-      - pgdata:/var/lib/postgresql/data
-      - ./tmp/uploads:/var/tmp/uploads
+      - db_data:/var/lib/postgresql/data
+      - ${MULTER_DEST}:/var/tmp/uploads
     ports:
-      - ${POSTGRES_PORT}:${POSTGRES_PORT}
+      - ${POSTGRES_PORT}:5432
     restart: unless-stopped
 
 volumes:
-  pgdata:
+  db_data:

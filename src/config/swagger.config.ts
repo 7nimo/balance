@@ -4,7 +4,7 @@ export const swaggerConfig = new DocumentBuilder()
   .setTitle('Balance API')
   .setDescription('Balance API docs')
   .setVersion('1.0')
-  .addTag('balance')
+  .setBasePath('api')
   .addBearerAuth()
   .build();
 

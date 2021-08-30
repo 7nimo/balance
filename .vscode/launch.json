@@ -4,6 +4,12 @@
     {
       "type": "node",
       "request": "attach",
+      "name": "balance",
+      "remoteRoot": "/app"
+    },
+    {
+      "type": "node",
+      "request": "attach",
       "name": "Debug: balance",
       "remoteRoot": "/app",
       "localRoot": "{$workspaceFolder}",
@@ -12,7 +18,8 @@
       "restart": true,
       "address": "0.0.0.0",
       "skipFiles": [
-        "<node_internals>/**"
+        "<node_internals>/**",
+        "/dist/*"
       ]
     }
   ]
