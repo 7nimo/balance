@@ -1,15 +1,15 @@
 import { Injectable } from '@nestjs/common';
 import { OnEvent } from '@nestjs/event-emitter';
 import { StatementSavedEvent } from '../events/statement-saved.event';
-import { TransactionsService } from 'src/transactions/transactions.service';
+import { TransactionService } from 'src/transaction/transaction.service';
 
 @Injectable()
 export class StatementSavedListener {
-  constructor(private readonly transactionsService: TransactionsService) {}
+  constructor(private readonly transactionService: TransactionService) {}
 
   @OnEvent('statement.saved')
   async handleStatementSavedEvent(event: StatementSavedEvent) {
-    const result = await this.transactionsService.copyFromCsv(
+    const result = await this.transactionService.copyFromCsv(
       event.id,
       event.path,
     );

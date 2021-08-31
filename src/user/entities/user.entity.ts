@@ -12,7 +12,7 @@ import {
 } from 'typeorm';
 
 @Entity()
-export class User {
+export class UserEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
@@ -39,7 +39,7 @@ export class User {
     this.password = await argon2.hash(this.password);
   }
 
-  constructor(partial: Partial<User>) {
+  constructor(partial: Partial<UserEntity>) {
     Object.assign(this, partial);
   }
 }

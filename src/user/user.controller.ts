@@ -11,30 +11,30 @@ import {
 import { ApiTags } from '@nestjs/swagger';
 import { Public } from 'src/common/decorators/public.decorator';
 import { CreateUserDto, UserDto } from './dto';
-import { User } from './entities/user.entity';
-import { UsersService } from './users.service';
+import { UserEntity } from './entities/user.entity';
+import { UserService } from './user.service';
 
-@ApiTags('users')
-@Controller('users')
-export class UsersController {
-  constructor(private readonly usersService: UsersService) {}
+@ApiTags('user')
+@Controller('user')
+export class UserController {
+  constructor(private readonly userService: UserService) {}
 
   @Public()
   @Post()
   create(@Body() createUserDto: CreateUserDto): Promise<UserDto> {
-    return this.usersService.create(createUserDto);
+    return this.userService.create(createUserDto);
   }
 
   @Get(':uuid')
   findById(
     @Param('uuid', new ParseUUIDPipe({ version: '4' })) uuid: string,
-  ): Promise<User> {
-    return this.usersService.findById(uuid);
+  ): Promise<UserEntity> {
+    return this.userService.findById(uuid);
   }
 
   @Get()
-  findAll(): Promise<User[]> {
-    return this.usersService.findAll();
+  findAll(): Promise<UserEntity[]> {
+    return this.userService.findAll();
   }
 
   @HttpCode(204)
@@ -42,6 +42,6 @@ export class UsersController {
   remove(
     @Param('uuid', new ParseUUIDPipe({ version: '4' })) uuid: string,
   ): Promise<void> {
-    return this.usersService.remove(uuid);
+    return this.userService.remove(uuid);
   }
 }

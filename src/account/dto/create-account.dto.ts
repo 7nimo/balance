@@ -8,7 +8,7 @@ import {
 } from 'class-validator';
 import { BankEntity } from 'src/bank/entities/bank.entity';
 import { CurrencyEntity } from 'src/currency/entities/currency.entity';
-import { User } from 'src/users/entities/user.entity';
+import { UserEntity } from 'src/user/entities/user.entity';
 
 export class CreateAccountDto {
   @IsNotEmpty()
@@ -30,5 +30,5 @@ export class CreateAccountDto {
   readonly currency: CurrencyEntity;
 
   @IsUUID('4')
-  readonly user: User;
+  readonly user: UserEntity;
 }

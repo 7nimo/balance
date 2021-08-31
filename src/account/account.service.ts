@@ -8,21 +8,21 @@ import { AccountEntity } from './entities/account.entity';
 export class AccountService {
   constructor(
     @InjectRepository(AccountEntity)
-    private readonly accountsRepository: Repository<AccountEntity>,
+    private readonly accountRepository: Repository<AccountEntity>,
   ) {}
 
   create(createAccountDto: CreateAccountDto): Promise<AccountEntity> {
-    const account = this.accountsRepository.create(createAccountDto);
+    const account = this.accountRepository.create(createAccountDto);
 
-    return this.accountsRepository.save(account);
+    return this.accountRepository.save(account);
   }
 
   findAll(): Promise<AccountEntity[]> {
-    return this.accountsRepository.find();
+    return this.accountRepository.find();
   }
 
   async findOne(id: string): Promise<AccountEntity> {
-    const result = await this.accountsRepository.findOne({ where: { id } });
+    const result = await this.accountRepository.findOne({ where: { id } });
     if (result === undefined) {
       throw new NotFoundException(`Account with id ${id} does not exist`);
     }
@@ -33,13 +33,13 @@ export class AccountService {
     uuid: string,
     updateAccountDto: UpdateAccountDto,
   ): Promise<void> {
-    const result = await this.accountsRepository.update(uuid, updateAccountDto);
+    const result = await this.accountRepository.update(uuid, updateAccountDto);
     if (result.affected === 0) {
       throw new NotFoundException(`Account with id ${uuid} does not exist`);
     }
   }
 
   async remove(uuid: string): Promise<void> {
-    await this.accountsRepository.delete(uuid);
+    await this.accountRepository.delete(uuid);
   }
 }

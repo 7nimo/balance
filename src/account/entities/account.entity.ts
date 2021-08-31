@@ -9,8 +9,8 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { Transaction } from 'src/transactions/entities/transaction.entity';
-import { User } from 'src/users/entities/user.entity';
+import { TransactionEntity } from 'src/transaction/entities/transaction.entity';
+import { UserEntity } from 'src/user/entities/user.entity';
 import { BankEntity } from 'src/bank/entities/bank.entity';
 import { CurrencyEntity } from 'src/currency/entities/currency.entity';
 
@@ -39,11 +39,11 @@ export class AccountEntity {
   @JoinColumn()
   currency: CurrencyEntity;
 
-  @OneToMany(() => Transaction, (transaction) => transaction.account)
-  transactions: Transaction[];
+  @OneToMany(() => TransactionEntity, (transaction) => transaction.account)
+  transactions: TransactionEntity[];
 
-  @ManyToOne(() => User, user => user.accounts, { nullable: false })
-  user: User;
+  @ManyToOne(() => UserEntity, user => user.accounts, { nullable: false })
+  user: UserEntity;
 
   @CreateDateColumn({ type: 'timestamptz' })
   createdAt: string;

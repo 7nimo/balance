@@ -1,10 +1,10 @@
 import { Logger, MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { UsersModule } from './users/users.module';
+import { UsersModule } from './user/user.module';
 import { DatabaseModule } from './database/database.module';
 import { AuthModule } from './auth/auth.module';
 import { LoggerMiddleware } from './common/middleware/logger.middleware';
-import { TransactionsModule } from './transactions/transactions.module';
+import { TransactionsModule } from './transaction/transaction.module';
 import { BanksModule } from './bank/bank.module';
 import { AccountsModule } from './account/account.module';
 import { EventEmitterModule } from '@nestjs/event-emitter';

@@ -1,16 +1,16 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Connection, Repository } from 'typeorm';
-import { Transaction } from './entities/transaction.entity';
+import { TransactionEntity } from './entities/transaction.entity';
 import { CreateTransactionDto } from './dto';
 import { TransactionRO } from './transaction.interface';
 import { copyLloydsCsv } from './queries/copy-lloyds-csv.query';
 
 @Injectable()
-export class TransactionsService {
+export class TransactionService {
   constructor(
-    @InjectRepository(Transaction)
-    private readonly transactionsRepository: Repository<Transaction>,
+    @InjectRepository(TransactionEntity)
+    private readonly transactionRepository: Repository<TransactionEntity>,
     private readonly connection: Connection,
   ) {}
 
@@ -18,7 +18,7 @@ export class TransactionsService {
     createTransactionDto: CreateTransactionDto,
   ): Promise<TransactionRO> {
     // to do: error handling
-    const response = await this.transactionsRepository.save(
+    const response = await this.transactionRepository.save(
       createTransactionDto,
     );
 
@@ -50,8 +50,8 @@ export class TransactionsService {
     return;
   }
 
-  findAll(accountId: string, userId: string): Promise<Transaction[]> {
-    const transactions = this.transactionsRepository
+  findAll(accountId: string, userId: string): Promise<TransactionEntity[]> {
+    const transactions = this.transactionRepository
       .createQueryBuilder('transaction')
       .leftJoin('transaction.account', 'account')
       .leftJoin('account.user', 'user')
@@ -63,11 +63,11 @@ export class TransactionsService {
   }
 
   findOne(id: number): Promise<TransactionRO> {
-    return this.transactionsRepository.findOne(id);
+    return this.transactionRepository.findOne(id);
   }
 
   async clear(): Promise<void> {
-    await this.transactionsRepository.clear();
+    await this.transactionRepository.clear();
   }
 
   async copyFromCsv(accountId: string, filePath: string): Promise<void> {
