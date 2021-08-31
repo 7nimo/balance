@@ -2,7 +2,7 @@ import { AccountEntity } from 'src/account/entities/account.entity';
 import { CurrencyType } from 'src/common/enums/currency-type.enum';
 import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
 
-@Entity()
+@Entity('currency')
 export class CurrencyEntity {
   @PrimaryGeneratedColumn()
   id: number;

@@ -24,7 +24,7 @@ import { RouterModule } from '@nestjs/core';
     CurrencyModule,
     RouterModule.register([
       {
-        path: '/accounts/:accountId',
+        path: '/account/:accountId',
         module: TransactionsModule,
       },
     ]),

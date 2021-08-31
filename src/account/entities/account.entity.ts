@@ -14,7 +14,7 @@ import { UserEntity } from 'src/user/entities/user.entity';
 import { BankEntity } from 'src/bank/entities/bank.entity';
 import { CurrencyEntity } from 'src/currency/entities/currency.entity';
 
-@Entity()
+@Entity('account')
 export class AccountEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;

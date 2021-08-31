@@ -36,7 +36,7 @@ export class TransactionController {
     return this.transactionService.create(createTransactionDto);
   }
 
-  @Post(':uuid/import')
+  @Post('import')
   @UseInterceptors(FileInterceptor('statement', multerOptions))
   async uploadFile(
     @UploadedFile() file: Express.Multer.File,
