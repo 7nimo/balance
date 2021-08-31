@@ -7,7 +7,7 @@ module.exports = {
   database: process.env.POSTGRES_DB,
   entities: ['dist/**/entities/*.entity{.ts,.js}'],
   seeds: ['dist/database/seeds/*.seed{.ts,.js}'],
-  synchronize: process.env.NODE_ENV === 'development' ? true : false,
+  synchronize: true,
   logging: false,
   logger: "advanced-console",
 }

@@ -20,7 +20,7 @@ import { EventEmitter2 } from '@nestjs/event-emitter';
 import { StatementSavedEvent } from './events/statement-saved.event';
 import { Transaction } from './entities/transaction.entity';
 import { CreateTransactionDto } from './dto';
-import { Usr } from '../common/decorators/usr.decorator';
+import { User } from '../common/decorators/user.decorator';
 
 @ApiTags('transactions')
 @Controller('transactions')
@@ -56,7 +56,7 @@ export class TransactionsController {
 
   @Get()
   findAll(
-    @Usr('userId') userId: string,
+    @User('userId') userId: string,
     @Param('accountId') accountId: string,
   ): Promise<Transaction[]> {
     return this.transactionsService.findAll(accountId, userId);

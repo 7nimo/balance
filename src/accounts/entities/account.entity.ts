@@ -2,8 +2,10 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
   ManyToOne,
   OneToMany,
+  OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -23,22 +25,24 @@ export class Account {
   @Column({ nullable: true })
   sortCode: string;
 
-  @Column({ type: 'smallint' })
+  @Column({ type: 'integer', nullable: true })
   accountNumber: number;
 
   @Column({ type: 'numeric', precision: 15, scale: 6, default: 0 })
   balance: number;
 
-  @OneToMany(() => Bank, (bank) => bank.account)
-  banks: Bank[];
+  @OneToOne(() => Bank, { nullable: false })
+  @JoinColumn()
+  bank: Bank;
 
-  @OneToMany(() => Currency, (currency) => currency.account)
-  currencies: Currency[];
+  @OneToOne(() => Currency, { nullable: false })
+  @JoinColumn()
+  currency: Currency;
 
   @OneToMany(() => Transaction, (transaction) => transaction.account)
   transactions: Transaction[];
 
-  @ManyToOne(() => User, (user) => user.accounts)
+  @ManyToOne(() => User, user => user.accounts, { nullable: false })
   user: User;
 
   @CreateDateColumn({ type: 'timestamptz' })

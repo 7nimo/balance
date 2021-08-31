@@ -23,7 +23,6 @@ export class User {
   @Column()
   password: string;
 
-  // this should be linked to currency column in the future
   @Column({ default: 'PLN' })
   baseCurrency: string;
 
@@ -33,7 +32,7 @@ export class User {
   @UpdateDateColumn({ type: 'timestamptz' })
   updatedAt: string;
 
-  @OneToMany(() => Account, (account) => account.user)
+  @OneToMany(() => Account, account => account.user)
   accounts: Account[];
 
   @BeforeInsert() async hashPassword() {

@@ -16,7 +16,6 @@ export class AuthService {
       user_id: userId,
     };
 
-    // error handling?
     return this.jwtService.sign(payload);
   }
 }
