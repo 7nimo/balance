@@ -11,7 +11,7 @@ import {
 } from 'typeorm';
 import { Transaction } from 'src/transactions/entities/transaction.entity';
 import { User } from 'src/users/entities/user.entity';
-import { Bank } from 'src/banks/entities/bank.entity';
+import { BankEntity } from 'src/bank/entities/bank.entity';
 import { Currency } from 'src/currency/entities/currency.entity';
 
 @Entity()
@@ -31,9 +31,9 @@ export class AccountEntity {
   @Column({ type: 'numeric', precision: 15, scale: 6, default: 0 })
   balance: number;
 
-  @OneToOne(() => Bank, { nullable: false })
+  @OneToOne(() => BankEntity, { nullable: false })
   @JoinColumn()
-  bank: Bank;
+  bank: BankEntity;
 
   @OneToOne(() => Currency, { nullable: false })
   @JoinColumn()

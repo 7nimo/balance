@@ -2,7 +2,7 @@ import { AccountEntity } from 'src/account/entities/account.entity';
 import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
-export class Bank {
+export class BankEntity {
   @PrimaryGeneratedColumn()
   id: number;
 

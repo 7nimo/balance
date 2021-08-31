@@ -1,6 +1,6 @@
 import { Controller, Get, Param } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import { BanksService } from './banks.service';
+import { BanksService } from './bank.service';
 
 @ApiTags('banks')
 @Controller('banks')

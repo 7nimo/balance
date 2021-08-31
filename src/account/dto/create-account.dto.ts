@@ -6,7 +6,7 @@ import {
   IsUUID,
   Matches,
 } from 'class-validator';
-import { Bank } from 'src/banks/entities/bank.entity';
+import { BankEntity } from 'src/bank/entities/bank.entity';
 import { Currency } from 'src/currency/entities/currency.entity';
 import { User } from 'src/users/entities/user.entity';
 
@@ -24,7 +24,7 @@ export class CreateAccountDto {
   readonly accountNumber?: number;
 
   @IsInt()
-  readonly bank: Bank;
+  readonly bank: BankEntity;
 
   @IsInt()
   readonly currency: Currency;

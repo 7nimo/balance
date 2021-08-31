@@ -5,7 +5,7 @@ import { DatabaseModule } from './database/database.module';
 import { AuthModule } from './auth/auth.module';
 import { LoggerMiddleware } from './common/middleware/logger.middleware';
 import { TransactionsModule } from './transactions/transactions.module';
-import { BanksModule } from './banks/banks.module';
+import { BanksModule } from './bank/bank.module';
 import { AccountsModule } from './account/account.module';
 import { EventEmitterModule } from '@nestjs/event-emitter';
 import { CurrencyModule } from './currency/currency.module';

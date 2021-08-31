@@ -1,7 +1,7 @@
 import { Factory, Seeder } from 'typeorm-seeding';
 import { Connection } from 'typeorm';
-import { Bank } from 'src/banks/entities/bank.entity';
-import { CreateBankDto } from 'src/banks/dto';
+import { BankEntity } from 'src/bank/entities/bank.entity';
+import { CreateBankDto } from 'src/bank/dto';
 
 export default class CreateBanks implements Seeder {
   banksData: CreateBankDto[] = [{ name: 'mBank' }, { name: 'Lloyds' }];
@@ -10,7 +10,7 @@ export default class CreateBanks implements Seeder {
     await connection
       .createQueryBuilder()
       .insert()
-      .into(Bank)
+      .into(BankEntity)
       .values(this.banksData)
       .execute();
   }
