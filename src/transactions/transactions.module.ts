@@ -4,7 +4,7 @@ import { TransactionsController } from './transactions.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Transaction } from './entities/transaction.entity';
 import { StatementSavedListener } from 'src/transactions/listeners/statement-saved.listener';
-import { AccountsModule } from 'src/accounts/accounts.module';
+import { AccountsModule } from 'src/account/account.module';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Transaction]), AccountsModule],

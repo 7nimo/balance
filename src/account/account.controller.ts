@@ -10,29 +10,29 @@ import {
   HttpCode,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import { AccountsService } from './accounts.service';
+import { AccountService } from './account.service';
 import { CreateAccountDto, UpdateAccountDto } from './dto';
-import { Account } from './entities/account.entity';
+import { AccountEntity } from './entities/account.entity';
 
 @ApiTags('accounts')
 @Controller('accounts')
 export class AccountsController {
-  constructor(private readonly accountsService: AccountsService) {}
+  constructor(private readonly accountsService: AccountService) {}
 
   @Post()
-  create(@Body() createAccountDto: CreateAccountDto): Promise<Account> {
+  create(@Body() createAccountDto: CreateAccountDto): Promise<AccountEntity> {
     return this.accountsService.create(createAccountDto);
   }
 
   @Get()
-  findAll(): Promise<Account[]> {
+  findAll(): Promise<AccountEntity[]> {
     return this.accountsService.findAll();
   }
 
   @Get(':uuid')
   findOne(
     @Param('uuid', new ParseUUIDPipe({ version: '4' })) uuid: string,
-  ): Promise<Account> {
+  ): Promise<AccountEntity> {
     return this.accountsService.findOne(uuid);
   }
 

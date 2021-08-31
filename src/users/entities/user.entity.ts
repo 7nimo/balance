@@ -1,6 +1,6 @@
 import * as argon2 from 'argon2';
 import { Exclude } from 'class-transformer';
-import { Account } from 'src/accounts/entities/account.entity';
+import { AccountEntity } from 'src/account/entities/account.entity';
 import {
   Entity,
   Column,
@@ -32,8 +32,8 @@ export class User {
   @UpdateDateColumn({ type: 'timestamptz' })
   updatedAt: string;
 
-  @OneToMany(() => Account, account => account.user)
-  accounts: Account[];
+  @OneToMany(() => AccountEntity, account => account.user)
+  accounts: AccountEntity[];
 
   @BeforeInsert() async hashPassword() {
     this.password = await argon2.hash(this.password);

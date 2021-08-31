@@ -1,5 +1,5 @@
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
-import { Account } from 'src/accounts/entities/account.entity';
+import { AccountEntity } from 'src/account/entities/account.entity';
 
 @Entity()
 export class Transaction {
@@ -12,7 +12,6 @@ export class Transaction {
   @Column()
   transactionDesc: string;
 
-  // to do: extract transaction types
   @Column()
   transactionType: string;
 
@@ -25,8 +24,8 @@ export class Transaction {
   @Column({ type: 'numeric', precision: 15, scale: 6 })
   balance: number;
 
-  @ManyToOne(() => Account, (account) => account.transactions, {
+  @ManyToOne(() => AccountEntity, (account) => account.transactions, {
     nullable: false,
   })
-  account: Account;
+  account: AccountEntity;
 }

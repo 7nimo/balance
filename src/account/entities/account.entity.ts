@@ -15,7 +15,7 @@ import { Bank } from 'src/banks/entities/bank.entity';
 import { Currency } from 'src/currency/entities/currency.entity';
 
 @Entity()
-export class Account {
+export class AccountEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 

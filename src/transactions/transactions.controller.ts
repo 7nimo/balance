@@ -15,7 +15,7 @@ import { TransactionsService } from './transactions.service';
 import { ApiTags } from '@nestjs/swagger';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { multerOptions } from 'src/config/multer.config';
-import { AccountsService } from 'src/accounts/accounts.service';
+import { AccountService } from 'src/account/account.service';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 import { StatementSavedEvent } from './events/statement-saved.event';
 import { Transaction } from './entities/transaction.entity';
@@ -27,7 +27,7 @@ import { User } from '../common/decorators/user.decorator';
 export class TransactionsController {
   constructor(
     private readonly transactionsService: TransactionsService,
-    private readonly accountsService: AccountsService,
+    private readonly accountsService: AccountService,
     private readonly eventEmitter: EventEmitter2,
   ) {}
 

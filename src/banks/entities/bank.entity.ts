@@ -1,4 +1,4 @@
-import { Account } from 'src/accounts/entities/account.entity';
+import { AccountEntity } from 'src/account/entities/account.entity';
 import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
@@ -9,7 +9,7 @@ export class Bank {
   @Column()
   name: string;
 
-  @OneToOne(() => Account)
+  @OneToOne(() => AccountEntity)
   @JoinColumn()
-  account: Account;
+  account: AccountEntity;
 }

@@ -2,24 +2,26 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateAccountDto, UpdateAccountDto } from './dto';
-import { Account } from './entities/account.entity';
+import { AccountEntity } from './entities/account.entity';
 
 @Injectable()
-export class AccountsService {
+export class AccountService {
   constructor(
-    @InjectRepository(Account)
-    private readonly accountsRepository: Repository<Account>,
+    @InjectRepository(AccountEntity)
+    private readonly accountsRepository: Repository<AccountEntity>,
   ) {}
 
-  create(createAccountDto: CreateAccountDto): Promise<Account> {
-    return this.accountsRepository.save(createAccountDto);
+  create(createAccountDto: CreateAccountDto): Promise<AccountEntity> {
+    const account = this.accountsRepository.create(createAccountDto);
+
+    return this.accountsRepository.save(account);
   }
 
-  findAll(): Promise<Account[]> {
+  findAll(): Promise<AccountEntity[]> {
     return this.accountsRepository.find();
   }
 
-  async findOne(id: string): Promise<Account> {
+  async findOne(id: string): Promise<AccountEntity> {
     const result = await this.accountsRepository.findOne({ where: { id } });
     if (result === undefined) {
       throw new NotFoundException(`Account with id ${id} does not exist`);
