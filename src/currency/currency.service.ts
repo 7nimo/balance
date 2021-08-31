@@ -1,16 +1,16 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Currency } from './entities/currency.entity';
+import { CurrencyEntity } from './entities/currency.entity';
 
 @Injectable()
 export class CurrencyService {
   constructor(
-    @InjectRepository(Currency)
-    private readonly currencyRepository: Repository<Currency>,
+    @InjectRepository(CurrencyEntity)
+    private readonly currencyRepository: Repository<CurrencyEntity>,
   ) {}
 
-  findAll(): Promise<Currency[]> {
+  findAll(): Promise<CurrencyEntity[]> {
     return this.currencyRepository.find();
   }
 }

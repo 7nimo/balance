@@ -1,11 +1,10 @@
 import { CurrencyType } from 'src/common/enums/currency-type.enum';
 import { Factory, Seeder } from 'typeorm-seeding';
 import { Connection } from 'typeorm';
-import { Currency } from 'src/currency/entities/currency.entity';
+import { CurrencyEntity } from 'src/currency/entities/currency.entity';
 import { CreateCurrencyDto } from 'src/currency/dto';
 
-export default class CreateCurrencies implements Seeder {
-  // to do: migrations?
+export default class CreateCurrency implements Seeder {
   currencyData: CreateCurrencyDto[] = [
     {
       code: 'GBP',
@@ -33,7 +32,7 @@ export default class CreateCurrencies implements Seeder {
     await connection
       .createQueryBuilder()
       .insert()
-      .into(Currency)
+      .into(CurrencyEntity)
       .values(this.currencyData)
       .execute();
   }

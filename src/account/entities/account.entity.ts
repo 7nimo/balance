@@ -12,7 +12,7 @@ import {
 import { Transaction } from 'src/transactions/entities/transaction.entity';
 import { User } from 'src/users/entities/user.entity';
 import { BankEntity } from 'src/bank/entities/bank.entity';
-import { Currency } from 'src/currency/entities/currency.entity';
+import { CurrencyEntity } from 'src/currency/entities/currency.entity';
 
 @Entity()
 export class AccountEntity {
@@ -35,9 +35,9 @@ export class AccountEntity {
   @JoinColumn()
   bank: BankEntity;
 
-  @OneToOne(() => Currency, { nullable: false })
+  @OneToOne(() => CurrencyEntity, { nullable: false })
   @JoinColumn()
-  currency: Currency;
+  currency: CurrencyEntity;
 
   @OneToMany(() => Transaction, (transaction) => transaction.account)
   transactions: Transaction[];
