@@ -1,6 +1,8 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { UserEntity } from 'src/user/entities/user.entity';
+import { getConnection, Repository } from 'typeorm';
+import { AccountRO, AccountsRO } from './account.interface';
 import { CreateAccountDto, UpdateAccountDto } from './dto';
 import { AccountEntity } from './entities/account.entity';
 
@@ -11,35 +13,50 @@ export class AccountService {
     private readonly accountRepository: Repository<AccountEntity>,
   ) {}
 
-  create(createAccountDto: CreateAccountDto): Promise<AccountEntity> {
-    const account = this.accountRepository.create(createAccountDto);
+  async create(
+    userId: Partial<UserEntity>,
+    createAccountDto: CreateAccountDto): Promise<AccountRO> {
+    const account = this.accountRepository.create({user: userId, ...createAccountDto });
+    this.accountRepository.save(account);
 
-    return this.accountRepository.save(account);
+    return {account};
   }
 
-  findAll(): Promise<AccountEntity[]> {
-    return this.accountRepository.find();
+  async find(userId: string): Promise<AccountsRO> {    
+    const accounts = await this.accountRepository.find({ where: { user: userId}})
+
+    return {accounts};
   }
 
-  async findOne(id: string): Promise<AccountEntity> {
-    const result = await this.accountRepository.findOne({ where: { id } });
-    if (result === undefined) {
-      throw new NotFoundException(`Account with id ${id} does not exist`);
+  async findOne(userId: string, uuid: string) {
+    const account = await this.accountRepository.findOne({
+      where: { user: userId, id: uuid },
+      relations: ['bank', 'currency']
+    });
+    if (account === undefined) {
+      throw new NotFoundException(`Account with id ${uuid} does not exist`);
     }
-    return result;
+    return { account };
   }
 
   async update(
+    userId: Partial<UserEntity>,
     uuid: string,
     updateAccountDto: UpdateAccountDto,
   ): Promise<void> {
-    const result = await this.accountRepository.update(uuid, updateAccountDto);
+    const result = await this.accountRepository.update({ user: userId, id: uuid}, updateAccountDto);
     if (result.affected === 0) {
       throw new NotFoundException(`Account with id ${uuid} does not exist`);
     }
   }
 
-  async remove(uuid: string): Promise<void> {
-    await this.accountRepository.delete(uuid);
+  async remove(userId: string, uuid: string): Promise<void> {
+    await getConnection()
+      .createQueryBuilder()
+      .delete()
+      .from(AccountEntity)
+      .where("user = :userId", { userId: userId })
+      .andWhere("id = :id", { id: uuid })
+      .execute();
   }
 }

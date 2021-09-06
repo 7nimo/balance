@@ -3,6 +3,8 @@ import {
   CreateDateColumn,
   Entity,
   JoinColumn,
+  JoinTable,
+  ManyToMany,
   ManyToOne,
   OneToMany,
   OneToOne,
@@ -31,12 +33,10 @@ export class AccountEntity {
   @Column({ type: 'numeric', precision: 15, scale: 6, default: 0 })
   balance: number;
 
-  @OneToOne(() => BankEntity, { nullable: false })
-  @JoinColumn()
+  @ManyToOne(() => BankEntity, bank => bank.accounts)
   bank: BankEntity;
 
-  @OneToOne(() => CurrencyEntity, { nullable: false })
-  @JoinColumn()
+  @ManyToOne(() => CurrencyEntity, currency => currency.account)
   currency: CurrencyEntity;
 
   @OneToMany(() => TransactionEntity, (transaction) => transaction.account)
