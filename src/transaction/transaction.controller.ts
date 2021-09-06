@@ -39,10 +39,11 @@ export class TransactionController {
   @Post('import')
   @UseInterceptors(FileInterceptor('statement', multerOptions))
   async uploadFile(
+    @User('id') userId: string,
     @UploadedFile() file: Express.Multer.File,
-    @Param('uuid', new ParseUUIDPipe({ version: '4' })) uuid: string,
+    @Param('uuid') uuid: string,
   ): Promise<void> {
-    const account = await this.accountService.findOne(uuid);
+    const account = await this.accountService.findOne(userId, uuid);
     if (account === undefined) {
       throw new NotFoundException(`Account with ${uuid} does not exist`);
     }
@@ -56,7 +57,7 @@ export class TransactionController {
 
   @Get()
   findAll(
-    @User('userId') userId: string,
+    @User('id') userId: string,
     @Param('accountId') accountId: string,
   ): Promise<TransactionEntity[]> {
     return this.transactionService.findAll(accountId, userId);

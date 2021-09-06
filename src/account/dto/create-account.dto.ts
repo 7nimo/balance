@@ -28,7 +28,4 @@ export class CreateAccountDto {
 
   @IsInt()
   readonly currency: CurrencyEntity;
-
-  @IsUUID('4')
-  readonly user: UserEntity;
 }
