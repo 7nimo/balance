@@ -1,4 +1,4 @@
-import { Injectable, UnprocessableEntityException } from '@nestjs/common';
+import { Injectable, NotFoundException, UnprocessableEntityException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UserEntity } from './entities/user.entity';
 import { Repository } from 'typeorm';
@@ -30,8 +30,12 @@ export class UserService {
     return this.userRepository.findOne({ email });
   }
 
-  findById(id: string): Promise<UserEntity> {
-    return this.userRepository.findOne(id);
+  async findById(id: string): Promise<UserEntity> {
+    const user = await this.userRepository.findOne(id);
+    if (user) {
+      return user;
+    }
+    throw new NotFoundException('User with this id does not exist');
   }
 
   async remove(id: string): Promise<void> {
