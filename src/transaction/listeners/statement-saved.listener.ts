@@ -13,7 +13,5 @@ export class StatementSavedListener {
       event.id,
       event.path,
     );
-
-    console.log(result);
   }
 }
