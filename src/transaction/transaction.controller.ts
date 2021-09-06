@@ -6,7 +6,6 @@ import {
   Param,
   Delete,
   HttpCode,
-  ParseUUIDPipe,
   UseInterceptors,
   UploadedFile,
   NotFoundException,
@@ -18,9 +17,9 @@ import { multerOptions } from 'src/config/multer.config';
 import { AccountService } from 'src/account/account.service';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 import { StatementSavedEvent } from './events/statement-saved.event';
-import { TransactionEntity } from './entities/transaction.entity';
 import { CreateTransactionDto } from './dto';
 import { User } from '../common/decorators/user.decorator';
+import { TransactionsRO } from './transaction.interface';
 
 @ApiTags('transaction')
 @Controller('transaction')
@@ -59,13 +58,15 @@ export class TransactionController {
   findAll(
     @User('id') userId: string,
     @Param('accountId') accountId: string,
-  ): Promise<TransactionEntity[]> {
+  ): Promise<TransactionsRO> {
     return this.transactionService.findAll(accountId, userId);
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.transactionService.findOne(+id);
+  findOne(
+    @User('id') userId: string,
+    @Param('id') accountId: number) {
+    return this.transactionService.findOne(userId, accountId);
   }
 
   // temporary dev endpoint

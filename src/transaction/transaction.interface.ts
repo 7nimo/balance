@@ -1,4 +1,6 @@
-export class TransactionRO {
+import { TransactionEntity } from './entities/transaction.entity';
+
+export interface TransactionData {
   id: number;
   transactionDate: string;
   transactionDesc: string;
@@ -6,4 +8,12 @@ export class TransactionRO {
   debitAmount?: number;
   creditAmount?: number;
   balance: number;
+}
+
+export interface TransactionRO {
+  transaction: TransactionEntity;
+}
+
+export interface TransactionsRO {
+  transactions: TransactionEntity[];
 }

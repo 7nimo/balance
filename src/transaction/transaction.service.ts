@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Connection, Repository } from 'typeorm';
 import { TransactionEntity } from './entities/transaction.entity';
 import { CreateTransactionDto } from './dto';
-import { TransactionRO } from './transaction.interface';
+import { TransactionRO, TransactionsRO } from './transaction.interface';
 import { copyLloydsCsv } from './queries/copy-lloyds-csv.query';
 
 @Injectable()
@@ -17,12 +17,13 @@ export class TransactionService {
   async create(
     createTransactionDto: CreateTransactionDto,
   ): Promise<TransactionRO> {
-    // to do: error handling
-    const response = await this.transactionRepository.save(
+    const transaction = this.transactionRepository.create(
       createTransactionDto,
     );
 
-    return response;
+    await this.transactionRepository.save(transaction);
+
+    return {transaction};
   }
 
   // is this needed?
@@ -50,8 +51,8 @@ export class TransactionService {
     return;
   }
 
-  findAll(accountId: string, userId: string): Promise<TransactionEntity[]> {
-    const transactions = this.transactionRepository
+  async findAll(userId: string, accountId: string): Promise<TransactionsRO> {
+    const transactions = await this.transactionRepository
       .createQueryBuilder('transaction')
       .leftJoin('transaction.account', 'account')
       .leftJoin('account.user', 'user')
@@ -59,11 +60,19 @@ export class TransactionService {
       .andWhere('user.id = :userId', { userId: userId })
       .getMany();
 
-    return transactions;
+    return {transactions};
   }
 
-  findOne(id: number): Promise<TransactionRO> {
-    return this.transactionRepository.findOne(id);
+  async findOne(userId: string, accountId: number): Promise<TransactionRO> {
+    const transaction = await await this.transactionRepository
+      .createQueryBuilder('transaction')
+      .leftJoin('transaction.account', 'account')
+      .leftJoin('account.user', 'user')
+      .where('account.id = :accountId', { accountId: accountId })
+      .andWhere('user.id = :userId', { userId: userId })
+      .getOne();
+
+    return {transaction};
   }
 
   async clear(): Promise<void> {
