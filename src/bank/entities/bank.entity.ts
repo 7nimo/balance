@@ -1,5 +1,5 @@
 import { AccountEntity } from 'src/account/entities/account.entity';
-import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity('bank')
 export class BankEntity {
@@ -8,8 +8,7 @@ export class BankEntity {
 
   @Column()
   name: string;
-
-  @OneToOne(() => AccountEntity)
-  @JoinColumn()
-  account: AccountEntity;
+  
+  @OneToMany(() => AccountEntity, account => account.bank)
+  accounts: AccountEntity[];
 }
