@@ -1,4 +1,5 @@
-import { Controller, Post, UseGuards } from '@nestjs/common';
+import { Controller, Header, Post, Req, Res, UseGuards } from '@nestjs/common';
+import { Response } from 'express';
 import { Public } from 'src/common/decorators/public.decorator';
 import { User } from 'src/common/decorators/user.decorator';
 import { AuthService } from './auth.service';
@@ -11,7 +12,11 @@ export class AuthController {
   @Public()
   @UseGuards(LocalAuthGuard)
   @Post('login')
-  login(@User('id') userId: string): string {
-    return this.authService.login(userId);
+  login(@User('id') userId: string, @Res() res: Response) {
+    const cookie = this.authService.getCookieWithJwt(userId);
+
+    res.setHeader('Set-Cookie', cookie);
+
+    res.json('success');
   }
 }
