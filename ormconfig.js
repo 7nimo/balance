@@ -8,6 +8,5 @@ module.exports = {
   entities: ['dist/**/entities/*.entity{.ts,.js}'],
   seeds: ['dist/database/seeds/*.seed{.ts,.js}'],
   synchronize: true,
-  logging: false,
-  logger: "advanced-console",
+  // logging: ["query", "error"]
 }
