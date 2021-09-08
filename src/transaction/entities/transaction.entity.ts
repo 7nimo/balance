@@ -7,25 +7,25 @@ export class TransactionEntity {
   id: number;
 
   @Column({ type: 'date' })
-  transactionDate: string;
+  date: string;
 
   @Column()
-  transactionDesc: string;
+  description: string;
 
   @Column()
-  transactionType: string;
+  type: string;
 
   @Column({ type: 'numeric', precision: 15, scale: 6, nullable: true })
-  debitAmount: number;
+  debitAmount: string;
 
   @Column({ type: 'numeric', precision: 15, scale: 6, nullable: true })
-  creditAmount: number;
+  creditAmount: string;
 
   @Column({ type: 'numeric', precision: 15, scale: 6 })
-  balance: number;
+  balance: string;
 
   @ManyToOne(() => AccountEntity, (account) => account.transactions, {
     nullable: false,
   })
-  account: AccountEntity;
+  account: AccountEntity | string;
 }

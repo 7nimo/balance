@@ -1,4 +1,4 @@
 export class StatementSavedEvent {
-  id: string;
+  accountId: string;
   path: string;
 }

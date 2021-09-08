@@ -1,35 +1,32 @@
-import { IsDecimal, IsString, IsUUID, ValidateIf } from 'class-validator';
+import { IsDecimal, IsString, ValidateIf } from 'class-validator';
 
 export class CreateTransactionDto {
-  @IsUUID('4')
-  readonly accountId: string;
+  @IsString()
+  readonly date: string;
 
   @IsString()
-  readonly transactionDate: string;
+  readonly description: string;
 
   @IsString()
-  readonly transactionDesc: string;
-
-  @IsString()
-  readonly transactionType: string;
+  readonly type: string;
 
   @ValidateIf((o) => o.creditAmount === undefined)
   @IsDecimal({
     force_decimal: true,
     decimal_digits: '2',
   })
-  readonly debitAmount: number;
+  readonly debitAmount: string;
 
   @ValidateIf((o) => o.debitAmount === undefined)
   @IsDecimal({
     force_decimal: true,
     decimal_digits: '2',
   })
-  readonly creditAmount: number;
+  readonly creditAmount: string;
 
   @IsDecimal({
     force_decimal: true,
     decimal_digits: '2',
   })
-  readonly balance: number;
+  readonly balance: string;
 }

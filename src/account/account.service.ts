@@ -21,22 +21,22 @@ export class AccountService {
 
     return {account};
   }
-
+  
+  async findOne(userId: string, accountId: string) {
+    const account = await this.accountRepository.findOne({
+      where: { user: userId, id: accountId },
+      relations: ['bank', 'currency']
+    });
+    if (!account) {
+      throw new NotFoundException(`Account with id ${accountId} does not exist`);
+    }
+    return {account};
+  }
+  
   async find(userId: string): Promise<AccountsRO> {    
     const accounts = await this.accountRepository.find({ where: { user: userId}})
 
     return {accounts};
-  }
-
-  async findOne(userId: string, uuid: string) {
-    const account = await this.accountRepository.findOne({
-      where: { user: userId, id: uuid },
-      relations: ['bank', 'currency']
-    });
-    if (account === undefined) {
-      throw new NotFoundException(`Account with id ${uuid} does not exist`);
-    }
-    return { account };
   }
 
   async update(

@@ -34,27 +34,27 @@ export class AccountsController {
     return this.accountService.find(userId);
   }
 
-  @Get(':uuid')
-  findOne(@User('id') userId: string, @Param('uuid') uuid: string): Promise<AccountRO> {
-    return this.accountService.findOne(userId, uuid);
+  @Get(':accountId')
+  findOne(@User('id') userId: string, @Param('accountId') accountId: string): Promise<AccountRO> {
+    return this.accountService.findOne(userId, accountId);
   }
 
   @HttpCode(204)
-  @Patch(':uuid')
+  @Patch(':accountId')
   update(
     @User('id') userId: Partial<UserEntity>,
-    @Param('uuid') uuid: string,
+    @Param('accountId') accountId: string,
     @Body() updateAccountDto: UpdateAccountDto,
   ): Promise<void> {
-    return this.accountService.update(userId, uuid, updateAccountDto);
+    return this.accountService.update(userId, accountId, updateAccountDto);
   }
 
   @HttpCode(204)
-  @Delete(':uuid')
+  @Delete(':accountId')
   remove(
     @User('id') userId: string,
-    @Param('uuid') uuid: string,
+    @Param('accountId') accountId: string,
   ) {
-    return this.accountService.remove(userId, uuid);
+    return this.accountService.remove(userId, accountId);
   }
 }

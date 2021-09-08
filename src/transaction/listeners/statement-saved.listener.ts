@@ -10,7 +10,7 @@ export class StatementSavedListener {
   @OnEvent('statement.saved')
   async handleStatementSavedEvent(event: StatementSavedEvent) {
     const result = await this.transactionService.copyFromCsv(
-      event.id,
+      event.accountId,
       event.path,
     );
   }
