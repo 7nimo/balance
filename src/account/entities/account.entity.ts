@@ -29,16 +29,16 @@ export class AccountEntity {
   @Column({ type: 'numeric', precision: 15, scale: 6, default: 0 })
   balance: number;
 
-  @ManyToOne(() => BankEntity, bank => bank.accounts)
+  @ManyToOne(() => BankEntity, (bank) => bank.accounts)
   bank: BankEntity;
 
-  @ManyToOne(() => CurrencyEntity, currency => currency.account)
+  @ManyToOne(() => CurrencyEntity, (currency) => currency.account)
   currency: CurrencyEntity;
 
   @OneToMany(() => TransactionEntity, (transaction) => transaction.account)
   transactions: TransactionEntity[];
 
-  @ManyToOne(() => UserEntity, user => user.accounts, { nullable: false })
+  @ManyToOne(() => UserEntity, (user) => user.accounts, { nullable: false })
   user: UserEntity;
 
   @CreateDateColumn({ type: 'timestamptz' })

@@ -3,12 +3,10 @@ import {
   IsNotEmpty,
   IsOptional,
   IsString,
-  IsUUID,
   Matches,
 } from 'class-validator';
 import { BankEntity } from 'src/bank/entities/bank.entity';
 import { CurrencyEntity } from 'src/currency/entities/currency.entity';
-import { UserEntity } from 'src/user/entities/user.entity';
 
 export class CreateAccountDto {
   @IsNotEmpty()

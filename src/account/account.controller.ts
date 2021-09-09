@@ -14,7 +14,6 @@ import { UserEntity } from 'src/user/entities/user.entity';
 import { AccountRO, AccountsRO } from './account.interface';
 import { AccountService } from './account.service';
 import { CreateAccountDto, UpdateAccountDto } from './dto';
-import { AccountEntity } from './entities/account.entity';
 
 @ApiTags('account')
 @Controller('account')
@@ -24,7 +23,7 @@ export class AccountsController {
   @Post()
   create(
     @User('id') userId: Partial<UserEntity>,
-    @Body() createAccountDto: CreateAccountDto
+    @Body() createAccountDto: CreateAccountDto,
   ): Promise<AccountRO> {
     return this.accountService.create(userId, createAccountDto);
   }
@@ -35,7 +34,10 @@ export class AccountsController {
   }
 
   @Get(':accountId')
-  findOne(@User('id') userId: string, @Param('accountId') accountId: string): Promise<AccountRO> {
+  findOne(
+    @User('id') userId: string,
+    @Param('accountId') accountId: string,
+  ): Promise<AccountRO> {
     return this.accountService.findOne(userId, accountId);
   }
 
@@ -51,10 +53,7 @@ export class AccountsController {
 
   @HttpCode(204)
   @Delete(':accountId')
-  remove(
-    @User('id') userId: string,
-    @Param('accountId') accountId: string,
-  ) {
+  remove(@User('id') userId: string, @Param('accountId') accountId: string) {
     return this.accountService.remove(userId, accountId);
   }
 }

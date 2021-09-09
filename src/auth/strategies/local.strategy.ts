@@ -34,9 +34,9 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
     }
 
     const loginUserRO = {
-      id: user.id
-    }
-    
+      id: user.id,
+    };
+
     return loginUserRO;
   }
 }

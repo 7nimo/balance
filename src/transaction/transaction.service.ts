@@ -5,7 +5,6 @@ import { TransactionEntity } from './entities/transaction.entity';
 import { CreateTransactionDto } from './dto';
 import { TransactionRO, TransactionsRO } from './transaction.interface';
 import { copyLloydsCsv } from './queries/copy-lloyds-csv.query';
-import { CsvParserService } from 'src/common/services/csv-parser/csv-parser.service';
 
 @Injectable()
 export class TransactionService {
@@ -13,25 +12,23 @@ export class TransactionService {
     @InjectRepository(TransactionEntity)
     private readonly transactionRepository: Repository<TransactionEntity>,
     private readonly connection: Connection,
-    private readonly csvParser: CsvParserService,
   ) {}
 
   async create(
     accountId: string,
     createTransactionDto: CreateTransactionDto,
   ): Promise<TransactionRO> {
+    const transaction = this.transactionRepository.create({
+      account: accountId,
+      ...createTransactionDto,
+    });
 
-
-    const transaction = this.transactionRepository.create(
-      {account: accountId, ... createTransactionDto}
-    );
-    
     await this.transactionRepository.save(transaction);
 
-    return {transaction};
+    return { transaction };
   }
 
-  async createMany(transactions) {
+  async createMany(transactions: TransactionEntity[]) {
     try {
       const qb = await this.transactionRepository
         .createQueryBuilder()
@@ -40,7 +37,7 @@ export class TransactionService {
         .values(transactions)
         .execute();
     } catch (error) {
-      throw new InternalServerErrorException(error)
+      throw new InternalServerErrorException(error);
     }
 
     // await queryRunner.connect();
@@ -68,7 +65,7 @@ export class TransactionService {
       .andWhere('user.id = :userId', { userId: userId })
       .getMany();
 
-    return {transactions};
+    return { transactions };
   }
 
   async findOne(userId: string, accountId: number): Promise<TransactionRO> {
@@ -80,7 +77,7 @@ export class TransactionService {
       .andWhere('user.id = :userId', { userId: userId })
       .getOne();
 
-    return {transaction};
+    return { transaction };
   }
 
   async clear(): Promise<void> {

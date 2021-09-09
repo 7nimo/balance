@@ -15,28 +15,36 @@ export class AccountService {
 
   async create(
     userId: Partial<UserEntity>,
-    createAccountDto: CreateAccountDto): Promise<AccountRO> {
-    const account = this.accountRepository.create({user: userId, ...createAccountDto });
+    createAccountDto: CreateAccountDto,
+  ): Promise<AccountRO> {
+    const account = this.accountRepository.create({
+      user: userId,
+      ...createAccountDto,
+    });
     this.accountRepository.save(account);
 
-    return {account};
+    return { account };
   }
-  
+
   async findOne(userId: string, accountId: string) {
     const account = await this.accountRepository.findOne({
       where: { user: userId, id: accountId },
-      relations: ['bank', 'currency']
+      relations: ['bank', 'currency'],
     });
     if (!account) {
-      throw new NotFoundException(`Account with id ${accountId} does not exist`);
+      throw new NotFoundException(
+        `Account with id ${accountId} does not exist`,
+      );
     }
-    return {account};
+    return { account };
   }
-  
-  async find(userId: string): Promise<AccountsRO> {    
-    const accounts = await this.accountRepository.find({ where: { user: userId}})
 
-    return {accounts};
+  async find(userId: string): Promise<AccountsRO> {
+    const accounts = await this.accountRepository.find({
+      where: { user: userId },
+    });
+
+    return { accounts };
   }
 
   async update(
@@ -44,7 +52,10 @@ export class AccountService {
     uuid: string,
     updateAccountDto: UpdateAccountDto,
   ): Promise<void> {
-    const result = await this.accountRepository.update({ user: userId, id: uuid}, updateAccountDto);
+    const result = await this.accountRepository.update(
+      { user: userId, id: uuid },
+      updateAccountDto,
+    );
     if (result.affected === 0) {
       throw new NotFoundException(`Account with id ${uuid} does not exist`);
     }
@@ -55,8 +66,8 @@ export class AccountService {
       .createQueryBuilder()
       .delete()
       .from(AccountEntity)
-      .where("user = :userId", { userId: userId })
-      .andWhere("id = :id", { id: uuid })
+      .where('user = :userId', { userId: userId })
+      .andWhere('id = :id', { id: uuid })
       .execute();
   }
 }

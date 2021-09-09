@@ -5,8 +5,10 @@ import { createReadStream } from 'fs';
 
 @Injectable()
 export class CsvParserService {
-
-  async parseLloydsCsv(accountId: string, filePath: string): Promise<TransactionEntity[]> {
+  async parseLloydsCsv(
+    accountId: string,
+    filePath: string,
+  ): Promise<TransactionEntity[]> {
     return new Promise(function (resolve, reject) {
       const transactions: TransactionEntity[] = [];
 
@@ -20,7 +22,10 @@ export class CsvParserService {
 
           records.forEach((record) => {
             const transaction = new TransactionEntity();
-            transaction.transactionDate = record[0].split("/").reverse().join("-");
+            transaction.transactionDate = record[0]
+              .split('/')
+              .reverse()
+              .join('-');
             transaction.transactionType = record[1];
             transaction.transactionDesc = record[4];
             if (record[5]) transaction.debitAmount = record[5];
@@ -41,7 +46,7 @@ export class CsvParserService {
           //     if (records[i][5]) transaction.debitAmount = records[i][5];
           //     if (records[i][6]) transaction.creditAmount = records[i][6];
           //     transaction.balance = records[i][7];
-          //     transaction.account = accountId;              
+          //     transaction.account = accountId;
           //   }
 
           //   transactions.push(transaction);
@@ -50,14 +55,16 @@ export class CsvParserService {
         .on('end', () => {
           resolve(transactions);
         })
-        .on('error', error => reject(error))
+        .on('error', (error) => reject(error));
     });
   }
 
-  async parseLloyds(accountId: string, filePath: string): Promise<TransactionEntity[]> {
+  async parseLloyds(
+    accountId: string,
+    filePath: string,
+  ): Promise<TransactionEntity[]> {
     const transactions: TransactionEntity[] = [];
     let records: string[] = [];
-
     const stream = createReadStream(filePath, 'utf-8');
 
     for await (const data of stream) {
@@ -70,7 +77,7 @@ export class CsvParserService {
 
     for (const record of records) {
       const transaction = new TransactionEntity();
-      transaction.transactionDate = record[0].split("/").reverse().join("-");
+      transaction.transactionDate = record[0].split('/').reverse().join('-');
       transaction.transactionType = record[1];
       transaction.transactionDesc = record[4];
       if (record[5]) transaction.debitAmount = record[5];

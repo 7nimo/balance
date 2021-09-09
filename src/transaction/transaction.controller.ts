@@ -36,7 +36,7 @@ export class TransactionController {
   async create(
     @User('id') userId: string,
     @Param('accountId') accountId: string,
-    @Body() createTransactionDto: CreateTransactionDto
+    @Body() createTransactionDto: CreateTransactionDto,
   ): Promise<TransactionRO> {
     const account = await this.accountService.findOne(userId, accountId);
     if (!account) {
@@ -64,9 +64,9 @@ export class TransactionController {
     // not used currently
     // this.eventEmitter.emit('statement.saved', statementSavedEvent);
 
-    console.time('parseLloyds')
+    console.time('parseLloyds');
     const transactions = await this.csvParser.parseLloyds(accountId, file.path);
-    console.timeEnd('parseLloyds')
+    console.timeEnd('parseLloyds');
 
     this.transactionService.createMany(transactions);
   }
@@ -80,9 +80,7 @@ export class TransactionController {
   }
 
   @Get(':id')
-  findOne(
-    @User('id') userId: string,
-    @Param('accountId') accountId: number) {
+  findOne(@User('id') userId: string, @Param('accountId') accountId: number) {
     return this.transactionService.findOne(userId, accountId);
   }
 

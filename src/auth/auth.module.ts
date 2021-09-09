@@ -30,7 +30,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
     AuthService,
     LocalStrategy,
     JwtStrategy,
-    
+
     {
       provide: APP_GUARD,
       useClass: JwtAuthGuard,

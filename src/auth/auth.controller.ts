@@ -1,4 +1,4 @@
-import { Controller, Header, Post, Req, Res, UseGuards } from '@nestjs/common';
+import { Controller, Post, Res, UseGuards } from '@nestjs/common';
 import { Response } from 'express';
 import { Public } from 'src/common/decorators/public.decorator';
 import { User } from 'src/common/decorators/user.decorator';

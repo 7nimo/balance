@@ -32,7 +32,7 @@ export class UserEntity {
   @UpdateDateColumn({ type: 'timestamptz' })
   updatedAt: string;
 
-  @OneToMany(() => AccountEntity, account => account.user)
+  @OneToMany(() => AccountEntity, (account) => account.user)
   accounts: AccountEntity[];
 
   @BeforeInsert() async hashPassword() {

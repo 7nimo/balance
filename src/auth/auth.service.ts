@@ -20,6 +20,8 @@ export class AuthService {
 
     const token = this.jwtService.sign(payload);
 
-    return `Authentication=Bearer ${token}; HttpOnly; Path=/; Max-Age=${this.configService.get('JWT_EXP')}`;
+    return `Authentication=Bearer ${token}; HttpOnly; Path=/; Max-Age=${this.configService.get(
+      'JWT_EXP',
+    )}`;
   }
 }

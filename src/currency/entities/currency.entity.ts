@@ -1,6 +1,6 @@
 import { AccountEntity } from 'src/account/entities/account.entity';
 import { CurrencyType } from 'src/common/enums/currency-type.enum';
-import { Column, Entity, JoinTable, ManyToMany, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity('currency')
 export class CurrencyEntity {
@@ -16,6 +16,6 @@ export class CurrencyEntity {
   @Column({ default: CurrencyType.FIAT })
   type: CurrencyType;
 
-  @OneToMany(() => AccountEntity, account => account.currency)
+  @OneToMany(() => AccountEntity, (account) => account.currency)
   account: AccountEntity;
 }
