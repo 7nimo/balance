@@ -18,7 +18,7 @@ export class CsvParserService {
         .on('data', (data) => {
           const records = data
             .toString()
-            .split('\n')
+            .split(EOL)
             .slice(1, -1)
             .map((row: string) => row.split(','));
 
@@ -96,9 +96,11 @@ export class CsvParserService {
     accountId: string,
     filePath: string,
   ): Promise<TransactionEntity[]> {
+    const iconv = require('iconv-lite');
     const transactions: TransactionEntity[] = [];
     const rows: string[] = [];
-    const stream = createReadStream(filePath);
+    const stream = createReadStream(filePath)
+      .pipe(iconv.decodeStream('win1250'));
 
     const rl = readline.createInterface({
       input: stream,
