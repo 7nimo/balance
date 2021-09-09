@@ -2,12 +2,11 @@ import { Injectable } from '@nestjs/common';
 import { TransactionEntity } from 'src/transaction/entities/transaction.entity';
 import * as fs from 'fs';
 import * as readline from 'readline';
-import { createReadStream } from 'fs';
 import { EOL } from 'os';
 
 @Injectable()
 export class CsvParserService {
-  async parseLloyds(
+  async parseLloydsTest(
     accountId: string,
     filePath: string,
   ): Promise<TransactionEntity[]> {
@@ -38,9 +37,9 @@ export class CsvParserService {
             transactions.push(transaction);
           });
 
+          // performance test of for loops 
           // for (let i = 0; i < records.length; i++) {
           //   const transaction = new TransactionEntity();
-
           //   for (let j = 0; j < records[i].length; j++) {
           //     transaction.transactionDate = records[i][0].split("/").reverse().join("-");
           //     transaction.transactionType = records[i][1];
@@ -50,11 +49,13 @@ export class CsvParserService {
           //     transaction.balance = records[i][7];
           //     transaction.account = accountId;
           //   }
-
           //   transactions.push(transaction);
           // }
         })
         .on('end', () => {
+          fs.unlink(filePath, (error) => {
+            if (error) throw error;
+          })
           resolve(transactions);
         })
         .on('error', (error) => reject(error));
@@ -67,7 +68,12 @@ export class CsvParserService {
   ): Promise<TransactionEntity[]> {
     const transactions: TransactionEntity[] = [];
     let records: string[] = [];
-    const stream = createReadStream(filePath, 'utf-8');
+    const stream = fs.createReadStream(filePath, 'utf-8')
+      .on('end', () => {
+        fs.unlink(filePath, (error) => {
+          if (error) throw error;
+        })
+      });
 
     for await (const data of stream) {
       records = data
@@ -99,8 +105,13 @@ export class CsvParserService {
     const iconv = require('iconv-lite');
     const transactions: TransactionEntity[] = [];
     const rows: string[] = [];
-    const stream = createReadStream(filePath)
-      .pipe(iconv.decodeStream('win1250'));
+    const stream = fs.createReadStream(filePath)
+      .pipe(iconv.decodeStream('win1250'))
+      .on('end', () => {
+        fs.unlink(filePath, (error) => {
+          if (error) throw error;
+        })
+      });
 
     const rl = readline.createInterface({
       input: stream,
@@ -113,14 +124,13 @@ export class CsvParserService {
     }
 
     const records = rows
+      // exclude rows containing unwanted data
       .slice(38, -5)
       .map((row: string) => row.split(';'));
 
-    // console.dir(records, { maxArrayLength: null })
-
     for (const record of records) {
       const transaction = new TransactionEntity();
-      transaction.transactionDate = record[1]
+      transaction.transactionDate = record[0]
       transaction.transactionType = record[2];
       transaction.transactionDesc = (`${record[3]} ${record[4]}`).replace(/\s+/g, ' ').trim();
       if (+record[6] < 0) {
@@ -133,7 +143,6 @@ export class CsvParserService {
 
       transactions.push(transaction);
     }
-    //   console.dir(transactions, { maxArrayLength: null })
     return transactions;
   }
 }
