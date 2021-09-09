@@ -12,7 +12,7 @@ export class CsvParserFactory {
     Mbank: this.parseMBankCsv,
   };
 
-  getParser(bankName: string): Function {
+  getParser(bankName: string) {
     return this.parsers[bankName];
   }
 

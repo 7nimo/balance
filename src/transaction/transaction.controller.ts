@@ -4,8 +4,6 @@ import {
   Post,
   Body,
   Param,
-  Delete,
-  HttpCode,
   UseInterceptors,
   UploadedFile,
   NotFoundException,
@@ -15,7 +13,7 @@ import { ApiTags } from '@nestjs/swagger';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { multerOptions } from 'src/config/multer.config';
 import { AccountService } from 'src/account/account.service';
-import { EventEmitter2 } from '@nestjs/event-emitter';
+// import { EventEmitter2 } from '@nestjs/event-emitter';
 // import { StatementSavedEvent } from './events/statement-saved.event';
 import { CreateTransactionDto } from './dto';
 import { User } from '../common/decorators/user.decorator';
@@ -43,7 +41,6 @@ export class TransactionController {
     if (!account) {
       throw new NotFoundException(`Account with ${accountId} does not exist`);
     }
-
     return this.transactionService.create(accountId, createTransactionDto);
   }
 
