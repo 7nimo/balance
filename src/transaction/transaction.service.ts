@@ -5,7 +5,6 @@ import { TransactionEntity } from './entities/transaction.entity';
 import { CreateTransactionDto } from './dto';
 import { TransactionRO, TransactionsRO } from './transaction.interface';
 import { copyLloydsCsv } from './queries/copy-lloyds-csv.query';
-import { AccountEntity } from 'src/account/entities/account.entity';
 import { CsvParserService } from 'src/common/services/csv-parser/csv-parser.service';
 
 @Injectable()
@@ -14,6 +13,7 @@ export class TransactionService {
     @InjectRepository(TransactionEntity)
     private readonly transactionRepository: Repository<TransactionEntity>,
     private readonly connection: Connection,
+    private readonly csvParser: CsvParserService,
   ) {}
 
   async create(
@@ -58,10 +58,6 @@ export class TransactionService {
     //   await queryRunner.release();
     // }
   }
-
-  // async getTransactionsFromCsv(accountId: string, path: string): Promise<string[][]> {
-  //   return this.csvParser.parseLloydsCsv(accountId, path);
-  // }
 
   async findAll(userId: string, accountId: string): Promise<TransactionsRO> {
     const transactions = await this.transactionRepository

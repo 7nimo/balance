@@ -61,10 +61,12 @@ export class TransactionController {
     statementSavedEvent.accountId = accountId;
     statementSavedEvent.path = file.path;
 
+    // not used currently
     // this.eventEmitter.emit('statement.saved', statementSavedEvent);
 
-    // const transactions = await this.transactionService.getTransactionsFromCsv(accountId, file.path);
-    const transactions = await this.csvParser.parseLloydsCsv(accountId, file.path);
+    console.time('parseLloyds')
+    const transactions = await this.csvParser.parseLloyds(accountId, file.path);
+    console.timeEnd('parseLloyds')
 
     this.transactionService.createMany(transactions);
   }
