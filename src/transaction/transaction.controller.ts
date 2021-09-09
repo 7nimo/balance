@@ -21,6 +21,7 @@ import { CreateTransactionDto } from './dto';
 import { User } from '../common/decorators/user.decorator';
 import { TransactionRO, TransactionsRO } from './transaction.interface';
 import { CsvParserService } from 'src/common/services/csv-parser/csv-parser.service';
+import { TransactionEntity } from './entities/transaction.entity';
 
 @ApiTags('transaction')
 @Controller('transaction')
@@ -57,16 +58,21 @@ export class TransactionController {
     if (!account) {
       throw new NotFoundException(`Account with ${accountId} does not exist`);
     }
-    const statementSavedEvent = new StatementSavedEvent();
-    statementSavedEvent.accountId = accountId;
-    statementSavedEvent.path = file.path;
-
-    // not used currently
+    // const statementSavedEvent = new StatementSavedEvent();
+    // statementSavedEvent.accountId = accountId;
+    // statementSavedEvent.path = file.path;
     // this.eventEmitter.emit('statement.saved', statementSavedEvent);
 
-    console.time('parseLloyds');
-    const transactions = await this.csvParser.parseLloyds(accountId, file.path);
-    console.timeEnd('parseLloyds');
+    let transactions: TransactionEntity[] = []
+    if (account.account.bank.name === 'Lloyds') {
+      console.time('Lloyds');
+      transactions = await this.csvParser.parseLloydsCsv(accountId, file.path);
+      console.timeEnd('Lloyds');
+    } else {
+      console.time('mBank');
+      transactions = await this.csvParser.parseMBankCsv(accountId, file.path);
+      console.timeEnd('mBank');
+    }
 
     this.transactionService.createMany(transactions);
   }
