@@ -5,11 +5,17 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { TransactionEntity } from './entities/transaction.entity';
 import { StatementSavedListener } from 'src/transaction/listeners/statement-saved.listener';
 import { AccountsModule } from 'src/account/account.module';
+import { CsvParserFactory } from 'src/common/factories/csv-parser.factory';
 import { CsvParserService } from 'src/common/services/csv-parser/csv-parser.service';
 
 @Module({
   imports: [TypeOrmModule.forFeature([TransactionEntity]), AccountsModule],
   controllers: [TransactionController],
-  providers: [TransactionService, CsvParserService, StatementSavedListener],
+  providers: [
+    TransactionService,
+    CsvParserService,
+    CsvParserFactory,
+    StatementSavedListener,
+  ],
 })
 export class TransactionsModule {}
