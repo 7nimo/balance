@@ -63,7 +63,7 @@ export class TransactionController {
     // statementSavedEvent.path = file.path;
     // this.eventEmitter.emit('statement.saved', statementSavedEvent);
 
-    let transactions: TransactionEntity[] = []
+    let transactions: TransactionEntity[] = [];
     if (account.account.bank.name === 'Lloyds') {
       console.time('Lloyds');
       transactions = await this.csvParser.parseLloydsCsv(accountId, file.path);

@@ -3,6 +3,7 @@ import { TransactionEntity } from 'src/transaction/entities/transaction.entity';
 import * as fs from 'fs';
 import * as readline from 'readline';
 import { EOL } from 'os';
+import iconv from 'iconv-lite';
 
 @Injectable()
 export class CsvParserService {
@@ -37,7 +38,7 @@ export class CsvParserService {
             transactions.push(transaction);
           });
 
-          // performance test of for loops 
+          // performance test of for loops
           // for (let i = 0; i < records.length; i++) {
           //   const transaction = new TransactionEntity();
           //   for (let j = 0; j < records[i].length; j++) {
@@ -55,7 +56,7 @@ export class CsvParserService {
         .on('end', () => {
           fs.unlink(filePath, (error) => {
             if (error) throw error;
-          })
+          });
           resolve(transactions);
         })
         .on('error', (error) => reject(error));
@@ -68,12 +69,11 @@ export class CsvParserService {
   ): Promise<TransactionEntity[]> {
     const transactions: TransactionEntity[] = [];
     let records: string[] = [];
-    const stream = fs.createReadStream(filePath, 'utf-8')
-      .on('end', () => {
-        fs.unlink(filePath, (error) => {
-          if (error) throw error;
-        })
+    const stream = fs.createReadStream(filePath, 'utf-8').on('end', () => {
+      fs.unlink(filePath, (error) => {
+        if (error) throw error;
       });
+    });
 
     for await (const data of stream) {
       records = data
@@ -102,22 +102,23 @@ export class CsvParserService {
     accountId: string,
     filePath: string,
   ): Promise<TransactionEntity[]> {
-    const iconv = require('iconv-lite');
     const transactions: TransactionEntity[] = [];
     const rows: string[] = [];
-    const stream = fs.createReadStream(filePath)
+
+    const stream = fs
+      .createReadStream(filePath)
       .pipe(iconv.decodeStream('win1250'))
       .on('end', () => {
         fs.unlink(filePath, (error) => {
           if (error) throw error;
-        })
+        });
       });
 
     const rl = readline.createInterface({
       input: stream,
       crlfDelay: Infinity,
       terminal: false,
-    })
+    });
 
     for await (const line of rl) {
       rows.push(line);
@@ -130,9 +131,11 @@ export class CsvParserService {
 
     for (const record of records) {
       const transaction = new TransactionEntity();
-      transaction.transactionDate = record[0]
+      transaction.transactionDate = record[0];
       transaction.transactionType = record[2];
-      transaction.transactionDesc = (`${record[3]} ${record[4]}`).replace(/\s+/g, ' ').trim();
+      transaction.transactionDesc = `${record[3]} ${record[4]}`
+        .replace(/\s+/g, ' ')
+        .trim();
       if (+record[6] < 0) {
         transaction.debitAmount = Math.abs(+record[6]).toFixed(2);
       } else {
