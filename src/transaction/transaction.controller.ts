@@ -19,7 +19,8 @@ import { EventEmitter2 } from '@nestjs/event-emitter';
 import { StatementSavedEvent } from './events/statement-saved.event';
 import { CreateTransactionDto } from './dto';
 import { User } from '../common/decorators/user.decorator';
-import { TransactionsRO } from './transaction.interface';
+import { TransactionRO, TransactionsRO } from './transaction.interface';
+import { CsvParserService } from 'src/common/services/csv-parser/csv-parser.service';
 
 @ApiTags('transaction')
 @Controller('transaction')
@@ -28,30 +29,44 @@ export class TransactionController {
     private readonly transactionService: TransactionService,
     private readonly accountService: AccountService,
     private readonly eventEmitter: EventEmitter2,
+    private readonly csvParser: CsvParserService,
   ) {}
 
   @Post()
-  create(@Body() createTransactionDto: CreateTransactionDto) {
-    return this.transactionService.create(createTransactionDto);
+  async create(
+    @User('id') userId: string,
+    @Param('accountId') accountId: string,
+    @Body() createTransactionDto: CreateTransactionDto
+  ): Promise<TransactionRO> {
+    const account = await this.accountService.findOne(userId, accountId);
+    if (!account) {
+      throw new NotFoundException(`Account with ${accountId} does not exist`);
+    }
+
+    return this.transactionService.create(accountId, createTransactionDto);
   }
 
   @Post('import')
   @UseInterceptors(FileInterceptor('statement', multerOptions))
-  async uploadFile(
+  async import(
     @User('id') userId: string,
+    @Param('accountId') accountId: string,
     @UploadedFile() file: Express.Multer.File,
-    @Param('uuid') uuid: string,
-  ): Promise<void> {
-    const account = await this.accountService.findOne(userId, uuid);
-    if (account === undefined) {
-      throw new NotFoundException(`Account with ${uuid} does not exist`);
+  ) {
+    const account = await this.accountService.findOne(userId, accountId);
+    if (!account) {
+      throw new NotFoundException(`Account with ${accountId} does not exist`);
     }
     const statementSavedEvent = new StatementSavedEvent();
-    statementSavedEvent.id = uuid;
+    statementSavedEvent.accountId = accountId;
     statementSavedEvent.path = file.path;
 
-    this.eventEmitter.emit('statement.saved', statementSavedEvent);
-    // return this.transactionService.handleCsvImport(uuid, file.path);
+    // this.eventEmitter.emit('statement.saved', statementSavedEvent);
+
+    // const transactions = await this.transactionService.getTransactionsFromCsv(accountId, file.path);
+    const transactions = await this.csvParser.parseLloydsCsv(accountId, file.path);
+
+    this.transactionService.createMany(transactions);
   }
 
   @Get()
@@ -59,13 +74,13 @@ export class TransactionController {
     @User('id') userId: string,
     @Param('accountId') accountId: string,
   ): Promise<TransactionsRO> {
-    return this.transactionService.findAll(accountId, userId);
+    return this.transactionService.findAll(userId, accountId);
   }
 
   @Get(':id')
   findOne(
     @User('id') userId: string,
-    @Param('id') accountId: number) {
+    @Param('accountId') accountId: number) {
     return this.transactionService.findOne(userId, accountId);
   }
 

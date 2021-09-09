@@ -1,10 +1,12 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Connection, Repository } from 'typeorm';
 import { TransactionEntity } from './entities/transaction.entity';
 import { CreateTransactionDto } from './dto';
 import { TransactionRO, TransactionsRO } from './transaction.interface';
 import { copyLloydsCsv } from './queries/copy-lloyds-csv.query';
+import { AccountEntity } from 'src/account/entities/account.entity';
+import { CsvParserService } from 'src/common/services/csv-parser/csv-parser.service';
 
 @Injectable()
 export class TransactionService {
@@ -15,41 +17,51 @@ export class TransactionService {
   ) {}
 
   async create(
+    accountId: string,
     createTransactionDto: CreateTransactionDto,
   ): Promise<TransactionRO> {
-    const transaction = this.transactionRepository.create(
-      createTransactionDto,
-    );
 
+
+    const transaction = this.transactionRepository.create(
+      {account: accountId, ... createTransactionDto}
+    );
+    
     await this.transactionRepository.save(transaction);
 
     return {transaction};
   }
 
-  // is this needed?
-  async createMany(transactions: CreateTransactionDto[]) {
-    const queryRunner = this.connection.createQueryRunner();
-
-    await queryRunner.connect();
-    await queryRunner.startTransaction();
+  async createMany(transactions) {
     try {
-      await queryRunner.manager.save(transactions[0]);
-      await queryRunner.manager.save(transactions[1]);
-
-      await queryRunner.commitTransaction();
-    } catch (err) {
-      // since we have errors lets rollback the changes we made
-      await queryRunner.rollbackTransaction();
-    } finally {
-      // you need to release a queryRunner which was manually instantiated
-      await queryRunner.release();
+      const qb = await this.transactionRepository
+        .createQueryBuilder()
+        .insert()
+        .into(TransactionEntity)
+        .values(transactions)
+        .execute();
+    } catch (error) {
+      throw new InternalServerErrorException(error)
     }
+
+    // await queryRunner.connect();
+    // await queryRunner.startTransaction();
+    // try {
+    //   await queryRunner.manager.save(transactions[0]);
+    //   await queryRunner.manager.save(transactions[1]);
+
+    //   await queryRunner.commitTransaction();
+    // } catch (err) {
+    //   // since we have errors lets rollback the changes we made
+    //   await queryRunner.rollbackTransaction();
+    // } finally {
+    //   // you need to release a queryRunner which was manually instantiated
+    //   await queryRunner.release();
+    // }
   }
 
-  handleCsvImport(uuid: string, path: string): Promise<void> {
-    // to do
-    return;
-  }
+  // async getTransactionsFromCsv(accountId: string, path: string): Promise<string[][]> {
+  //   return this.csvParser.parseLloydsCsv(accountId, path);
+  // }
 
   async findAll(userId: string, accountId: string): Promise<TransactionsRO> {
     const transactions = await this.transactionRepository
@@ -64,7 +76,7 @@ export class TransactionService {
   }
 
   async findOne(userId: string, accountId: number): Promise<TransactionRO> {
-    const transaction = await await this.transactionRepository
+    const transaction = await this.transactionRepository
       .createQueryBuilder('transaction')
       .leftJoin('transaction.account', 'account')
       .leftJoin('account.user', 'user')

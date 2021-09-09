@@ -2,13 +2,13 @@ import { IsDecimal, IsString, ValidateIf } from 'class-validator';
 
 export class CreateTransactionDto {
   @IsString()
-  readonly date: string;
+  readonly transactionDate: string;
 
   @IsString()
-  readonly description: string;
+  readonly transactionDesc: string;
 
   @IsString()
-  readonly type: string;
+  readonly transactionType: string;
 
   @ValidateIf((o) => o.creditAmount === undefined)
   @IsDecimal({

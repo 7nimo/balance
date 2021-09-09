@@ -7,13 +7,13 @@ export class TransactionEntity {
   id: number;
 
   @Column({ type: 'date' })
-  date: string;
+  transactionDate: string;
 
   @Column()
-  description: string;
+  transactionDesc: string;
 
   @Column()
-  type: string;
+  transactionType: string;
 
   @Column({ type: 'numeric', precision: 15, scale: 6, nullable: true })
   debitAmount: string;
