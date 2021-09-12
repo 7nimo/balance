@@ -4,18 +4,19 @@ services:
   balance_api:
     container_name: balance_api
     build:
-      context: .
+      context: ./balance-api
       target: ${NODE_ENV}
-    command: npm run start:debug
     volumes:
-      - .:/app
+      - ./balance-api:/app
       - /app/node_modules
     ports:
-      - ${SERVER_PORT}:${SERVER_PORT}
-      - 9229:9229
+      - "${SERVER_PORT}:${SERVER_PORT}"
+      - "9229:9229"
+    working_dir: /app
     restart: unless-stopped
     depends_on:
       - balance_db
+    command: npm run start:debug
  
   balance_db:
     container_name: balance_db
@@ -27,10 +28,9 @@ services:
       PG_DATA: /var/lib/postgresql/data
     volumes:
       - db_data:/var/lib/postgresql/data
-      - ${MULTER_DEST}:/var/tmp/uploads
     ports:
-      - ${POSTGRES_PORT}:5432
+      - "${POSTGRES_PORT}:5432"
     restart: unless-stopped
 
 volumes:
-  db_data:
+  db_data: {}
