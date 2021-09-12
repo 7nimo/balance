@@ -1,6 +1,21 @@
 version: "3.8"
 
 services:
+  frontend:
+      container_name: balance_frontend
+      build:
+        context: ./frontend
+      volumes:
+        - ./frontend:/app
+        - /app/node_modules
+      environment:
+        - PORT=4100
+        - "REACT_APP_BALANCE_API_URL=http://localhost:4200/api"
+      ports:
+        - "4100:4100"
+      working_dir: /app
+      command: bash -c "yarn && yarn start"
+
   balance_api:
     container_name: balance_api
     build:
