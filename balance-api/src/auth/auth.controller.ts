@@ -38,7 +38,7 @@ export class AuthController {
     res.json({status: 'accepted'});
   }
 
-  @Post('log-out')
+  @Post('sign-out')
   @HttpCode(202)
   async logOut(@User('id') userId: string, @Res() res: Response) {
     await this.userService.removeRefreshToken(userId);

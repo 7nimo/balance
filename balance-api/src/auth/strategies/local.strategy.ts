@@ -18,7 +18,7 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
   }
 
   async validate(email: string, password: string): Promise<LoginUserRO> {
-    const user = await this.userService.findByEmail(email);
+    const {user} = await this.userService.findByEmail(email);
 
     if (!user) {
       throw new UnauthorizedException('Incorrect username or password');

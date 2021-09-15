@@ -8,6 +8,7 @@ import { UserEntity } from './entities/user.entity';
 import { Repository } from 'typeorm';
 import { CreateUserDto, UserDto } from './dto';
 import * as argon2 from 'argon2';
+import { UserRO } from './user.interface';
 
 @Injectable()
 export class UserService {
@@ -16,7 +17,7 @@ export class UserService {
     private readonly userRepository: Repository<UserEntity>,
   ) { }
 
-  async create(createUserDto: CreateUserDto): Promise<UserDto> {
+  async create(createUserDto: CreateUserDto): Promise<UserRO> {
     const userExists = await this.findByEmail(createUserDto.email);
     if (userExists) {
       throw new UnprocessableEntityException(
@@ -24,15 +25,17 @@ export class UserService {
       );
     }
     const user = this.userRepository.create(createUserDto);
-    return this.userRepository.save(user);
+    this.userRepository.save(user);
+
+    return {user}; 
   }
 
   setRefreshToken(userId: string, refreshToken: string) {
     this.userRepository.update(userId, { refreshToken });
   }
 
-  async getUserIfRefreshTokenMatches( userId: string, refreshToken: string) {
-    const user = await this.findById(userId);
+  async getUserIfRefreshTokenMatches( userId: string, refreshToken: string): Promise<UserRO> {
+    const {user} = await this.findById(userId);
  
     const isRefreshTokenMatching = await argon2.verify(
       user.refreshToken,
@@ -40,24 +43,22 @@ export class UserService {
     );
  
     if (isRefreshTokenMatching) {
-      return user;
+      return {user};
     }
   }
 
-  findAll(): Promise<UserEntity[]> {
-    return this.userRepository.find();
+  async findByEmail(email: string): Promise<UserRO> {
+    const user = await this.userRepository.findOne({ email });
+
+    return {user};
   }
 
-  findByEmail(email: string): Promise<UserEntity> {
-    return this.userRepository.findOne({ email });
-  }
-
-  async findById(id: string): Promise<UserEntity> {
+  async findById(id: string): Promise<UserRO> {
     const user = await this.userRepository.findOne(id);
-    if (user) {
-      return user;
+    if (!user) {
+      throw new NotFoundException('User with this id does not exist');
     }
-    throw new NotFoundException('User with this id does not exist');
+    return {user};
   }
 
   async remove(id: string): Promise<void> {

@@ -12,6 +12,7 @@ import { ApiTags } from '@nestjs/swagger';
 import { Public } from 'src/common/decorators/public.decorator';
 import { CreateUserDto, UserDto } from './dto';
 import { UserEntity } from './entities/user.entity';
+import { UserRO } from './user.interface';
 import { UserService } from './user.service';
 
 @ApiTags('user')
@@ -21,20 +22,15 @@ export class UserController {
 
   @Public()
   @Post()
-  create(@Body() createUserDto: CreateUserDto): Promise<UserDto> {
+  create(@Body() createUserDto: CreateUserDto): Promise<UserRO> {
     return this.userService.create(createUserDto);
   }
 
   @Get(':uuid')
   findById(
     @Param('uuid', new ParseUUIDPipe({ version: '4' })) uuid: string,
-  ): Promise<UserEntity> {
+  ): Promise<UserRO> {
     return this.userService.findById(uuid);
-  }
-
-  @Get()
-  findAll(): Promise<UserEntity[]> {
-    return this.userService.findAll();
   }
 
   @HttpCode(204)
