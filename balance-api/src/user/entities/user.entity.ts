@@ -20,11 +20,11 @@ export class UserEntity {
   email: string;
 
   @Exclude()
-  @Column()
+  @Column({ select: false })
   password: string;
 
   @Exclude()
-  @Column({ nullable: true })
+  @Column({ select: false, nullable: true })
   refreshToken?: string | null;
 
   @Column({ default: 'PLN' })

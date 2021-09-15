@@ -2,6 +2,8 @@ import { Controller, Get, HttpCode, Post, Req, Res, UseGuards } from '@nestjs/co
 import { Response } from 'express';
 import { Public } from 'src/common/decorators/public.decorator';
 import { User } from 'src/common/decorators/user.decorator';
+import { UserEntity } from 'src/user/entities/user.entity';
+import { UserRO } from 'src/user/user.interface';
 import { UserService } from 'src/user/user.service';
 import { AuthService } from './auth.service';
 import JwtRefreshGuard from './guards/jwt-refresh.guard';
@@ -17,15 +19,15 @@ export class AuthController {
   @Public()
   @UseGuards(LocalAuthGuard)
   @Post('sign-in')
-  login(@User('id') userId: string, @Res() res: Response) {
-    const accessTokenCookie = this.authService.getCookieWithJwt(userId);
-    const refreshTokenCookie = this.authService.getCookieWithRefreshToken(userId);
+  login(@User() user: UserEntity, @Res() res: Response) {
+    const accessTokenCookie = this.authService.getCookieWithJwt(user.id);
+    const refreshTokenCookie = this.authService.getCookieWithRefreshToken(user.id);
 
-    this.userService.setRefreshToken(userId, refreshTokenCookie);
+    this.userService.setRefreshToken(user.id, refreshTokenCookie);
 
     res.setHeader('Set-Cookie', [accessTokenCookie, refreshTokenCookie]);
 
-    res.json({status: 'accepted'});
+    res.json({user});
   }
 
   @UseGuards(JwtRefreshGuard)

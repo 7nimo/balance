@@ -30,7 +30,7 @@ export class UserController {
   findById(
     @Param('uuid', new ParseUUIDPipe({ version: '4' })) uuid: string,
   ): Promise<UserRO> {
-    return this.userService.findById(uuid);
+    return this.userService.findOne(uuid);
   }
 
   @HttpCode(204)

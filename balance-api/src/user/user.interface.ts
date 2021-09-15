@@ -1,7 +1,11 @@
 import { UserEntity } from './entities/user.entity';
 
-export interface LoginUserRO {
+export interface UserData {
   id: string;
+  email: string;
+  baseCurrency: string;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 export interface UserRO {

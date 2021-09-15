@@ -18,7 +18,7 @@ export class UserService {
   ) { }
 
   async create(createUserDto: CreateUserDto): Promise<UserRO> {
-    const userExists = await this.findByEmail(createUserDto.email);
+    const userExists = await this.findOne(createUserDto.email);
     if (userExists) {
       throw new UnprocessableEntityException(
         'User with this email already exists',
@@ -27,38 +27,34 @@ export class UserService {
     const user = this.userRepository.create(createUserDto);
     this.userRepository.save(user);
 
-    return {user}; 
+    return { user };
   }
 
   setRefreshToken(userId: string, refreshToken: string) {
     this.userRepository.update(userId, { refreshToken });
   }
 
-  async getUserIfRefreshTokenMatches( userId: string, refreshToken: string): Promise<UserRO> {
-    const {user} = await this.findById(userId);
- 
+  async getUserIfRefreshTokenMatches(userId: string, refreshToken: string): Promise<UserEntity> {
+    const user = await this.getUserWithRefreshToken(userId);
+
     const isRefreshTokenMatching = await argon2.verify(
       user.refreshToken,
       refreshToken
     );
- 
+
     if (isRefreshTokenMatching) {
-      return {user};
+      return user;
     }
   }
 
-  async findByEmail(email: string): Promise<UserRO> {
-    const user = await this.userRepository.findOne({ email });
+  async findOne(where: any): Promise<UserRO> {
+    const user = await this.userRepository.findOne({ where });
 
-    return {user};
-  }
-
-  async findById(id: string): Promise<UserRO> {
-    const user = await this.userRepository.findOne(id);
     if (!user) {
       throw new NotFoundException('User with this id does not exist');
     }
-    return {user};
+
+    return { user };
   }
 
   async remove(id: string): Promise<void> {
@@ -69,5 +65,27 @@ export class UserService {
     return this.userRepository.update(userId, {
       refreshToken: null
     });
+  }
+
+  async getUserWithPwd(email: string): Promise<UserEntity> {
+    const user = await this.userRepository
+      .createQueryBuilder('user')
+      .select('user')
+      .addSelect('user.password')
+      .where('user.email = :email', { email: email })
+      .getOneOrFail();
+
+    return user;
+  }
+
+  async getUserWithRefreshToken(userId: string): Promise<UserEntity> {
+    const user = await this.userRepository
+      .createQueryBuilder('user')
+      .select('user')
+      .addSelect('user.refreshToken')
+      .where('user.id = :userId', { userId: userId })
+      .getOneOrFail();
+
+    return user;
   }
 }
