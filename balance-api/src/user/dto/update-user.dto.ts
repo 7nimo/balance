@@ -3,5 +3,5 @@ import { AdditionalUserInfo, CreateUserDto } from './create-user.dto';
 
 export class UpdateUserDto extends IntersectionType(
   PartialType(OmitType(CreateUserDto, ['email'] as const)),
-  AdditionalUserInfo,
+  PartialType(AdditionalUserInfo),
 ) {}

@@ -15,13 +15,29 @@ export class AuthService {
     return argon2.verify(hash, password);
   }
 
-  getCookieWithJwt(userId: string): string {
+  getCookieWithJwt(userId: string) {
     const payload: JwtPayload = { userId: userId };
 
     const token = this.jwtService.sign(payload);
 
-    return `Authentication=Bearer ${token}; HttpOnly; Path=/; Max-Age=${this.configService.get(
-      'JWT_EXP',
-    )}`;
+    return `Authorization=${token}; HttpOnly; Path=/; expires=${this.configService.get('JWT_TOKEN_EXP')}`;
+  }
+
+  getCookieWithRefreshToken(userId: string) {
+    const payload: JwtPayload = { userId: userId };
+
+    const token = this.jwtService.sign(payload, {
+      secret: this.configService.get('JWT_REFRESH_TOKEN_SECRET'),
+      expiresIn: this.configService.get('JWT_REFRESH_TOKEN_EXP'),
+    });
+   
+    return `jwt=${token}; HttpOnly; Path=/; expires=${this.configService.get('JWT_REFRESH_TOKEN_EXP')}`;
+  }
+
+  getCookiesForLogOut() {
+    return [
+      'Authorization=; HttpOnly; Path=/; Max-Age=0',
+      'jwt=; HttpOnly; Path=/; Max-Age=0'
+    ];
   }
 }

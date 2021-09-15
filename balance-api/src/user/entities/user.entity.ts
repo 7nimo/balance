@@ -23,6 +23,10 @@ export class UserEntity {
   @Column()
   password: string;
 
+  @Exclude()
+  @Column({ nullable: true })
+  refreshToken?: string | null;
+
   @Column({ default: 'PLN' })
   baseCurrency: string;
 
@@ -37,6 +41,12 @@ export class UserEntity {
 
   @BeforeInsert() async hashPassword() {
     this.password = await argon2.hash(this.password);
+  }
+
+  @BeforeInsert() async hashRefreshToken() {
+    if (this.refreshToken) {
+      this.refreshToken = await argon2.hash(this.refreshToken);
+    }
   }
 
   constructor(partial: Partial<UserEntity>) {

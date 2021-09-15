@@ -1,22 +1,50 @@
-import { Controller, Post, Res, UseGuards } from '@nestjs/common';
+import { Controller, Get, HttpCode, Post, Req, Res, UseGuards } from '@nestjs/common';
 import { Response } from 'express';
 import { Public } from 'src/common/decorators/public.decorator';
 import { User } from 'src/common/decorators/user.decorator';
+import { UserService } from 'src/user/user.service';
 import { AuthService } from './auth.service';
-import { LocalAuthGuard } from './guards/local-auth.guard';
+import JwtRefreshGuard from './guards/jwt-refresh.guard';
+import { LocalAuthGuard } from './guards/local.guard';
 
-@Controller()
+@Controller('auth')
 export class AuthController {
-  constructor(private readonly authService: AuthService) {}
+  constructor(
+    private readonly authService: AuthService,
+    private readonly userService: UserService,
+  ) {}
 
   @Public()
   @UseGuards(LocalAuthGuard)
-  @Post('login')
+  @Post('sign-in')
   login(@User('id') userId: string, @Res() res: Response) {
-    const cookie = this.authService.getCookieWithJwt(userId);
+    const accessTokenCookie = this.authService.getCookieWithJwt(userId);
+    const refreshTokenCookie = this.authService.getCookieWithRefreshToken(userId);
 
-    res.setHeader('Set-Cookie', cookie);
+    this.userService.setRefreshToken(userId, refreshTokenCookie);
 
-    res.json('success');
+    res.setHeader('Set-Cookie', [accessTokenCookie, refreshTokenCookie]);
+
+    res.json({status: 'accepted'});
+  }
+
+  @UseGuards(JwtRefreshGuard)
+  @Get('refresh')
+  refresh(@User('id') userId: string, @Res() res: Response) {
+    const accessTokenCookie = this.authService.getCookieWithJwt(userId);
+ 
+    res.setHeader('Set-Cookie', accessTokenCookie);
+
+    res.json({status: 'accepted'});
+  }
+
+  @Post('log-out')
+  @HttpCode(202)
+  async logOut(@User('id') userId: string, @Res() res: Response) {
+    await this.userService.removeRefreshToken(userId);
+
+    res.setHeader('Set-Cookie', this.authService.getCookiesForLogOut());
+
+    res.json({status: 'accepted'});
   }
 }
