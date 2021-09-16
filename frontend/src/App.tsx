@@ -1,14 +1,29 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import SignInForm from './components/Login';
+import { QueryClient, QueryClientProvider } from 'react-query';
+import { ReactQueryDevtools } from 'react-query/devtools'
+import { AuthProvider } from './providers/auth.provider';
+
+ const queryClient = new QueryClient({
+   defaultOptions: {
+     queries: {
+       refetchOnWindowFocus: false,
+     },
+   },
+ });
+
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header"> 
-      </header>
-      <div className=""></div>
-    </div>
+    <QueryClientProvider client={queryClient}>
+      <AuthProvider>
+        <main className="App">
+        </main>
+      </AuthProvider>
+
+      <ReactQueryDevtools initialIsOpen={false}/>
+    </QueryClientProvider>
   );
 }
 

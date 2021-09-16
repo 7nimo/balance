@@ -4,4 +4,3 @@ export interface Token {
   authTokenExpiry: number;
   refreshTokenExpiry: number;
 }
-
