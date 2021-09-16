@@ -20,7 +20,7 @@ export class AuthService {
 
     const token = this.jwtService.sign(payload);
 
-    return `Authorization=${token}; HttpOnly; Path=/; expires=${this.configService.get('JWT_TOKEN_EXP')}`;
+    return `Authorization=${token};  Path=/; Expires=${this.configService.get('JWT_TOKEN_EXP')}; Secure; HttpOnly`;
   }
 
   getCookieWithRefreshToken(userId: string) {
@@ -31,13 +31,13 @@ export class AuthService {
       expiresIn: this.configService.get('JWT_REFRESH_TOKEN_EXP'),
     });
    
-    return `refresh=${token}; HttpOnly; Path=/; expires=${this.configService.get('JWT_REFRESH_TOKEN_EXP')}`;
+    return `refresh=${token};  Path=/; Expires=${this.configService.get('JWT_REFRESH_TOKEN_EXP')}; Secure; HttpOnly`;
   }
 
   getCookiesForLogOut() {
     return [
-      'Authorization=; HttpOnly; Path=/; Max-Age=0',
-      'refresh=; HttpOnly; Path=/; Max-Age=0'
+      'Authorization=; Path=/; Max-Age=0 Secure; HttpOnly',
+      'refresh=; Path=/; Max-Age=0 Secure; HttpOnly'
     ];
   }
 }
