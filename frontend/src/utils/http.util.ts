@@ -3,15 +3,16 @@ interface HttpResponse<T> extends Response {
 }
 
 export async function http<T>(
-  request: RequestInfo
+  request: RequestInfo,
 ): Promise<HttpResponse<T>> {
   const response: HttpResponse<T> = await fetch(
-    request
+    request,
   );
 
   try {
     // may error if there is no body
     response.data = await response.json();
+  // eslint-disable-next-line no-empty
   } catch (error) { }
 
   if (!response.ok) {
@@ -23,39 +24,39 @@ export async function http<T>(
 export async function get<T>(
   path: string,
   args: RequestInit = {
-    method: "get",
+    method: 'get',
     headers: {
       'Content-Type': 'application/json',
     },
-  }
+  },
 ): Promise<HttpResponse<T>> {
-  return await http<T>(new Request(path, args));
-};
+  return http<T>(new Request(path, args));
+}
 
 export async function post<T>(
   path: string,
   body: any,
   args: RequestInit = {
-    method: "post",
+    method: 'post',
     headers: {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(body),
-  }
+  },
 ): Promise<HttpResponse<T>> {
-  return await http<T>(new Request(path, args));
-};
+  return http<T>(new Request(path, args));
+}
 
 export async function put<T>(
   path: string,
   body: any,
   args: RequestInit = {
-    method: "put",
+    method: 'put',
     headers: {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(body),
-  }
+  },
 ): Promise<HttpResponse<T>> {
-  return await http<T>(new Request(path, args));
-};
+  return http<T>(new Request(path, args));
+}
