@@ -31,13 +31,13 @@ export class AuthService {
       expiresIn: this.configService.get('JWT_REFRESH_TOKEN_EXP'),
     });
    
-    return `jwt=${token}; HttpOnly; Path=/; expires=${this.configService.get('JWT_REFRESH_TOKEN_EXP')}`;
+    return `refresh=${token}; HttpOnly; Path=/; expires=${this.configService.get('JWT_REFRESH_TOKEN_EXP')}`;
   }
 
   getCookiesForLogOut() {
     return [
       'Authorization=; HttpOnly; Path=/; Max-Age=0',
-      'jwt=; HttpOnly; Path=/; Max-Age=0'
+      'refresh=; HttpOnly; Path=/; Max-Age=0'
     ];
   }
 }

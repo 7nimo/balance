@@ -43,12 +43,6 @@ export class UserEntity {
     this.password = await argon2.hash(this.password);
   }
 
-  @BeforeInsert() async hashRefreshToken() {
-    if (this.refreshToken) {
-      this.refreshToken = await argon2.hash(this.refreshToken);
-    }
-  }
-
   constructor(partial: Partial<UserEntity>) {
     Object.assign(this, partial);
   }

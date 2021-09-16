@@ -25,12 +25,12 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
       throw new UnauthorizedException('Incorrect username or password');
     }
 
-    const isMatch = await this.authService.verifyPassword(
+    const isEqual = await this.authService.verifyPassword(
       user.password,
       password,
     );
 
-    if (!isMatch) {
+    if (!isEqual) {
       throw new UnauthorizedException('Incorrect username or password');
     }
 

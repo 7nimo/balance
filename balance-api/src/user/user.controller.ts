@@ -11,7 +11,6 @@ import {
 import { ApiTags } from '@nestjs/swagger';
 import { Public } from 'src/common/decorators/public.decorator';
 import { CreateUserDto, UserDto } from './dto';
-import { UserEntity } from './entities/user.entity';
 import { UserRO } from './user.interface';
 import { UserService } from './user.service';
 
@@ -30,7 +29,7 @@ export class UserController {
   findById(
     @Param('uuid', new ParseUUIDPipe({ version: '4' })) uuid: string,
   ): Promise<UserRO> {
-    return this.userService.findOne(uuid);
+    return this.userService.findById(uuid);
   }
 
   @HttpCode(204)
