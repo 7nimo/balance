@@ -1,14 +1,19 @@
 export interface User {
   id: string;
   email: string;
-  password: string;
   baseCurrency: string;
   createdAt: Date;
   modifiedAt: Date;
 }
 
-export type SignInPayload = Pick<User, "email" | "password"> & {
+export interface LoginCredentials {
+  email: string;
+  password: string;
   remember?: Boolean;
 };
 
-export type SignUpPayload = Pick<User, "email" | "password">;
+export type RegisterCredentials = {
+  email: string;
+  password: string;
+  baseCurrency?: number;
+};

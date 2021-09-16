@@ -5,7 +5,3 @@ export interface Token {
   refreshTokenExpiry: number;
 }
 
-export interface LoginParams {
-  email: string;
-  password: string;
-}
