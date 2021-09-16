@@ -16,7 +16,7 @@ export class UserService {
   constructor(
     @InjectRepository(UserEntity)
     private readonly userRepository: Repository<UserEntity>,
-  ) { }
+  ) {}
 
   async create(createUserDto: CreateUserDto): Promise<UserRO> {
     const user = await this.findByEmail(createUserDto.email);
@@ -37,17 +37,17 @@ export class UserService {
     this.userRepository.update(userId, { refreshToken: refreshTokenHash });
   }
 
-  async getUserIfRefreshTokenMatches(userId: string, refreshToken: string): Promise<UserEntity> {
+  async getUserIfRefreshTokenMatches(
+    userId: string,
+    refreshToken: string,
+  ): Promise<UserEntity> {
     const user = await this.getUserWithRefreshToken(userId);
-    
-    const isEqual = await argon2.verify(
-      refreshToken,
-      user.refreshToken,
-    );
+
+    const isEqual = await argon2.verify(refreshToken, user.refreshToken);
 
     if (isEqual) {
       return user;
-    } 
+    }
     throw new UnauthorizedException('Error validating refresh token');
   }
 
@@ -61,7 +61,7 @@ export class UserService {
   }
 
   async findByEmail(email: string): Promise<UserRO> {
-    const user = await this.userRepository.findOne({email});
+    const user = await this.userRepository.findOne({ email });
 
     if (!user) {
       throw new NotFoundException('User with this id does not exist');
@@ -75,7 +75,7 @@ export class UserService {
 
   async removeRefreshToken(userId: string) {
     return this.userRepository.update(userId, {
-      refreshToken: null
+      refreshToken: null,
     });
   }
 
@@ -96,7 +96,7 @@ export class UserService {
       .select('user')
       .addSelect('user.refreshToken')
       .where('user.id = :userId', { userId: userId })
-      .getOneOrFail()
+      .getOneOrFail();
 
     return user;
   }

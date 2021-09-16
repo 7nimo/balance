@@ -1,4 +1,12 @@
-import { Controller, Get, HttpCode, Post, Req, Res, UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  HttpCode,
+  Post,
+  Req,
+  Res,
+  UseGuards,
+} from '@nestjs/common';
 import { Response } from 'express';
 import { Public } from 'src/common/decorators/public.decorator';
 import { User } from 'src/common/decorators/user.decorator';
@@ -20,22 +28,26 @@ export class AuthController {
   @Post('sign-in')
   login(@User() user: UserEntity, @Res() res: Response) {
     const accessTokenCookie = this.authService.getCookieWithJwt(user.id);
-    const refreshTokenCookie = this.authService.getCookieWithRefreshToken(user.id);
+    const refreshTokenCookie = this.authService.getCookieWithRefreshToken(
+      user.id,
+    );
     this.userService.saveRefreshToken(user.id, refreshTokenCookie);
 
     res.setHeader('Set-Cookie', [accessTokenCookie, refreshTokenCookie]);
-    res.json({user});
+    res.json({ user });
   }
 
   @UseGuards(JwtRefreshGuard)
   @Get('refresh')
   refresh(@User() user: UserEntity, @Res() res: Response) {
     const accessTokenCookie = this.authService.getCookieWithJwt(user.id);
-    const refreshTokenCookie = this.authService.getCookieWithRefreshToken(user.id);
+    const refreshTokenCookie = this.authService.getCookieWithRefreshToken(
+      user.id,
+    );
     this.userService.saveRefreshToken(user.id, refreshTokenCookie);
- 
+
     res.setHeader('Set-Cookie', [accessTokenCookie, refreshTokenCookie]);
-    res.json({status: 'accepted'});
+    res.json({ status: 'accepted' });
   }
 
   @Post('sign-out')
@@ -44,6 +56,6 @@ export class AuthController {
     await this.userService.removeRefreshToken(userId);
 
     res.setHeader('Set-Cookie', this.authService.getCookiesForLogOut());
-    res.json({status: 'accepted'});
+    res.json({ status: 'accepted' });
   }
 }
