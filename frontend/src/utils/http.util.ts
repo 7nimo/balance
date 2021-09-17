@@ -2,18 +2,14 @@ interface HttpResponse<T> extends Response {
   data?: T;
 }
 
-export async function http<T>(
-  request: RequestInfo,
-): Promise<HttpResponse<T>> {
-  const response: HttpResponse<T> = await fetch(
-    request,
-  );
+export async function http<T>(request: RequestInfo): Promise<HttpResponse<T>> {
+  const response: HttpResponse<T> = await fetch(request);
 
   try {
     // may error if there is no body
     response.data = await response.json();
-  // eslint-disable-next-line no-empty
-  } catch (error) { }
+    // eslint-disable-next-line no-empty
+  } catch (error) {}
 
   if (!response.ok) {
     throw new Error(response.statusText);
@@ -28,7 +24,7 @@ export async function get<T>(
     headers: {
       'Content-Type': 'application/json',
     },
-  },
+  }
 ): Promise<HttpResponse<T>> {
   return http<T>(new Request(path, args));
 }
@@ -42,7 +38,7 @@ export async function post<T>(
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(body),
-  },
+  }
 ): Promise<HttpResponse<T>> {
   return http<T>(new Request(path, args));
 }
@@ -56,7 +52,7 @@ export async function put<T>(
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(body),
-  },
+  }
 ): Promise<HttpResponse<T>> {
   return http<T>(new Request(path, args));
 }
