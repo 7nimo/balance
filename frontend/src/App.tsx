@@ -3,7 +3,8 @@ import './App.css';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
 
-import { AuthProvider } from './providers/auth';
+import { useForm } from 'react-hook-form';
+import { AuthProvider } from './api/auth';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -13,16 +14,31 @@ const queryClient = new QueryClient({
   },
 });
 
-function App() {
+type FormValues = {
+  email: string;
+  password: string;
+};
+
+const App: React.FC = () => {
+  const { register, handleSubmit } = useForm<FormValues>();
+  const onSubmit = handleSubmit((data) => console.log(data));
+
   return (
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
-        <main className="App" />
+        <main className="App">
+          <form onSubmit={onSubmit}>
+            <input type="email" {...register('email')} />
+            <input type="password" {...register('password')} />
+
+            <input type="submit" />
+          </form>
+        </main>
       </AuthProvider>
 
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   );
-}
+};
 
 export default App;

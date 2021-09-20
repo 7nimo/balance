@@ -1,10 +1,12 @@
 import { initReactQueryAuth } from 'react-query-auth';
 
 import { API_URL } from '../config/constants';
-import {
-  LoginCredentials, RegisterCredentials, User, Status,
-} from '../models';
+import { LoginCredentials, RegisterCredentials, User, Status } from '../models';
 import { post } from '../utils/http.util';
+
+interface Error {
+  message: string;
+}
 
 const loadUser = async (userId: string): Promise<User> => {
   // this should return user profile in the future
@@ -17,10 +19,7 @@ const loadUser = async (userId: string): Promise<User> => {
 };
 
 const loginFn = async (loginCredentials: LoginCredentials): Promise<User> => {
-  const { data: user } = await post<User>(
-    `${API_URL}/auth/sign-in`,
-    loginCredentials,
-  );
+  const { data: user } = await post<User>(`${API_URL}/auth/sign-in`, loginCredentials);
 
   if (!user) {
     throw new Error('Login process failed');
@@ -54,8 +53,8 @@ const authConfig = {
 };
 
 export const { AuthProvider, useAuth } = initReactQueryAuth<
-User,
-Error,
-LoginCredentials,
-RegisterCredentials
+  User,
+  Error,
+  LoginCredentials,
+  RegisterCredentials
 >(authConfig);
