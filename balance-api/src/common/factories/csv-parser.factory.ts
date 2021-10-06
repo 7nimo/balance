@@ -3,13 +3,12 @@ import { TransactionEntity } from 'src/transaction/entities/transaction.entity';
 import * as fs from 'fs';
 import * as readline from 'readline';
 import { EOL } from 'os';
-import iconv from 'iconv-lite';
 
 @Injectable()
 export class CsvParserFactory {
   private parsers = {
     Lloyds: this.parseLloydsCsv,
-    Mbank: this.parseMBankCsv,
+    mBank: this.parseMBankCsv,
   };
 
   getParser(bankName: string) {
@@ -59,6 +58,9 @@ export class CsvParserFactory {
     const transactions: TransactionEntity[] = [];
     const rows: string[] = [];
 
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    const iconv = require('iconv-lite');
+
     const stream = fs
       .createReadStream(filePath)
       .pipe(iconv.decodeStream('win1250'))
@@ -79,7 +81,7 @@ export class CsvParserFactory {
     }
 
     const records = rows
-      // exclude rows containing unwanted data
+      // exclude rows containing unwanted data from csv
       .slice(38, -5)
       .map((row: string) => row.split(';'));
 
