@@ -70,7 +70,7 @@ export class UserService {
   }
 
   async remove(id: string): Promise<void> {
-    await this.userRepository.delete(id);
+    this.userRepository.delete(id);
   }
 
   async removeRefreshToken(userId: string) {
