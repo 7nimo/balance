@@ -11,7 +11,7 @@ import {
 import { ApiTags } from '@nestjs/swagger';
 import { Public } from 'src/common/decorators/public.decorator';
 import { User } from 'src/common/decorators/user.decorator';
-import { CreateUserDto, UserDto } from './dto';
+import { CreateUserDto } from './dto';
 import { UserRO } from './user.interface';
 import { UserService } from './user.service';
 
