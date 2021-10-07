@@ -10,6 +10,7 @@ import {
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { Public } from 'src/common/decorators/public.decorator';
+import { User } from 'src/common/decorators/user.decorator';
 import { CreateUserDto, UserDto } from './dto';
 import { UserRO } from './user.interface';
 import { UserService } from './user.service';
@@ -25,11 +26,9 @@ export class UserController {
     return this.userService.create(createUserDto);
   }
 
-  @Get(':uuid')
-  findById(
-    @Param('uuid', new ParseUUIDPipe({ version: '4' })) uuid: string,
-  ): Promise<UserRO> {
-    return this.userService.findById(uuid);
+  @Get()
+  findById(@User('id') userId: string): Promise<UserRO> {
+    return this.userService.findById(userId);
   }
 
   @HttpCode(204)
