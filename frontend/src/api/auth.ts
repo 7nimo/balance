@@ -1,60 +1,35 @@
-import { initReactQueryAuth } from 'react-query-auth';
-
 import { API_URL } from '../config/constants';
-import { LoginCredentials, RegisterCredentials, User, Status } from '../models';
-import { post } from '../utils/http.util';
+import { LoginCredentials, RegisterCredentials, Status, User } from '../models';
+import { get, post } from '../utils/http.util';
 
-interface Error {
-  message: string;
+export async function getUserData(): Promise<User | undefined> {
+  const { data: user } = await get<User>(`${API_URL}/user/`);
+
+  return user;
 }
 
-const loadUser = async (userId: string): Promise<User> => {
-  // this should return user profile in the future
-  const { data: user } = await post<User>(`${API_URL}/auth/sign-in`, userId);
+export async function loginWithEmailAndPassword(data: LoginCredentials): Promise<User | undefined> {
+  const { data: user } = await post<User>(`${API_URL}/auth/sign-in/`, data);
 
-  if (!user) {
-    throw new Error('Error while getting user data');
-  }
   return user;
-};
+}
 
-const loginFn = async (loginCredentials: LoginCredentials): Promise<User> => {
-  const { data: user } = await post<User>(`${API_URL}/auth/sign-in`, loginCredentials);
+export async function getNewRefreshToken(): Promise<Status | undefined> {
+  const { data: status } = await post<Status>(`${API_URL}/auth/refresh/`);
 
-  if (!user) {
-    throw new Error('Login process failed');
-  }
-  return user;
-};
-
-const registerFn = async (registerCredentials: RegisterCredentials): Promise<User> => {
-  const { data: user } = await post<User>(`${API_URL}/user`, registerCredentials);
-
-  if (!user) {
-    throw new Error('Registration process failed');
-  }
-  return user;
-};
-
-const logoutFn = async (): Promise<Status> => {
-  const { data: status } = await post<Status>(`${API_URL}/auth/sign-out`, null);
-
-  if (!status) {
-    throw new Error('Logout process failed');
-  }
   return status;
-};
+}
 
-const authConfig = {
-  loadUser,
-  loginFn,
-  registerFn,
-  logoutFn,
-};
+export async function registerWithEmailAndPassword(
+  data: RegisterCredentials
+): Promise<User | undefined> {
+  const { data: user } = await post<User>(`${API_URL}/user/`, data);
 
-export const { AuthProvider, useAuth } = initReactQueryAuth<
-  User,
-  Error,
-  LoginCredentials,
-  RegisterCredentials
->(authConfig);
+  return user;
+}
+
+export async function logout(): Promise<Status | undefined> {
+  const { data: status } = await post<Status>(`${API_URL}/auth/sign-out/`, null);
+
+  return status;
+}

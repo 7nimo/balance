@@ -1,19 +1,23 @@
-interface HttpResponse<T> extends Response {
+export interface HttpResponse<T> extends Response {
   data?: T;
 }
 
 export async function http<T>(request: RequestInfo): Promise<HttpResponse<T>> {
   const response: HttpResponse<T> = await fetch(request);
 
-  try {
-    // may error if there is no body
-    response.data = await response.json();
-    // eslint-disable-next-line no-empty
-  } catch (error) {}
-
   if (!response.ok) {
     throw new Error(response.statusText);
   }
+
+  try {
+    // may error if there is no body
+    response.data = await response.json();
+  } catch (error) {
+    if (error instanceof Error) {
+      throw new Error(error.message);
+    }
+  }
+
   return response;
 }
 
@@ -24,6 +28,7 @@ export async function get<T>(
     headers: {
       'Content-Type': 'application/json',
     },
+    credentials: 'include',
   }
 ): Promise<HttpResponse<T>> {
   return http<T>(new Request(path, args));
@@ -31,12 +36,13 @@ export async function get<T>(
 
 export async function post<T>(
   path: string,
-  body: any,
+  body?: any,
   args: RequestInit = {
     method: 'post',
     headers: {
       'Content-Type': 'application/json',
     },
+    credentials: 'include',
     body: JSON.stringify(body),
   }
 ): Promise<HttpResponse<T>> {
@@ -51,6 +57,7 @@ export async function put<T>(
     headers: {
       'Content-Type': 'application/json',
     },
+    credentials: 'include',
     body: JSON.stringify(body),
   }
 ): Promise<HttpResponse<T>> {

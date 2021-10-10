@@ -3,12 +3,12 @@ import { getUserData, registerWithEmailAndPassword, loginWithEmailAndPassword } 
 
 import { API_URL } from '../config/constants';
 import { LoginCredentials, RegisterCredentials, User, Status, Error } from '../models';
-import { handleApiResponse, post } from '../utils/http.util';
+import { post } from '../utils/http.util';
 
 const waitInitial = false;
 
-const loadUser = async (): Promise<User | null> => {
-  let user = null;
+const loadUser = async (): Promise<User | undefined> => {
+  let user;
 
   if (!user) {
     user = await getUserData();
@@ -17,20 +17,20 @@ const loadUser = async (): Promise<User | null> => {
   return user;
 };
 
-const loginFn = async (loginCredentials: LoginCredentials): Promise<User> => {
+const loginFn = async (loginCredentials: LoginCredentials): Promise<User | undefined> => {
   const user = await loginWithEmailAndPassword(loginCredentials);
 
   return user;
 };
 
-const registerFn = async (registerCredentials: RegisterCredentials): Promise<User> => {
+const registerFn = async (registerCredentials: RegisterCredentials): Promise<User | undefined> => {
   const user = await registerWithEmailAndPassword(registerCredentials);
 
   return user;
 };
 
-const logoutFn = async (): Promise<Status> => {
-  const status = await post<Status>(`${API_URL}/auth/sign-out`).then(handleApiResponse);
+const logoutFn = async (): Promise<Status | undefined> => {
+  const { data: status } = await post<Status>(`${API_URL}/auth/sign-out`);
 
   return status;
 };
@@ -44,7 +44,7 @@ const authConfig = {
 };
 
 const { AuthProvider, AuthConsumer, useAuth } = initReactQueryAuth<
-  User | null,
+  User | undefined,
   Error,
   LoginCredentials,
   RegisterCredentials

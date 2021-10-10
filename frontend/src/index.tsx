@@ -4,10 +4,16 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { ReactQueryProvider } from './lib/react-query';
+import { AuthProvider } from './lib/auth';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <ReactQueryProvider>
+      <AuthProvider>
+        <App />
+      </AuthProvider>
+    </ReactQueryProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );
