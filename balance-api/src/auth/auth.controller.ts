@@ -1,14 +1,11 @@
 import {
   Controller,
-  Get,
   HttpCode,
   Post,
-  Req,
   Res,
   UseGuards,
 } from '@nestjs/common';
 import { Response } from 'express';
-import { access } from 'fs';
 import { Public } from 'src/common/decorators/public.decorator';
 import { User } from 'src/common/decorators/user.decorator';
 import { UserEntity } from 'src/user/entities/user.entity';
