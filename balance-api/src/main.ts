@@ -15,8 +15,13 @@ import { ValidationPipe } from './common/pipes/validation.pipe';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
+  const corsConfig = {
+    credentials: true,
+    origin: true,
+  };
+
   app.setGlobalPrefix('api');
-  app.enableCors();
+  app.enableCors(corsConfig);
   app.use(helmet());
   app.use(cookieParser());
   // app.use(csurf());

@@ -6,10 +6,11 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UserEntity } from './entities/user.entity';
-import { getConnection, Repository } from 'typeorm';
+import { Repository, ReturningStatementNotSupportedError } from 'typeorm';
 import { CreateUserDto, UserDto } from './dto';
 import * as argon2 from 'argon2';
 import { UserRO } from './user.interface';
+import { constants } from 'buffer';
 
 @Injectable()
 export class UserService {
@@ -32,23 +33,29 @@ export class UserService {
   }
 
   async saveRefreshToken(userId: string, refreshToken: string) {
-    const refreshTokenHash = await argon2.hash(refreshToken);
-
-    this.userRepository.update(userId, { refreshToken: refreshTokenHash });
+    const hashedRefreshToken = await argon2.hash(refreshToken);
+    
+    try {
+      await this.userRepository.update(userId, { refreshToken: hashedRefreshToken }); 
+    } catch (error) {
+      throw new Error(error);
+    }
   }
 
   async getUserIfRefreshTokenMatches(
     userId: string,
     refreshToken: string,
-  ): Promise<UserEntity> {
-    const user = await this.getUserWithRefreshToken(userId);
+  ): Promise<UserRO> {
 
-    const isEqual = await argon2.verify(refreshToken, user.refreshToken);
+    const { refreshToken: hashedRefreshToken , ...user } = await this.getUserWithRefreshToken(userId);
 
-    if (isEqual) {
-      return user;
+    const isEqual = await argon2.verify(hashedRefreshToken, refreshToken);
+
+    if (!isEqual) {
+      throw new UnauthorizedException('Error validating refresh token');
     }
-    throw new UnauthorizedException('Error validating refresh token');
+
+    return { user } as UserRO;
   }
 
   async findById(id: string): Promise<UserRO> {
@@ -73,9 +80,9 @@ export class UserService {
     this.userRepository.delete(id);
   }
 
-  async removeRefreshToken(userId: string) {
+  async revokeRefreshToken(userId: string) {
     return this.userRepository.update(userId, {
-      refreshToken: null,
+      refreshToken: '',
     });
   }
 

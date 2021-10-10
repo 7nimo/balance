@@ -5,6 +5,7 @@ import { ConfigService } from '@nestjs/config';
 import { Request } from 'express';
 import { JwtPayload } from '../jwt-payload.interface';
 import { UserService } from 'src/user/user.service';
+import { UserRO } from 'src/user/user.interface';
 
 @Injectable()
 export class JwtRefreshTokenStrategy extends PassportStrategy(
@@ -26,12 +27,10 @@ export class JwtRefreshTokenStrategy extends PassportStrategy(
     });
   }
 
-  async validate(request: Request, payload: JwtPayload) {
-    const refreshToken = request.cookies['_brt']
-    
-    const user = this.userService.getUserIfRefreshTokenMatches(
+  async validate(request: Request, payload: JwtPayload): Promise<UserRO> {
+    const user = await this.userService.getUserIfRefreshTokenMatches(
       payload.userId,
-      refreshToken,
+      request.cookies['_brt'],
     );
 
     return user;

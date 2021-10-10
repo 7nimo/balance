@@ -8,6 +8,7 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { Response } from 'express';
+import { access } from 'fs';
 import { Public } from 'src/common/decorators/public.decorator';
 import { User } from 'src/common/decorators/user.decorator';
 import { UserEntity } from 'src/user/entities/user.entity';
@@ -27,25 +28,27 @@ export class AuthController {
   @UseGuards(LocalAuthGuard)
   @Post('sign-in')
   login(@User() user: UserEntity, @Res() res: Response) {
-    const accessTokenCookie = this.authService.getCookieWithJwt(user.id);
-    const refreshTokenCookie = this.authService.getCookieWithRefreshToken(
-      user.id,
-    );
-    this.userService.saveRefreshToken(user.id, refreshTokenCookie);
+    const accessToken = this.authService.getAccessToken(user.id);
+    const refreshToken = this.authService.getRefreshToken(user.id);
+    this.userService.saveRefreshToken(user.id, refreshToken);
+
+    const accessTokenCookie = this.authService.getCookieWithJwt(accessToken);
+    const refreshTokenCookie = this.authService.getCookieWithRefreshToken(refreshToken);
 
     res.setHeader('Set-Cookie', [accessTokenCookie, refreshTokenCookie]);
     res.json({ user });
   }
 
   @UseGuards(JwtRefreshGuard)
-  @Get('refresh')
-  refresh(@User() user: UserEntity, @Res() res: Response) {
-    const accessTokenCookie = this.authService.getCookieWithJwt(user.id);
-    const refreshTokenCookie = this.authService.getCookieWithRefreshToken(
-      user.id,
-    );
-    this.userService.saveRefreshToken(user.id, refreshTokenCookie);
+  @Post('refresh')
+  refresh(@User('id') userId: string, @Res() res: Response) {
+    const accessToken = this.authService.getAccessToken(userId);
+    const refreshToken = this.authService.getRefreshToken(userId);
+    this.userService.saveRefreshToken(userId, refreshToken);
 
+    const accessTokenCookie = this.authService.getCookieWithJwt(accessToken);
+    const refreshTokenCookie = this.authService.getCookieWithRefreshToken(refreshToken);
+    
     res.setHeader('Set-Cookie', [accessTokenCookie, refreshTokenCookie]);
     res.json({ status: 'accepted' });
   }
@@ -53,7 +56,7 @@ export class AuthController {
   @Post('sign-out')
   @HttpCode(202)
   async logOut(@User('id') userId: string, @Res() res: Response) {
-    await this.userService.removeRefreshToken(userId);
+    await this.userService.revokeRefreshToken(userId);
 
     res.setHeader('Set-Cookie', this.authService.getCookiesForLogOut());
     res.json({ status: 'accepted' });

@@ -25,7 +25,7 @@ export class UserEntity {
 
   @Exclude()
   @Column({ select: false, nullable: true })
-  refreshToken?: string | null;
+  refreshToken?: string;
 
   @Column({ default: 'PLN' })
   baseCurrency: string;
@@ -39,7 +39,7 @@ export class UserEntity {
   @OneToMany(() => AccountEntity, (account) => account.user)
   accounts: AccountEntity[];
 
-  @BeforeInsert() async hashPassword() {
+  @BeforeInsert() async hashPassword(): Promise<void> {
     this.password = await argon2.hash(this.password);
   }
 
