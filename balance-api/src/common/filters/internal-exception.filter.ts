@@ -3,7 +3,7 @@ import { BaseExceptionFilter } from '@nestjs/core';
 import { Request } from 'express';
 
 @Catch(HttpException)
-export class InternalExceptionsFilter extends BaseExceptionFilter {
+export class InternalExceptionFilter extends BaseExceptionFilter {
   catch(exception: unknown, host: ArgumentsHost) {
     super.catch(exception, host);
 
