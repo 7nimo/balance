@@ -1,10 +1,4 @@
-import {
-  Controller,
-  HttpCode,
-  Post,
-  Res,
-  UseGuards,
-} from '@nestjs/common';
+import { Controller, HttpCode, Post, Res, UseGuards } from '@nestjs/common';
 import { Response } from 'express';
 import { Public } from 'src/common/decorators/public.decorator';
 import { User } from 'src/common/decorators/user.decorator';
@@ -30,7 +24,8 @@ export class AuthController {
     this.userService.saveRefreshToken(user.id, refreshToken);
 
     const accessTokenCookie = this.authService.getCookieWithJwt(accessToken);
-    const refreshTokenCookie = this.authService.getCookieWithRefreshToken(refreshToken);
+    const refreshTokenCookie =
+      this.authService.getCookieWithRefreshToken(refreshToken);
 
     res.setHeader('Set-Cookie', [accessTokenCookie, refreshTokenCookie]);
     res.json({ user });
@@ -44,8 +39,9 @@ export class AuthController {
     this.userService.saveRefreshToken(userId, refreshToken);
 
     const accessTokenCookie = this.authService.getCookieWithJwt(accessToken);
-    const refreshTokenCookie = this.authService.getCookieWithRefreshToken(refreshToken);
-    
+    const refreshTokenCookie =
+      this.authService.getCookieWithRefreshToken(refreshToken);
+
     res.setHeader('Set-Cookie', [accessTokenCookie, refreshTokenCookie]);
     res.json({ status: 'accepted' });
   }

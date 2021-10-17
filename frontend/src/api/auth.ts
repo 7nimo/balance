@@ -14,10 +14,8 @@ export async function loginWithEmailAndPassword(data: LoginCredentials): Promise
   return user;
 }
 
-export async function getNewRefreshToken(): Promise<Status | undefined> {
-  const { data: status } = await post<Status>(`${API_URL}/auth/refresh/`);
-
-  return status;
+export async function getNewRefreshToken(): Promise<void> {
+  await post<Status>(`${API_URL}/auth/refresh/`);
 }
 
 export async function registerWithEmailAndPassword(

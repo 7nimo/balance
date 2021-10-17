@@ -1,4 +1,3 @@
-import { PropsWithChildren } from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
 
@@ -11,11 +10,15 @@ const queryClient = new QueryClient({
   },
 });
 
-export function ReactQueryProvider({ children }: PropsWithChildren<{}>): JSX.Element {
+interface Props {
+  children: React.ReactNode;
+}
+
+export const ReactQueryProvider: React.FC<Props> = ({ children }) => {
   return (
     <QueryClientProvider client={queryClient}>
       <ReactQueryDevtools />
       {children}
     </QueryClientProvider>
   );
-}
+};

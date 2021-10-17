@@ -3,7 +3,9 @@ export interface HttpResponse<T> extends Response {
 }
 
 export async function http<T>(request: RequestInfo): Promise<HttpResponse<T>> {
-  const response: HttpResponse<T> = await fetch(request);
+  const response: HttpResponse<T> = await fetch(request).catch((err) => {
+    throw new Error(err);
+  });
 
   if (!response.ok) {
     throw new Error(response.statusText);
