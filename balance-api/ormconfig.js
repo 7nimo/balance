@@ -9,4 +9,4 @@ module.exports = {
   seeds: ['dist/database/seeds/*.seed{.ts,.js}'],
   synchronize: true,
   // logging: ["query", "error"]
-}
+};
