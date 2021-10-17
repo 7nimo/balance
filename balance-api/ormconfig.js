@@ -1,3 +1,7 @@
+const SnakeNamingStrategy =
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  require('typeorm-naming-strategies').SnakeNamingStrategy;
+
 module.exports = {
   type: 'postgres',
   host: process.env.POSTGRES_HOST,
@@ -8,5 +12,6 @@ module.exports = {
   entities: ['dist/**/entities/*.entity{.ts,.js}'],
   seeds: ['dist/database/seeds/*.seed{.ts,.js}'],
   synchronize: true,
+  namingStrategy: new SnakeNamingStrategy(),
   // logging: ["query", "error"]
 };
