@@ -42,9 +42,10 @@ export class UserEntity {
   @OneToMany(() => AccountEntity, (account) => account.user)
   accounts: AccountEntity[];
 
-  @BeforeInsert() async hashPassword(): Promise<void> {
-    this.password = await argon2.hash(this.password);
-  }
+  // @BeforeInsert()
+  // async hashPassword(): Promise<void> {
+  //   this.password = await argon2.hash(this.password);
+  // }
 
   constructor(partial: Partial<UserEntity>) {
     Object.assign(this, partial);

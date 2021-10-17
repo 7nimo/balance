@@ -1,11 +1,12 @@
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import { PassportStrategy } from '@nestjs/passport';
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { Request } from 'express';
 import { JwtPayload } from '../jwt-payload.interface';
 import { UserService } from 'src/user/user.service';
 import { UserRO } from 'src/user/user.interface';
+import * as argon2 from 'argon2';
 
 @Injectable()
 export class JwtRefreshTokenStrategy extends PassportStrategy(
@@ -28,11 +29,18 @@ export class JwtRefreshTokenStrategy extends PassportStrategy(
   }
 
   async validate(request: Request, payload: JwtPayload): Promise<UserRO> {
-    const user = await this.userService.getUserIfRefreshTokenMatches(
-      payload.userId,
+    const { refreshToken: hashedRefreshToken, ...user } =
+      await this.userService.getUserWithRefreshToken(payload.userId);
+
+    const isEqual = await argon2.verify(
+      hashedRefreshToken,
       request.cookies['_brt'],
     );
 
-    return user;
+    if (!isEqual) {
+      throw new UnauthorizedException('Error validating refresh token');
+    }
+
+    return { user };
   }
 }

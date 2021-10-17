@@ -4,8 +4,8 @@ import {
   Delete,
   Get,
   HttpCode,
-  Param,
-  ParseUUIDPipe,
+  HttpException,
+  HttpStatus,
   Post,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
@@ -22,8 +22,15 @@ export class UserController {
 
   @Public()
   @Post()
-  create(@Body() createUserDto: CreateUserDto): Promise<UserRO> {
-    return this.userService.create(createUserDto);
+  async create(@Body() createUserDto: CreateUserDto): Promise<UserRO> {
+    try {
+      return await this.userService.create(createUserDto);
+    } catch (error) {
+      throw new HttpException(
+        'Email is invalid or already taken',
+        HttpStatus.UNPROCESSABLE_ENTITY,
+      );
+    }
   }
 
   @Get()
@@ -32,10 +39,8 @@ export class UserController {
   }
 
   @HttpCode(204)
-  @Delete(':uuid')
-  remove(
-    @Param('uuid', new ParseUUIDPipe({ version: '4' })) uuid: string,
-  ): Promise<void> {
-    return this.userService.remove(uuid);
+  @Delete()
+  remove(@User('id') userId: string): Promise<void> {
+    return this.userService.remove(userId);
   }
 }

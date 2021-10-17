@@ -9,7 +9,7 @@ export class CreateUserDto {
   @MaxLength(255)
   // to do: Implement Proper Password Strength validation
   // @Matches(pattern: RegExp, modifiers?: string)
-  readonly password: string;
+  password: string;
 
   @IsString()
   readonly username: string;
