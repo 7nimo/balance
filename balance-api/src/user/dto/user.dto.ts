@@ -1,4 +1,4 @@
-import { IsEmail, IsUUID } from 'class-validator';
+import { IsEmail, IsString, IsUUID } from 'class-validator';
 
 export class UserDto {
   @IsUUID('4')
@@ -6,4 +6,7 @@ export class UserDto {
 
   @IsEmail()
   readonly email: string;
+
+  @IsString()
+  readonly username: string;
 }

@@ -1,5 +1,5 @@
-// eslint-disable-next-line import/no-cycle
-import { Bank, Currency } from '.';
+import { Bank } from './bank';
+import { Currency } from './currency';
 
 export interface Account {
   id: string;

@@ -10,6 +10,9 @@ export class CreateUserDto {
   // to do: Implement Proper Password Strength validation
   // @Matches(pattern: RegExp, modifiers?: string)
   readonly password: string;
+
+  @IsString()
+  readonly username: string;
 }
 
 export class AdditionalUserInfo {
