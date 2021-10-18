@@ -1,7 +1,7 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UserEntity } from 'src/user/entities/user.entity';
-import { getConnection, Repository } from 'typeorm';
+import { DeleteResult, getConnection, Repository, UpdateResult } from 'typeorm';
 import { AccountRO, AccountsRO } from './account.interface';
 import { CreateAccountDto, UpdateAccountDto } from './dto';
 import { AccountEntity } from './entities/account.entity';
@@ -21,25 +21,19 @@ export class AccountService {
       user: userId,
       ...createAccountDto,
     });
-    this.accountRepository.save(account);
+    await this.accountRepository.save(account);
 
     return { account };
   }
 
   async findOne(userId: string, accountId: string) {
-    const account = await this.accountRepository.findOne({
+    return await this.accountRepository.findOne({
       where: { user: userId, id: accountId },
       relations: ['bank', 'currency'],
     });
-    if (!account) {
-      throw new NotFoundException(
-        `Account with id ${accountId} does not exist`,
-      );
-    }
-    return { account };
   }
 
-  async find(userId: string): Promise<AccountsRO> {
+  async findAll(userId: string): Promise<AccountsRO> {
     const accounts = await this.accountRepository.find({
       where: { user: userId },
     });
@@ -48,26 +42,23 @@ export class AccountService {
   }
 
   async update(
-    userId: Partial<UserEntity>,
-    uuid: string,
+    userId: Pick<UserEntity, 'id'>,
+    accountId: string,
     updateAccountDto: UpdateAccountDto,
-  ): Promise<void> {
-    const result = await this.accountRepository.update(
-      { user: userId, id: uuid },
+  ): Promise<UpdateResult> {
+    return this.accountRepository.update(
+      { user: userId, id: accountId },
       updateAccountDto,
     );
-    if (result.affected === 0) {
-      throw new NotFoundException(`Account with id ${uuid} does not exist`);
-    }
   }
 
-  async remove(userId: string, uuid: string): Promise<void> {
-    await getConnection()
+  async remove(userId: string, accountId: string): Promise<DeleteResult> {
+    return getConnection()
       .createQueryBuilder()
       .delete()
       .from(AccountEntity)
       .where('user = :userId', { userId: userId })
-      .andWhere('id = :id', { id: uuid })
+      .andWhere('id = :id', { id: accountId })
       .execute();
   }
 }

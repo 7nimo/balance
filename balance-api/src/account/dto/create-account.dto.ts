@@ -1,9 +1,11 @@
 import {
+  IsAlphanumeric,
   IsInt,
   IsNotEmpty,
   IsOptional,
   IsString,
   Matches,
+  MaxLength,
 } from 'class-validator';
 import { BankEntity } from 'src/bank/entities/bank.entity';
 import { CurrencyEntity } from 'src/currency/entities/currency.entity';
@@ -18,8 +20,9 @@ export class CreateAccountDto {
   readonly sortCode?: string;
 
   @IsOptional()
-  @IsInt()
-  readonly accountNumber?: number;
+  @MaxLength(30)
+  @IsAlphanumeric()
+  readonly accountNumber?: string;
 
   @IsInt()
   readonly bank: BankEntity;

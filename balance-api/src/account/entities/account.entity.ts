@@ -23,8 +23,8 @@ export class AccountEntity {
   @Column({ nullable: true })
   sortCode: string;
 
-  @Column({ type: 'integer', nullable: true })
-  accountNumber: number;
+  @Column({ nullable: true })
+  accountNumber: string;
 
   @Column({ type: 'numeric', precision: 15, scale: 6, default: 0 })
   balance: number;
