@@ -24,7 +24,7 @@ export class UserEntity {
 
   @Exclude()
   @Column({ select: false })
-  password: string;
+  password?: string;
 
   @Exclude()
   @Column({ select: false, nullable: true })

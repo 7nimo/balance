@@ -1,1 +1,1 @@
-export { JwtPayloadDto } from './jwt-payload.dto';
+export * from './jwt-payload.dto';

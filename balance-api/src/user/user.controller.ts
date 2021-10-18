@@ -4,9 +4,8 @@ import {
   Delete,
   Get,
   HttpCode,
-  HttpException,
-  HttpStatus,
   Post,
+  UnprocessableEntityException,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { Public } from 'src/common/decorators/public.decorator';
@@ -26,9 +25,8 @@ export class UserController {
     try {
       return await this.userService.create(createUserDto);
     } catch (error) {
-      throw new HttpException(
+      throw new UnprocessableEntityException(
         'Email is invalid or already taken',
-        HttpStatus.UNPROCESSABLE_ENTITY,
       );
     }
   }
@@ -40,7 +38,7 @@ export class UserController {
 
   @HttpCode(204)
   @Delete()
-  remove(@User('id') userId: string): Promise<void> {
-    return this.userService.remove(userId);
+  async remove(@User('id') userId: string): Promise<void> {
+    await this.userService.remove(userId);
   }
 }

@@ -1,7 +1,7 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UserEntity } from './entities/user.entity';
-import { Repository } from 'typeorm';
+import { DeleteResult, Repository } from 'typeorm';
 import { CreateUserDto } from './dto';
 import * as argon2 from 'argon2';
 import { UserRO } from './user.interface';
@@ -35,8 +35,8 @@ export class UserService {
     return { user };
   }
 
-  async remove(id: string): Promise<void> {
-    this.userRepository.delete(id);
+  async remove(id: string): Promise<DeleteResult> {
+    return this.userRepository.delete(id);
   }
 
   async getUserWithPwd(email: string): Promise<UserEntity> {

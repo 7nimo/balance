@@ -2,7 +2,7 @@ import { Controller, HttpCode, Post, Res, UseGuards } from '@nestjs/common';
 import { Response } from 'express';
 import { Public } from 'src/common/decorators/public.decorator';
 import { User } from 'src/common/decorators/user.decorator';
-import { UserEntity } from 'src/user/entities/user.entity';
+import { UserRO } from 'src/user/user.interface';
 import { UserService } from 'src/user/user.service';
 import { AuthService } from './auth.service';
 import JwtRefreshGuard from './guards/jwt-refresh.guard';
@@ -18,17 +18,17 @@ export class AuthController {
   @Public()
   @UseGuards(LocalAuthGuard)
   @Post('sign-in')
-  login(@User() user: UserEntity, @Res() res: Response) {
-    const accessToken = this.authService.getAccessToken(user.id);
-    const refreshToken = this.authService.getRefreshToken(user.id);
-    this.userService.saveRefreshToken(user.id, refreshToken);
+  login(@User() user: UserRO, @Res() res: Response) {
+    const accessToken = this.authService.getAccessToken(user.user.id);
+    const refreshToken = this.authService.getRefreshToken(user.user.id);
+    this.userService.saveRefreshToken(user.user.id, refreshToken);
 
     const accessTokenCookie = this.authService.getCookieWithJwt(accessToken);
     const refreshTokenCookie =
       this.authService.getCookieWithRefreshToken(refreshToken);
 
     res.setHeader('Set-Cookie', [accessTokenCookie, refreshTokenCookie]);
-    res.json({ user });
+    res.json(user);
   }
 
   @UseGuards(JwtRefreshGuard)
