@@ -1,5 +1,6 @@
 {
-  "eslint.workingDirectories": ["src"],
+  "scss.lint.unknownAtRules": "ignore",
+  "eslint.workingDirectories": ["../src"],
   "editor.defaultFormatter": "dbaeumer.vscode-eslint",
   "editor.formatOnSave": true,
   "eslint.alwaysShowStatus": true,
@@ -13,5 +14,6 @@
   "[jsonc]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.formatOnSave": true
-  }
+  },
+  "typescript.tsdk": "node_modules/typescript/lib"
 }
