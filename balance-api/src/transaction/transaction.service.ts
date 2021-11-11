@@ -29,16 +29,12 @@ export class TransactionService {
   }
 
   async createMany(transactions: TransactionEntity[]) {
-    try {
-      const qb = await this.transactionRepository
-        .createQueryBuilder()
-        .insert()
-        .into(TransactionEntity)
-        .values(transactions)
-        .execute();
-    } catch (error) {
-      throw new InternalServerErrorException(error);
-    }
+    return await this.transactionRepository
+      .createQueryBuilder()
+      .insert()
+      .into(TransactionEntity)
+      .values(transactions)
+      .execute();
   }
 
   async findAll(userId: string, accountId: string): Promise<TransactionsRO> {
@@ -70,6 +66,7 @@ export class TransactionService {
   }
 
   async copyFromCsv(accountId: string, filePath: string): Promise<void> {
+    // for testing purposes
     const queryRunner = this.connection.createQueryRunner();
 
     try {

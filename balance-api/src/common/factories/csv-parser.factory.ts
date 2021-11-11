@@ -80,6 +80,14 @@ export class CsvParserFactory {
       rows.push(line);
     }
 
+    // todo implement mBank csv validation
+    // const mBankValidationString =
+    //   '#Data operacji;#Data księgowania;#Opis operacji;#Tytuł;#Nadawca/Odbiorca;#Numer konta;#Kwota;#Saldo po operacji';
+
+    // if (!rows.includes(mBankValidationString)) {
+    // }
+    // todo end
+
     const records = rows
       // exclude rows containing unwanted data from csv
       .slice(38, -5)

@@ -57,7 +57,7 @@ export class TransactionController {
     }
 
     const transactions: TransactionEntity[] = await this.csvParserService.parse(
-      account.account,
+      account,
       file.path,
     );
 
@@ -77,8 +77,3 @@ export class TransactionController {
     return this.transactionService.findOne(userId, accountId);
   }
 }
-
-// const statementSavedEvent = new StatementSavedEvent();
-// statementSavedEvent.accountId = accountId;
-// statementSavedEvent.path = file.path;
-// this.eventEmitter.emit('statement.saved', statementSavedEvent);

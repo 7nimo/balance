@@ -5,7 +5,7 @@
     "source.fixAll.eslint": true
   },
   "eslint.alwaysShowStatus": true,
-  "eslint.workingDirectories": ["src"],
+  "eslint.workingDirectories": ["../src"],
   "[json]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.formatOnSave": true
