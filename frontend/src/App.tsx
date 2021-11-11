@@ -1,21 +1,23 @@
-import React from 'react';
-import './App.css';
-
 import { useAuth } from './lib/auth';
-import { UserInfo } from './components/UserInfo';
-import { Login } from './components/Login';
-import { Button } from './components/Button';
+import { SignInForm } from './forms/SignInForm/SignInForm';
+import MainLayout from './components/Layout/MainLayout/MainLayout';
+import s from './App.module.scss';
 
-const App: React.FC = () => {
+function App(): JSX.Element {
   const { user } = useAuth();
   return (
-    <main>
-      {user ? <UserInfo /> : <Login />}
-      <div className="box">
-        <Button />
-      </div>
-    </main>
+    <>
+      {user ? (
+        <MainLayout />
+      ) : (
+        <div className={s.mainBackground}>
+          <div className={s.fullscreenLayout}>
+            <SignInForm />
+          </div>
+        </div>
+      )}
+    </>
   );
-};
+}
 
 export default App;

@@ -1,17 +1,24 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-
-import './index.css';
-import App from './App';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import reportWebVitals from './reportWebVitals';
 import { ReactQueryProvider } from './lib/react-query';
 import { AuthProvider } from './lib/auth';
+import App from './App';
+import Dashboard from './pages/Dashboard/Dashboard';
+import './index.scss';
 
 ReactDOM.render(
   <React.StrictMode>
     <ReactQueryProvider>
       <AuthProvider>
-        <App />
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<App />}>
+              <Route path="/dashboard" element={<Dashboard />} />
+            </Route>
+          </Routes>
+        </BrowserRouter>
       </AuthProvider>
     </ReactQueryProvider>
   </React.StrictMode>,

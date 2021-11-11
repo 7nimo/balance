@@ -1,0 +1,23 @@
+.wrapper {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  image-rendering: crisp-edges;
+  box-sizing: content-box;
+  min-height: 70px;
+  margin-left: 16px;
+
+  svg {
+    width: 28px;
+    height: 28px;
+  }
+}
+
+.logo {
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 32px;
+  letter-spacing: -0.04em;
+  padding-left: .5rem;
+  color: #000;
+}

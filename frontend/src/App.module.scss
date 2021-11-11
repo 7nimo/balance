@@ -1,0 +1,21 @@
+.fullscreenLayout {
+  max-width: 700px;
+  position: relative;
+  margin-left: 100px;
+  padding: 0 2rem;
+  height: 100%;
+}
+
+.mainBackground {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  background-position: 100% 100%;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-image: url("assets/backgrounds/temp_bg.svg");
+}
