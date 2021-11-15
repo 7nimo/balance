@@ -2,8 +2,8 @@
 import s from './Card.module.scss';
 
 interface CardProps {
-  children: React.ReactNode;
   style?: React.CSSProperties;
+  children: React.ReactNode;
 }
 
 export default function Card(CardProps: CardProps): JSX.Element {
