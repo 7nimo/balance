@@ -15,9 +15,12 @@ $colors: (
 
 @mixin default-theme {
   --background: white;
-  --text-color: var(--gray6);
-  --h-color: var(--gray6);
+  --text-color: var(--gray8);
+  --h-color: var(--gray8);
   --nav-bg: white;
+  --nav-shadow: 4px 0 10px -3px #c1c1c1;
+  --card-shadow: 0 4px 8px rgba(0,30,84,0.12);
+  --bg: #dbe1e8;
   --card-bg: white;
   --border: 1px solid var(--gray1);
 }
@@ -31,6 +34,9 @@ $colors: (
   --text-color: var(--gray2);
   --h-color: white;
   --nav-bg: var(--gray5);
+  --nav-shadow: 4px 0 10px -3px #010101;
+  --card-shadow: 0 4px 8px rgba(0,0,0,0.38);
+  --bg: var(--gray8);
   --card-bg: var(--gray5);
   --border: 1px solid var(--green-grad);
 }
@@ -53,13 +59,31 @@ $colors: (
   }
 
   --gray0: #f8f8f8;
-  --gray1: #d2d2d2;
-  --gray2: #adadad;
-  --gray3: #898989;
-  --gray4: #676767;
-  --gray5: #474747;
-  --gray6: #292929;
-  --purple-special: 88, 65, 216;
+  --gray1: #eef0f2;
+  --gray2: #e3e3e3;
+  --gray3: #d2d2d2;
+  --gray4: #adadad;
+  --gray5: #898989;
+  --gray6: #676767;
+  --gray7: #474747;
+  --gray8: #292929;
+ 
+  // --special: 88, 65, 216;
+  --special: 0, 62, 193;
+
+  // --icon-main: #b2becd;
+  // --icon-secondary: #a2a1ff;
+  // --icon-accent: #c1c0ff;
+
+  // --icon-main: #6563ff;
+  // --icon-secondary: #a2a1ff;
+  // --icon-accent: #c1c0ff;
+
+  --icon-main: #c1c0ff;
+  --icon-accent: #6563ff;
+
+  --btn-active: #e5e4ff;
+  --btn-active-hover: #c1c0ff;
 
   --green-grad: linear-gradient(
     to bottom right,
@@ -67,10 +91,29 @@ $colors: (
     var(--green-dark) 85%
   );
 
+  // --cosmos
+  --cosmic-grad: radial-gradient(
+    circle,
+    rgba(2,0,36,1) 0%,
+    rgba(99,99,171,1) 35%,
+    rgba(0,212,255,0.22871155298056722) 100%);
+
+
+  --test-grad: radial-gradient(
+    circle,
+    rgba(255,255,255,.5) 0%,
+    rgba(99,99,171,1) 35%,
+    rgba(0,212,255,0.22871155298056722) 100%);
+
+  --random-grad: radial-gradient(circle, rgba(131,58,180,1) 0%, rgba(204,41,89,0.16148466222426472) 36%, rgba(253,29,29,1) 73%, rgba(252,176,69,1) 100%);
+
+  --drawer-width: 250px;
+  --top-bar-height: 70px;
+  
   @include default-theme;
 }
 
-* { margin:0; padding:0; font-synthesis: none; }
+* { margin:0; padding:0; font-synthesis: none; box-sizing: border-box; }
 
 html {
   font-size: var(--font-size);

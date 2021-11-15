@@ -1,11 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import reportWebVitals from './reportWebVitals';
+import { BrowserRouter } from 'react-router-dom';
 import { ReactQueryProvider } from './lib/react-query';
 import { AuthProvider } from './lib/auth';
+import reportWebVitals from './reportWebVitals';
 import App from './App';
-import Dashboard from './pages/Dashboard/Dashboard';
 import './index.scss';
 
 ReactDOM.render(
@@ -13,11 +12,7 @@ ReactDOM.render(
     <ReactQueryProvider>
       <AuthProvider>
         <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<App />}>
-              <Route path="/dashboard" element={<Dashboard />} />
-            </Route>
-          </Routes>
+          <App />
         </BrowserRouter>
       </AuthProvider>
     </ReactQueryProvider>

@@ -1,0 +1,87 @@
+.drawerItem {
+  display: flex;
+  width: 100%;
+  height: 48px;
+}
+
+.focusableLink {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  text-decoration: none;
+  color: inherit;
+  border-radius: 1rem;
+  padding-left: .5rem;
+  transition: all .3s ease;
+
+  &:hover {
+    background: var(--gray1);
+
+    .iconWrapper {
+      background: var(--gray7);
+
+      --icon-main: #fafafa;
+      --icon-accent: #979797; 
+    }
+  }
+
+  &:focus {
+    outline: 2px solid var(--gray8);
+  }
+}
+
+:global {
+  .active {
+    background: var(--btn-active);
+
+    &:hover {
+      background: var(--btn-active-hover);
+    }
+  }
+}
+
+.iconWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  background: var(--gray1);
+  border-radius: 50%;
+  font-size: 24px;
+  transition: background-color .3s ease;
+}
+
+.navTitle { 
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--gray7);
+  padding-left: .5em;
+}
+
+// .shard {
+//   &::before { 
+//     content: ""; width: 100%; height: 100%; 
+//     background: rgba(255,255,255,0); top: 0; left: 0; 
+//     position: absolute;
+//   }
+//   @for $i from 1 through 30 {
+//     &:nth-child(#{$i}) .shard::before {
+//       $ad: ($i*0.05s+0.02s);
+//       @include animation(shimmer .8s $ad forwards);
+//     }
+//   }
+// }
+
+// @keyframes shimmer {
+//   0% {
+//     background-color: rgba(255,255,255,0);  
+//   }
+//   35% {
+//     background-color: rgba(255,255,255,.1);
+//   }
+//   100% {
+//     background-color: rgba(255,255,255,0);  
+//   }
+// }
