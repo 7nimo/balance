@@ -1,18 +1,24 @@
+import { LoginCredentials } from '@types';
 import cx from 'classnames';
 import { useEffect } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { Button } from '../../components/Form/Button/Button';
-import { useAuth } from '../../lib/auth';
-import { LoginCredentials } from '../../models';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { Button } from '../../Button/Button';
+import { useAuth } from '../../../lib/auth';
 import s from './SignInForm.module.scss';
 
-interface SignInInputs {
+type SignInInputs = {
   email: string;
   password: string;
-}
+};
 
 export function SignInForm(): JSX.Element {
   const { login } = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const from = location.state?.from?.pathname || '/dashboard';
+
   const {
     register,
     handleSubmit,
@@ -28,13 +34,8 @@ export function SignInForm(): JSX.Element {
     },
   });
 
-  const onSubmit: SubmitHandler<LoginCredentials> = async (values: SignInInputs) => {
-    try {
-      await login(values);
-    } catch (error) {
-      // eslint-disable-next-line no-console
-      console.log(error);
-    }
+  const onSubmit: SubmitHandler<LoginCredentials> = async (formData: SignInInputs) => {
+    login(formData).then(() => navigate(from, { replace: true }));
   };
 
   useEffect(() => {
