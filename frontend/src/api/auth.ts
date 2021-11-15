@@ -1,5 +1,5 @@
-import { API_URL } from '../config/constants';
-import { LoginCredentials, RegisterCredentials, Status, User } from '../models';
+import { LoginCredentials, RegisterCredentials, Status, User } from '@types';
+import { API_URL } from './constants';
 import { get, post } from '../utils/http.util';
 
 export async function getUserData(): Promise<User | undefined> {
