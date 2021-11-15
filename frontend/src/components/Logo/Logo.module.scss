@@ -3,13 +3,12 @@
   align-items: center;
   flex-direction: row;
   image-rendering: crisp-edges;
-  box-sizing: content-box;
-  min-height: 70px;
-  margin-left: 16px;
+  min-height: var(--top-bar-height);
+  margin-left: 1rem;
 
   svg {
-    width: 28px;
-    height: 28px;
+    width: 32px;
+    height: 32px;
   }
 }
 
