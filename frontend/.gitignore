@@ -8,6 +8,10 @@
 # testing
 /coverage
 
+# assets
+src/assets/svg/icons/streamline/
+src/assets/svg/icons/raw/
+
 # production
 /build
 

@@ -1,0 +1,12 @@
+{
+  "outDir": "./src/components/Icons",
+  "expandProps": false,
+  "titleProp": true,
+  "typescript": true,
+  "ext": "tsx",
+  "ignoreExisting": true,
+  "replaceAttrValues": {
+    "#91BEFF": "var(--icon-main)",
+    "#1F78F0": "var(--icon-accent)"
+  }
+}

@@ -9,7 +9,10 @@
     "eject": "react-scripts eject",
     "lint": "eslint src --ext .js,.jsx,.ts,.ts",
     "lint:fix": "eslint src --ext .js,.jsx,.ts,.tsx --fix",
-    "lint:quiet": "eslint src --ext .js,.jsx,.ts,.ts --quiet"
+    "lint:quiet": "eslint src --ext .js,.jsx,.ts,.ts --quiet",
+    "svgo": "rimraf ./src/assets/svg/icons/optimized  & svgo -q -p 8 -f ./src/assets/svg/icons/raw -o ./src/assets/svg/icons/optimized",
+    "svgr": "npx @svgr/cli --config-file .svgo.yml ./src/components/Icons ./src/assets/icons/optimized",
+    "icon-gen": "npx @svgr/cli --icon -d ./src/components/Icons ./src/assets/svg/icons/optimized"
   },
   "browserslist": {
     "production": [
@@ -40,11 +43,13 @@
     "react-query": "^3.32.0",
     "react-query-auth": "^1.1.0",
     "react-router-dom": "^6.0.1",
+    "styled-components": "^5.3.3",
     "typescript": "^4.4.4",
     "web-vitals": "^2.1.2",
     "yup": "^0.32.11"
   },
   "devDependencies": {
+    "@svgr/cli": "^5.5.0",
     "@types/react-router-dom": "^5.3.2",
     "@typescript-eslint/eslint-plugin": "^5.3.0",
     "@typescript-eslint/parser": "^5.3.0",
@@ -60,6 +65,8 @@
     "eslint-plugin-react-hooks": "^4.2.0",
     "prettier": "2.4.1",
     "react-scripts": "^4.0.3",
+    "rimraf": "^3.0.2",
+    "svgo": "^2.8.0",
     "typescript-plugin-css-modules": "^3.4.0"
   }
 }
