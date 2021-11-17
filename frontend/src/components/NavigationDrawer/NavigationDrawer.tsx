@@ -1,13 +1,29 @@
+import { fetchAccounts } from 'api/account';
 import SvgBank from 'components/icons/Bank';
-import SvgBitcoin from 'components/icons/Bitcoin';
 import SvgCalendar from 'components/icons/Calendar';
 import SvgPieChart from 'components/icons/PieChart';
 import SvgSettings from 'components/icons/Settings';
-import NavButton from 'components/NavButton/NavButton';
+import { NavButton } from 'components/NavButton/NavButton';
+// import { queryClient } from 'lib/react-query';
+import { NavButtonExpandable } from 'components/NavButtonExpandable/NavButtonExpandable';
+import { FC, useEffect, useState } from 'react';
+import { Account } from '@types';
+import SvgBtc from 'components/icons/Btc';
+import { useQuery } from 'react-query';
 import LogoWrapper from '../Logo/Logo';
 import s from './NavigationDrawer.module.scss';
 
-export function NavigationDrawer(): JSX.Element {
+export const NavigationDrawer: FC = () => {
+  // const { loading, data, error } = useQuery('accounts', fetchAccounts);
+  const { data } = useQuery('accounts', fetchAccounts);
+  const [accounts, setAccounts] = useState<Account[] | []>([]);
+
+  useEffect(() => {
+    if (data) {
+      setAccounts(data.accounts);
+    }
+  }, [data]);
+
   return (
     <nav className={s.sidebar}>
       <LogoWrapper />
@@ -17,10 +33,15 @@ export function NavigationDrawer(): JSX.Element {
           <NavButton link="dashboard" label="Assets" icon={<SvgPieChart />} />
         </li>
         <li className={s.listItem}>
-          <NavButton link="account" label="Bank Accounts" icon={<SvgBank />} />
+          <NavButtonExpandable
+            link="account"
+            label="Bank Accounts"
+            icon={<SvgBank />}
+            data={accounts}
+          />
         </li>
         <li className={s.listItem}>
-          <NavButton link="crypto" label="Crypto" icon={<SvgBitcoin />} />
+          <NavButton link="crypto" label="Crypto" icon={<SvgBtc />} />
         </li>
         <li className={s.listItem}>
           <NavButton link="calendar" label="Calendar" icon={<SvgCalendar />} />
@@ -31,4 +52,4 @@ export function NavigationDrawer(): JSX.Element {
       </ul>
     </nav>
   );
-}
+};

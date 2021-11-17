@@ -1,34 +1,21 @@
+import { FC } from 'react';
 import { NavLink } from 'react-router-dom';
-// import cx from 'classnames';
 import s from './NavButton.module.scss';
 
-interface NavButtonProps {
+interface Props extends React.HTMLAttributes<HTMLElement> {
   link: string;
   label: string;
   icon: JSX.Element;
-  collapsible?: boolean;
+  // style?: CSSProperties;
 }
 
-function NavButton({ link, label, icon, collapsible }: NavButtonProps): JSX.Element {
+export const NavButton: FC<Props> = ({ link, label, icon, style }) => {
   return (
-    <div className={s.drawerItem}>
-      {/* <NavLink to={`/${link}`} className={cx(s.focusableLink)}> */}
-      <NavLink
-        to={`/${link}`}
-        end
-        className={s.focusableLink}
-        // className={(isActive) => `${s.focusableLink}${!isActive ? '' : s.active}`}
-      >
+    <div style={style} className={s.drawerItem}>
+      <NavLink to={`/${link}`} end className={s.focusableLink}>
         <div className={s.iconWrapper}>{icon}</div>
-        <span className={s.navTitle}>{label}</span>
-        {collapsible ? '' : ''}
+        <span className={s.label}>{label}</span>
       </NavLink>
     </div>
   );
-}
-
-NavButton.defaultProps = {
-  collapsible: false,
 };
-
-export default NavButton;
