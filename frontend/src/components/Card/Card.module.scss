@@ -2,14 +2,12 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  width: 100%;
 
   color: var(--text-color);
   background: var(--card-bg);
 
   box-shadow: var(--card-shadow);
-  border-radius: 5px;
+  // border-radius: 5px;
+  border-radius: 25px;
   border: var(--border);
-
-  // padding: 1em;
 }

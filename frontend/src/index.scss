@@ -23,6 +23,11 @@ $colors: (
   --bg: #dbe1e8;
   --card-bg: white;
   --border: 1px solid var(--gray1);
+
+  --icon-main: #b2becd;
+  --icon-accent: #6c7983;
+  --icon-color-main: var(--btn-active);
+  --icon-color-accent: var(--gray8);
 }
 
 .light-theme {
@@ -39,6 +44,11 @@ $colors: (
   --bg: var(--gray8);
   --card-bg: var(--gray5);
   --border: 1px solid var(--green-grad);
+
+  --icon-main: #6c7983;
+  --icon-accent: #454e56;
+  --icon-color-main: var(--btn-active);
+  --icon-color-accent: var(--gray8);
 }
 
 :root {
@@ -51,6 +61,9 @@ $colors: (
   --line-height: calc(var(--font-size) * 1.5);
   --spacing: 2rem;
   --spacingv: calc(var(--line-height) / 2);
+
+  --drawer-width: 250px;
+  --top-bar-height: 70px;
 
   @each $name, $color in $colors {
     --#{""+$name}: #{$color};
@@ -67,23 +80,17 @@ $colors: (
   --gray6: #676767;
   --gray7: #474747;
   --gray8: #292929;
- 
-  // --special: 88, 65, 216;
+
   --special: 0, 62, 193;
 
-  // --icon-main: #b2becd;
-  // --icon-secondary: #a2a1ff;
-  // --icon-accent: #c1c0ff;
+  // --icon-color-main: #a7a7a7;
 
-  // --icon-main: #6563ff;
-  // --icon-secondary: #a2a1ff;
-  // --icon-accent: #c1c0ff;
+  // --icon-color-main: #c1c0ff;
+  // --icon-color-accent: #6563ff;
 
-  --icon-main: #c1c0ff;
-  --icon-accent: #6563ff;
-
-  --btn-active: #e5e4ff;
-  --btn-active-hover: #c1c0ff;
+  --btn-hover: rgba(152, 121, 255, 0.2);
+  --btn-active: rgba(152, 121, 255, 0.5);
+  --btn-active-hover: rgba(152, 121, 255, 0.8);
 
   --green-grad: linear-gradient(
     to bottom right,
@@ -106,9 +113,6 @@ $colors: (
     rgba(0,212,255,0.22871155298056722) 100%);
 
   --random-grad: radial-gradient(circle, rgba(131,58,180,1) 0%, rgba(204,41,89,0.16148466222426472) 36%, rgba(253,29,29,1) 73%, rgba(252,176,69,1) 100%);
-
-  --drawer-width: 250px;
-  --top-bar-height: 70px;
   
   @include default-theme;
 }
@@ -178,3 +182,44 @@ h2 {
     background: $color;
   }
 }
+
+// global classes
+.active {
+  background: var(--btn-active);
+  --icon-main: var(--icon-color-main);
+  --icon-accent: var(--icon-color-accent); 
+
+  &:hover {
+    background: var(--btn-active-hover);
+  }
+
+  [class*="iconWrapper"] {
+    background: var(--nav-bg)
+  }
+}
+
+// .shard {
+//   &::before { 
+//     content: ""; width: 100%; height: 100%; 
+//     background: rgba(255,255,255,0); top: 0; left: 0; 
+//     position: absolute;
+//   }
+//   @for $i from 1 through 30 {
+//     &:nth-child(#{$i}) .shard::before {
+//       $ad: ($i*0.05s+0.02s);
+//       @include animation(shimmer .8s $ad forwards);
+//     }
+//   }
+// }
+
+// @keyframes shimmer {
+//   0% {
+//     background-color: rgba(255,255,255,0);  
+//   }
+//   35% {
+//     background-color: rgba(255,255,255,.1);
+//   }
+//   100% {
+//     background-color: rgba(255,255,255,0);  
+//   }
+// }

@@ -8,7 +8,7 @@ export const Layout = (): JSX.Element => {
     <div className={s.main}>
       <NavigationDrawer />
       <TopAppBar />
-      <div className={s.contentContainer}>
+      <div className={s.container}>
         <main className={s.content}>
           <Outlet />
         </main>

@@ -1,20 +1,21 @@
 .main {
   display: flex;
   flex-direction: column;
-  min-height: 100%;
+  min-height: calc(100vh - var(--top-bar-height));
 }
 
-.contentContainer {
+.container {
   display: flex;
   flex-direction: column;
   margin-top: var(--top-bar-height);
   margin-left: var(--drawer-width);
-  min-height: 100vh;
+  min-height: calc(100vh - var(--top-bar-height));
+  max-width: calc(100vw - var(--drawer-width));
   background: var(--bg);
 }
 
 .content {
   display: block;
-  width: 1280px;
+  width: clamp(640px, 1024px, 1280px);
   margin: 24px auto;
 }
