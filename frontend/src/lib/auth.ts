@@ -30,7 +30,7 @@ const registerFn = async (registerCredentials: RegisterCredentials): Promise<Use
 };
 
 const logoutFn = async (): Promise<Status | undefined> => {
-  const { data: status } = await post<Status>(`${API_URL}/auth/sign-out`);
+  const status = await post<Status>(`${API_URL}/auth/sign-out`);
 
   return status;
 };

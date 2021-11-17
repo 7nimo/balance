@@ -2,7 +2,18 @@ export interface HttpResponse<T> extends Response {
   data?: T;
 }
 
-export async function http<T>(request: RequestInfo): Promise<HttpResponse<T>> {
+export async function http<T>(request: RequestInfo): Promise<T> {
+  const response: HttpResponse<T> = await fetch(request);
+
+  if (response.ok) {
+    const data = await response.json();
+    return data;
+  }
+
+  return Promise.reject(response.statusText);
+}
+
+export async function httppp<T>(request: RequestInfo): Promise<HttpResponse<T>> {
   const response: HttpResponse<T> = await fetch(request).catch((err) => {
     throw new Error(err);
   });
@@ -32,7 +43,7 @@ export async function get<T>(
     },
     credentials: 'include',
   }
-): Promise<HttpResponse<T>> {
+): Promise<T> {
   return http<T>(new Request(path, args));
 }
 
@@ -47,7 +58,7 @@ export async function post<T>(
     credentials: 'include',
     body: JSON.stringify(body),
   }
-): Promise<HttpResponse<T>> {
+): Promise<T> {
   return http<T>(new Request(path, args));
 }
 
@@ -62,6 +73,6 @@ export async function put<T>(
     credentials: 'include',
     body: JSON.stringify(body),
   }
-): Promise<HttpResponse<T>> {
+): Promise<T> {
   return http<T>(new Request(path, args));
 }
