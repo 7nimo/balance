@@ -1,20 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
-import { ReactQueryProvider } from './lib/react-query';
-import { AuthProvider } from './lib/auth';
 import reportWebVitals from './reportWebVitals';
-import App from './App';
+import { ReactQueryProvider } from './lib/react-query';
+import { App } from './App';
 import './index.scss';
 
 ReactDOM.render(
   <React.StrictMode>
     <ReactQueryProvider>
-      <AuthProvider>
-        <BrowserRouter>
-          <App />
-        </BrowserRouter>
-      </AuthProvider>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
     </ReactQueryProvider>
   </React.StrictMode>,
   document.getElementById('root')
