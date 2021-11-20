@@ -1,0 +1,28 @@
+.wrapper {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  image-rendering: crisp-edges;
+  min-height: var(--top-bar-height);
+  margin-left: 18px;
+
+  svg {
+    width: 32px;
+    height: 32px; 
+  } 
+}
+
+.logo {
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 32px;
+  letter-spacing: -0.04em;
+  padding-left: .5rem;
+  color: var(--h-color);
+}
+
+[class*="dark-theme"] * .wrapper {
+  svg {
+    fill: white;
+  }
+}

@@ -1,11 +1,11 @@
 import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import Dashboard from 'pages/Dashboard/Dashboard';
-import Account from 'pages/Account/Account';
-import Crypto from 'pages/Crypto/Crypto';
-import Calendar from 'pages/Calendar/Calendar';
-import { Settings } from 'pages/Settings/Settings';
+import AccountPage from 'pages/AccountPage/AccountPage';
+import CryptoPage from 'pages/CryptoPage/CryptoPage';
+import CalendarPage from 'pages/CalendarPage/CalendarPage';
+import { SettingsPage } from 'pages/SettingsPage/SettingsPage';
 import SignInPage from 'pages/SignInPage/SignInPage';
-import { Layout } from 'components/Layout/Layout';
+import { Layout } from 'common/components/Layout/Layout';
 import { FC } from 'react';
 import { AuthProvider, useAuth } from 'lib/auth';
 // import { queryClient } from 'lib/react-query';
@@ -46,7 +46,7 @@ export const App: FC = () => {
             path="/account/:id"
             element={
               <RequireAuth>
-                <Account />
+                <AccountPage />
               </RequireAuth>
             }
           />
@@ -54,7 +54,7 @@ export const App: FC = () => {
             path="/crypto"
             element={
               <RequireAuth>
-                <Crypto />
+                <CryptoPage />
               </RequireAuth>
             }
           />
@@ -62,7 +62,7 @@ export const App: FC = () => {
             path="/calendar"
             element={
               <RequireAuth>
-                <Calendar />
+                <CalendarPage />
               </RequireAuth>
             }
           />
@@ -70,7 +70,7 @@ export const App: FC = () => {
             path="/settings"
             element={
               <RequireAuth>
-                <Settings />
+                <SettingsPage />
               </RequireAuth>
             }
           />
