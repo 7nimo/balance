@@ -5,7 +5,7 @@ import CryptoPage from 'pages/CryptoPage/CryptoPage';
 import CalendarPage from 'pages/CalendarPage/CalendarPage';
 import { SettingsPage } from 'pages/SettingsPage/SettingsPage';
 import SignInPage from 'pages/SignInPage/SignInPage';
-import { Layout } from 'common/components/Layout/Layout';
+import { MainLayout } from 'common/components/MainLayout/MainLayout';
 import { FC } from 'react';
 import { AuthProvider, useAuth } from 'lib/auth';
 // import { queryClient } from 'lib/react-query';
@@ -25,7 +25,7 @@ export const App: FC = () => {
   return (
     <AuthProvider>
       <Routes>
-        <Route element={<Layout />}>
+        <Route element={<MainLayout />}>
           <Route
             path="/"
             element={
