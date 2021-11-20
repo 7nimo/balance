@@ -9,7 +9,7 @@ import { FC, useEffect, useState } from 'react';
 import { Account } from '@types';
 import SvgBtc from 'common/components/icons/Btc';
 import { useQuery } from 'react-query';
-import LogoWrapper from '../Logo/Logo';
+import LogoWrapper from '../../components/Logo/Logo';
 import s from './NavigationDrawer.module.scss';
 
 export const NavigationDrawer: FC = () => {
