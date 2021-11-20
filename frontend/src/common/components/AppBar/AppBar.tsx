@@ -1,8 +1,8 @@
 import { useLocation } from 'react-router-dom';
 import { AppBarActions } from './AppBarActions/AppBarActions';
-import s from './TopAppBar.module.scss';
+import s from './AppBar.module.scss';
 
-export const TopAppBar = (): JSX.Element => {
+export const AppBar = (): JSX.Element => {
   const location = useLocation();
 
   return (
