@@ -7,6 +7,7 @@ import {
   UseInterceptors,
   UploadedFile,
   NotFoundException,
+  ParseUUIDPipe,
 } from '@nestjs/common';
 import { TransactionService } from './transaction.service';
 import { ApiTags } from '@nestjs/swagger';
@@ -48,12 +49,14 @@ export class TransactionController {
   @UseInterceptors(FileInterceptor('statement', multerOptions))
   async import(
     @User('id') userId: string,
-    @Param('accountId') accountId: string,
+    @Param('accountId', new ParseUUIDPipe({ version: '4' })) accountId: string,
     @UploadedFile() file: Express.Multer.File,
   ) {
     const account = await this.accountService.findOne(userId, accountId);
     if (!account) {
-      throw new NotFoundException(`Account with ${accountId} does not exist`);
+      throw new NotFoundException(
+        `Account with id ${accountId} does not exist`,
+      );
     }
 
     const transactions: TransactionEntity[] = await this.csvParserService.parse(
@@ -67,7 +70,7 @@ export class TransactionController {
   @Get()
   findAll(
     @User('id') userId: string,
-    @Param('accountId') accountId: string,
+    @Param('accountId', new ParseUUIDPipe({ version: '4' })) accountId: string,
   ): Promise<TransactionsRO> {
     return this.transactionService.findAll(userId, accountId);
   }
