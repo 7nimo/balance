@@ -1,11 +1,14 @@
-import { Account, AccountsRO } from '@types';
+import { Account, Accounts } from '@types';
+import { useQuery, UseQueryResult } from 'react-query';
 import { API_URL } from './constants';
 import { get } from '../utils/http.util';
 
-export const fetchAccountById = async (accountId: string): Promise<Account | undefined> => {
+export const fetchAccountById = async (accountId: string): Promise<Account> => {
   return get<Account>(`${API_URL}/account/${accountId}`);
 };
 
-export const fetchAccounts = async (): Promise<AccountsRO> => {
-  return get<AccountsRO>(`${API_URL}/account`);
+export const fetchAccounts = async (): Promise<Accounts> => {
+  return get<Accounts>(`${API_URL}/account`);
 };
+
+export const useAccounts = (): UseQueryResult<Accounts> => useQuery('accounts', fetchAccounts);

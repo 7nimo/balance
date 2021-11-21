@@ -1,12 +1,16 @@
-import { Row } from 'common/components/layouts/Row/Row';
-import { Section } from 'common/components/Section/Section';
+import { useParams } from 'react-router-dom';
+import { AccountContainer } from 'modules/account/containers/AccountContainer/AccountContainer';
+import { useAccounts } from 'api/account';
 
 export default function AccountPage(): JSX.Element {
-  return (
-    <Section title="ok">
-      <Row>
-        <p>content</p>
-      </Row>
-    </Section>
-  );
+  const { id } = useParams<string>();
+  const { data } = useAccounts();
+
+  if (data && id) {
+    const result = data.accounts.find((account) => account.id === id);
+
+    return <AccountContainer account={result} />;
+  }
+
+  return <div>loading...</div>;
 }

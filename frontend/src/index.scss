@@ -85,9 +85,9 @@ $colors: (
   --theme-transition: background .5s ease;
 
   @each $name, $color in $colors {
-    --#{""+$name}: #{$color};
-    --#{""+$name}-dark: #{darken($color, 7%)};
-    --#{""+$name}-light: #{lighten($color, 7%)};
+    --#{$name}: #{$color};
+    --#{$name}-dark: #{darken($color, 7%)};
+    --#{$name}-light: #{lighten($color, 7%)};
   }
 
   // --gray0: #f8f8f8;
@@ -191,8 +191,12 @@ h2 {
   line-height: calc(var(--spacingv) * 3);
 }
 
-span {
+span, p {
   color: var(--text-color);
+}
+
+p {
+  word-wrap: anywhere;
 }
 
 // Color Utilities

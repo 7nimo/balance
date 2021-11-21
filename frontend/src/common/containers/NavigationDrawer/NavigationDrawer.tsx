@@ -1,26 +1,30 @@
-import { fetchAccounts } from 'api/account';
 import SvgBank from 'common/components/icons/Bank';
 import SvgCalendar from 'common/components/icons/Calendar';
 import SvgPieChart from 'common/components/icons/PieChart';
 import SvgSettings from 'common/components/icons/Settings';
 import { NavButton } from 'common/components/NavButton/NavButton';
 import { NavButtonExpandable } from 'common/components/NavButtonExpandable/NavButtonExpandable';
-import { FC, useEffect, useState } from 'react';
-import { Account } from '@types';
+import { FC, ReactElement } from 'react';
 import SvgBtc from 'common/components/icons/Btc';
-import { useQuery } from 'react-query';
+import SvgCash from 'common/components/icons/Cash';
+import { Account } from '@types';
 import LogoWrapper from '../../components/Logo/Logo';
 import s from './NavigationDrawer.module.scss';
 
-export const NavigationDrawer: FC = () => {
-  const { data } = useQuery('accounts', fetchAccounts);
-  const [accounts, setAccounts] = useState<Account[] | []>([]);
+type Props = {
+  accounts: Account[] | [];
+};
 
-  useEffect(() => {
-    if (data) {
-      setAccounts(data.accounts);
-    }
-  }, [data]);
+export const NavigationDrawer: FC<Props> = ({ accounts }) => {
+  const renderAccounts = (): ReactElement | ReactElement[] | null => {
+    return accounts.length
+      ? accounts.map((account) => (
+          <div className={s.listItem} key={account.id}>
+            <NavButton link={`account/${account.id}`} label={account.name} icon={<SvgCash />} />
+          </div>
+        ))
+      : null;
+  };
 
   return (
     <nav className={s.sidebar}>
@@ -31,12 +35,9 @@ export const NavigationDrawer: FC = () => {
           <NavButton link="dashboard" label="Assets" icon={<SvgPieChart />} />
         </li>
         <li className={s.listItem}>
-          <NavButtonExpandable
-            link="account"
-            label="Bank Accounts"
-            icon={<SvgBank />}
-            data={accounts}
-          />
+          <NavButtonExpandable label="Bank Accounts" icon={<SvgBank />}>
+            {renderAccounts()}
+          </NavButtonExpandable>
         </li>
         <li className={s.listItem}>
           <NavButton link="crypto" label="Crypto" icon={<SvgBtc />} />

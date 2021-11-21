@@ -1,5 +1,5 @@
-import { Row } from 'common/components/layouts/Row/Row';
-import { Section } from 'common/components/Section/Section';
+import { Row } from 'common/components/layout/Row/Row';
+import { Section } from 'common/components/layout/Section/Section';
 import { Shrug } from 'common/components/Shrug/Shrug';
 
 export default function Dashboard(): JSX.Element {

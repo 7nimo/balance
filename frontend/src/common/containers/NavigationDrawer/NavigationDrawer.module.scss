@@ -20,3 +20,9 @@
 .listItem {
   margin-bottom: 20px;
 }
+
+[class*="expandableContent"] {
+  .listItem {
+    margin: 10px 0 0 0;
+  }
+}

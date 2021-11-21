@@ -2,7 +2,9 @@ export interface HttpResponse<T> extends Response {
   data?: T;
 }
 
-export async function http<T>(request: RequestInfo): Promise<T> {
+export async function http<T>(request: Request): Promise<T> {
+  // eslint-disable-next-line no-console
+  console.log('request: ', request.url);
   const response: HttpResponse<T> = await fetch(request);
 
   if (response.ok) {

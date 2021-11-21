@@ -13,6 +13,6 @@ export interface Account {
   updatedAt: string;
 }
 
-export interface AccountsRO {
-  accounts: Account[];
+export interface Accounts {
+  accounts: Account[] | [];
 }

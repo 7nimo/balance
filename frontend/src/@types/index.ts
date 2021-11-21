@@ -5,3 +5,4 @@ export * from './currency';
 export * from './response';
 export * from './transaction';
 export * from './user';
+export * from './theme';

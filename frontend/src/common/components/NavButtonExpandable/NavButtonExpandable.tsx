@@ -1,33 +1,34 @@
 import { AnimateHeight } from 'common/components/AnimateHeight/AnimateHeight';
 import { ChevronDown, ChevronUp } from 'common/components/icons';
-import SvgCash from 'common/components/icons/Cash';
-import { NavButton } from 'common/components/NavButton/NavButton';
-import { FC, useEffect, useRef, useState } from 'react';
+import { useToggle } from 'hooks/useToggle';
+import { FC, ReactNode, RefObject, useEffect, useRef, useState } from 'react';
 import s from './NavButtonExpandable.module.scss';
 
 interface Props {
-  link: string;
   label: string;
   icon: JSX.Element;
-  data: any[];
+  children?: ReactNode | null;
 }
 
-export const NavButtonExpandable: FC<Props> = ({ link, label, icon, data }) => {
-  const [expanded, setExpanded] = useState(false);
+// todo: render  regular button if no children
+// todo: use hook to extract dimensions
+
+export const NavButtonExpandable: FC<Props> = ({ label, icon, children }) => {
+  const [expanded, toggleExpanded] = useToggle(false);
   const [height, setHeight] = useState(0);
   const measuredRef = useRef<HTMLDivElement>(null);
 
+  const getContentHeight = (ref: RefObject<HTMLDivElement>): number => {
+    return ref.current!.getBoundingClientRect().height;
+  };
+
   useEffect(() => {
-    setHeight(measuredRef.current!.getBoundingClientRect().height);
+    setHeight(getContentHeight(measuredRef));
   }, [measuredRef]);
 
   const handleClick = (): void => {
-    setExpanded(!expanded);
-    if (expanded) {
-      setHeight(0);
-    } else {
-      setHeight(measuredRef.current!.getBoundingClientRect().height);
-    }
+    toggleExpanded();
+    expanded ? setHeight(0) : setHeight(getContentHeight(measuredRef));
   };
 
   return (
@@ -36,17 +37,15 @@ export const NavButtonExpandable: FC<Props> = ({ link, label, icon, data }) => {
         <button type="button" className={s.focusable} onClick={handleClick}>
           <div className={s.iconWrapper}>{icon}</div>
           <span className={s.label}>{label}</span>
-          <div className={s.trailingIcon}>{expanded ? <ChevronUp /> : <ChevronDown />}</div>
+          {children ? (
+            <div className={s.trailingIcon}>{expanded ? <ChevronUp /> : <ChevronDown />}</div>
+          ) : null}
         </button>
       </div>
 
       <AnimateHeight className={s.expandableContainer} height={height}>
         <div className={s.expandableContent} ref={measuredRef}>
-          {data.map((item) => (
-            <div className={s.listItem} key={item.id}>
-              <NavButton link={`${link}/${item.id}`} label={item.name} icon={<SvgCash />} />
-            </div>
-          ))}
+          {children}
         </div>
       </AnimateHeight>
     </div>

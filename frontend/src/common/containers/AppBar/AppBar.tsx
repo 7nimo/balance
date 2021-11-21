@@ -6,7 +6,7 @@ export const AppBar = (): JSX.Element => {
   const location = useLocation();
 
   return (
-    <header className={s.topAppBar}>
+    <header className={s.appBar}>
       <section className={s.section}>
         {/* <nav>todo</nav> */}
         <h1 className={s.h1}>{location.pathname}</h1>

@@ -1,4 +1,4 @@
-.topAppBar {
+.appBar {
   position: fixed;
   display: flex;
   align-items: center;
@@ -10,6 +10,7 @@
   background: var(--nav-bg);
   box-shadow: var(--app-bar-shadow);
   transition: var(--theme-transition);
+  z-index: 99;
 }
 
 .section {
