@@ -1,16 +1,15 @@
 // import cx from 'classnames';
+import { FC } from 'react';
 import s from './Card.module.scss';
 
-interface CardProps {
-  style?: React.CSSProperties;
+interface Props extends React.HTMLAttributes<HTMLElement> {
   children: React.ReactNode;
 }
 
-export default function Card(CardProps: CardProps): JSX.Element {
-  const { style, children } = CardProps;
+export const Card: FC<Props> = ({ style, children }) => {
   return (
     <div style={style} className={s.card}>
       {children}
     </div>
   );
-}
+};
