@@ -1,10 +1,11 @@
-.wrapper {
+.link {
   display: flex;
   align-items: center;
   flex-direction: row;
   image-rendering: crisp-edges;
   min-height: var(--top-bar-height);
   margin-left: 18px;
+  text-decoration: none;
 
   svg {
     width: 32px;
@@ -21,7 +22,7 @@
   color: var(--h-color);
 }
 
-[class*="dark-theme"] * .wrapper {
+[class*="dark-theme"] * .link {
   svg {
     fill: white;
   }

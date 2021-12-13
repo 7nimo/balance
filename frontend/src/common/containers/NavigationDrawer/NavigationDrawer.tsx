@@ -8,7 +8,7 @@ import { FC, ReactElement } from 'react';
 import SvgBtc from 'common/components/icons/Btc';
 import SvgCash from 'common/components/icons/Cash';
 import { Account } from '@types';
-import LogoWrapper from '../../components/Logo/Logo';
+import Logo from '../../components/Logo/Logo';
 import s from './NavigationDrawer.module.scss';
 
 type Props = {
@@ -28,7 +28,7 @@ export const NavigationDrawer: FC<Props> = ({ accounts }) => {
 
   return (
     <nav className={s.sidebar}>
-      <LogoWrapper />
+      <Logo />
 
       <ul className={s.list}>
         <li className={s.listItem}>

@@ -1,8 +1,9 @@
+import { Link } from 'react-router-dom';
 import s from './Logo.module.scss';
 
 export default function Logo(): JSX.Element {
   return (
-    <div className={s.wrapper}>
+    <Link to="../" className={s.link}>
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 59.723 58.152" xmlSpace="preserve">
         <path
           stroke="none"
@@ -10,6 +11,6 @@ export default function Logo(): JSX.Element {
         />
       </svg>
       <span className={s.logo}>balance</span>
-    </div>
+    </Link>
   );
 }
