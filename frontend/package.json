@@ -10,8 +10,8 @@
     "lint": "eslint src --ext .js,.jsx,.ts,.ts",
     "lint:fix": "eslint src --ext .js,.jsx,.ts,.tsx --fix",
     "lint:quiet": "eslint src --ext .js,.jsx,.ts,.ts --quiet",
-    "svgo": "rimraf ./src/assets/svg/icons/optimized  & svgo -q -p 8 -f ./src/assets/svg/icons/raw -o ./src/assets/svg/icons/optimized",
-    "svgr": "npx @svgr/cli --config-file .svgo.yml ./src/components/Icons ./src/assets/icons/optimized",
+    "svgo": "rimraf ./src/assets/svg/icons/optimized  & svgo -q -p 8 -f ./src/assets/svg/icons/raw/new -o ./src/assets/svg/icons/optimized",
+    "svgr": "npx @svgr/cli --config-file svgo.yml ./src/common/components/icons ./src/assets/svg/icons/optimized",
     "icon-gen": "npx @svgr/cli --icon -d ./src/components/Icons ./src/assets/svg/icons/optimized"
   },
   "browserslist": {
@@ -36,6 +36,7 @@
     "@types/react-dom": "^17.0.11",
     "classnames": "^2.3.1",
     "d3": "^7.1.1",
+    "lodash": "^4.17.21",
     "node-sass": "^6.0.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
