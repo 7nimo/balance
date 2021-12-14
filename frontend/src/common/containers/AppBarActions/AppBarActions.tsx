@@ -17,6 +17,7 @@ export const AppBarActions: FC<Props> = () => {
     toggleTheme();
   };
 
+  // todo: dropdown menu [settings/logout]
   const handleDropdown = (): void => {};
 
   return (
