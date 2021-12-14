@@ -24,6 +24,7 @@ $colors: (
   --bg: #dbe1e8;
   --card-bg: white;
   --border: 1px solid var(--gray1);
+  --line: rgba(178, 190, 205, .8);
 
   --icon-main: #b2becd;
   --icon-accent: #6c7983;
@@ -56,7 +57,8 @@ $colors: (
   --bg: var(--gray8);
   --card-bg: #2a2e35;
   --border: 1px solid rgba(138,145,158, .2);
-  --border-heavy: 1px solid rgba(138,145,158, .66)  ;
+  --border-heavy: 1px solid rgba(138,145,158, .66);
+  --line: rgba(178, 190, 205, .2);
 
   --icon-main: #6c7983;
   --icon-accent: #454e56;
@@ -85,9 +87,9 @@ $colors: (
   --theme-transition: background .5s ease;
 
   @each $name, $color in $colors {
-    --#{$name}: #{$color};
-    --#{$name}-dark: #{darken($color, 7%)};
-    --#{$name}-light: #{lighten($color, 7%)};
+    --#{""+$name}: #{$color};
+    --#{""+$name}-dark: #{darken($color, 7%)};
+    --#{""+$name}-light: #{lighten($color, 7%)};
   }
 
   // --gray0: #f8f8f8;
@@ -179,14 +181,21 @@ h1, h2, h3, h4, h5, h6 {
 
 h1 {
   font-weight: 700;
-  font-size: 3rem;
+  font-size: 2rem;
   letter-spacing: -0.022em;
   line-height: calc(var(--spacingv) * 4.5);
 }
 
 h2 {
-  font-weight: 700;
-  font-size: 1.8rem;
+  font-weight: 600;
+  font-size: 1.75rem;
+  letter-spacing: -0.021em;
+  line-height: calc(var(--spacingv) * 3);
+}
+
+h3 {
+  font-weight: 500;
+  font-size: 1.5rem;
   letter-spacing: -0.021em;
   line-height: calc(var(--spacingv) * 3);
 }
