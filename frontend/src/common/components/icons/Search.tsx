@@ -1,9 +1,10 @@
 interface SVGRProps {
   title?: string;
   titleId?: string;
+  className?: string;
 }
 
-function SvgSearch({ title, titleId }: SVGRProps): JSX.Element {
+function SvgSearch({ className, title, titleId }: SVGRProps): JSX.Element {
   return (
     <svg
       viewBox="0 0 24 24"
@@ -12,6 +13,7 @@ function SvgSearch({ title, titleId }: SVGRProps): JSX.Element {
       width="1em"
       height="1em"
       aria-labelledby={titleId}
+      className={className || undefined}
     >
       {title ? <title id={titleId}>{title}</title> : null}
       <path
