@@ -1,4 +1,5 @@
-import { FC, useEffect, useMemo, useRef, useState } from 'react';
+/* eslint-disable @typescript-eslint/no-shadow */
+import { FC, useEffect, useMemo, useState } from 'react';
 import { Account, Transaction } from '@types';
 import { useTransactions } from 'api/transaction';
 import { capitalize } from 'common/utils/helpers';
@@ -13,17 +14,8 @@ type Props = {
   account?: Account;
 };
 
-export function usePrevious(value: any): any {
-  const ref = useRef();
-  useEffect(() => {
-    ref.current = value;
-  });
-  return ref.current;
-}
-
 export const AccountContainer: FC<Props> = ({ account }) => {
   const [query, setQuery] = useState<string>('');
-  const prevQuery = usePrevious(query);
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const { data } = useTransactions(account!.id, (initialData) => {
     setTransactions(initialData.transactions);
@@ -33,32 +25,30 @@ export const AccountContainer: FC<Props> = ({ account }) => {
     if (data && query === '') setTransactions(data.transactions);
   }, [query, data]);
 
-  const search = (): void => {
-    if (data) {
-      const value = query.toLowerCase();
-      const result: Transaction[] = data.transactions.filter((transaction) =>
-        transaction.transactionDesc.toLowerCase().includes(value)
-      );
-      console.log('search: ', result);
-      setTransactions(result);
-    }
-  };
+  const debouncedSearch = useMemo(
+    () =>
+      debounce((q: string): void => {
+        if (data) {
+          const query = q.toLowerCase();
+          const result: Transaction[] = data.transactions.filter((transaction) =>
+            transaction.transactionDesc.toLowerCase().includes(query)
+          );
+          setTransactions(result);
+        }
+      }, 1000),
+    [data]
+  );
 
-  // const debouncedSearch = debounce(search, 1000);
-  const debouncedSearch = useMemo(() => debounce(search, 1000), [search]);
+  const handleChange = (query: string): void => {
+    setQuery(query);
+    debouncedSearch(query);
+  };
 
   useEffect(() => {
     return () => {
       debouncedSearch.cancel();
     };
-  }, []);
-
-  useEffect(() => {
-    if (data && query && query !== prevQuery) {
-      console.log(prevQuery);
-      debouncedSearch();
-    }
-  }, [debouncedSearch, data, query, prevQuery]);
+  }, [debouncedSearch]);
 
   return (
     <>
@@ -69,7 +59,7 @@ export const AccountContainer: FC<Props> = ({ account }) => {
           <SearchBar
             placeholder="Search"
             value={query}
-            handleChange={(e) => setQuery(e.target.value)}
+            handleChange={(e) => handleChange(e.target.value)}
             handleReset={() => setQuery('')}
           />
           <p style={{ marginLeft: 'auto' }}>Query: {query}</p>
