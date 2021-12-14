@@ -7,9 +7,8 @@ export default function AccountPage(): JSX.Element {
   const { data } = useAccounts();
 
   if (data && id) {
-    const result = data.accounts.find((account) => account.id === id);
-
-    return <AccountContainer account={result} />;
+    const account = data.accounts.find((acc) => acc.id === id);
+    return <AccountContainer account={account} />;
   }
 
   return <div>loading...</div>;
