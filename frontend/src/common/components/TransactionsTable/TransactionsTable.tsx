@@ -1,13 +1,22 @@
 import { Transaction } from '@types';
 import { FC } from 'react';
+import { Spinner } from '../Spinner/Spinner';
 import s from './TransactionsTable.module.scss';
 
 type Props = {
-  transactions: Transaction[];
+  transactions?: Transaction[] | null;
 };
 
-export const TransactionsTable: FC<Props> = ({ transactions }) => {
-  const renderTransactions = transactions.map((transaction) => {
+export const TransactionsTable: FC<Props> = ({ transactions = null }) => {
+  if (!transactions || !transactions?.length) {
+    return (
+      <div className={s.emptyTable}>
+        {transactions === null ? <Spinner size={48} /> : <p>Hmmm, can&apos;t find anything!</p>}
+      </div>
+    );
+  }
+
+  const renderTransactions = transactions?.map((transaction) => {
     return (
       <tr key={transaction.id.toString()} className={s.row}>
         <td className={s.date}>
@@ -56,7 +65,7 @@ export const TransactionsTable: FC<Props> = ({ transactions }) => {
           </th>
         </tr>
       </thead>
-      <tbody className={s.body}>{renderTransactions ?? <div>Error occured</div>}</tbody>
+      <tbody className={s.body}>{renderTransactions}</tbody>
     </table>
   );
 };

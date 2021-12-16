@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 export const useToggle = (initialValue = false): [boolean, () => void] => {
-  const [state, setValue] = useState(initialValue);
-  const toggle = (): void => setValue(!state);
+  const [state, setState] = useState(initialValue);
+  const toggle = (): void => setState(!state);
   return [state, toggle];
 };

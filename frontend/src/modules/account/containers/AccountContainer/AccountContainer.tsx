@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-shadow */
-import { FC, useEffect, useMemo, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { Account, Transaction } from '@types';
 import { useTransactions } from 'api/transaction';
 import { capitalize } from 'common/utils/helpers';
@@ -8,7 +8,9 @@ import { TransactionsTable } from 'common/components/TransactionsTable/Transacti
 import { SearchBar } from 'common/components/forms/SearchBar/SearchBar';
 import { ActionBar } from 'common/containers/ActionBar/ActionBar';
 import { Block } from 'common/components/layout/Block/Block';
-import { debounce } from 'lodash';
+import { useDebounce } from 'hooks/useDebounce';
+import { ChartContainer } from 'modules/charts/containers/ChartContainer/ChartContainer';
+import { useStore } from 'store/store';
 
 type Props = {
   account?: Account;
@@ -16,32 +18,35 @@ type Props = {
 
 export const AccountContainer: FC<Props> = ({ account }) => {
   const [query, setQuery] = useState<string>('');
-  const [transactions, setTransactions] = useState<Transaction[]>([]);
+  const [transactions, setTransactions] = useState<Transaction[] | null>(null);
+
+  const setData = useStore((state) => state.setData);
+
   const { data } = useTransactions(account!.id, (initialData) => {
     setTransactions(initialData.transactions);
+    setData(initialData.transactions);
   });
 
   useEffect(() => {
     if (data && query === '') setTransactions(data.transactions);
   }, [query, data]);
 
-  const debouncedSearch = useMemo(
-    () =>
-      debounce((q: string): void => {
-        if (data) {
-          const query = q.toLowerCase();
-          const result: Transaction[] = data.transactions.filter((transaction) =>
-            transaction.transactionDesc.toLowerCase().includes(query)
-          );
-          setTransactions(result);
-        }
-      }, 1000),
-    [data]
-  );
+  const search = (query: string): void => {
+    const q = query.toLowerCase();
+    const result: Transaction[] = data!.transactions.filter((transaction) => {
+      return transaction.transactionDesc.toLowerCase().includes(q);
+    });
+    setTransactions(result);
+  };
+
+  const debouncedSearch = useDebounce((query) => search(query), 1000, data);
 
   const handleChange = (query: string): void => {
     setQuery(query);
-    debouncedSearch(query);
+
+    if (data && query !== '') {
+      debouncedSearch(query);
+    }
   };
 
   useEffect(() => {
@@ -54,6 +59,10 @@ export const AccountContainer: FC<Props> = ({ account }) => {
     <>
       <PageHeader title={capitalize(account!.name)} />
 
+      <Block>
+        <ChartContainer />
+      </Block>
+
       <Block title="Transactions">
         <ActionBar>
           <SearchBar
@@ -62,7 +71,6 @@ export const AccountContainer: FC<Props> = ({ account }) => {
             handleChange={(e) => handleChange(e.target.value)}
             handleReset={() => setQuery('')}
           />
-          <p style={{ marginLeft: 'auto' }}>Query: {query}</p>
         </ActionBar>
 
         <section>

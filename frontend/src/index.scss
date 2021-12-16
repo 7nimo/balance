@@ -205,6 +205,7 @@ span, p {
 }
 
 p {
+  color: var(--text-color);
   word-wrap: anywhere;
 }
 
@@ -221,6 +222,12 @@ p {
 }
 
 // global classes
+
+.center {
+  display: flex;
+  justify-content: center;
+}
+
 .active {
   background: var(--btn-active);
   --icon-main: var(--icon-color-main);
@@ -261,3 +268,23 @@ p {
 //     background-color: rgba(255,255,255,0);  
 //   }
 // }
+
+// spinner
+#spinner {
+  display: block;
+  height: 1em;
+  width: 1em;
+  border: 4px rgba(0, 0, 0, 0.25) solid;
+  border-top: 4px black solid;
+  border-radius: 50%;
+  animation: spin 1s infinite linear;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(359deg);
+  }
+}
