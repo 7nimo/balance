@@ -4,7 +4,7 @@ import SvgPieChart from 'common/components/icons/PieChart';
 import SvgSettings from 'common/components/icons/Settings';
 import { NavButton } from 'common/components/NavButton/NavButton';
 import { NavButtonExpandable } from 'common/components/NavButtonExpandable/NavButtonExpandable';
-import { FC, ReactElement } from 'react';
+import { FC } from 'react';
 import SvgBtc from 'common/components/icons/Btc';
 import SvgCash from 'common/components/icons/Cash';
 import { Account } from '@types';
@@ -12,19 +12,17 @@ import Logo from '../../components/Logo/Logo';
 import s from './NavigationDrawer.module.scss';
 
 type Props = {
-  accounts: Account[] | [];
+  accounts?: Account[];
 };
 
 export const NavigationDrawer: FC<Props> = ({ accounts }) => {
-  const renderAccounts = (): ReactElement | ReactElement[] | null => {
-    return accounts.length
-      ? accounts.map((account) => (
-          <div className={s.listItem} key={account.id}>
-            <NavButton link={`account/${account.id}`} label={account.name} icon={<SvgCash />} />
-          </div>
-        ))
-      : null;
-  };
+  const renderAccounts = accounts?.map((account) => {
+    return (
+      <div className={s.listItem} key={account.id}>
+        <NavButton link={`account/${account.id}`} label={account.name} icon={<SvgCash />} />
+      </div>
+    );
+  });
 
   return (
     <nav className={s.sidebar}>
@@ -36,7 +34,7 @@ export const NavigationDrawer: FC<Props> = ({ accounts }) => {
         </li>
         <li className={s.listItem}>
           <NavButtonExpandable label="Bank Accounts" icon={<SvgBank />}>
-            {renderAccounts()}
+            {renderAccounts}
           </NavButtonExpandable>
         </li>
         <li className={s.listItem}>
