@@ -1,4 +1,5 @@
 import { fetchAccounts } from 'api/account';
+import { fetchCurrencies } from 'api/currency';
 import { FC } from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
@@ -19,6 +20,7 @@ interface Props {
 
 export const ReactQueryProvider: FC<Props> = ({ children }) => {
   queryClient.prefetchQuery('accounts', fetchAccounts);
+  queryClient.prefetchQuery('currency', fetchCurrencies);
 
   return (
     <QueryClientProvider client={queryClient}>
