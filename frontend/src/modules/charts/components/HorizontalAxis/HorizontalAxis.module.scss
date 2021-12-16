@@ -1,0 +1,16 @@
+.axisWrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 1.5rem;
+  height: 2rem;
+  border-top: 1px solid var(--line);
+
+  span {
+    display: block;
+    font-size: .75rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    color: var(--text-color);
+  }
+}
