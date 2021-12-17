@@ -1,13 +1,13 @@
 import { FC } from 'react';
 import { ControlBar } from 'modules/charts/components/ControlBar/ControlBar';
-import { Chart } from 'modules/charts/components/Chart/Chart';
+import { LineChart } from 'modules/charts/components/LineChart/LineChart';
 import { HorizontalAxis } from 'modules/charts/components/HorizontalAxis/HorizontalAxis';
-import { Period } from '@types';
+import { DataPoint, Period } from '@types';
 import { useStore } from 'store/store';
 import s from './ChartContainer.module.scss';
 
 type Props = {
-  assetData?: any;
+  assetData?: DataPoint[];
 };
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -16,8 +16,8 @@ export const ChartContainer: FC<Props> = ({ assetData }) => {
 
   return (
     <div className={s.chartContainer}>
-      <ControlBar currencySymbol="£" assetAmount={87689.89} />
-      <Chart data={data} />
+      <ControlBar currencySymbol="£" assetAmount={1000.89} />
+      <LineChart assetData={data} />
       <HorizontalAxis period={Period.all} />
     </div>
   );
