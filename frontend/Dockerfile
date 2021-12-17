@@ -1,4 +1,4 @@
-FROM node:latest AS development
+FROM node:16.13.0 AS development
 
 ENV NODE_ENV=development
 
