@@ -1,5 +1,6 @@
 import { StateCreator } from 'zustand';
 import { DataPoint, Transaction } from '@types';
+import * as d3 from 'd3';
 
 // export type AssetType = 'FIAT' | 'CRYPTO';
 
@@ -8,10 +9,11 @@ export interface Asset {
   // type: AssetType;
   data?: DataPoint[];
 }
+const dateParser = d3.timeParse('%Y-%m-%d');
 
 const setAssetData = (data: Transaction[]): DataPoint[] => {
   const mappedData: DataPoint[] = data.map((transaction) => ({
-    date: transaction.transactionDate,
+    date: dateParser(transaction.transactionDate)!,
     value: Math.round((Number(transaction.balance) + Number.EPSILON) * 100) / 100,
   }));
   return mappedData;

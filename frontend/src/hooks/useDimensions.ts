@@ -19,7 +19,7 @@ interface Return<T> extends Omit<Event<T>, 'entry'> {
   entry?: ResizeObserverEntry;
 }
 
-export const useDimensions = <T extends HTMLElement | null>(): Return<T> => {
+export const useDimensions = <T extends HTMLDivElement | null>(): Return<T> => {
   const [state, setState] = useState({
     width: 0,
     height: 0,
@@ -39,7 +39,7 @@ export const useDimensions = <T extends HTMLElement | null>(): Return<T> => {
         ref.current = element;
       }
       if (observerRef.current && ref.current)
-        observerRef.current.observe(ref.current as HTMLElement);
+        observerRef.current.observe(ref.current as HTMLDivElement);
     },
     [unobserve]
   );

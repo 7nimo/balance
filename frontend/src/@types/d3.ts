@@ -1,4 +1,9 @@
 export type DataPoint = {
-  date: string;
+  date: Date;
   value: number;
+};
+
+export type Point = {
+  x: number;
+  y: number;
 };
