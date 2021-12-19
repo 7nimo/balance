@@ -9,8 +9,8 @@ import { SearchBar } from 'common/components/forms/SearchBar/SearchBar';
 import { ActionBar } from 'common/containers/ActionBar/ActionBar';
 import { Block } from 'common/components/layout/Block/Block';
 import { useDebounce } from 'hooks/useDebounce';
-// import { ChartContainer } from 'modules/charts/containers/ChartContainer/ChartContainer';
 import { useStore } from 'store/store';
+import { LineChartContainer } from 'modules/charts/containers/LineChartContainer/LineChartContainer';
 
 type Props = {
   account?: Account;
@@ -59,7 +59,9 @@ export const AccountContainer: FC<Props> = ({ account }) => {
     <>
       <PageHeader title={capitalize(account!.name)} />
 
-      {/* <Block><ChartContainer /></Block> */}
+      <Block>
+        <LineChartContainer />
+      </Block>
 
       <Block title="Transactions">
         <ActionBar>

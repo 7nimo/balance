@@ -4,20 +4,20 @@ import { FC, useEffect, useRef, useState } from 'react';
 import { ControlBar } from 'modules/charts/components/ControlBar/ControlBar';
 import { LineChart } from 'modules/charts/components/LineChart/LineChart';
 import { HorizontalAxis } from 'modules/charts/components/HorizontalAxis/HorizontalAxis';
-import { DataPoint, Period, Point } from '@types';
 import { useStore } from 'store/store';
-import * as d3 from 'd3';
-
 import { useDimensions } from 'hooks/useDimensions';
 import { usePrevious } from 'hooks/usePrevious';
-import s from './ChartContainer.module.scss';
+import { DataPoint, Period, Point } from '@types';
+import * as d3 from 'd3';
+
+import s from './LineChartContainer.module.scss';
 
 type Props = {
   account?: any;
 };
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-export const ChartContainer: FC<Props> = ({ account }) => {
+export const LineChartContainer: FC<Props> = ({ account }) => {
   const { observe, width, height } = useDimensions<HTMLDivElement>();
   const storeData = useStore((state) => state.d3);
 
