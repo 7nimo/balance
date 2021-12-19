@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-shadow */
-import { FC, ReactElement, ReactNode, useState } from 'react';
+import { FC, useEffect, useRef, useState } from 'react';
 import { ControlBar } from 'modules/charts/components/ControlBar/ControlBar';
 import { LineChart } from 'modules/charts/components/LineChart/LineChart';
 import { HorizontalAxis } from 'modules/charts/components/HorizontalAxis/HorizontalAxis';
@@ -9,23 +9,36 @@ import { useStore } from 'store/store';
 import * as d3 from 'd3';
 
 import { useDimensions } from 'hooks/useDimensions';
+import { usePrevious } from 'hooks/usePrevious';
 import s from './ChartContainer.module.scss';
 
 type Props = {
-  assetData?: DataPoint[];
+  account?: any;
 };
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-export const ChartContainer: FC<Props> = ({ assetData }) => {
+export const ChartContainer: FC<Props> = ({ account }) => {
   const { observe, width, height } = useDimensions<HTMLDivElement>();
   const storeData = useStore((state) => state.d3);
 
   const [tooltipPosition, setTooltipPosition] = useState<Point>({ x: 0, y: 0 });
   const [date, setDate] = useState<string>();
-  const [value, setValue] = useState<number>();
+  const [value, setValue] = useState<number>(0);
+  const currentValue = useRef<number>(0);
+  const [prevValue, setPrevious] = usePrevious<number | undefined>(undefined);
 
   // !¬ Data
   const data: d3.InternMap<Date, DataPoint[]> = d3.group(storeData, (d: DataPoint) => d.date);
+
+  useEffect(() => {
+    // if (data.size > 1 && currentValue.current !== undefined && currentValue.current !== prevValue) {
+    if (data.size > 1 && currentValue.current === 0) {
+      setPrevious(currentValue.current);
+      const current = data.values().next().value[0].value;
+      currentValue.current = current;
+      setValue(currentValue.current);
+    }
+  }, [data, currentValue, prevValue, setPrevious]);
 
   // !¬ Accesors
   const x = ([x]: [Date, DataPoint[]]): Date => x;
@@ -63,42 +76,45 @@ export const ChartContainer: FC<Props> = ({ assetData }) => {
   };
 
   const onMouseMove = (event: React.SyntheticEvent): void => {
-    const hoveredDate = xScale.invert(d3.pointer(event)[0]);
-    // const i = d3.bisectCenter(X, xScale.invert(d3.pointer(event)[0]));
+    if (X.length && Y.length) {
+      const hoveredDate = xScale.invert(d3.pointer(event)[0]);
+      // const i = d3.bisectCenter(X, xScale.invert(d3.pointer(event)[0]));
 
-    const closestIndex = d3.leastIndex(
-      data,
-      (a, b) =>
-        Math.abs((x(a) as any) - (hoveredDate as any)) -
-        Math.abs((x(b) as any) - (hoveredDate as any))
-    );
+      const closestIndex = d3.leastIndex(
+        data,
+        (a, b) =>
+          Math.abs((x(a) as any) - (hoveredDate as any)) -
+          Math.abs((x(b) as any) - (hoveredDate as any))
+      );
 
-    const formatDate = d3.timeFormat('%Y-%m-%d');
+      const formatDate = d3.timeFormat('%d/%m/%Y');
+      const xValue = X[closestIndex!];
+      const yValue = Y[closestIndex!];
+      const date = formatDate(xValue);
 
-    const xValue = X[closestIndex!];
-    const yValue = Y[closestIndex!];
+      const xPos: number = xScale(xValue);
+      const yPos: number = yScale(yValue);
 
-    const date = formatDate(xValue);
+      setTooltipPosition({ x: xPos - 75, y: yPos - 80 });
+      d3.select('#circle').attr('cx', xPos).attr('cy', yPos);
 
-    const xPos: number = xScale(xValue);
-    const yPos: number = yScale(yValue);
-    setTooltipPosition({ x: xPos - 75, y: yPos - 80 });
-    d3.select('#circle').attr('cx', xPos).attr('cy', yPos);
+      setDate(date);
+      setValue(yValue);
 
-    setDate(date);
-    setValue(yValue);
-
-    // data.get(date);
+      // data.get(date);
+    }
   };
 
   const onMouseLeave = (): void => {
     d3.select('#tooltip').style('opacity', 0);
     d3.select('#circle').style('opacity', 0);
+
+    setValue(currentValue.current);
   };
 
   return (
     <div className={s.chartContainer}>
-      <ControlBar currencySymbol="£" assetAmount={1000.89} />
+      <ControlBar currencySymbol="£" assetAmount={value ?? 0} />
       <LineChart
         data={data}
         ref={observe}

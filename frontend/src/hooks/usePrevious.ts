@@ -1,9 +1,12 @@
 import { useEffect, useRef } from 'react';
 
-export function usePrevious(value: any): any {
-  const ref = useRef();
+export function usePrevious<T>(value: T | undefined): [T | undefined, (val: T) => void] {
+  const ref = useRef<T>();
+  const setPrevious = (newValue: T | undefined): void => {
+    ref.current = newValue;
+  };
   useEffect(() => {
-    ref.current = value;
+    setPrevious(value);
   });
-  return ref.current;
+  return [ref.current, setPrevious];
 }
