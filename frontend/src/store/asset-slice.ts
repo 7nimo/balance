@@ -2,34 +2,47 @@ import { StateCreator } from 'zustand';
 import { DataPoint, Transaction } from '@types';
 import * as d3 from 'd3';
 
-// export type AssetType = 'FIAT' | 'CRYPTO';
+export type AssetSlice = {
+  assets: Map<string, d3.InternMap<Date, DataPoint[]>>;
+  // createAsset: (key: string, assets: Map<string, DataPoint[]>) => void;
+  setAssetData: (
+    key: string,
+    transactions: Transaction[],
+    assets: Map<string, d3.InternMap<Date, DataPoint[]>>
+  ) => void;
+};
 
-export interface Asset {
-  id: number;
-  // type: AssetType;
-  data?: DataPoint[];
-}
-const dateParser = d3.timeParse('%Y-%m-%d');
-
-const setAssetData = (data: Transaction[]): DataPoint[] => {
+const mapAssetData = (data: Transaction[]): d3.InternMap<Date, DataPoint[]> => {
+  const dateParser = d3.timeParse('%Y-%m-%d');
   const mappedData: DataPoint[] = data.map((transaction) => ({
     date: dateParser(transaction.transactionDate)!,
     value: Math.round((Number(transaction.balance) + Number.EPSILON) * 100) / 100,
   }));
-  return mappedData;
+  const grouppedByDate = d3.group(mappedData, (d: DataPoint) => d.date);
+  return grouppedByDate;
 };
 
-export type AssetSlice = {
-  d3: DataPoint[];
-  setData: (data: Transaction[]) => void;
+// const createAsset = (key: string, assets: Map<string, DataPoint[]>): Map<string, DataPoint[]> => {
+//   return assets.set(key, []);
+// };
+
+const setAssetData = (
+  key: string,
+  transactions: Transaction[],
+  assets: Map<string, d3.InternMap<Date, DataPoint[]>>
+): Map<string, d3.InternMap<Date, DataPoint[]>> => {
+  const mappedData = mapAssetData(transactions);
+  assets.set(key, mappedData);
+  return assets;
 };
 
 export const createAssetSlice: StateCreator<AssetSlice> = (set) => ({
-  d3: [],
-  setData: (data: any) => {
+  assets: new Map(),
+  // createAsset: (key, assets) => createAsset(key, assets),
+  setAssetData: (key, transactions, assets) => {
     set((state) => ({
       ...state,
-      d3: setAssetData(data),
+      assets: setAssetData(key, transactions, assets),
     }));
   },
 });

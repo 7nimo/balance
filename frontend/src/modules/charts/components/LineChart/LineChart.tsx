@@ -6,10 +6,11 @@ import { InternMap } from 'd3';
 import s from './LineChart.module.scss';
 
 type Props = {
+  id: string;
   data: InternMap<Date, DataPoint[]>;
   width: number;
   height: number;
-  lineGenerator: d3.Line<any>;
+  drawnPath: string;
   onMouseEnter: () => void;
   onMouseMove: (e: SyntheticEvent) => void;
   onMouseLeave: () => void;
@@ -21,10 +22,11 @@ type Props = {
 export const LineChart = forwardRef<HTMLDivElement, Props>(
   (
     {
+      id,
       data,
       width,
       height,
-      lineGenerator,
+      drawnPath,
       onMouseEnter,
       onMouseMove,
       onMouseLeave,
@@ -48,13 +50,15 @@ export const LineChart = forwardRef<HTMLDivElement, Props>(
         svg
           .append('g')
           .append('path')
+          .attr('id', id)
           .attr('fill', 'none')
           .attr('stroke', 'var(--orange)')
           .attr('stroke-width', 2)
-          .attr('d', lineGenerator(d3.map(data, (_, i) => [i, i])));
+          .attr('d', drawnPath);
 
-        // !¬ Tooltip
+        svg.selectChild();
 
+        // !¬ Tooltip circle
         svg
           .append('circle')
           .attr('id', 'circle')
@@ -80,7 +84,7 @@ export const LineChart = forwardRef<HTMLDivElement, Props>(
         // const yAxisGenerator = d3.axisLeft(yScale);
         // const yAxis = svg.append('g').call(yAxisGenerator);
       }
-    }, [data, lineGenerator]);
+    }, [data, drawnPath, id]);
 
     return (
       <div className={s.chartWrapper} ref={ref}>

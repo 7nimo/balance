@@ -7,38 +7,52 @@ import { HorizontalAxis } from 'modules/charts/components/HorizontalAxis/Horizon
 import { useStore } from 'store/store';
 import { useDimensions } from 'hooks/useDimensions';
 import { usePrevious } from 'hooks/usePrevious';
-import { DataPoint, Period, Point } from '@types';
+import { Account, DataPoint, Period, Point } from '@types';
 import * as d3 from 'd3';
 
 import s from './LineChartContainer.module.scss';
 
 type Props = {
-  account?: any;
+  account: Account;
 };
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const LineChartContainer: FC<Props> = ({ account }) => {
   const { observe, width, height } = useDimensions<HTMLDivElement>();
-  const storeData = useStore((state) => state.d3);
+  const assets = useStore((state) => state.assets);
 
   const [tooltipPosition, setTooltipPosition] = useState<Point>({ x: 0, y: 0 });
-  const [date, setDate] = useState<string>();
-  const [value, setValue] = useState<number>(0);
+  const [tooltipData, setTooltipData] = useState<{ date: string; value: number }>({
+    date: new Date().toString(),
+    value: 0,
+  });
   const currentValue = useRef<number>(0);
-  const [prevValue, setPrevious] = usePrevious<number | undefined>(undefined);
+  // const [prevValue, setPrevious] = usePrevious<number | undefined>(undefined);
+
+  const map: d3.InternMap<Date, DataPoint[]> = new Map();
+  map.set(new Date(), [{ date: new Date(), value: 0 }]);
 
   // !¬ Data
-  const data: d3.InternMap<Date, DataPoint[]> = d3.group(storeData, (d: DataPoint) => d.date);
+  const [data, setData] = useState<d3.InternMap<Date, DataPoint[]>>(map);
+
+  useEffect(() => {
+    async function setChartData(): Promise<void> {
+      setData(assets.get(account.id)!);
+    }
+
+    if (assets.size > 1 && assets.has(account.id)) {
+      console.log('hiho');
+      setChartData().then(() => console.log(data));
+    }
+  }, [assets, account, data]);
 
   useEffect(() => {
     // if (data.size > 1 && currentValue.current !== undefined && currentValue.current !== prevValue) {
-    if (data.size > 1 && currentValue.current === 0) {
-      setPrevious(currentValue.current);
+    if (data && data.size > 1 && currentValue.current === 0) {
       const current = data.values().next().value[0].value;
       currentValue.current = current;
-      setValue(currentValue.current);
     }
-  }, [data, currentValue, prevValue, setPrevious]);
+  }, [data, currentValue]);
 
   // !¬ Accesors
   const x = ([x]: [Date, DataPoint[]]): Date => x;
@@ -69,6 +83,8 @@ export const LineChartContainer: FC<Props> = ({ account }) => {
     .y(([i]) => yScale(Y[i]));
   // .curve(d3.curveBasis)
 
+  const path = lineGenerator(d3.map(data, (_, i) => [i, i]));
+
   // !¬ Mouse Events
   const onMouseEnter = (): void => {
     d3.select('#tooltip').style('opacity', 1);
@@ -77,20 +93,18 @@ export const LineChartContainer: FC<Props> = ({ account }) => {
 
   const onMouseMove = (event: React.SyntheticEvent): void => {
     if (X.length && Y.length) {
-      const hoveredDate = xScale.invert(d3.pointer(event)[0]);
-      // const i = d3.bisectCenter(X, xScale.invert(d3.pointer(event)[0]));
-
+      const hoveredPoint = xScale.invert(d3.pointer(event)[0]);
       const closestIndex = d3.leastIndex(
         data,
         (a, b) =>
-          Math.abs((x(a) as any) - (hoveredDate as any)) -
-          Math.abs((x(b) as any) - (hoveredDate as any))
+          Math.abs((x(a) as any) - (hoveredPoint as any)) -
+          Math.abs((x(b) as any) - (hoveredPoint as any))
       );
 
       const formatDate = d3.timeFormat('%d/%m/%Y');
       const xValue = X[closestIndex!];
       const yValue = Y[closestIndex!];
-      const date = formatDate(xValue);
+      const hoveredDate = formatDate(xValue);
 
       const xPos: number = xScale(xValue);
       const yPos: number = yScale(yValue);
@@ -98,10 +112,7 @@ export const LineChartContainer: FC<Props> = ({ account }) => {
       setTooltipPosition({ x: xPos - 75, y: yPos - 80 });
       d3.select('#circle').attr('cx', xPos).attr('cy', yPos);
 
-      setDate(date);
-      setValue(yValue);
-
-      // data.get(date);
+      setTooltipData({ date: hoveredDate, value: yValue });
     }
   };
 
@@ -109,20 +120,21 @@ export const LineChartContainer: FC<Props> = ({ account }) => {
     d3.select('#tooltip').style('opacity', 0);
     d3.select('#circle').style('opacity', 0);
 
-    setValue(currentValue.current);
+    // setValue(currentValue.current);
   };
 
   return (
     <div className={s.chartContainer}>
-      <ControlBar currencySymbol="£" assetAmount={value ?? 0} />
+      <ControlBar currencySymbol="£" assetAmount={tooltipData.value ?? currentValue.current} />
       <LineChart
+        id={account.id}
         data={data}
         ref={observe}
         width={width}
         height={height}
-        lineGenerator={lineGenerator}
-        date={date}
-        value={value}
+        drawnPath={path!}
+        date={tooltipData.date}
+        value={tooltipData.value}
         tooltipPosition={tooltipPosition}
         onMouseEnter={onMouseEnter}
         onMouseMove={onMouseMove}

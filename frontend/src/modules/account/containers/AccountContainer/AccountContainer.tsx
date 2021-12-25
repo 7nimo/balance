@@ -13,18 +13,18 @@ import { useStore } from 'store/store';
 import { LineChartContainer } from 'modules/charts/containers/LineChartContainer/LineChartContainer';
 
 type Props = {
-  account?: Account;
+  account: Account;
 };
 
 export const AccountContainer: FC<Props> = ({ account }) => {
   const [query, setQuery] = useState<string>('');
   const [transactions, setTransactions] = useState<Transaction[] | null>(null);
 
-  const setData = useStore((state) => state.setData);
+  const [assets, setAssetData] = useStore((state) => [state.assets, state.setAssetData]);
 
   const { data } = useTransactions(account!.id, (initialData) => {
     setTransactions(initialData.transactions);
-    setData(initialData.transactions);
+    setAssetData(account!.id, initialData.transactions, assets);
   });
 
   useEffect(() => {
@@ -60,7 +60,7 @@ export const AccountContainer: FC<Props> = ({ account }) => {
       <PageHeader title={capitalize(account!.name)} />
 
       <Block>
-        <LineChartContainer />
+        <LineChartContainer account={account} />
       </Block>
 
       <Block title="Transactions">
