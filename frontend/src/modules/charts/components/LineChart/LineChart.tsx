@@ -1,22 +1,21 @@
 import { useEffect, useRef, SyntheticEvent, forwardRef } from 'react';
 import * as d3 from 'd3';
 
-import { DataPoint, Point } from '@types';
+import { Point } from '@types';
 import { InternMap } from 'd3';
 import s from './LineChart.module.scss';
 
 type Props = {
   id: string;
-  data: InternMap<Date, DataPoint[]>;
+  data: InternMap<Date, number[]>;
   width: number;
   height: number;
   drawnPath: string;
   onMouseEnter: () => void;
   onMouseMove: (e: SyntheticEvent) => void;
   onMouseLeave: () => void;
-  date?: string;
-  value?: number;
   tooltipPosition: Point;
+  tooltipData: { date: string; value: number };
 };
 
 export const LineChart = forwardRef<HTMLDivElement, Props>(
@@ -30,9 +29,8 @@ export const LineChart = forwardRef<HTMLDivElement, Props>(
       onMouseEnter,
       onMouseMove,
       onMouseLeave,
-      date,
-      value,
       tooltipPosition,
+      tooltipData,
     },
     ref
   ) => {
@@ -94,8 +92,8 @@ export const LineChart = forwardRef<HTMLDivElement, Props>(
           style={{ left: tooltipPosition.x ?? 0, top: tooltipPosition.y ?? 0 }}
         >
           <div className={s.tooltipValue}>
-            <span className={s.value}>{`£${value}`}</span>
-            <span className={s.date}>{date}</span>
+            <span className={s.value}>{`£${tooltipData.value}`}</span>
+            <span className={s.date}>{tooltipData.date}</span>
           </div>
         </div>
 

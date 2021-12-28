@@ -20,7 +20,7 @@ export const AccountContainer: FC<Props> = ({ account }) => {
   const [query, setQuery] = useState<string>('');
   const [transactions, setTransactions] = useState<Transaction[] | null>(null);
 
-  const [assets, setAssetData] = useStore((state) => [state.assets, state.setAssetData]);
+  const [assets, setAssetData] = useStore((state) => [state.assets, state.setAssetD3Data]);
 
   const { data } = useTransactions(account!.id, (initialData) => {
     setTransactions(initialData.transactions);

@@ -6,8 +6,7 @@ import { LineChart } from 'modules/charts/components/LineChart/LineChart';
 import { HorizontalAxis } from 'modules/charts/components/HorizontalAxis/HorizontalAxis';
 import { useStore } from 'store/store';
 import { useDimensions } from 'hooks/useDimensions';
-import { usePrevious } from 'hooks/usePrevious';
-import { Account, DataPoint, Period, Point } from '@types';
+import { Account, Period, Point } from '@types';
 import * as d3 from 'd3';
 
 import s from './LineChartContainer.module.scss';
@@ -22,41 +21,36 @@ export const LineChartContainer: FC<Props> = ({ account }) => {
   const assets = useStore((state) => state.assets);
 
   const [tooltipPosition, setTooltipPosition] = useState<Point>({ x: 0, y: 0 });
-  const [tooltipData, setTooltipData] = useState<{ date: string; value: number }>({
-    date: new Date().toString(),
+  const [tooltipData, setTooltipData] = useState({
+    date: '',
     value: 0,
   });
-  const currentValue = useRef<number>(0);
-  // const [prevValue, setPrevious] = usePrevious<number | undefined>(undefined);
-
-  const map: d3.InternMap<Date, DataPoint[]> = new Map();
-  map.set(new Date(), [{ date: new Date(), value: 0 }]);
+  const [amount, setAmount] = useState(0);
+  const currentAmount = useRef(0);
 
   // !¬ Data
-  const [data, setData] = useState<d3.InternMap<Date, DataPoint[]>>(map);
+  const [data, setData] = useState<d3.InternMap<Date, number[]>>(new Map());
+  const [pathMap, addPathToMap] = useState(new Map());
 
   useEffect(() => {
     async function setChartData(): Promise<void> {
       setData(assets.get(account.id)!);
     }
-
-    if (assets.size > 1 && assets.has(account.id)) {
-      console.log('hiho');
-      setChartData().then(() => console.log(data));
+    if (assets.has(account.id)) {
+      // !!this should run only when new data appears AAAAAAAAAAAAA
+      setChartData()
+        .then(() => {
+          const [firstElement] = assets.get(account.id)!.values().next().value;
+          currentAmount.current = firstElement;
+          setAmount(firstElement);
+        })
+        .catch((err) => console.error(err));
     }
   }, [assets, account, data]);
 
-  useEffect(() => {
-    // if (data.size > 1 && currentValue.current !== undefined && currentValue.current !== prevValue) {
-    if (data && data.size > 1 && currentValue.current === 0) {
-      const current = data.values().next().value[0].value;
-      currentValue.current = current;
-    }
-  }, [data, currentValue]);
-
   // !¬ Accesors
-  const x = ([x]: [Date, DataPoint[]]): Date => x;
-  const y = ([, y]: [Date, DataPoint[]]): number => y[0].value;
+  const x = ([x]: [Date, number[]]): Date => x;
+  const y = ([, y]: [Date, number[]]): number => y[0];
 
   // Compute values.
   const X = d3.map(data, x);
@@ -80,8 +74,8 @@ export const LineChartContainer: FC<Props> = ({ account }) => {
     .line()
     .defined(([i, _]) => D[i] as boolean)
     .x(([i]) => xScale(X[i]!))
-    .y(([i]) => yScale(Y[i]));
-  // .curve(d3.curveBasis)
+    .y(([i]) => yScale(Y[i]))
+    .curve(d3.curveBasis);
 
   const path = lineGenerator(d3.map(data, (_, i) => [i, i]));
 
@@ -113,6 +107,7 @@ export const LineChartContainer: FC<Props> = ({ account }) => {
       d3.select('#circle').attr('cx', xPos).attr('cy', yPos);
 
       setTooltipData({ date: hoveredDate, value: yValue });
+      setAmount(yValue);
     }
   };
 
@@ -120,12 +115,12 @@ export const LineChartContainer: FC<Props> = ({ account }) => {
     d3.select('#tooltip').style('opacity', 0);
     d3.select('#circle').style('opacity', 0);
 
-    // setValue(currentValue.current);
+    setAmount(currentAmount.current ?? 0);
   };
 
   return (
     <div className={s.chartContainer}>
-      <ControlBar currencySymbol="£" assetAmount={tooltipData.value ?? currentValue.current} />
+      <ControlBar currencySymbol="£" assetAmount={amount} />
       <LineChart
         id={account.id}
         data={data}
@@ -133,9 +128,8 @@ export const LineChartContainer: FC<Props> = ({ account }) => {
         width={width}
         height={height}
         drawnPath={path!}
-        date={tooltipData.date}
-        value={tooltipData.value}
         tooltipPosition={tooltipPosition}
+        tooltipData={tooltipData}
         onMouseEnter={onMouseEnter}
         onMouseMove={onMouseMove}
         onMouseLeave={onMouseLeave}
