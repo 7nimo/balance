@@ -9,10 +9,9 @@ services:
         - ./frontend:/app
         - /app/node_modules
       environment:
-        - PORT=4100
-        - "REACT_APP_BALANCE_API_URL=http://localhost:4200/api"
+        REACT_APP_BALANCE_API_URL: "http://localhost:4200/api"
       ports:
-        - "4100:4100"
+        - "${FRONTEND_PORT}:${FRONTEND_PORT}"
       working_dir: /app
       command: bash -c "yarn && yarn start"
 
@@ -25,7 +24,7 @@ services:
       - ./balance-api:/app
       - /app/node_modules
     ports:
-      - "${SERVER_PORT}:${SERVER_PORT}"
+      - ${SERVER_PORT}:${SERVER_PORT}
       - "9229:9229"
     working_dir: /app
     restart: unless-stopped
@@ -35,14 +34,14 @@ services:
  
   balance_db:
     container_name: balance_db
-    image: postgres:13.3
+    image: postgres:14.1
     environment:
       POSTGRES_DB: ${POSTGRES_DB}
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      PG_DATA: /var/lib/postgresql/data
+      PG_DATA: /var/lib/postgresql/balance_db
     volumes:
-      - db_data:/var/lib/postgresql/data
+      - db_data:/var/lib/postgresql/balance_db
     ports:
       - "${POSTGRES_PORT}:5432"
     restart: unless-stopped
