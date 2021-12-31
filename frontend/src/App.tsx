@@ -10,7 +10,7 @@ import { FC } from 'react';
 import { AuthProvider, useAuth } from 'lib/auth';
 // import { queryClient } from 'lib/react-query';
 
-export const RequireAuth: FC<{ children: JSX.Element }> = ({ children }) => {
+const RequireAuth: FC<{ children: JSX.Element }> = ({ children }) => {
   const auth = useAuth();
   const location = useLocation();
 

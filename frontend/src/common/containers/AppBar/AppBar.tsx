@@ -2,7 +2,7 @@ import { useLocation } from 'react-router-dom';
 import { AppBarActions } from '../AppBarActions/AppBarActions';
 import s from './AppBar.module.scss';
 
-export const AppBar = (): JSX.Element => {
+export function AppBar(): JSX.Element {
   const location = useLocation();
 
   return (
@@ -16,4 +16,4 @@ export const AppBar = (): JSX.Element => {
       </section>
     </header>
   );
-};
+}

@@ -46,7 +46,9 @@ export const useDimensions = <T extends HTMLElement | null>(): Return<T> => {
 
   useEffect(() => {
     if (!('ResizeObserver' in window) || !('ResizeObserverEntry' in window)) {
-      return () => null;
+      return function () {
+        return null;
+      };
     }
 
     let raf: number | null = null;

@@ -5,6 +5,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Button } from '../../Button/Button';
 import { useAuth } from '../../../../lib/auth';
+
 import s from './SignInForm.module.scss';
 
 type SignInInputs = {
@@ -12,12 +13,17 @@ type SignInInputs = {
   password: string;
 };
 
+type StateType = {
+  from: { pathname: string };
+};
+
 export function SignInForm(): JSX.Element {
   const { login } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
+  const state = location.state as StateType;
 
-  const from = location.state?.from?.pathname || '/dashboard';
+  const from = state.from?.pathname || '/dashboard';
 
   const {
     register,
