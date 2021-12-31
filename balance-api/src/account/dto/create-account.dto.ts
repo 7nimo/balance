@@ -2,6 +2,7 @@ import {
   IsAlphanumeric,
   IsInt,
   IsNotEmpty,
+  IsNumber,
   IsOptional,
   IsString,
   Matches,
@@ -20,6 +21,7 @@ export class CreateAccountDto {
   readonly sortCode?: string;
 
   @IsOptional()
+  @IsString()
   @MaxLength(30)
   @IsAlphanumeric()
   readonly accountNumber?: string;
@@ -29,4 +31,7 @@ export class CreateAccountDto {
 
   @IsInt()
   readonly currency: CurrencyEntity;
+
+  @IsNumber()
+  readonly balance: number;
 }

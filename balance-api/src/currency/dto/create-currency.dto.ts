@@ -9,5 +9,5 @@ export class CreateCurrencyDto {
   readonly name: string;
 
   @IsEnum(CurrencyType)
-  readonly type?: CurrencyType;
+  readonly type: CurrencyType;
 }
