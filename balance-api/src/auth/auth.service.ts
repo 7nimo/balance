@@ -2,7 +2,6 @@ import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import * as argon2 from 'argon2';
-import { access } from 'fs';
 import { JwtPayload } from './jwt-payload.interface';
 
 @Injectable()
@@ -24,8 +23,9 @@ export class AuthService {
   }
 
   getCookieWithJwt(accessToken: string) {
-    const accessTokenCookie = 
-      `_bat=${accessToken}; Path=/; Expires=${this.configService.get('JWT_TOKEN_EXP')}; Secure; HttpOnly; SameSite=Strict`;
+    const accessTokenCookie = `_bat=${accessToken}; Path=/; Expires=${this.configService.get(
+      'JWT_TOKEN_EXP',
+    )}; Secure; HttpOnly; SameSite=None`;
 
     return accessTokenCookie;
   }
@@ -42,16 +42,17 @@ export class AuthService {
   }
 
   getCookieWithRefreshToken(refreshToken: string) {
-    const refreshTokenCookie = 
-      `_brt=${refreshToken}; Path=/api/auth/refresh/; Expires=${this.configService.get('JWT_REFRESH_TOKEN_EXP')}; Secure; HttpOnly; SameSite=Strict`;
+    const refreshTokenCookie = `_brt=${refreshToken}; Path=/api/auth/refresh/; Expires=${this.configService.get(
+      'JWT_REFRESH_TOKEN_EXP',
+    )}; Secure; HttpOnly; SameSite=None`;
 
     return refreshTokenCookie;
   }
 
   getCookiesForLogOut() {
     return [
-      '_bat=; Path=/; Expires=0; Secure; HttpOnly; SameSite=Strict',
-      '_brt=; Path=/; Expires=0; Secure; HttpOnly; SameSite=Strict',
+      '_bat=; Path=/; Expires=0; Secure; HttpOnly; SameSite=None',
+      '_brt=; Path=/; Expires=0; Secure; HttpOnly; SameSite=None',
     ];
   }
 }

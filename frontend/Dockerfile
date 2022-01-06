@@ -1,13 +1,16 @@
-FROM node:16.13.0 AS development
+FROM node:16-alpine AS development
 
 ENV NODE_ENV=development
 
 WORKDIR /app
 
-COPY package*.json ./
+COPY yarn.lock .
+COPY package.json .
 
-RUN npm install
+RUN yarn --prod
 
 COPY . .
 
-RUN npm run build
+EXPOSE 4100
+
+CMD [ "yarn", "start" ]
