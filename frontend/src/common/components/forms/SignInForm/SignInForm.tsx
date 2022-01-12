@@ -2,7 +2,7 @@ import { LoginCredentials } from '@types';
 import cx from 'classnames';
 import { useEffect } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-location';
 import { Button } from '../../Button/Button';
 import { useAuth } from '../../../../lib/auth';
 
@@ -13,17 +13,9 @@ type SignInInputs = {
   password: string;
 };
 
-type StateType = {
-  from: { pathname: string };
-};
-
-export function SignInForm(): JSX.Element {
+function SignInForm(): React.ReactElement {
   const { login } = useAuth();
   const navigate = useNavigate();
-  const location = useLocation();
-  const state = location.state as StateType;
-
-  const from = state.from?.pathname || '/dashboard';
 
   const {
     register,
@@ -41,7 +33,7 @@ export function SignInForm(): JSX.Element {
   });
 
   const onSubmit: SubmitHandler<LoginCredentials> = async (formData: SignInInputs) => {
-    login(formData).then(() => navigate(from, { replace: true }));
+    login(formData).then(() => navigate({ to: '../dashboard', replace: true }));
   };
 
   useEffect(() => {
@@ -111,3 +103,5 @@ export function SignInForm(): JSX.Element {
     </div>
   );
 }
+
+export default SignInForm;

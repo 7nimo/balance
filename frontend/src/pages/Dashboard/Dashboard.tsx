@@ -3,7 +3,7 @@ import { Block } from 'common/components/layout/Block/Block';
 import { Shrug } from 'common/components/Shrug/Shrug';
 import { Chart } from 'modules/charts/components/Chart';
 
-export default function Dashboard(): JSX.Element {
+function Dashboard(): React.ReactElement {
   return (
     <>
       <Block title="Assets">
@@ -26,3 +26,5 @@ export default function Dashboard(): JSX.Element {
     </>
   );
 }
+
+export default Dashboard;

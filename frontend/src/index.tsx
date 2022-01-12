@@ -1,17 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter } from 'react-router-dom';
 import reportWebVitals from './reportWebVitals';
-import { ReactQueryProvider } from './lib/react-query';
-import { App } from './App';
+import ReactQueryProvider from './lib/react-query';
+import App from './App';
 import './index.scss';
 
 ReactDOM.render(
   <React.StrictMode>
     <ReactQueryProvider>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
+      <App />
     </ReactQueryProvider>
   </React.StrictMode>,
   document.getElementById('root')

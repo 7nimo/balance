@@ -1,15 +1,15 @@
-import { useLocation } from 'react-router-dom';
+import { useMatch } from 'react-location';
 import { AppBarActions } from '../AppBarActions/AppBarActions';
 import s from './AppBar.module.scss';
 
-export function AppBar(): JSX.Element {
-  const location = useLocation();
+function AppBar(): React.ReactElement {
+  const { params } = useMatch();
 
   return (
     <header className={s.appBar}>
       <section className={s.section}>
         {/* <nav>todo</nav> */}
-        <h1 className={s.h1}>{location.pathname}</h1>
+        <h1 className={s.h1}>{params.id}</h1>
       </section>
       <section className={s.section}>
         <AppBarActions />
@@ -17,3 +17,5 @@ export function AppBar(): JSX.Element {
     </header>
   );
 }
+
+export default AppBar;

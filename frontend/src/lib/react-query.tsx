@@ -1,6 +1,5 @@
 import { fetchAccounts } from 'api/account';
 import { fetchCurrencies } from 'api/currency';
-import { FC } from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
 
@@ -14,11 +13,11 @@ export const queryClient = new QueryClient({
   },
 });
 
-interface Props {
+type Props = {
   children: React.ReactNode;
-}
+};
 
-export const ReactQueryProvider: FC<Props> = ({ children }) => {
+function ReactQueryProvider({ children }: Props): React.ReactElement {
   queryClient.prefetchQuery('accounts', fetchAccounts);
   queryClient.prefetchQuery('currency', fetchCurrencies);
 
@@ -28,4 +27,6 @@ export const ReactQueryProvider: FC<Props> = ({ children }) => {
       {children}
     </QueryClientProvider>
   );
-};
+}
+
+export default ReactQueryProvider;

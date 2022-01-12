@@ -46,9 +46,8 @@ export const useDimensions = <T extends HTMLElement | null>(): Return<T> => {
 
   useEffect(() => {
     if (!('ResizeObserver' in window) || !('ResizeObserverEntry' in window)) {
-      return function () {
-        return null;
-      };
+      // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+      () => null;
     }
 
     let raf: number | null = null;

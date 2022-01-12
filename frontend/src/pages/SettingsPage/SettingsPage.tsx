@@ -1,7 +1,7 @@
 import { Block } from 'common/components/layout/Block/Block';
 import { Row } from 'common/components/layout/Row/Row';
 
-export function SettingsPage(): JSX.Element {
+function SettingsPage(): React.ReactElement {
   return (
     <Block title="Settings">
       <Row>
@@ -10,3 +10,5 @@ export function SettingsPage(): JSX.Element {
     </Block>
   );
 }
+
+export default SettingsPage;

@@ -1,25 +1,12 @@
-import { AppBar } from 'common/containers/AppBar/AppBar';
-import { NavigationDrawer } from 'common/containers/NavigationDrawer/NavigationDrawer';
-import { Outlet } from 'react-router-dom';
-import { FC, useEffect, useState } from 'react';
-import { Account } from '@types';
-import { useQuery } from 'react-query';
-import { fetchAccounts } from 'api/account';
+import AppBar from 'common/containers/AppBar/AppBar';
+import Drawer from 'common/containers/NavigationDrawer/NavigationDrawer';
+import { Outlet } from 'react-location';
 import s from './MainViewContainer.module.scss';
 
-export const MainViewContainer: FC = () => {
-  const { data } = useQuery('accounts', fetchAccounts);
-  const [accounts, setAccounts] = useState<Account[] | []>([]);
-
-  useEffect(() => {
-    if (data) {
-      setAccounts(data.accounts);
-    }
-  }, [data]);
-
+function MainViewContainer(): React.ReactElement {
   return (
     <div className={s.main}>
-      <NavigationDrawer accounts={accounts} />
+      <Drawer />
       <AppBar />
       <main className={s.container}>
         <div className={s.content}>
@@ -28,4 +15,6 @@ export const MainViewContainer: FC = () => {
       </main>
     </div>
   );
-};
+}
+
+export default MainViewContainer;

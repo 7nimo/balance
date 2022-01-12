@@ -1,7 +1,12 @@
 {
   "name": "frontend",
-  "version": "1.0.0",
   "private": true,
+  "repository": {
+    "directory": "frontend",
+    "type": "git",
+    "url": "https://github.com/elusion-io/balance"
+  },
+  "version": "0",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
@@ -13,18 +18,6 @@
     "svgo": "rimraf ./src/assets/svg/icons/optimized  & svgo -q -p 8 -f ./src/assets/svg/icons/raw/new -o ./src/assets/svg/icons/optimized",
     "svgr": "npx @svgr/cli --config-file svgo.yml ./src/common/components/icons ./src/assets/svg/icons/optimized",
     "icon-gen": "npx @svgr/cli --icon -d ./src/components/Icons ./src/assets/svg/icons/optimized"
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
   },
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.1",
@@ -41,9 +34,9 @@
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-hook-form": "^7.22.5",
+    "react-location": "^3.3.0",
     "react-query": "^3.34.7",
     "react-query-auth": "^1.1.0",
-    "react-router-dom": "^6.2.1",
     "react-scripts": "^5.0.0",
     "styled-components": "^5.3.3",
     "typescript": "^4.5.4",
@@ -55,7 +48,6 @@
     "@svgr/cli": "^6.1.2",
     "@types/d3": "^7.1.0",
     "@types/history": "^4.7.9",
-    "@types/react-router-dom": "^5.3.2",
     "@typescript-eslint/eslint-plugin": "^5.8.1",
     "@typescript-eslint/parser": "^5.8.1",
     "eslint": "^8",
@@ -72,5 +64,17 @@
     "rimraf": "^3.0.2",
     "svgo": "^2.8.0",
     "typescript-plugin-css-modules": "^3.4.0"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   }
 }
