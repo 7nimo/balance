@@ -11,6 +11,7 @@ import { useDebounce } from 'hooks/useDebounce';
 import { useStore } from 'store/store';
 import { useAccount } from 'api/account';
 import { useMatch } from 'react-location';
+import { LineChartContainer } from 'modules/charts/containers/LineChartContainer/LineChartContainer';
 
 function AccountContainer(): React.ReactElement {
   const [query, setQuery] = useState<string>('');
@@ -29,7 +30,7 @@ function AccountContainer(): React.ReactElement {
 
   const { data } = useTransactions(accountId, (initialData) => {
     setTransactions(initialData.transactions);
-    setAssetData(account!.id, initialData.transactions, assets);
+    setAssetData(accountId, initialData.transactions, assets);
   });
 
   useEffect(() => {
@@ -71,7 +72,7 @@ function AccountContainer(): React.ReactElement {
       <PageHeader title={accountName} />
 
       <Block>
-        <LineChartContainer account={account} />
+        <LineChartContainer account={account!.account} />
       </Block>
 
       <Block title="Transactions">
