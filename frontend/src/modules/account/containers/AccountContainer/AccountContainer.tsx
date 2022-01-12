@@ -8,7 +8,6 @@ import { SearchBar } from 'common/components/forms/SearchBar/SearchBar';
 import { ActionBar } from 'common/containers/ActionBar/ActionBar';
 import { Block } from 'common/components/layout/Block/Block';
 import { useDebounce } from 'hooks/useDebounce';
-// import { ChartContainer } from 'modules/charts/containers/ChartContainer/ChartContainer';
 import { useStore } from 'store/store';
 import { useAccount } from 'api/account';
 import { useMatch } from 'react-location';
@@ -26,11 +25,11 @@ function AccountContainer(): React.ReactElement {
 
   const { data: account } = useAccount(accountId);
 
-  const setData = useStore((state) => state.setData);
+  const [assets, setAssetData] = useStore((state) => [state.assets, state.setAssetD3Data]);
 
   const { data } = useTransactions(accountId, (initialData) => {
     setTransactions(initialData.transactions);
-    setData(initialData.transactions);
+    setAssetData(account!.id, initialData.transactions, assets);
   });
 
   useEffect(() => {
@@ -71,7 +70,9 @@ function AccountContainer(): React.ReactElement {
     <>
       <PageHeader title={accountName} />
 
-      {/* <Block><ChartContainer /></Block> */}
+      <Block>
+        <LineChartContainer account={account} />
+      </Block>
 
       <Block title="Transactions">
         <ActionBar>

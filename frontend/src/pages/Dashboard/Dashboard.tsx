@@ -1,7 +1,6 @@
 import { Row } from 'common/components/layout/Row/Row';
 import { Block } from 'common/components/layout/Block/Block';
 import { Shrug } from 'common/components/Shrug/Shrug';
-import { Chart } from 'modules/charts/components/Chart';
 
 function Dashboard(): React.ReactElement {
   return (
@@ -19,9 +18,6 @@ function Dashboard(): React.ReactElement {
         <Row>
           <Shrug label="¯\_(ツ)_/¯" />
         </Row>
-      </Block>
-      <Block>
-        <Chart />
       </Block>
     </>
   );
