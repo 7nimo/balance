@@ -1,8 +1,7 @@
 /* eslint-disable @typescript-eslint/no-shadow */
-import { FC, useEffect, useState } from 'react';
-import { Account, Transaction } from '@types';
+import { useEffect, useState } from 'react';
+import { Transaction } from '@types';
 import { useTransactions } from 'api/transaction';
-import { capitalize } from 'common/utils/helpers';
 import { PageHeader } from 'common/components/PageHeader/PageHeader';
 import { TransactionsTable } from 'common/components/TransactionsTable/TransactionsTable';
 import { SearchBar } from 'common/components/forms/SearchBar/SearchBar';
@@ -11,18 +10,25 @@ import { Block } from 'common/components/layout/Block/Block';
 import { useDebounce } from 'hooks/useDebounce';
 // import { ChartContainer } from 'modules/charts/containers/ChartContainer/ChartContainer';
 import { useStore } from 'store/store';
+import { useAccount } from 'api/account';
+import { useMatch } from 'react-location';
 
-type Props = {
-  account?: Account;
-};
-
-export const AccountContainer: FC<Props> = ({ account }) => {
+function AccountContainer(): React.ReactElement {
   const [query, setQuery] = useState<string>('');
-  const [transactions, setTransactions] = useState<Transaction[] | null>(null);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [Transactions, setTransactions] = useState<Transaction[] | null>(null);
+  const [accountName, setAccountName] = useState('');
+
+  const {
+    data: { transactions },
+    params: { accountId },
+  } = useMatch();
+
+  const { data: account } = useAccount(accountId);
 
   const setData = useStore((state) => state.setData);
 
-  const { data } = useTransactions(account!.id, (initialData) => {
+  const { data } = useTransactions(accountId, (initialData) => {
     setTransactions(initialData.transactions);
     setData(initialData.transactions);
   });
@@ -55,9 +61,15 @@ export const AccountContainer: FC<Props> = ({ account }) => {
     };
   }, [debouncedSearch]);
 
+  useEffect(() => {
+    if (account !== undefined && !accountName) {
+      setAccountName(account!.account.name);
+    }
+  }, [account, accountName]);
+
   return (
     <>
-      <PageHeader title={capitalize(account!.name)} />
+      <PageHeader title={accountName} />
 
       {/* <Block><ChartContainer /></Block> */}
 
@@ -72,9 +84,11 @@ export const AccountContainer: FC<Props> = ({ account }) => {
         </ActionBar>
 
         <section>
-          <TransactionsTable transactions={transactions} />
+          <TransactionsTable transactions={transactions as Transaction[]} />
         </section>
       </Block>
     </>
   );
-};
+}
+
+export default AccountContainer;

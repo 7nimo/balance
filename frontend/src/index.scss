@@ -204,7 +204,7 @@ span, p {
   color: var(--text-color);
 }
 
-p {
+p, div, pre {
   color: var(--text-color);
   word-wrap: anywhere;
 }

@@ -8,6 +8,7 @@ import SettingsPage from 'pages/SettingsPage/SettingsPage';
 import SignInPage from 'pages/SignInPage/SignInPage';
 import MainViewContainer from 'common/containers/MainViewContainer/MainViewContainer';
 import { MakeGenerics, ReactLocation, Route } from 'react-location';
+import AccountContainer from 'modules/account/containers/AccountContainer/AccountContainer';
 
 type LocationGenerics = MakeGenerics<{
   Params: { accountId: string };
@@ -35,7 +36,7 @@ export const routes: Route<LocationGenerics>[] = [
           },
           {
             path: ':accountId',
-            element: <AccountsPage />,
+            element: <AccountContainer />,
             loader: ({ params: { accountId } }) =>
               queryClient.getQueryData(['transactions', accountId]) ??
               queryClient.fetchQuery(['transactions', accountId], () =>
