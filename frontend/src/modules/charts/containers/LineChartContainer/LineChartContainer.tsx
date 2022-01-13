@@ -1,22 +1,22 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-shadow */
-import { FC, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { ControlBar } from 'modules/charts/components/ControlBar/ControlBar';
 import { LineChart } from 'modules/charts/components/LineChart/LineChart';
 import { HorizontalAxis } from 'modules/charts/components/HorizontalAxis/HorizontalAxis';
 import { useStore } from 'store/store';
 import { useDimensions } from 'hooks/useDimensions';
-import { Account, Period, Point } from '@types';
+import { Period, Point } from '@types';
 import * as d3 from 'd3';
 
 import s from './LineChartContainer.module.scss';
 
 type Props = {
-  account: Account;
+  accountId: string;
 };
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-export const LineChartContainer: FC<Props> = ({ account }) => {
+function LineChartContainer({ accountId }: Props): React.ReactElement {
   const { observe, width, height } = useDimensions<HTMLDivElement>();
   const assets = useStore((state) => state.assets);
 
@@ -30,23 +30,24 @@ export const LineChartContainer: FC<Props> = ({ account }) => {
 
   // !¬ Data
   const [data, setData] = useState<d3.InternMap<Date, number[]>>(new Map());
-  const [pathMap, addPathToMap] = useState(new Map());
+  // const [pathMap, addPathToMap] = useState(new Map());
 
   useEffect(() => {
     async function setChartData(): Promise<void> {
-      setData(assets.get(account.id)!);
+      setData(assets.get(accountId)!);
     }
-    if (assets.has(account.id)) {
-      // !!this should run only when new data appears AAAAAAAAAAAAA
+    if (assets.has(accountId)) {
+      // todo: !!this should run only when new data appears AAAAAAAAAAAAA
       setChartData()
         .then(() => {
-          const [firstElement] = assets.get(account.id)!.values().next().value;
+          const [firstElement] = assets.get(accountId)!.values().next().value;
           currentAmount.current = firstElement;
           setAmount(firstElement);
         })
+        // eslint-disable-next-line no-console
         .catch((err) => console.error(err));
     }
-  }, [assets, account, data]);
+  }, [assets, accountId, data]);
 
   // !¬ Accesors
   const x = ([x]: [Date, number[]]): Date => x;
@@ -122,7 +123,7 @@ export const LineChartContainer: FC<Props> = ({ account }) => {
     <div className={s.chartContainer}>
       <ControlBar currencySymbol="£" assetAmount={amount} />
       <LineChart
-        id={account.id}
+        id={accountId}
         data={data}
         ref={observe}
         width={width}
@@ -137,4 +138,6 @@ export const LineChartContainer: FC<Props> = ({ account }) => {
       <HorizontalAxis period={Period.all} />
     </div>
   );
-};
+}
+
+export default LineChartContainer;

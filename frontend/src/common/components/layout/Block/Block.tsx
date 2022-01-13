@@ -7,11 +7,11 @@ interface SectionProps {
   children: ReactNode;
 }
 
-export const Block: React.FC<SectionProps & Record<string, any>> = ({
+function Block({
   title,
   children,
   ...restProps
-}) => {
+}: SectionProps & Record<string, any>): React.ReactElement {
   return (
     <div className={s.container}>
       <Card {...restProps}>
@@ -20,4 +20,6 @@ export const Block: React.FC<SectionProps & Record<string, any>> = ({
       </Card>
     </div>
   );
-};
+}
+
+export default Block;

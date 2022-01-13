@@ -7,12 +7,6 @@ WORKDIR /app
 COPY yarn.lock .
 COPY package.json .
 
-# RUN npm install -g -s --no-progress yarn && \
-#     yarn && \
-#     yarn run build && \
-#     yarn run prune && \
-
-
 RUN yarn --prod
 
 COPY . .

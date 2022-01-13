@@ -2,16 +2,16 @@
 import { useEffect, useState } from 'react';
 import { Transaction } from '@types';
 import { useTransactions } from 'api/transaction';
-import { PageHeader } from 'common/components/PageHeader/PageHeader';
 import { TransactionsTable } from 'common/components/TransactionsTable/TransactionsTable';
 import { SearchBar } from 'common/components/forms/SearchBar/SearchBar';
 import { ActionBar } from 'common/containers/ActionBar/ActionBar';
-import { Block } from 'common/components/layout/Block/Block';
 import { useDebounce } from 'hooks/useDebounce';
 import { useStore } from 'store/store';
 import { useAccount } from 'api/account';
 import { useMatch } from 'react-location';
-import { LineChartContainer } from 'modules/charts/containers/LineChartContainer/LineChartContainer';
+import AccountHeader from 'modules/account/components/AccountHeader/AccountHeader';
+import Block from 'common/components/layout/Block/Block';
+import LineChartContainer from 'modules/charts/containers/LineChartContainer/LineChartContainer';
 
 function AccountContainer(): React.ReactElement {
   const [query, setQuery] = useState<string>('');
@@ -63,16 +63,16 @@ function AccountContainer(): React.ReactElement {
 
   useEffect(() => {
     if (account !== undefined && !accountName) {
-      setAccountName(account!.account.name);
+      setAccountName(account.account.name);
     }
   }, [account, accountName]);
 
   return (
     <>
-      <PageHeader title={accountName} />
+      <AccountHeader title={accountName} />
 
       <Block>
-        <LineChartContainer account={account!.account} />
+        <LineChartContainer accountId={accountId} />
       </Block>
 
       <Block title="Transactions">

@@ -1,7 +1,9 @@
 .wrapper {
-  height: 300px;
-  width: 300px;
-  background: cyan;
+  height: 200px;
+  width: 200px;
+  background: var(--card-bg);
+  color: var(--text-color);
+  border-radius: 5%;
 }
 
 .link {
