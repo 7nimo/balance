@@ -4,7 +4,7 @@ import SvgBank from 'common/components/icons/Bank';
 import SvgCalendar from 'common/components/icons/Calendar';
 import SvgPieChart from 'common/components/icons/PieChart';
 import SvgSettings from 'common/components/icons/Settings';
-import s from './NavigationDrawer.module.scss';
+import s from './Drawer.module.scss';
 import Logo from '../../components/Logo/Logo';
 
 function Drawer(): React.ReactElement {

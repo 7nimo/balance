@@ -1,5 +1,5 @@
 import AppBar from 'common/containers/AppBar/AppBar';
-import Drawer from 'common/containers/NavigationDrawer/NavigationDrawer';
+import Drawer from 'common/containers/Drawer/Drawer';
 import { Outlet } from 'react-location';
 import s from './MainViewContainer.module.scss';
 

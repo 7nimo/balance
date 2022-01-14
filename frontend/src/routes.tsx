@@ -10,6 +10,9 @@ import MainViewContainer from 'common/containers/MainViewContainer/MainViewConta
 import { MakeGenerics, ReactLocation, Route } from 'react-location';
 import AccountContainer from 'modules/account/containers/AccountContainer/AccountContainer';
 import { fetchAccounts } from 'api/account';
+import Nope from 'common/components/Nope';
+import AccountSettings from 'modules/account/containers/AccountSettings/AccountSettings';
+import NewAccount from 'modules/account/containers/NewAccount/NewAccount';
 
 type LocationGenerics = MakeGenerics<{
   Params: { accountId: string };
@@ -37,6 +40,14 @@ export const routes: Route<LocationGenerics>[] = [
               queryClient.fetchQuery('accounts', () => fetchAccounts()),
           },
           {
+            path: '/new',
+            element: <NewAccount />,
+          },
+          {
+            path: ':accountId/settings',
+            element: <AccountSettings />,
+          },
+          {
             path: ':accountId',
             element: <AccountContainer />,
             loader: ({ params: { accountId } }) =>
@@ -44,17 +55,18 @@ export const routes: Route<LocationGenerics>[] = [
               queryClient.fetchQuery(['transactions', accountId], () =>
                 fetchTransactionsByAccountId(accountId)
               ),
+            // todo: error element
             // element: <AccountOverview />
-          },
-          {
-            path: ':id/settings',
-            // element: <AccountSettings />
           },
         ],
       },
       { path: 'crypto', element: <CryptoPage /> },
       { path: 'calendar', element: <CalendarPage /> },
       { path: 'settings', element: <SettingsPage /> },
+      {
+        path: '*',
+        element: <Nope />,
+      },
     ],
   },
 ];

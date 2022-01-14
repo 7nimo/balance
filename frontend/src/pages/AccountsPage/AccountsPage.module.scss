@@ -1,13 +1,61 @@
 .wrapper {
-  height: 200px;
-  width: 200px;
+  display: flex;
+  height: 300px;
+  width: 300px;
+  padding: 1rem;
   background: var(--card-bg);
   color: var(--text-color);
   border-radius: 5%;
+  margin: 10px;
+
+  a {
+    text-decoration: none;
+  }
+
+  h2 {
+    font-weight: 600;
+    margin-top: .75rem;
+    margin-bottom: 1rem;
+  }
 }
 
 .link {
   display: block;
   height: 100%;
   width: 100%;
+}
+
+.logoWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 15%;
+  height: 66%;
+  width: 66%;
+  background: var(--bg);
+  font-size: 150px;
+}
+
+.create {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+
+  height: 100%;
+  width: 100%;
+
+  svg {
+    margin-top: 15%;
+    height: 80%;
+    width: 80%;
+  }
+  h3 {
+    position: absolute;
+    top: 0;
+    font-weight: 600;
+    color: var(--gray4);
+    margin: 10px 0;
+  }
 }
