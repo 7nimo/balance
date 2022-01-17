@@ -1,10 +1,18 @@
-import { ReactNode } from 'react';
+import cx from 'classnames';
 import s from './Row.module.scss';
 
-interface RowProps {
-  children: ReactNode;
+interface Props {
+  children: React.ReactNode;
+  className?: string;
+  style?: React.CSSProperties;
 }
 
-export const Row: React.FC<RowProps> = ({ children }) => {
-  return <div className={s.Row}>{children}</div>;
-};
+function Row({ children, className, style }: Props): React.ReactElement {
+  return (
+    <div className={cx(s.Row, className)} style={style}>
+      {children}
+    </div>
+  );
+}
+
+export default Row;

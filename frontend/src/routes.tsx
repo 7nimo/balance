@@ -6,8 +6,8 @@ import CryptoPage from 'pages/CryptoPage/CryptoPage';
 import Dashboard from 'pages/Dashboard/Dashboard';
 import SettingsPage from 'pages/SettingsPage/SettingsPage';
 import SignInPage from 'pages/SignInPage/SignInPage';
-import MainViewContainer from 'common/containers/MainViewContainer/MainViewContainer';
-import { MakeGenerics, ReactLocation, Route } from 'react-location';
+import MainView from 'common/containers/MainView/MainView';
+import { MakeGenerics, Navigate, ReactLocation, Route } from 'react-location';
 import AccountContainer from 'modules/account/containers/AccountContainer/AccountContainer';
 import { fetchAccounts } from 'api/account';
 import Nope from 'common/components/Nope';
@@ -21,9 +21,10 @@ type LocationGenerics = MakeGenerics<{
 export const location = new ReactLocation<LocationGenerics>();
 
 export const routes: Route<LocationGenerics>[] = [
+  { path: '/', element: <Navigate to="./dashboard" /> },
   { path: 'sign-in', element: <SignInPage /> },
   {
-    element: <MainViewContainer />,
+    element: <MainView />,
     children: [
       {
         path: 'dashboard',

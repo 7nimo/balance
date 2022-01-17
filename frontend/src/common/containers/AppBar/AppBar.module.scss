@@ -6,9 +6,8 @@
   max-height: var(--top-bar-height);
   width: calc(100vw - var(--drawer-width));
   margin-left: var(--drawer-width);
-  border-bottom: var(--border);
+  border-bottom: 1px solid var(--border-color);
   background: var(--nav-bg);
-  box-shadow: var(--app-bar-shadow);
   transition: var(--theme-transition);
   z-index: 99;
 }

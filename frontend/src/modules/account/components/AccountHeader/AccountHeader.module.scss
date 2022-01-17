@@ -21,25 +21,26 @@
   color: var(--gray3);
 }
 
-.buttonsRow {
+.btnGroup {
   display: flex;
+  position: relative;
   width: 100%;
   
   &::after {
     position: absolute;
     left: 50%;
-    bottom: 2px;
+    bottom: 0;
     transform: translateX(-50%);
     content: '';
     display: block;
-    width: 110%;
+    width: 105%;
     height: 1px;
     background: var(--line);
   }
 }
 
 .btn {
-  box-sizing: content-box;
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -47,6 +48,7 @@
   font-size: 1rem;
   font-weight: 500;
   color: var(--text-color);
+  text-decoration: none;
 
   background: transparent;
   
@@ -58,10 +60,19 @@
   }
   
   border: none;
-  border-bottom: 2px solid transparent;
 
-  &:hover {
-    background-color: cyan;
-    border-bottom: 2px solid var(--gray6);
+  &:hover::after {
+    content: '';
+    display: block;
+    position: absolute;
+    bottom: -1px;
+    right: 0;
+    left: 0;
+    height: 3px;
+    background-color: var(--gray5);
+    color: var(--gray6);
+    z-index: 2;
+
+    // border-bottom: 2px solid var(--gray6);
   }
 }

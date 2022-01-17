@@ -18,12 +18,12 @@
   font-weight: 700;
   line-height: 32px;
   letter-spacing: -0.04em;
-  padding-left: .5rem;
+  padding-left: 1rem;
   color: var(--h-color);
 }
 
 [class*="dark-theme"] * .link {
   svg {
-    fill: white;
+    fill: var(--h-color);
   }
 }

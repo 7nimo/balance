@@ -8,8 +8,10 @@
 .container {
   display: flex;
   flex-direction: column;
+  align-items: center;
   margin-top: var(--top-bar-height);
   margin-left: var(--drawer-width);
+  padding: 0 1.5rem;
   min-height: calc(100vh - var(--top-bar-height));
   max-width: calc(100vw - var(--drawer-width));
   background: var(--bg);
@@ -20,6 +22,7 @@
 
 .content {
   display: block;
-  width: clamp(640px, 1024px, 1280px);
-  margin: 24px auto;
+  width: 100%;
+  max-width: 1450px;
+  padding: 1.5rem 0;
 }

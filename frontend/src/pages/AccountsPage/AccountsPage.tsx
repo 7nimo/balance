@@ -1,11 +1,9 @@
 import { Account } from '@types';
-import SvgBank from 'common/components/icons/Bank';
 // import Block from 'common/components/layout/Block/Block';
-import PageHeader from 'common/components/PageHeader/PageHeader';
 import { Link, useMatch } from 'react-location';
 import ColorLine from 'common/components/ColorLine';
 import styled from 'styled-components';
-import SvgAdd from 'common/components/icons/actions/Add';
+// import SvgAdd from 'common/components/icons/actions/Add';
 import s from './AccountsPage.module.scss';
 import { ReactComponent as Logo } from '../../assets/svg/banks/lloyds.svg';
 
@@ -34,25 +32,17 @@ function AccountsPage(): React.ReactElement {
     );
   });
 
-  const renderAddNewAccount = (
-    <div className={s.wrapper}>
-      <Link to="/account/new" className={s.link}>
-        <div className={s.create}>
-          <h3>Add new account</h3>
-          <SvgAdd />
-        </div>
-      </Link>
-    </div>
-  );
+  // const renderAddNewAccount = (
+  //   <div className={s.wrapper}>
+  //     <Link to="/account/new" className={s.link}>
+  //       <div className={s.create}>
+  //         <h3>Add new account</h3>
+  //         <SvgAdd />
+  //       </div>
+  //     </Link>
+  //   </div>
+  // );
 
-  return (
-    <>
-      <PageHeader title="Bank Accounts" icon={<SvgBank />} />
-      <Wrapper>
-        {renderAccounts}
-        {renderAddNewAccount}
-      </Wrapper>
-    </>
-  );
+  return <Wrapper>{renderAccounts}</Wrapper>;
 }
 export default AccountsPage;

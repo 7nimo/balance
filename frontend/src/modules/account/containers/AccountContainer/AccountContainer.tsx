@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-shadow */
 import { useEffect, useState } from 'react';
-import { Transaction } from '@types';
+import { Account, Transaction } from '@types';
 import { useTransactions } from 'api/transaction';
 import { TransactionsTable } from 'common/components/TransactionsTable/TransactionsTable';
 import { SearchBar } from 'common/components/forms/SearchBar/SearchBar';
@@ -17,14 +17,14 @@ function AccountContainer(): React.ReactElement {
   const [query, setQuery] = useState<string>('');
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [Transactions, setTransactions] = useState<Transaction[] | null>(null);
-  const [accountName, setAccountName] = useState('');
+  const [account, setAccount] = useState<Account | null>(null);
 
   const {
     data: { transactions },
     params: { accountId },
   } = useMatch();
 
-  const { data: account } = useAccount(accountId);
+  const { data: accountData } = useAccount(accountId);
 
   const [assets, setAssetData] = useStore((state) => [state.assets, state.setAssetD3Data]);
 
@@ -62,14 +62,14 @@ function AccountContainer(): React.ReactElement {
   }, [debouncedSearch]);
 
   useEffect(() => {
-    if (account !== undefined && !accountName) {
-      setAccountName(account.account.name);
+    if (accountData !== undefined && !account) {
+      setAccount(accountData.account);
     }
-  }, [account, accountName]);
+  }, [accountData, account]);
 
   return (
     <>
-      <AccountHeader title={accountName} />
+      <AccountHeader title={account?.name} currency={account?.currency} />
 
       <Block>
         <LineChartContainer accountId={accountId} />
@@ -85,9 +85,7 @@ function AccountContainer(): React.ReactElement {
           />
         </ActionBar>
 
-        <section>
-          <TransactionsTable transactions={transactions as Transaction[]} />
-        </section>
+        <TransactionsTable transactions={transactions as Transaction[]} />
       </Block>
     </>
   );

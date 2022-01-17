@@ -8,7 +8,7 @@ function AppBar(): React.ReactElement {
   return (
     <header className={s.appBar}>
       <section className={s.section}>
-        <h1 className={s.h1}>{matches.at(-1)?.pathname}</h1>
+        <h1 className={s.h1}>{matches[matches.length - 1]?.pathname}</h1>
       </section>
       <section className={s.section}>
         <AppBarActions />

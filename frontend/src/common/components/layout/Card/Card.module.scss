@@ -6,8 +6,7 @@
   color: var(--text-color);
   background: var(--card-bg);
 
-  box-shadow: var(--card-shadow);
-  border-radius: 4px;
-  border: var(--border);
+  border-radius: var(--card-border-radius);
+  border: 1px solid var(--border-color);
   transition: var(--theme-transition);
 }

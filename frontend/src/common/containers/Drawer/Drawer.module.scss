@@ -4,15 +4,14 @@
   left: 0px;
   min-height: 100vh;
   width: var(--drawer-width);
-  border-right: var(--border);
+  border-right: 1px solid var(--border-color);
   background: var(--nav-bg);
-  box-shadow: var(--nav-shadow);
   transition: var(--theme-transition);
   z-index: 100;
 }
 
 .list {
-  margin: 32px 8px;
+  margin: 32px 0;
   list-style-type: none;
   padding: 0px;
 }

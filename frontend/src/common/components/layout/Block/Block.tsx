@@ -1,10 +1,9 @@
-import { Card } from 'common/components/Card/Card';
-import { ReactNode } from 'react';
+import Card from 'common/components/layout/Card/Card';
 import s from './Block.module.scss';
 
 interface SectionProps {
   title?: string;
-  children: ReactNode;
+  children: React.ReactNode;
 }
 
 function Block({
