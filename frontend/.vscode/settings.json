@@ -1,19 +1,23 @@
 {
-  "scss.lint.unknownAtRules": "ignore",
-  "eslint.workingDirectories": ["../src"],
-  "editor.defaultFormatter": "dbaeumer.vscode-eslint",
-  "editor.formatOnSave": true,
-  "eslint.alwaysShowStatus": true,
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": true
   },
-  "[json]": {
+  "typescript.validate.enable": true,
+  "files.eol": "\n",
+  "editor.formatOnSave": false,
+  "editor.tabSize": 2,
+  "eslint.nodePath": ".yarn/sdks",
+  "typescript.enablePromptUseWorkspaceTsdk": true,
+  "eslint.validate": ["json", "jsonc", "yml", "yaml", "html"],
+  "[html]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.formatOnSave": true
   },
-  "[jsonc]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
-    "editor.formatOnSave": true
-  },
-  "typescript.tsdk": "node_modules/typescript/lib"
+  "eslint.packageManager": "yarn",
+  "prettier.prettierPath": ".yarn/sdks/prettier/index.js",
+  "typescript.tsdk": ".yarn/sdks/typescript/lib",
+  "search.exclude": {
+    "**/.yarn": true,
+    "**/.pnp.*": true
+  }
 }

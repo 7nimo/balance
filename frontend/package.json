@@ -16,7 +16,7 @@
     "lint": "eslint src --ext .js,.jsx,.ts,.ts",
     "lint:fix": "eslint src --ext .js,.jsx,.ts,.tsx --fix",
     "lint:quiet": "eslint src --ext .js,.jsx,.ts,.ts --quiet",
-    "svgo": "rimraf ./src/assets/svg/icons/optimized  & svgo -q -p 8 -f ./src/assets/svg/icons/raw/new -o ./src/assets/svg/icons/optimized",
+    "svgo": "rimraf ./src/assets/svg/icons/optimized  & svgo -q -p 8 -f ./src/assets/svg/icons/raw -o ./src/assets/svg/icons/optimized",
     "svgr": "npx @svgr/cli --config-file svgo.yml ./src/common/components/icons ./src/assets/svg/icons/optimized",
     "icon-gen": "npx @svgr/cli --icon -d ./src/components/Icons ./src/assets/svg/icons/optimized"
   },
@@ -53,9 +53,8 @@
     "@types/history": "^4.7.9",
     "@typescript-eslint/eslint-plugin": "^5.8.1",
     "@typescript-eslint/parser": "^5.8.1",
+    "typescript-plugin-css-modules": "^3.4.0",
     "eslint": "^8",
-    "eslint-config-airbnb": "^19.0.4",
-    "eslint-config-airbnb-typescript": "^16.1.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-import-resolver-typescript": "^2.5.0",
     "eslint-plugin-import": "^2.25.3",
@@ -65,8 +64,7 @@
     "eslint-plugin-react-hooks": "^4.3.0",
     "prettier": "2.5.1",
     "rimraf": "^3.0.2",
-    "svgo": "^2.8.0",
-    "typescript-plugin-css-modules": "^3.4.0"
+    "svgo": "^2.8.0"
   },
   "browserslist": {
     "production": [
