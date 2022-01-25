@@ -4,7 +4,7 @@
   "private": true,
   "repository": {
     "type": "git",
-    "url": "https://github.com/elusion-io/balance"
+    "url": "https://github.com/7nimo/balance"
   },
   "workspaces": [
     "balance-api",
