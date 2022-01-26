@@ -7,7 +7,6 @@
     "url": "https://github.com/7nimo/balance"
   },
   "workspaces": [
-    "balance-api",
-    "frontend"
+    "packages/*"
   ]
 }

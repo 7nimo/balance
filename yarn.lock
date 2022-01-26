@@ -1520,7 +1520,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/runtime@npm:^7.10.2, @babel/runtime@npm:^7.11.2, @babel/runtime@npm:^7.12.5, @babel/runtime@npm:^7.15.4, @babel/runtime@npm:^7.16.3, @babel/runtime@npm:^7.5.5, @babel/runtime@npm:^7.6.2, @babel/runtime@npm:^7.7.2, @babel/runtime@npm:^7.7.6, @babel/runtime@npm:^7.8.4, @babel/runtime@npm:^7.9.2":
+"@babel/runtime@npm:^7.1.2, @babel/runtime@npm:^7.10.2, @babel/runtime@npm:^7.11.2, @babel/runtime@npm:^7.12.5, @babel/runtime@npm:^7.15.4, @babel/runtime@npm:^7.16.3, @babel/runtime@npm:^7.5.5, @babel/runtime@npm:^7.6.2, @babel/runtime@npm:^7.7.2, @babel/runtime@npm:^7.7.6, @babel/runtime@npm:^7.8.4, @babel/runtime@npm:^7.9.2":
   version: 7.16.7
   resolution: "@babel/runtime@npm:7.16.7"
   dependencies:
@@ -4299,6 +4299,68 @@ __metadata:
   languageName: node
   linkType: hard
 
+"api@workspace:packages/api":
+  version: 0.0.0-use.local
+  resolution: "api@workspace:packages/api"
+  dependencies:
+    "@nestjs/cli": 8.1.6
+    "@nestjs/common": ^8.2.4
+    "@nestjs/config": ^1.1.5
+    "@nestjs/core": ^8.2.4
+    "@nestjs/event-emitter": ^1.0.0
+    "@nestjs/jwt": ^8.0.0
+    "@nestjs/passport": ^8.0.1
+    "@nestjs/platform-express": ^8.2.4
+    "@nestjs/schematics": 8.0.5
+    "@nestjs/swagger": ^5.1.5
+    "@nestjs/testing": 8.2.4
+    "@nestjs/throttler": ^2.0.0
+    "@nestjs/typeorm": ^8.0.2
+    "@types/cookie-parser": ^1.4.2
+    "@types/express": 4.17.13
+    "@types/jest": ^27.0.3
+    "@types/multer": ^1.4.7
+    "@types/node": 17.0.5
+    "@types/passport-jwt": ^3.0.6
+    "@types/passport-local": ^1.0.34
+    "@types/supertest": ^2.0.11
+    "@typescript-eslint/eslint-plugin": 5.8.1
+    "@typescript-eslint/parser": 5.8.1
+    argon2: ^0.28.3
+    class-transformer: ^0.5.1
+    class-validator: ^0.13.2
+    cookie-parser: ^1.4.6
+    csurf: ^1.11.0
+    dotenv: ^10.0.0
+    eslint: 8.5.0
+    eslint-config-prettier: 8.3.0
+    eslint-plugin-import: 2.25.3
+    eslint-plugin-prettier: ^4.0.0
+    helmet: ^4.6.0
+    iconv-lite: ^0.6.3
+    jest: 27.4.5
+    papaparse: ^5.3.1
+    passport: ^0.5.2
+    passport-jwt: 4.0.0
+    passport-local: 1.0.0
+    pg: ^8.7.1
+    prettier: 2.5.1
+    reflect-metadata: ^0.1.13
+    rimraf: ^3.0.2
+    rxjs: ^7.5.1
+    supertest: 6.1.6
+    swagger-ui-express: ^4.3.0
+    ts-jest: 27.1.2
+    ts-loader: 9.2.6
+    ts-node: 10.4.0
+    tsconfig-paths: 3.12.0
+    typeorm: ^0.2.41
+    typeorm-naming-strategies: ^2.0.0
+    typeorm-seeding: ^1.6.1
+    typescript: ^4.5.4
+  languageName: unknown
+  linkType: soft
+
 "app-root-path@npm:^3.0.0":
   version: 3.0.0
   resolution: "app-root-path@npm:3.0.0"
@@ -4525,13 +4587,6 @@ __metadata:
   bin:
     atob: bin/atob.js
   checksum: dfeeeb70090c5ebea7be4b9f787f866686c645d9f39a0d184c817252d0cf08455ed25267d79c03254d3be1f03ac399992a792edcd5ffb9c91e097ab5ef42833a
-  languageName: node
-  linkType: hard
-
-"attr-accept@npm:^2.2.1":
-  version: 2.2.2
-  resolution: "attr-accept@npm:2.2.2"
-  checksum: 496f7249354ab53e522510c1dc8f67a1887382187adde4dc205507d2f014836a247073b05e9d9ea51e2e9c7f71b0d2aa21730af80efa9af2d68303e5f0565c4d
   languageName: node
   linkType: hard
 
@@ -4807,68 +4862,6 @@ __metadata:
   checksum: f6ce13f2549d4770fe6de9a5e5bb86744600f45db59fc8d206758474933ed8294d55bfb237148180dd1c62c9a3f21054a52ffb5fc74a3b45b906b676dbc899b5
   languageName: node
   linkType: hard
-
-"balance-api@workspace:balance-api":
-  version: 0.0.0-use.local
-  resolution: "balance-api@workspace:balance-api"
-  dependencies:
-    "@nestjs/cli": 8.1.6
-    "@nestjs/common": ^8.2.4
-    "@nestjs/config": ^1.1.5
-    "@nestjs/core": ^8.2.4
-    "@nestjs/event-emitter": ^1.0.0
-    "@nestjs/jwt": ^8.0.0
-    "@nestjs/passport": ^8.0.1
-    "@nestjs/platform-express": ^8.2.4
-    "@nestjs/schematics": 8.0.5
-    "@nestjs/swagger": ^5.1.5
-    "@nestjs/testing": 8.2.4
-    "@nestjs/throttler": ^2.0.0
-    "@nestjs/typeorm": ^8.0.2
-    "@types/cookie-parser": ^1.4.2
-    "@types/express": 4.17.13
-    "@types/jest": ^27.0.3
-    "@types/multer": ^1.4.7
-    "@types/node": 17.0.5
-    "@types/passport-jwt": ^3.0.6
-    "@types/passport-local": ^1.0.34
-    "@types/supertest": ^2.0.11
-    "@typescript-eslint/eslint-plugin": 5.8.1
-    "@typescript-eslint/parser": 5.8.1
-    argon2: ^0.28.3
-    class-transformer: ^0.5.1
-    class-validator: ^0.13.2
-    cookie-parser: ^1.4.6
-    csurf: ^1.11.0
-    dotenv: ^10.0.0
-    eslint: 8.5.0
-    eslint-config-prettier: 8.3.0
-    eslint-plugin-import: 2.25.3
-    eslint-plugin-prettier: ^4.0.0
-    helmet: ^4.6.0
-    iconv-lite: ^0.6.3
-    jest: 27.4.5
-    papaparse: ^5.3.1
-    passport: ^0.5.2
-    passport-jwt: 4.0.0
-    passport-local: 1.0.0
-    pg: ^8.7.1
-    prettier: 2.5.1
-    reflect-metadata: ^0.1.13
-    rimraf: ^3.0.2
-    rxjs: ^7.5.1
-    supertest: 6.1.6
-    swagger-ui-express: ^4.3.0
-    ts-jest: 27.1.2
-    ts-loader: 9.2.6
-    ts-node: 10.4.0
-    tsconfig-paths: 3.12.0
-    typeorm: ^0.2.41
-    typeorm-naming-strategies: ^2.0.0
-    typeorm-seeding: ^1.6.1
-    typescript: ^4.5.4
-  languageName: unknown
-  linkType: soft
 
 "balance@workspace:.":
   version: 0.0.0-use.local
@@ -7447,6 +7440,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"eslint-config-standard@npm:^16.0.3":
+  version: 16.0.3
+  resolution: "eslint-config-standard@npm:16.0.3"
+  peerDependencies:
+    eslint: ^7.12.1
+    eslint-plugin-import: ^2.22.1
+    eslint-plugin-node: ^11.1.0
+    eslint-plugin-promise: ^4.2.1 || ^5.0.0
+  checksum: 6ae193634f289ae95dbbf2291dc1e7c5bedef2425c594db07ec58476c902e6eb51a2b1c9cd2bad3772e921f5515dc2f8fb5447f7a56c20c99801ef1296c3bfef
+  languageName: node
+  linkType: hard
+
 "eslint-import-resolver-node@npm:^0.3.6":
   version: 0.3.6
   resolution: "eslint-import-resolver-node@npm:0.3.6"
@@ -7494,6 +7499,17 @@ __metadata:
     "@babel/plugin-transform-react-jsx": ^7.14.9
     eslint: ^8.1.0
   checksum: 30e63c5357b0b5571f39afed51e59c140084f4aa53c106b1fd04f26da42b268908466daa6020b92943e71409bdaee1c67202515ed9012404d027cc92cb03cefa
+  languageName: node
+  linkType: hard
+
+"eslint-plugin-import-newlines@npm:^1.1.7":
+  version: 1.1.7
+  resolution: "eslint-plugin-import-newlines@npm:1.1.7"
+  peerDependencies:
+    eslint: ">=6.0.0"
+  bin:
+    import-linter: lib/index.js
+  checksum: da3fed1fd61e737c7f9086ffa813e7da3f58a9efe63bf4f14f856ca0de8d3d34ff785b2ce93ec9c022c6ee9c84c49fc67c94aae8ddc2d8c4755e99ae47f1ca78
   languageName: node
   linkType: hard
 
@@ -8186,15 +8202,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"file-selector@npm:^0.2.2":
-  version: 0.2.4
-  resolution: "file-selector@npm:0.2.4"
-  dependencies:
-    tslib: ^2.0.3
-  checksum: 83341e7416352c7de0caf433b33c8d007d3c298c17d6ba0e70168af82bb045d905ddd6f4bc3ca764a2035c6f18eae7f52223dc6a784056f61b8391c351f88323
-  languageName: node
-  linkType: hard
-
 "filelist@npm:^1.0.1":
   version: 1.0.2
   resolution: "filelist@npm:1.0.2"
@@ -8398,56 +8405,6 @@ __metadata:
   checksum: 13ea8b08f91e669a64e3ba3a20eb79d7ca5379a81f1ff7f4310d54e2320645503cc0c78daedc93dfb6191287295f6479544a649c64d8e41a1c0fb0c221552346
   languageName: node
   linkType: hard
-
-"frontend@workspace:frontend":
-  version: 0.0.0-use.local
-  resolution: "frontend@workspace:frontend"
-  dependencies:
-    "@svgr/cli": ^6.1.2
-    "@testing-library/jest-dom": ^5.16.1
-    "@testing-library/react": ^12.1.2
-    "@testing-library/user-event": ^13.5.0
-    "@types/d3": ^7.1.0
-    "@types/history": ^4.7.9
-    "@types/jest": ^27.0.3
-    "@types/node": ^17.0.5
-    "@types/react": ^17.0.38
-    "@types/react-dom": ^17.0.11
-    "@types/styled-components": ^5.1.20
-    "@typescript-eslint/eslint-plugin": ^5.8.1
-    "@typescript-eslint/parser": ^5.8.1
-    classnames: ^2.3.1
-    d3: ^7.2.1
-    eslint: ^8
-    eslint-config-prettier: ^8.3.0
-    eslint-import-resolver-typescript: ^2.5.0
-    eslint-plugin-import: ^2.25.3
-    eslint-plugin-jsx-a11y: ^6.5.1
-    eslint-plugin-prettier: ^4.0.0
-    eslint-plugin-react: ^7.28.0
-    eslint-plugin-react-hooks: ^4.3.0
-    lodash: ^4.17.21
-    node-sass: ^7.0.1
-    prettier: 2.5.1
-    react: ^17.0.2
-    react-dom: ^17.0.2
-    react-dropzone: ^11.5.1
-    react-hook-form: ^7.22.5
-    react-location: ^3.3.0
-    react-location-devtools: ^3.3.0
-    react-query: ^3.34.7
-    react-query-auth: ^1.1.0
-    react-scripts: ^5.0.0
-    rimraf: ^3.0.2
-    styled-components: ^5.3.3
-    svgo: ^2.8.0
-    typescript: ^4.5.4
-    typescript-plugin-css-modules: ^3.4.0
-    web-vitals: ^2.1.2
-    yup: ^0.32.11
-    zustand: ^3.6.8
-  languageName: unknown
-  linkType: soft
 
 "fs-extra@npm:10.0.0, fs-extra@npm:^10.0.0":
   version: 10.0.0
@@ -13706,16 +13663,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-dropzone@npm:^11.5.1":
-  version: 11.5.1
-  resolution: "react-dropzone@npm:11.5.1"
+"react-dropzone-uploader@npm:^2.11.0":
+  version: 2.11.0
+  resolution: "react-dropzone-uploader@npm:2.11.0"
   dependencies:
-    attr-accept: ^2.2.1
-    file-selector: ^0.2.2
-    prop-types: ^15.7.2
+    "@babel/runtime": ^7.1.2
   peerDependencies:
-    react: ">= 16.8"
-  checksum: 54d801ca5b952d9e00913c516bcb3b961d34058116d0444ac3ce911e98e777fbd936fb60e81c0739664f68bf1dd1bdc6a1477d0b50b46ffe986140671562110d
+    prop-types: ">=15.5.10"
+    react: ">=16.2.0"
+    react-dom: ">=16.2.0"
+  checksum: 62a320f22d753d3916d0de4921e138892e02adeafe4fced1e9cd8e0199867f06317a631c256e83d0e2b06022fe45c89401f51a6f71ed2004328dcbfde5371009
   languageName: node
   linkType: hard
 
@@ -16286,6 +16243,58 @@ __metadata:
   checksum: 2e488dde7d2c4a2fa2e79cf2470600f8ce81bc0563c276b72df8ff412d74456ae532ba824650ae936ce207440c79720ddcfaa25e3cb4477572b8534fa4e34d49
   languageName: node
   linkType: hard
+
+"ui@workspace:packages/ui":
+  version: 0.0.0-use.local
+  resolution: "ui@workspace:packages/ui"
+  dependencies:
+    "@svgr/cli": ^6.1.2
+    "@testing-library/jest-dom": ^5.16.1
+    "@testing-library/react": ^12.1.2
+    "@testing-library/user-event": ^13.5.0
+    "@types/d3": ^7.1.0
+    "@types/history": ^4.7.9
+    "@types/jest": ^27.0.3
+    "@types/node": ^17.0.5
+    "@types/react": ^17.0.38
+    "@types/react-dom": ^17.0.11
+    "@types/styled-components": ^5.1.20
+    "@typescript-eslint/eslint-plugin": ^5.8.1
+    "@typescript-eslint/parser": ^5.8.1
+    classnames: ^2.3.1
+    d3: ^7.2.1
+    eslint: ^8
+    eslint-config-prettier: ^8.3.0
+    eslint-config-standard: ^16.0.3
+    eslint-import-resolver-typescript: ^2.5.0
+    eslint-plugin-import: ^2.25.3
+    eslint-plugin-import-newlines: ^1.1.7
+    eslint-plugin-jsx-a11y: ^6.5.1
+    eslint-plugin-prettier: ^4.0.0
+    eslint-plugin-react: ^7.28.0
+    eslint-plugin-react-hooks: ^4.3.0
+    lodash: ^4.17.21
+    node-sass: ^7.0.1
+    prettier: 2.5.1
+    react: ^17.0.2
+    react-dom: ^17.0.2
+    react-dropzone-uploader: ^2.11.0
+    react-hook-form: ^7.22.5
+    react-location: ^3.3.0
+    react-location-devtools: ^3.3.0
+    react-query: ^3.34.7
+    react-query-auth: ^1.1.0
+    react-scripts: ^5.0.0
+    rimraf: ^3.0.2
+    styled-components: ^5.3.3
+    svgo: ^2.8.0
+    typescript: ^4.5.4
+    typescript-plugin-css-modules: ^3.4.0
+    web-vitals: ^2.1.2
+    yup: ^0.32.11
+    zustand: ^3.6.8
+  languageName: unknown
+  linkType: soft
 
 "uid-safe@npm:2.1.5":
   version: 2.1.5

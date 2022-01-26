@@ -2,14 +2,17 @@ import React from 'react';
 import Dropzone from 'react-dropzone-uploader';
 import { API_URL } from 'api/constants';
 import { useMatch } from 'react-location';
+import { post } from 'utils/http.util';
+import { useMutation } from 'react-query';
 
 function AccountSettings(): React.ReactElement {
   const {
-
     params: { accountId },
-
   } = useMatch()
 
+  const mutation = useMutation((file) => {
+    return post(`${API_URL}/account/${accountId}/transaction/import`, file)
+  }) 
     // specify upload params and url for your files
     const getUploadParams = ({ }) => { return { url: `${API_URL}/account/${accountId}/transaction/import` } }
   
