@@ -1,11 +1,13 @@
 import { Account } from '@types';
+import React from 'react';
 // import Block from 'common/components/layout/Block/Block';
 import { Link, useMatch } from 'react-location';
-import ColorLine from 'common/components/ColorLine';
+import ColorLine from 'src/common/components/ColorLine';
 import styled from 'styled-components';
+
+import { ReactComponent as Logo } from '../../assets/svg/banks/lloyds.svg';
 // import SvgAdd from 'common/components/icons/actions/Add';
 import s from './AccountsPage.module.scss';
-import { ReactComponent as Logo } from '../../assets/svg/banks/lloyds.svg';
 
 const Wrapper = styled.div`
   display: flex;
@@ -13,15 +15,19 @@ const Wrapper = styled.div`
   margin: 0 -10px;
 `;
 
-function AccountsPage(): React.ReactElement {
-  const {
-    data: { accounts },
-  } = useMatch();
+function AccountsPage (): React.ReactElement {
+  const { data: { accounts } } = useMatch();
 
   const renderAccounts = (accounts as Account[]).map((account) => {
     return (
-      <div className={s.wrapper} key={account.id}>
-        <Link to={`/account/${account.id}`} className={s.link}>
+      <div
+        className={s.wrapper}
+        key={account.id}
+      >
+        <Link
+          className={s.link}
+          to={`/account/${account.id}`}
+        >
           <div className={s.logoWrapper}>
             <Logo className={s.logo} />
           </div>
@@ -45,4 +51,5 @@ function AccountsPage(): React.ReactElement {
 
   return <Wrapper>{renderAccounts}</Wrapper>;
 }
+
 export default AccountsPage;

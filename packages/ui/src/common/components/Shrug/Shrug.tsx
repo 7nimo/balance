@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import React, { FC, useState } from 'react';
 
 type Props = {
   label: string;
@@ -11,9 +11,9 @@ export const Shrug: FC<Props> = (props) => {
   return (
     <div>
       <button
-        type="button"
-        style={{ border: 'none', background: 'transparent' }}
         onClick={() => setSize(1.1 * size + 1)}
+        style={{ background: 'transparent', border: 'none' }}
+        type='button'
       >
         <span style={{ fontSize: `${size}px` }}>{label}</span>
       </button>

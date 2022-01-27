@@ -1,3 +1,5 @@
+import React from 'react';
+
 import s from './PageHeader.module.scss';
 
 type Props = {
@@ -5,7 +7,7 @@ type Props = {
   icon: React.ReactElement;
 };
 
-function PageHeader({ title, icon }: Props): React.ReactElement {
+function PageHeader ({ icon, title }: Props): React.ReactElement {
   return (
     <div className={s.container}>
       <div className={s.header}>

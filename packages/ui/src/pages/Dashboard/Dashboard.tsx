@@ -1,10 +1,11 @@
-import Row from 'common/components/layout/Row/Row';
-import Block from 'common/components/layout/Block/Block';
-import { Shrug } from 'common/components/Shrug/Shrug';
+import React from 'react';
+import Block from 'src/common/components/layout/Block/Block';
+import Row from 'src/common/components/layout/Row/Row';
+import { Shrug } from 'src/common/components/Shrug/Shrug';
 
-function Dashboard(): React.ReactElement {
+function Dashboard (): React.ReactElement {
   return (
-    <Block title="Assets">
+    <Block title='Assets'>
       <Row style={{ flexDirection: 'column' }}>
         <h1>To do:</h1>
         <ul>
@@ -15,7 +16,7 @@ function Dashboard(): React.ReactElement {
         </ul>
       </Row>
       <Row>
-        <Shrug label="¯\_(ツ)_/¯" />
+        <Shrug label='¯\_(ツ)_/¯' />
       </Row>
     </Block>
   );

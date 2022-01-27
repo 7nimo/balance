@@ -4,13 +4,15 @@ ENV NODE_ENV=development
 
 WORKDIR /app
 
-COPY yarn.lock ../manifests/ 2>/dev/null || :
+RUN corepack enable
+RUN yarn set version stable
+
 COPY package.json .
+COPY yarn.lock . 
+COPY .yarn/cache .
 
 RUN yarn
 
 COPY . .
-
-EXPOSE 3000
 
 CMD [ "yarn", "start" ]

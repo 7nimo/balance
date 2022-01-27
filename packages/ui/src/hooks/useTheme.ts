@@ -1,6 +1,6 @@
 import { THEME, Theme } from '@types';
 import { useEffect, useState } from 'react';
-import { storage } from 'utils/storage';
+import { storage } from 'src/utils/storage';
 
 export const useTheme = (): {
   theme: Theme;
@@ -17,11 +17,13 @@ export const useTheme = (): {
 
   useEffect(() => {
     const localTheme = storage.getTheme();
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     localTheme !== null && THEME.indexOf(localTheme as any) !== -1
       ? setTheme(localTheme as Theme)
       : setTheme('light-theme');
     setThemeLoaded(true);
   }, []);
 
-  return { theme, themeLoaded, setMode };
+  return { setMode, theme, themeLoaded };
 };

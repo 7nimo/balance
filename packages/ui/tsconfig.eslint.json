@@ -1,4 +1,11 @@
 {
-  "extends": "./tsconfig.json",
-  "include": ["src/**/*.js", "src/**/*.ts", "src/**/*.tsx"]
+  "extends": "./tsconfig.base.json",
+  "exclude": [
+    "build/**/*",
+    "**/build/**/*"
+  ],
+  "compilerOptions": {
+    "baseUrl": "./src",
+    "composite": false
+  }
 }

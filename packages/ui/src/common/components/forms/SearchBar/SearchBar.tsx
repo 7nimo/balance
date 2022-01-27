@@ -1,6 +1,7 @@
-import { FC, useRef } from 'react';
-import SvgSearch from 'common/components/icons/Search';
-import SvgCross from 'common/components/icons/actions/Cross';
+import React, { FC, useRef } from 'react';
+
+import SvgCross from '../../icons/actions/Cross';
+import SvgSearch from '../../icons/Search';
 import s from './SearchBar.module.scss';
 
 interface Props extends React.HTMLProps<HTMLInputElement> {
@@ -10,27 +11,37 @@ interface Props extends React.HTMLProps<HTMLInputElement> {
   handleReset?: (event: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
-export const SearchBar: FC<Props> = ({ placeholder, value, handleChange, handleReset }) => {
+export const SearchBar: FC<Props> = ({ handleChange, handleReset, placeholder, value }) => {
   const inputRef = useRef<HTMLInputElement>(null);
 
   return (
-    <div className={s.searchBar} aria-hidden="true" onClick={() => inputRef.current?.focus()}>
+    <div
+      aria-hidden='true'
+      className={s.searchBar}
+      onClick={() => inputRef.current?.focus()}
+    >
       <SvgSearch className={s.icon} />
       <input
         className={s.field}
-        type="search"
-        placeholder={placeholder}
-        value={value}
-        ref={inputRef}
         onChange={handleChange}
+        placeholder={placeholder}
+        ref={inputRef}
+        type='search'
+        value={value}
       />
       <div className={s.iconWrapper}>
         {/* {showSpinner ? <div id="spinner" /> : null} */}
-        {value ? (
-          <button className={s.reset} type="button" onClick={handleReset}>
-            <SvgCross />
-          </button>
-        ) : null}
+        {value
+          ? (
+            <button
+              className={s.reset}
+              onClick={handleReset}
+              type='button'
+            >
+              <SvgCross />
+            </button>
+          )
+          : null}
       </div>
     </div>
   );

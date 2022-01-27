@@ -1,27 +1,28 @@
-import NavButton from 'common/components/navigation/NavButton/NavButton';
-import SvgBtc from 'common/components/icons/Btc';
-import SvgBank from 'common/components/icons/Bank';
-import SvgCalendar from 'common/components/icons/Calendar';
-import SvgPieChart from 'common/components/icons/PieChart';
-import SvgSettings from 'common/components/icons/Settings';
-import SvgCoin from 'common/components/icons/Coin';
-import { queryClient } from 'lib/react-query';
 import { Account, Accounts } from '@types';
-import { useEffect, useState } from 'react';
-import s from './Drawer.module.scss';
-import Logo from '../../components/Logo/Logo';
+import { queryClient } from 'lib/react-query';
+import React, { useEffect, useState } from 'react';
+import SvgBank from 'src/common/components/icons/Bank';
+import SvgBtc from 'src/common/components/icons/Btc';
+import SvgCalendar from 'src/common/components/icons/Calendar';
+import SvgCoin from 'src/common/components/icons/Coin';
+import SvgPieChart from 'src/common/components/icons/PieChart';
+import SvgSettings from 'src/common/components/icons/Settings';
+import NavButton from 'src/common/components/navigation/NavButton/NavButton';
 
-function Drawer(): React.ReactElement {
+import Logo from '../../components/Logo/Logo';
+import s from './Drawer.module.scss';
+
+function Drawer (): React.ReactElement {
   const data = queryClient.getQueryData<Accounts>('accounts');
   const [accounts, setAccounts] = useState<Account[] | []>();
 
   const renderAccounts = accounts?.map((account) => {
     return (
       <NavButton
-        key={account.id}
-        link={`account/${account.id}`}
-        label={account.name}
         icon={<SvgCoin />}
+        key={account.id}
+        label={account.name}
+        link={`account/${account.id}`}
         small
       />
     );
@@ -41,20 +42,40 @@ function Drawer(): React.ReactElement {
 
       <ul className={s.list}>
         <li className={s.listItem}>
-          <NavButton link="dashboard" label="Assets" icon={<SvgPieChart />} />
+          <NavButton
+            icon={<SvgPieChart />}
+            label='Assets'
+            link='dashboard'
+          />
         </li>
         <ul className={s.listItem}>
-          <NavButton link="account" label="Accounts" icon={<SvgBank />} />
+          <NavButton
+            icon={<SvgBank />}
+            label='Accounts'
+            link='account'
+          />
           {renderAccounts}
         </ul>
         <li className={s.listItem}>
-          <NavButton link="crypto" label="Crypto" icon={<SvgBtc />} />
+          <NavButton
+            icon={<SvgBtc />}
+            label='Crypto'
+            link='crypto'
+          />
         </li>
         <li className={s.listItem}>
-          <NavButton link="calendar" label="Calendar" icon={<SvgCalendar />} />
+          <NavButton
+            icon={<SvgCalendar />}
+            label='Calendar'
+            link='calendar'
+          />
         </li>
         <li className={s.listItem}>
-          <NavButton link="settings" label="Settings" icon={<SvgSettings />} />
+          <NavButton
+            icon={<SvgSettings />}
+            label='Settings'
+            link='settings'
+          />
         </li>
       </ul>
     </nav>

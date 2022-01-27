@@ -1,4 +1,4 @@
-import { useRef, useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export const useFirstRender = () => {

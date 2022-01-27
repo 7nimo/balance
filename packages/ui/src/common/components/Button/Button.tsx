@@ -1,4 +1,6 @@
 import cx from 'classnames';
+import React from 'react';
+
 import s from './Button.module.scss';
 
 interface ButtonProps extends React.ComponentPropsWithoutRef<'button'> {
@@ -6,17 +8,17 @@ interface ButtonProps extends React.ComponentPropsWithoutRef<'button'> {
   secondary?: boolean;
 }
 
-export function Button(props: ButtonProps): JSX.Element {
-  const { primary, secondary, disabled, ...restProps } = props;
+export function Button (props: ButtonProps): JSX.Element {
+  const { disabled, primary, secondary, ...restProps } = props;
 
   return (
     <button
-      type="button"
       className={cx(s.button, {
         [s.primary]: primary,
         [s.secondary]: secondary,
-        [s.disabled]: disabled,
+        [s.disabled]: disabled
       })}
+      type='button'
       {...restProps}
     />
   );
@@ -24,5 +26,5 @@ export function Button(props: ButtonProps): JSX.Element {
 
 Button.defaultProps = {
   primary: true,
-  secondary: false,
+  secondary: false
 };

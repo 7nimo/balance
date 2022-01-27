@@ -1,8 +1,8 @@
-import { useEffect, useRef, SyntheticEvent, forwardRef } from 'react';
-import * as d3 from 'd3';
-
 import { Point } from '@types';
+import * as d3 from 'd3';
 import { InternMap } from 'd3';
+import React, { forwardRef, SyntheticEvent, useEffect, useRef } from 'react';
+
 import s from './LineChart.module.scss';
 
 type Props = {
@@ -18,20 +18,19 @@ type Props = {
   tooltipData: { date: string; value: number };
 };
 
+// eslint-disable-next-line react/display-name
 export const LineChart = forwardRef<HTMLDivElement, Props>(
   (
-    {
-      id,
-      data,
-      width,
-      height,
+    { data,
       drawnPath,
+      height,
+      id,
       onMouseEnter,
-      onMouseMove,
       onMouseLeave,
-      tooltipPosition,
+      onMouseMove,
       tooltipData,
-    },
+      tooltipPosition,
+      width },
     ref
   ) => {
     const viewBox = `0 0 ${Math.floor(width)} ${Math.floor(height)}`;
@@ -42,6 +41,7 @@ export const LineChart = forwardRef<HTMLDivElement, Props>(
     useEffect(() => {
       if (data.size > 1 && d3Container.current && shouldUpdate.current === true) {
         const svg = d3.select(d3Container.current);
+
         shouldUpdate.current = false;
 
         // !¬ Path generator
@@ -85,10 +85,13 @@ export const LineChart = forwardRef<HTMLDivElement, Props>(
     }, [data, drawnPath, id]);
 
     return (
-      <div className={s.chartWrapper} ref={ref}>
+      <div
+        className={s.chartWrapper}
+        ref={ref}
+      >
         <div
-          id="tooltip"
           className={s.tooltip}
+          id='tooltip'
           style={{ left: tooltipPosition.x ?? 0, top: tooltipPosition.y ?? 0 }}
         >
           <div className={s.tooltipValue}>
@@ -98,12 +101,12 @@ export const LineChart = forwardRef<HTMLDivElement, Props>(
         </div>
 
         <svg
+          onMouseEnter={d3Container.current ? onMouseEnter : undefined}
+          onMouseLeave={d3Container.current ? onMouseLeave : undefined}
+          onMouseMove={d3Container.current ? onMouseMove : undefined}
+          ref={d3Container}
           style={{ overflow: 'visible' }}
           viewBox={viewBox}
-          ref={d3Container}
-          onMouseEnter={d3Container.current ? onMouseEnter : undefined}
-          onMouseMove={d3Container.current ? onMouseMove : undefined}
-          onMouseLeave={d3Container.current ? onMouseLeave : undefined}
         />
       </div>
     );

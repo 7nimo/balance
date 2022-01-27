@@ -1,5 +1,7 @@
 // import cx from 'classnames';
 import cx from 'classnames';
+import React from 'react';
+
 import s from './Card.module.scss';
 
 interface Props {
@@ -8,9 +10,12 @@ interface Props {
   style?: React.CSSProperties;
 }
 
-function Card({ children, className, style }: Props): React.ReactElement {
+function Card ({ children, className, style }: Props): React.ReactElement {
   return (
-    <div style={style} className={cx(s.card, className)}>
+    <div
+      className={cx(s.card, className)}
+      style={style}
+    >
       {children}
     </div>
   );

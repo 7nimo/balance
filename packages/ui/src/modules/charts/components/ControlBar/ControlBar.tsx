@@ -1,5 +1,6 @@
 import { Period } from '@types';
-import { FC } from 'react';
+import React from 'react';
+
 import s from './ControlBar.module.scss';
 
 type Props = {
@@ -7,7 +8,7 @@ type Props = {
   assetAmount: number;
 };
 
-export const ControlBar: FC<Props> = ({ currencySymbol, assetAmount }) => {
+function ControlBar ({ assetAmount, currencySymbol }: Props): React.ReactElement<Props> {
   // const mainCurrency = Math.floor(assetAmount);
   // const fractionalCurrency = assetAmount - mainCurrency;
 
@@ -21,11 +22,13 @@ export const ControlBar: FC<Props> = ({ currencySymbol, assetAmount }) => {
         <span>.{fractionalCurrency}</span>
       </div>
       <div className={s.periodSelector}>
-        <button type="button">{Period.week}</button>
-        <button type="button">{Period.month}</button>
-        <button type="button">{Period.year}</button>
-        <button type="button">{Period.all}</button>
+        <button type='button'>{Period.week}</button>
+        <button type='button'>{Period.month}</button>
+        <button type='button'>{Period.year}</button>
+        <button type='button'>{Period.all}</button>
       </div>
     </div>
   );
-};
+}
+
+export default ControlBar;

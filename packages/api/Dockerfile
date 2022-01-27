@@ -4,8 +4,12 @@ ENV NODE_ENV=development
 
 WORKDIR /app
 
-COPY yarn.lock .
+RUN corepack enable
+RUN yarn set version stable
+
 COPY package.json .
+COPY yarn.lock .
+COPY .yarn/cache .
 
 RUN yarn
 

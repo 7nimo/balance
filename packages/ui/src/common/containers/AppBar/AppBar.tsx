@@ -1,8 +1,10 @@
+import React from 'react';
 import { useMatches } from 'react-location';
-import { AppBarActions } from '../AppBarActions/AppBarActions';
+
+import AppBarActions from '../AppBarActions/AppBarActions';
 import s from './AppBar.module.scss';
 
-function AppBar(): React.ReactElement {
+function AppBar (): React.ReactElement {
   const matches = useMatches();
 
   return (

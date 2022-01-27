@@ -2,6 +2,7 @@
 import React from 'react';
 import { Link } from 'react-location';
 import styled from 'styled-components';
+
 import s from './NavButton.module.scss';
 
 interface Props {
@@ -28,14 +29,14 @@ const Wrapper = styled.div`
       : null}
 `;
 
-function NavButton({ link, label, icon, small = false }: Props): React.ReactElement {
+function NavButton ({ icon, label, link, small = false }: Props): React.ReactElement {
   return (
     <Wrapper small={small}>
       <Link
-        to={`/${link}`}
-        className={s.focusableLink}
         activeOptions={{ exact: true }}
+        className={s.focusableLink}
         getActiveProps={() => ({ className: 'active' })}
+        to={`/${link}`}
       >
         <div className={s.iconWrapper}>{icon}</div>
         <span className={s.label}>{label}</span>

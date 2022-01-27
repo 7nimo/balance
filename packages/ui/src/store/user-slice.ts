@@ -5,7 +5,8 @@ import { StateCreator } from 'zustand';
 const findCurrency = (): Currency | undefined => {
   const user = queryClient.getQueryData<User>('auth-user');
   const currencies = queryClient.getQueryData<Currency[]>('currency');
-  return currencies?.find((currency) => currency.code === user?.baseCurrency.toUpperCase());
+
+  return currencies?.find((currency: Currency) => currency.code === user?.baseCurrency.toUpperCase());
 };
 
 export interface UserSlice {
@@ -18,7 +19,7 @@ export const createUserSlice: StateCreator<UserSlice> = (set) => ({
   setBaseCurrency: () => {
     set((state) => ({
       ...state,
-      baseCurrency: findCurrency(),
+      baseCurrency: findCurrency()
     }));
-  },
+  }
 });

@@ -1,12 +1,13 @@
 import { Period } from '@types';
-import { FC } from 'react';
+import React from 'react';
+
 import s from './HorizontalAxis.module.scss';
 
 type Props = {
   period: Period;
 };
 
-export const HorizontalAxis: FC<Props> = ({ period }) => {
+function HorizontalAxis ({ period }: Props): React.ReactElement<Props> {
   return (
     <div className={s.axisWrapper}>
       <span>{period}</span>
@@ -15,4 +16,6 @@ export const HorizontalAxis: FC<Props> = ({ period }) => {
       <span>ooo</span>
     </div>
   );
-};
+}
+
+export default HorizontalAxis;

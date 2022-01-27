@@ -1,9 +1,14 @@
-import { FC } from 'react';
+import React from 'react';
 
-export const EmptyResult: FC = () => {
+function EmptyResult () {
   return (
-    <div style={{ width: '100%', height: '768px' }} className="center">
+    <div
+      className='center'
+      style={{ height: '768px', width: '100%' }}
+    >
       <p>Hmmm, can&apos;t find anything!</p>
     </div>
   );
-};
+}
+
+export default EmptyResult;

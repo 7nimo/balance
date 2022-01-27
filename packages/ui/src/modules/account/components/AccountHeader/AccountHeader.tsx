@@ -1,6 +1,8 @@
 import { Currency } from '@types';
-import SvgCash from 'common/components/icons/Cash';
+import React from 'react';
 import { Link } from 'react-location';
+import SvgCash from 'src/common/components/icons/Cash';
+
 import s from './AccountHeader.module.scss';
 
 type Props = {
@@ -8,7 +10,7 @@ type Props = {
   currency?: Currency;
 };
 
-function AccountHeader({ title, currency }: Props): React.ReactElement {
+function AccountHeader ({ currency, title }: Props): React.ReactElement {
   return (
     <div className={s.container}>
       <div className={s.header}>
@@ -17,10 +19,16 @@ function AccountHeader({ title, currency }: Props): React.ReactElement {
         <h1 className={s.lighter}>{currency?.code as string}</h1>
       </div>
       <div className={s.btnGroup}>
-        <Link to="./" className={s.btn}>
+        <Link
+          className={s.btn}
+          to='./'
+        >
           Overview
         </Link>
-        <Link to="./settings" className={s.btn}>
+        <Link
+          className={s.btn}
+          to='./settings'
+        >
           Settings
         </Link>
       </div>

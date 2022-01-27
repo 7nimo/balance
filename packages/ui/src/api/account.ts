@@ -1,7 +1,8 @@
 import { Account, Accounts } from '@types';
 import { useQuery, UseQueryResult } from 'react-query';
-import { API_URL } from './constants';
+
 import { get } from '../utils/http.util';
+import { API_URL } from './constants';
 
 export const fetchAccountById = async (accountId: string): Promise<Account> => {
   return get<Account>(`${API_URL}/account/${accountId}`);

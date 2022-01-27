@@ -1,17 +1,20 @@
-import { FC, ReactNode } from 'react';
+import React, { FC, ReactNode } from 'react';
 
 interface Props extends React.HTMLAttributes<HTMLElement> {
   height: number;
   children: ReactNode;
 }
 
-export const AnimateHeight: FC<Props> = ({ height = 0, className, children }) => {
+export const AnimateHeight: FC<Props> = ({ children, className, height = 0 }) => {
   const style = {
-    height: `${height}px`,
+    height: `${height}px`
   };
 
   return (
-    <div style={{ ...style }} className={className}>
+    <div
+      className={className}
+      style={{ ...style }}
+    >
       {children}
     </div>
   );

@@ -1,11 +1,12 @@
+/* eslint-disable sort-keys */
 import { LoginCredentials } from '@types';
 import cx from 'classnames';
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-location';
-import { Button } from '../../Button/Button';
-import { useAuth } from '../../../../lib/auth';
 
+import { useAuth } from '../../../../lib/auth';
+import { Button } from '../../Button/Button';
 import s from './SignInForm.module.scss';
 
 type SignInInputs = {
@@ -13,27 +14,25 @@ type SignInInputs = {
   password: string;
 };
 
-function SignInForm(): React.ReactElement {
+function SignInForm (): React.ReactElement {
   const { login } = useAuth();
   const navigate = useNavigate();
 
-  const {
-    register,
+  const { clearErrors,
+    formState: { dirtyFields, errors, isDirty, isValid },
     handleSubmit,
-    setFocus,
-    formState: { errors, dirtyFields, isDirty, isValid },
-    clearErrors,
-  } = useForm<SignInInputs>({
+    register,
+    setFocus } = useForm<SignInInputs>({
     mode: 'onChange',
     shouldFocusError: false,
     defaultValues: {
       email: '',
-      password: '',
-    },
+      password: ''
+    }
   });
 
   const onSubmit: SubmitHandler<LoginCredentials> = async (formData: SignInInputs) => {
-    login(formData).then(() => navigate({ to: '../dashboard', replace: true }));
+    await login(formData).then(() => navigate({ to: '../dashboard', replace: true }));
   };
 
   useEffect(() => {
@@ -48,22 +47,22 @@ function SignInForm(): React.ReactElement {
           <div className={s.fieldContainer}>
             <div className={s.fieldItem}>
               <label
-                htmlFor="email"
                 className={cx(s.floatingLabel, {
                   [s.fieldDirty]: dirtyFields.email,
-                  [s.fieldError]: errors.email,
+                  [s.fieldError]: errors.email
                 })}
+                htmlFor='email'
               >
                 Email
               </label>
               <input
-                autoComplete="email"
-                id="email"
+                autoComplete='email'
                 className={cx(s.fieldInput, { [s.fieldError]: errors.email })}
-                type="email"
+                id='email'
                 onFocus={() => clearErrors('email')}
+                type='email'
                 {...register('email', {
-                  required: 'Email is required',
+                  required: 'Email is required'
                 })}
               />
             </div>
@@ -72,29 +71,33 @@ function SignInForm(): React.ReactElement {
           <div className={s.fieldContainer}>
             <div className={s.fieldItem}>
               <label
-                htmlFor="password"
                 className={cx(s.floatingLabel, {
                   [s.fieldDirty]: dirtyFields.password,
-                  [s.fieldError]: errors.password,
+                  [s.fieldError]: errors.password
                 })}
+                htmlFor='password'
               >
                 Password
               </label>
               <input
-                autoComplete="current-password"
-                id="password"
+                autoComplete='current-password'
                 className={cx(s.fieldInput, { [s.fieldError]: errors.password })}
-                type="password"
+                id='password'
                 onFocus={() => clearErrors('password')}
+                type='password'
                 {...register('password', {
-                  required: 'Password is required',
+                  required: 'Password is required'
                 })}
               />
             </div>
           </div>
 
           <div className={s.buttons}>
-            <Button type="submit" primary disabled={!isDirty || !isValid}>
+            <Button
+              disabled={!isDirty || !isValid}
+              primary
+              type='submit'
+            >
               Sign In
             </Button>
           </div>

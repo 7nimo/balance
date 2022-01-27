@@ -1,10 +1,12 @@
-import AppBar from 'common/containers/AppBar/AppBar';
-import Drawer from 'common/containers/Drawer/Drawer';
+import React from 'react';
 import { Outlet } from 'react-location';
 import { ReactLocationDevtools } from 'react-location-devtools';
+
+import AppBar from '../AppBar/AppBar';
+import Drawer from '../Drawer/Drawer';
 import s from './MainView.module.scss';
 
-function MainView(): React.ReactElement {
+function MainView (): React.ReactElement {
   return (
     <div className={s.main}>
       <Drawer />

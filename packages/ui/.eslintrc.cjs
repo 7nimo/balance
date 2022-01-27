@@ -7,9 +7,10 @@ module.exports = {
     node: true,
   },
   ignorePatterns: [
-    '**/build/*',
-    '**/coverage/*',
-    '**/node_modules/*',
+    'build/*',
+    'public/*',
+    'coverage/*',
+    'node_modules/*',
     '.eslintrc.cjs',
     '.eslintrc.js',
     '.eslintrc.mjs',
@@ -17,6 +18,9 @@ module.exports = {
     '.prettierrc.cjs',
     '.vscode/**',
     '.yarn/**',
+    'tsconfig.json',
+    'tsconfig.eslint.json',
+    'tsconfig.base.json',
   ],
   extends: [
     'eslint:recommended',
@@ -27,7 +31,7 @@ module.exports = {
   ],
   overrides: [
     {
-      files: ['*.js', '*.cjs', '*.mjs'],
+      files: ['*.js', '*.cjs', '*.mjs', '*.ts', '*.tsx'],
       rules: {
         '@typescript-eslint/explicit-function-return-type': 'off',
         '@typescript-eslint/no-var-requires': 'off',
@@ -38,12 +42,16 @@ module.exports = {
         '@typescript-eslint/no-unsafe-return': 'off',
         '@typescript-eslint/restrict-plus-operands': 'off',
         '@typescript-eslint/restrict-template-expressions': 'off',
+        '@typescript-eslint/no-non-null-assertion': 'off',
       },
     },
   ],
-  parser: require.resolve('@typescript-eslint/parser'),
+  parser: "@typescript-eslint/parser",
   parserOptions: {
-    extraFileExtensions: ['.cjs', '.mjs'],
+    project: "./tsconfig.eslint.json",
+    tsconfigRootDir: __dirname,
+    sourceType: "module",
+    extraFileExtensions: [".cjs", ".mjs"],
     warnOnUnsupportedTypeScriptVersion: false,
   },
   plugins: [
@@ -104,7 +112,7 @@ module.exports = {
         when: 'always',
       },
     ],
-    'react/jsx-no-bind': 2,
+    'react/jsx-no-bind': 'off',
     'react/jsx-sort-props': [
       1,
       {

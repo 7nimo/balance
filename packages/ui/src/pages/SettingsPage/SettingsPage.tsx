@@ -1,9 +1,10 @@
-import Block from 'common/components/layout/Block/Block';
-import Row from 'common/components/layout/Row/Row';
+import React from 'react';
+import Block from 'src/common/components/layout/Block/Block';
+import Row from 'src/common/components/layout/Row/Row';
 
-function SettingsPage(): React.ReactElement {
+function SettingsPage (): React.ReactElement {
   return (
-    <Block title="Settings">
+    <Block title='Settings'>
       <Row>
         <p>zzz</p>
       </Row>

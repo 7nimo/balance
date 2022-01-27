@@ -1,8 +1,8 @@
+import { Error, LoginCredentials, RegisterCredentials, Status, User } from '@types';
 import { initReactQueryAuth } from 'react-query-auth';
-import { LoginCredentials, RegisterCredentials, User, Status, Error } from '@types';
-import { API_URL } from 'api/constants';
-import { getUserData, registerWithEmailAndPassword, loginWithEmailAndPassword } from '../api/auth';
+import { API_URL } from 'src/api/constants';
 
+import { getUserData, loginWithEmailAndPassword, registerWithEmailAndPassword } from '../api/auth';
 import { post } from '../utils/http.util';
 
 const waitInitial = false;
@@ -38,16 +38,16 @@ const logoutFn = async (): Promise<Status | undefined> => {
 const authConfig = {
   loadUser,
   loginFn,
-  registerFn,
   logoutFn,
-  waitInitial,
+  registerFn,
+  waitInitial
 };
 
-const { AuthProvider, AuthConsumer, useAuth } = initReactQueryAuth<
-  User | undefined,
-  Error,
-  LoginCredentials,
-  RegisterCredentials
+const { AuthConsumer, AuthProvider, useAuth } = initReactQueryAuth<
+User | undefined,
+Error,
+LoginCredentials,
+RegisterCredentials
 >(authConfig);
 
 export { AuthProvider, AuthConsumer, useAuth };

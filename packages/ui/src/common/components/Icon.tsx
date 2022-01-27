@@ -7,19 +7,24 @@ interface Props {
   tooltip?: string;
 }
 
-function Icon({ className, size = 24, icon, tooltip }: Props): React.ReactElement<Props> {
+function Icon ({ className, icon, size = 24, tooltip }: Props): React.ReactElement<Props> {
   const extraProps: Record<string, unknown> = {
     'data-testid': icon,
     ...(tooltip
       ? {
-          'data-for': tooltip,
-          'data-tip': true,
-        }
-      : {}),
+        'data-for': tooltip,
+        'data-tip': true
+      }
+      : {})
   };
 
   return (
-    <svg className={className} width={`${size}px`} height={`${size}px`} {...extraProps}>
+    <svg
+      className={className}
+      height={`${size}px`}
+      width={`${size}px`}
+      {...extraProps}
+    >
       {icon}
     </svg>
   );

@@ -1,9 +1,10 @@
-import Block from 'common/components/layout/Block/Block';
-import Row from 'common/components/layout/Row/Row';
+import React from 'react';
+import Block from 'src/common/components/layout/Block/Block';
+import Row from 'src/common/components/layout/Row/Row';
 
-function CryptoPage(): React.ReactElement {
+function CryptoPage (): React.ReactElement {
   return (
-    <Block title="Crypto">
+    <Block title='Crypto'>
       <Row>
         <p>hurr durr</p>
       </Row>

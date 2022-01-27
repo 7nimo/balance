@@ -1,5 +1,6 @@
 import { Transaction } from '@types';
-import { FC } from 'react';
+import React from 'react';
+
 import { Spinner } from '../Spinner/Spinner';
 import s from './TransactionsTable.module.scss';
 
@@ -7,7 +8,7 @@ type Props = {
   transactions?: Transaction[] | null;
 };
 
-export const TransactionsTable: FC<Props> = ({ transactions = null }) => {
+function TransactionsTable ({ transactions = null }: Props): React.ReactElement<Props> {
   if (!transactions || !transactions?.length) {
     return (
       <div className={s.emptyTable}>
@@ -18,7 +19,10 @@ export const TransactionsTable: FC<Props> = ({ transactions = null }) => {
 
   const renderTransactions = transactions?.map((transaction) => {
     return (
-      <tr key={transaction.id.toString()} className={s.row}>
+      <tr
+        className={s.row}
+        key={transaction.id.toString()}
+      >
         <td className={s.date}>
           <div>{transaction.transactionDate}</div>
         </td>
@@ -68,4 +72,6 @@ export const TransactionsTable: FC<Props> = ({ transactions = null }) => {
       <tbody className={s.body}>{renderTransactions}</tbody>
     </table>
   );
-};
+}
+
+export default TransactionsTable;

@@ -1,21 +1,23 @@
+/* eslint-disable sort-keys */
 export interface HttpResponse<T> extends Response {
   data?: T;
 }
 
-export async function http<T>(request: Request): Promise<T> {
+export async function http<T> (request: Request): Promise<T> {
   // eslint-disable-next-line no-console
   console.log('request: ', request.url);
   const response: HttpResponse<T> = await fetch(request);
 
   if (response.ok) {
     const data = await response.json();
+
     return data;
   }
 
   return Promise.reject(response.statusText);
 }
 
-export async function httppp<T>(request: RequestInfo): Promise<HttpResponse<T>> {
+export async function httppp<T> (request: RequestInfo): Promise<HttpResponse<T>> {
   const response: HttpResponse<T> = await fetch(request).catch((err) => {
     throw new Error(err);
   });
@@ -36,44 +38,46 @@ export async function httppp<T>(request: RequestInfo): Promise<HttpResponse<T>> 
   return response;
 }
 
-export async function get<T>(
+export async function get<T> (
   path: string,
   args: RequestInit = {
     method: 'get',
     headers: {
-      'Content-Type': 'application/json',
+      'Content-Type': 'application/json'
     },
-    credentials: 'include',
+    credentials: 'include'
   }
 ): Promise<T> {
   return http<T>(new Request(path, args));
 }
 
-export async function post<T>(
+export async function post<T> (
   path: string,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   body?: any,
   args: RequestInit = {
     method: 'post',
     headers: {
-      'Content-Type': 'application/json',
+      'Content-Type': 'application/json'
     },
     credentials: 'include',
-    body: JSON.stringify(body),
+    body: JSON.stringify(body)
   }
 ): Promise<T> {
   return http<T>(new Request(path, args));
 }
 
-export async function put<T>(
+export async function put<T> (
   path: string,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   body: any,
   args: RequestInit = {
     method: 'put',
     headers: {
-      'Content-Type': 'application/json',
+      'Content-Type': 'application/json'
     },
     credentials: 'include',
-    body: JSON.stringify(body),
+    body: JSON.stringify(body)
   }
 ): Promise<T> {
   return http<T>(new Request(path, args));

@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-floating-promises */
+/* eslint-disable sort-keys */
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 // source: https://stackoverflow.com/questions/61339259/how-to-dynamically-import-svg-and-render-it-inline
 
@@ -11,14 +13,16 @@ interface UseDynamicSVGImportOptions {
   onError?: (err: Error | unknown) => void;
 }
 
-function useSVG(name: string, options: UseDynamicSVGImportOptions = {}) {
+function useSVG (name: string, options: UseDynamicSVGImportOptions = {}) {
   const ImportedIconRef = useRef<React.FC<React.SVGProps<SVGSVGElement>>>();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<Error | unknown>();
 
   const { onCompleted, onError } = options;
+
   useEffect(() => {
     setLoading(true);
+
     const importIcon = async (): Promise<void> => {
       try {
         ImportedIconRef.current = (await import(`./${name}.svg`)).ReactComponent;
@@ -30,6 +34,7 @@ function useSVG(name: string, options: UseDynamicSVGImportOptions = {}) {
         setLoading(false);
       }
     };
+
     importIcon();
   }, [name, onCompleted, onError]);
 

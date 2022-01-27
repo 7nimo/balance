@@ -1,4 +1,6 @@
+import React from 'react';
 import styled from 'styled-components';
+
 import SvgTrash from './icons/Trash';
 
 const Wrapper = styled.div`
@@ -14,7 +16,7 @@ const Wrapper = styled.div`
   }
 `;
 
-function Nope(): React.ReactElement {
+function Nope (): React.ReactElement {
   return (
     <Wrapper>
       <h1>Nothing to see here...</h1>

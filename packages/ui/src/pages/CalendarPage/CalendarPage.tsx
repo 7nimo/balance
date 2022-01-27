@@ -1,9 +1,10 @@
-import Block from 'common/components/layout/Block/Block';
-import Row from 'common/components/layout/Row/Row';
+import React from 'react';
+import Block from 'src/common/components/layout/Block/Block';
+import Row from 'src/common/components/layout/Row/Row';
 
-export default function CalendarPage(): JSX.Element {
+export default function CalendarPage (): JSX.Element {
   return (
-    <Block title="Calendar">
+    <Block title='Calendar'>
       <Row>
         <p>content</p>
       </Row>

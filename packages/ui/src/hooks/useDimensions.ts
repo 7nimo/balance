@@ -21,8 +21,8 @@ interface Return<T> extends Omit<Event<T>, 'entry'> {
 
 export const useDimensions = <T extends HTMLDivElement | null>(): Return<T> => {
   const [state, setState] = useState({
-    width: 0,
     height: 0,
+    width: 0
   });
   const prevSizeRef = useRef<{ width?: number; height?: number }>({});
   const ref = useRef<T>();
@@ -38,33 +38,34 @@ export const useDimensions = <T extends HTMLDivElement | null>(): Return<T> => {
         unobserve();
         ref.current = element;
       }
-      if (observerRef.current && ref.current)
-        observerRef.current.observe(ref.current as HTMLDivElement);
+
+      if (observerRef.current && ref.current) { observerRef.current.observe(ref.current); }
     },
     [unobserve]
   );
 
   useEffect(() => {
     if (!('ResizeObserver' in window) || !('ResizeObserverEntry' in window)) {
-      // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+      // eslint-disable-next-line no-unused-expressions
       () => null;
     }
 
     let raf: number | null = null;
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     observerRef.current = new ResizeObserver(([entry]: any) => {
       raf = requestAnimationFrame(() => {
         const { contentRect } = entry;
 
-        const { width, height } = contentRect;
+        const { height, width } = contentRect;
 
         if (width === prevSizeRef.current.width && height === prevSizeRef.current.height) return;
 
-        prevSizeRef.current = { width, height };
+        prevSizeRef.current = { height, width };
 
         const next = {
-          width,
           height,
+          width
         };
 
         setState(next);

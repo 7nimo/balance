@@ -1,4 +1,5 @@
-import { FC } from 'react';
+import React, { FC } from 'react';
+
 import s from './IconButton.module.scss';
 
 type Props = React.HTMLProps<HTMLButtonElement> & {
@@ -7,7 +8,11 @@ type Props = React.HTMLProps<HTMLButtonElement> & {
 
 export const IconButton: FC<Props> = ({ icon, onClick }) => {
   return (
-    <button className={s.iconButton} type="button" onClick={onClick}>
+    <button
+      className={s.iconButton}
+      onClick={onClick}
+      type='button'
+    >
       {icon}
     </button>
   );

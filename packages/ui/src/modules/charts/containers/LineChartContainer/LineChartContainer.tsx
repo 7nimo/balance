@@ -1,14 +1,12 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @typescript-eslint/no-shadow */
-import { useEffect, useRef, useState } from 'react';
-import { ControlBar } from 'modules/charts/components/ControlBar/ControlBar';
-import { LineChart } from 'modules/charts/components/LineChart/LineChart';
-import { HorizontalAxis } from 'modules/charts/components/HorizontalAxis/HorizontalAxis';
-import { useStore } from 'store/store';
-import { useDimensions } from 'hooks/useDimensions';
 import { Period, Point } from '@types';
 import * as d3 from 'd3';
+import { useDimensions } from 'hooks/useDimensions';
+import React, { useEffect, useRef, useState } from 'react';
+import { useStore } from 'store/store';
 
+import ControlBar from '../../components/ControlBar/ControlBar';
+import HorizontalAxis from '../../components/HorizontalAxis/HorizontalAxis';
+import { LineChart } from '../../components/LineChart/LineChart';
 import s from './LineChartContainer.module.scss';
 
 type Props = {
@@ -16,14 +14,14 @@ type Props = {
 };
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-function LineChartContainer({ accountId }: Props): React.ReactElement {
-  const { observe, width, height } = useDimensions<HTMLDivElement>();
+function LineChartContainer ({ accountId }: Props): React.ReactElement {
+  const { height, observe, width } = useDimensions<HTMLDivElement>();
   const assets = useStore((state) => state.assets);
 
   const [tooltipPosition, setTooltipPosition] = useState<Point>({ x: 0, y: 0 });
   const [tooltipData, setTooltipData] = useState({
     date: '',
-    value: 0,
+    value: 0
   });
   const [amount, setAmount] = useState(0);
   const currentAmount = useRef(0);
@@ -33,14 +31,17 @@ function LineChartContainer({ accountId }: Props): React.ReactElement {
   // const [pathMap, addPathToMap] = useState(new Map());
 
   useEffect(() => {
-    async function setChartData(): Promise<void> {
+    // eslint-disable-next-line @typescript-eslint/require-await
+    async function setChartData (): Promise<void> {
       setData(assets.get(accountId)!);
     }
+
     if (assets.has(accountId)) {
       // todo: !!this should run only when new data appears AAAAAAAAAAAAA
       setChartData()
         .then(() => {
           const [firstElement] = assets.get(accountId)!.values().next().value;
+
           currentAmount.current = firstElement;
           setAmount(firstElement);
         })
@@ -73,7 +74,7 @@ function LineChartContainer({ accountId }: Props): React.ReactElement {
   // !¬ Line Generator
   const lineGenerator = d3
     .line()
-    .defined(([i, _]) => D[i] as boolean)
+    .defined(([i, _]) => D[i])
     .x(([i]) => xScale(X[i]!))
     .y(([i]) => yScale(Y[i]))
     .curve(d3.curveBasis);
@@ -121,19 +122,22 @@ function LineChartContainer({ accountId }: Props): React.ReactElement {
 
   return (
     <div className={s.chartContainer}>
-      <ControlBar currencySymbol="£" assetAmount={amount} />
+      <ControlBar
+        assetAmount={amount}
+        currencySymbol='£'
+      />
       <LineChart
-        id={accountId}
         data={data}
-        ref={observe}
-        width={width}
-        height={height}
         drawnPath={path!}
-        tooltipPosition={tooltipPosition}
-        tooltipData={tooltipData}
+        height={height}
+        id={accountId}
         onMouseEnter={onMouseEnter}
-        onMouseMove={onMouseMove}
         onMouseLeave={onMouseLeave}
+        onMouseMove={onMouseMove}
+        ref={observe}
+        tooltipData={tooltipData}
+        tooltipPosition={tooltipPosition}
+        width={width}
       />
       <HorizontalAxis period={Period.all} />
     </div>

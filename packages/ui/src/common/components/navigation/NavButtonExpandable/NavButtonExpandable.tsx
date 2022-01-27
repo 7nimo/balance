@@ -1,7 +1,8 @@
-import { AnimateHeight } from 'common/components/AnimateHeight/AnimateHeight';
-import { ChevronDown, ChevronUp } from 'common/components/icons';
 import { useToggle } from 'hooks/useToggle';
-import { FC, ReactNode, RefObject, useEffect, useRef, useState } from 'react';
+import React, { FC, ReactNode, RefObject, useEffect, useRef, useState } from 'react';
+
+import { AnimateHeight } from '../../AnimateHeight/AnimateHeight';
+import { ChevronDown, ChevronUp } from '../../icons';
 import s from './NavButtonExpandable.module.scss';
 
 interface Props {
@@ -13,7 +14,7 @@ interface Props {
 // todo: render  regular button if no children
 // todo: use hook to extract dimensions
 
-export const NavButtonExpandable: FC<Props> = ({ label, icon, children }) => {
+export const NavButtonExpandable: FC<Props> = ({ children, icon, label }) => {
   const [expanded, toggleExpanded] = useToggle(false);
   const [height, setHeight] = useState(0);
   const measuredRef = useRef<HTMLDivElement>(null);
@@ -34,17 +35,29 @@ export const NavButtonExpandable: FC<Props> = ({ label, icon, children }) => {
   return (
     <div className={s.container}>
       <div className={s.item}>
-        <button type="button" className={s.focusable} onClick={handleClick}>
+        <button
+          className={s.focusable}
+          onClick={handleClick}
+          type='button'
+        >
           <div className={s.iconWrapper}>{icon}</div>
           <span className={s.label}>{label}</span>
-          {children ? (
-            <div className={s.trailingIcon}>{expanded ? <ChevronUp /> : <ChevronDown />}</div>
-          ) : null}
+          {children
+            ? (
+              <div className={s.trailingIcon}>{expanded ? <ChevronUp /> : <ChevronDown />}</div>
+            )
+            : null}
         </button>
       </div>
 
-      <AnimateHeight className={s.expandableContainer} height={height}>
-        <div className={s.expandableContent} ref={measuredRef}>
+      <AnimateHeight
+        className={s.expandableContainer}
+        height={height}
+      >
+        <div
+          className={s.expandableContent}
+          ref={measuredRef}
+        >
           {children}
         </div>
       </AnimateHeight>
