@@ -1,10 +1,11 @@
 {
   "name": "balance",
-  "packageManager": "yarn@3.1.1",
+  "packageManager": "yarn@3.2.0-rc.12",
   "private": true,
+  "version": "0.1.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/7nimo/balance"
+    "url": "https://github.com/7nimo/balance.git"
   },
   "workspaces": [
     "packages/*"

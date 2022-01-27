@@ -1,25 +1,25 @@
 version: "3.9"
 
 services:
-  frontend:
-    container_name: balance_frontend
+  ui:
+    container_name: ui
     build:
-      context: ./frontend
+      context: ./packages/ui
     volumes:
-      - ./frontend:/app
+      - ./packages/ui:/app
       - /app/node_modules
     ports:
       - "${FRONTEND_PORT}:${FRONTEND_PORT}"
     working_dir: /app
     command: sh -c "yarn && yarn start"
 
-  balance_api:
-    container_name: balance_api
+  api:
+    container_name: api
     build:
-      context: ./balance-api
+      context: ./packages/api
       target: ${NODE_ENV}
     volumes:
-      - ./balance-api:/app
+      - ./packages/api:/app
       - /app/node_modules
     ports:
       - "${SERVER_PORT}:4200"
@@ -30,8 +30,8 @@ services:
       - balance_db
     command: sh -c "yarn && yarn start:debug"
  
-  balance_db:
-    container_name: balance_db
+  db:
+    container_name: db
     image: postgres:14.1
     environment:
       POSTGRES_DB: ${POSTGRES_DB}

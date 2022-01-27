@@ -4,7 +4,7 @@ ENV NODE_ENV=development
 
 WORKDIR /app
 
-COPY yarn.lock .
+COPY yarn.lock ../manifests/ 2>/dev/null || :
 COPY package.json .
 
 RUN yarn
