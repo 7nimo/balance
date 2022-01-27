@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable no-empty-pattern */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React from 'react';
 import Dropzone from 'react-dropzone-uploader';
 import { useMatch } from 'react-location';
@@ -13,7 +16,7 @@ function AccountSettings (): React.ReactElement {
   });
 
   // specify upload params and url for your files
-  const getUploadParams = ({ }) => { return { url: `${API_URL}/account/${accountId}/transaction/import` }; };
+  const getUploadParams = ({}) => { return { url: `${API_URL}/account/${accountId}/transaction/import` }; };
 
   // called every time a file's `status` changes
   const handleChangeStatus = ({ file, meta }: any, status: any) => { console.log(status, meta, file); };

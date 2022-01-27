@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Period, Point } from '@types';
 import * as d3 from 'd3';
 import { useDimensions } from 'hooks/useDimensions';

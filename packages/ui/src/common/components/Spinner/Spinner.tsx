@@ -1,12 +1,16 @@
-import React, { FC } from 'react';
+import React from 'react';
 
 type Props = {
   size?: number;
 };
 
-export const Spinner: FC<Props> = ({ size }) => {
-  return <div
-    id='spinner'
-    style={{ fontSize: `${size}px` }}
-  />;
-};
+function Spinner ({ size }: Props): React.ReactElement<Props> {
+  return (
+    <div
+      id='spinner'
+      style={{ fontSize: `${size}px` }}
+    />
+  );
+}
+
+export default Spinner;
