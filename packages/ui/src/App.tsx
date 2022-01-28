@@ -1,7 +1,7 @@
+import { AuthProvider } from '@core/lib/auth';
 import React from 'react';
 import { Router } from 'react-location';
 
-import { AuthProvider } from './lib/auth';
 import { location, routes } from './routes';
 
 function App (): React.ReactElement {

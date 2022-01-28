@@ -1,9 +1,9 @@
+import Card from '@components/Card/Card';
 import React from 'react';
 
-import Card from '../Card/Card';
 import s from './Block.module.scss';
 
-interface SectionProps {
+type Props = {
   title?: string;
   children: React.ReactNode;
 }
@@ -11,7 +11,7 @@ interface SectionProps {
 function Block ({ children,
   title,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  ...restProps }: SectionProps & Record<string, any>): React.ReactElement {
+  ...restProps }: Props & Record<string, any>): React.ReactElement {
   return (
     <div className={s.container}>
       <Card {...restProps}>

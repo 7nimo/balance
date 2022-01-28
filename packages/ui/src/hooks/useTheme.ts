@@ -1,6 +1,6 @@
+import { storage } from '@core/utils/storage';
 import { THEME, Theme } from '@types';
 import { useEffect, useState } from 'react';
-import { storage } from 'src/utils/storage';
 
 export const useTheme = (): {
   theme: Theme;

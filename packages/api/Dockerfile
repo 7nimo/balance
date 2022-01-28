@@ -11,7 +11,7 @@ COPY package.json .
 COPY yarn.lock .
 COPY .yarn/cache .
 
-RUN yarn
+RUN yarn install --check-cache
 
 COPY . .
 

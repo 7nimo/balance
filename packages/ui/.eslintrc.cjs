@@ -50,7 +50,7 @@ module.exports = {
   parserOptions: {
     project: "./tsconfig.eslint.json",
     tsconfigRootDir: __dirname,
-    sourceType: "module",
+    // sourceType: "module",
     extraFileExtensions: [".cjs", ".mjs"],
     warnOnUnsupportedTypeScriptVersion: false,
   },
@@ -71,7 +71,7 @@ module.exports = {
     semi: [2, 'always'],
     'no-extra-semi': 2,
     // specific overrides
-    '@typescript-eslint/no-non-null-assertion': 'error',
+    '@typescript-eslint/no-non-null-assertion': 'off',
     '@typescript-eslint/type-annotation-spacing': 'error',
     'arrow-parens': ['error', 'always'],
     'default-param-last': [0], // conflicts with TS version (this one doesn't allow TS ?)
@@ -102,7 +102,7 @@ module.exports = {
     ],
     'react-hooks/rules-of-hooks': 'error',
     'react-hooks/exhaustive-deps': 'error',
-    'react/jsx-closing-bracket-location': [1, 'tag-aligned'],
+    'react/jsx-closing-bracket-location': [1, 'line-aligned'],
     'react/jsx-first-prop-new-line': [1, 'multiline-multiprop'],
     'react/jsx-fragments': 'error',
     'react/jsx-max-props-per-line': [
@@ -112,7 +112,7 @@ module.exports = {
         when: 'always',
       },
     ],
-    'react/jsx-no-bind': 'off',
+    'react/jsx-no-bind': 'off', //
     'react/jsx-sort-props': [
       1,
       {
@@ -144,7 +144,7 @@ module.exports = {
         ],
       },
     ],
-    'sort-keys': 'error',
+    'sort-keys': 'warn',
   },
   settings: {
     'import/extensions': ['.js', '.ts', '.tsx'],

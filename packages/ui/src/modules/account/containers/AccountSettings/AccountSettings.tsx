@@ -1,22 +1,20 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable no-empty-pattern */
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { API_URL } from '@core/api/constants';
+// import { post } from '@core/utils/http.util';
 import React from 'react';
 import Dropzone from 'react-dropzone-uploader';
 import { useMatch } from 'react-location';
-import { useMutation } from 'react-query';
-import { API_URL } from 'src/api/constants';
-import { post } from 'src/utils/http.util';
+// import { useMutation } from 'react-query';
 
 function AccountSettings (): React.ReactElement {
   const { params: { accountId } } = useMatch();
 
-  const mutation = useMutation((file) => {
-    return post(`${API_URL}/account/${accountId}/transaction/import`, file);
-  });
+  // const mutation = useMutation((file) => {
+  //   return post(`${API_URL}/account/${accountId}/transaction/import`, file);
+  // });
 
   // specify upload params and url for your files
-  const getUploadParams = ({}) => { return { url: `${API_URL}/account/${accountId}/transaction/import` }; };
+  const getUploadParams = () => { return { url: `${API_URL}/account/${accountId}/transaction/import` }; };
 
   // called every time a file's `status` changes
   const handleChangeStatus = ({ file, meta }: any, status: any) => { console.log(status, meta, file); };

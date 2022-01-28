@@ -1,7 +1,7 @@
+import SvgCash from '@components/icons/Cash';
 import { Currency } from '@types';
 import React from 'react';
 import { Link } from 'react-location';
-import SvgCash from 'src/common/components/icons/Cash';
 
 import s from './AccountHeader.module.scss';
 

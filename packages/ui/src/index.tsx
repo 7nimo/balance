@@ -1,9 +1,9 @@
 import './index.scss';
 
+import ReactQueryProvider from '@core/lib/react-query';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import ReactQueryProvider from './lib/react-query';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 

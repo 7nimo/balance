@@ -1,11 +1,7 @@
 {
   "extends": "./tsconfig.base.json",
-  "exclude": [
-    "build/**/*",
-    "**/build/**/*"
-  ],
   "compilerOptions": {
-    "baseUrl": "./src",
+    "baseUrl": "src",
     "composite": false
   }
 }

@@ -1,13 +1,13 @@
+import SvgBank from '@components/icons/Bank';
+import SvgBtc from '@components/icons/Btc';
+import SvgCalendar from '@components/icons/Calendar';
+import SvgCoin from '@components/icons/Coin';
+import SvgPieChart from '@components/icons/PieChart';
+import SvgSettings from '@components/icons/Settings';
+import NavButton from '@components/navigation/NavButton/NavButton';
+import { queryClient } from '@core/lib/react-query';
 import { Account, Accounts } from '@types';
-import { queryClient } from 'lib/react-query';
 import React, { useEffect, useState } from 'react';
-import SvgBank from 'src/common/components/icons/Bank';
-import SvgBtc from 'src/common/components/icons/Btc';
-import SvgCalendar from 'src/common/components/icons/Calendar';
-import SvgCoin from 'src/common/components/icons/Coin';
-import SvgPieChart from 'src/common/components/icons/PieChart';
-import SvgSettings from 'src/common/components/icons/Settings';
-import NavButton from 'src/common/components/navigation/NavButton/NavButton';
 
 import Logo from '../../components/Logo/Logo';
 import s from './Drawer.module.scss';

@@ -76,6 +76,8 @@
     "react-is": "^17.0.2",
     "rimraf": "^3.0.2",
     "svgo": "^2.8.0",
+    "tsconfig-paths": "^3.12.0",
+    "tsconfig-paths-webpack-plugin": "^3.5.2",
     "typescript-plugin-css-modules": "^3.4.0"
   },
   "browserslist": {

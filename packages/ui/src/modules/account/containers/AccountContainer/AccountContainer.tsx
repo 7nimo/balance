@@ -1,23 +1,23 @@
 /* eslint-disable @typescript-eslint/no-shadow */
+import Block from '@components/Block/Block';
+import { SearchBar } from '@components/forms/SearchBar/SearchBar';
+import TransactionsTable from '@components/TransactionsTable/TransactionsTable';
+import { useAccount } from '@core/api/account';
+import { useTransactions } from '@core/api/transaction';
+import { useStore } from '@core/store/store';
 import { Account, Transaction } from '@types';
+import { ActionBar } from 'common/containers/ActionBar/ActionBar';
 import { useDebounce } from 'hooks/useDebounce';
+import LineChartContainer from 'modules/charts/containers/LineChartContainer/LineChartContainer';
 import React, { useEffect, useState } from 'react';
 import { useMatch } from 'react-location';
-import { useAccount } from 'src/api/account';
-import { useTransactions } from 'src/api/transaction';
-import { SearchBar } from 'src/common/components/forms/SearchBar/SearchBar';
-import Block from 'src/common/components/layout/Block/Block';
-import { TransactionsTable } from 'src/common/components/TransactionsTable/TransactionsTable';
-import { ActionBar } from 'src/common/containers/ActionBar/ActionBar';
-import LineChartContainer from 'src/modules/charts/containers/LineChartContainer/LineChartContainer';
-import { useStore } from 'store/store';
 
 import AccountHeader from '../../components/AccountHeader/AccountHeader';
 
 function AccountContainer (): React.ReactElement {
   const [query, setQuery] = useState<string>('');
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [Transactions, setTransactions] = useState<Transaction[] | null>(null);
+  const [_transactions, setTransactions] = useState<Transaction[] | null>(null);
   const [account, setAccount] = useState<Account | null>(null);
 
   const { data: { transactions },
@@ -36,11 +36,14 @@ function AccountContainer (): React.ReactElement {
     if (data && query === '') setTransactions(data.transactions);
   }, [query, data]);
 
+  // temporary hack
   const search = (query: string): void => {
     const q = query.toLowerCase();
-    const result: Transaction[] = data.transactions.filter((transaction) => {
-      return transaction.transactionDesc.toLowerCase().includes(q);
-    });
+    const result: Transaction[] = data
+      ? data.transactions.filter((transaction) => {
+        return transaction.transactionDesc.toLowerCase().includes(q);
+      })
+      : [];
 
     setTransactions(result);
   };
@@ -88,6 +91,7 @@ function AccountContainer (): React.ReactElement {
           />
         </ActionBar>
 
+        {_transactions}
         <TransactionsTable transactions={transactions as Transaction[]} />
       </Block>
     </>

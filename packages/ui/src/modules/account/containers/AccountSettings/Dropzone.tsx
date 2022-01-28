@@ -25,12 +25,15 @@ const CustomLayout = () => {
   };
 
   return (
-    <Dropzone
-      LayoutComponent={Layout}
-      classNames={{}}
-      getUploadParams={getUploadParams}
-      inputContent='Drop Files (Custom Layout)'
-      onSubmit={handleSubmit}
-    />
+    <>
+      <Dropzone
+        LayoutComponent={Layout}
+        classNames={{}}
+        getUploadParams={getUploadParams}
+        inputContent='Drop Files (Custom Layout)'
+        onSubmit={handleSubmit}
+      />
+      <CustomLayout />
+    </>
   );
 };

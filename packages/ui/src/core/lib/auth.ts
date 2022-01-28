@@ -1,9 +1,8 @@
+import { getUserData, loginWithEmailAndPassword, registerWithEmailAndPassword } from '@core/api/auth';
+import { API_URL } from '@core/api/constants';
+import { post } from '@core/utils/http.util';
 import { Error, LoginCredentials, RegisterCredentials, Status, User } from '@types';
 import { initReactQueryAuth } from 'react-query-auth';
-import { API_URL } from 'src/api/constants';
-
-import { getUserData, loginWithEmailAndPassword, registerWithEmailAndPassword } from '../api/auth';
-import { post } from '../utils/http.util';
 
 const waitInitial = false;
 

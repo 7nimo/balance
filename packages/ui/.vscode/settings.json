@@ -26,10 +26,10 @@
     "**/.yarn": true,
     "**/.pnp.*": true
   },
-  // "import/resolver": {
-  //   "alias": [ 
-  //     ["@components", "./src/common/components"],
-  //     ["@types", "./src/@types"]
-  //   ]
-  // }
+  "import/resolver": {
+    "alias": [ 
+      ["@components", "./src/common/components"],
+      ["@types", "./src/@types"]
+    ]
+  }
 }

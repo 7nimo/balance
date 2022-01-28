@@ -1,5 +1,5 @@
+import { queryClient } from '@core/lib/react-query';
 import { Currency, User } from '@types';
-import { queryClient } from 'lib/react-query';
 import { StateCreator } from 'zustand';
 
 const findCurrency = (): Currency | undefined => {

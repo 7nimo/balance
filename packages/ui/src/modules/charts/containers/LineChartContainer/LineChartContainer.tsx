@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { useStore } from '@core/store/store';
 import { Period, Point } from '@types';
 import * as d3 from 'd3';
 import { useDimensions } from 'hooks/useDimensions';
 import React, { useEffect, useRef, useState } from 'react';
-import { useStore } from 'store/store';
 
 import ControlBar from '../../components/ControlBar/ControlBar';
 import HorizontalAxis from '../../components/HorizontalAxis/HorizontalAxis';

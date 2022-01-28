@@ -1,12 +1,12 @@
+import ColorLine from '@components/ColorLine';
 import { Account } from '@types';
 import React from 'react';
-// import Block from 'common/components/layout/Block/Block';
+// import Block from '@components/Block/Block';
 import { Link, useMatch } from 'react-location';
-import ColorLine from 'src/common/components/ColorLine';
 import styled from 'styled-components';
 
 import { ReactComponent as Logo } from '../../assets/svg/banks/lloyds.svg';
-// import SvgAdd from 'common/components/icons/actions/Add';
+// import SvgAdd from '@components/icons/actions/Add';
 import s from './AccountsPage.module.scss';
 
 const Wrapper = styled.div`

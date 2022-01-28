@@ -1,7 +1,7 @@
+import Spinner from '@components/Spinner/Spinner';
 import { Transaction } from '@types';
 import React from 'react';
 
-import { Spinner } from '../Spinner/Spinner';
 import s from './TransactionsTable.module.scss';
 
 type Props = {

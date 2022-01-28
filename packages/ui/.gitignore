@@ -2,16 +2,19 @@
 
 # dependencies
 node_modules
-.yarn
-/.pnp
-.pnp.js
+.yarn/*
+!.yarn/cache
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
 
 # testing
 /coverage
 
 # assets
-src/assets/svg/icons/streamline/
-src/assets/svg/icons/raw/
+src/assets/svg/icons/
 
 # production
 /build

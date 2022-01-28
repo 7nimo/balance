@@ -1,8 +1,8 @@
+import { IconButton } from '@components/IconButton/IconButton';
+import { DarkMode, LightMode } from '@components/icons';
+import { UserAsDevil } from '@components/icons/user';
 import { useToggle } from 'hooks/useToggle';
 import React, { ReactNode } from 'react';
-import { IconButton } from 'src/common/components/IconButton/IconButton';
-import { DarkMode, LightMode } from 'src/common/components/icons';
-import { UserAsDevil } from 'src/common/components/icons/user';
 
 import s from './AppBarActions.module.scss';
 

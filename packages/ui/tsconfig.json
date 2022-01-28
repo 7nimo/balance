@@ -2,11 +2,23 @@
   "extends": "./tsconfig.base.json",
   "compilerOptions": {
     "jsx": "react",
+    "rootDirs": ["src", "app/src"],
     "baseUrl": ".",
+    "paths": {
+      "*": ["*", "app/*"],
+      "@components/*": ["./src/common/components/*"],
+      "@core/*": ["./src/core/*"],
+      "@hooks/*": ["./src/hooks/*"],
+    },
+    "typeRoots": ["./src/@types/*"],
+    "types": ["./src/@types"],
     "composite": false
   },
   "include": [
-    "src/**/*"
+    "src/**/*",
+    "app/src/**/*"
   ],
-  "exclude": ["node_modules"]
+  "exclude": [
+    "node_modules",
+  ]
 }

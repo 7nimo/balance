@@ -1,12 +1,12 @@
 /* eslint-disable sort-keys */
+import { Button } from '@components/Button/Button';
+import { useAuth } from '@core/lib/auth';
 import { LoginCredentials } from '@types';
 import cx from 'classnames';
 import React, { useEffect } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-location';
 
-import { useAuth } from '../../../../lib/auth';
-import { Button } from '../../Button/Button';
 import s from './SignInForm.module.scss';
 
 type SignInInputs = {

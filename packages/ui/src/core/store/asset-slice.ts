@@ -1,5 +1,5 @@
+import { DataPoint, Transaction } from '@types';
 import * as d3 from 'd3';
-import { DataPoint, Transaction } from 'src/@types';
 import { StateCreator } from 'zustand';
 
 type D3Data = d3.InternMap<Date, number[]>;

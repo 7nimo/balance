@@ -3,6 +3,7 @@ version: "3.9"
 services:
   ui:
     container_name: b_ui
+    profiles: ["frontend"]
     build:
       context: ./packages/ui
     volumes:
