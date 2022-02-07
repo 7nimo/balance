@@ -1,6 +1,6 @@
 {
   "name": "balance",
-  "packageManager": "yarn@3.2.0-rc.12",
+  "packageManager": "yarn@3.1.1",
   "private": true,
   "version": "0.1.0",
   "repository": {

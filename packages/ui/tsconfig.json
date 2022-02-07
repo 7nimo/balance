@@ -3,15 +3,15 @@
   "compilerOptions": {
     "jsx": "react",
     "rootDirs": ["src", "app/src"],
-    "baseUrl": ".",
+    "baseUrl": "./src",
     "paths": {
       "*": ["*", "app/*"],
-      "@components/*": ["./src/common/components/*"],
-      "@core/*": ["./src/core/*"],
-      "@hooks/*": ["./src/hooks/*"],
+      "@components/*": ["common/components/*"],
+      "@core/*": ["core/*"],
+      "@hooks/*": ["hooks/*"],
     },
-    "typeRoots": ["./src/@types/*"],
-    "types": ["./src/@types"],
+    "typeRoots": ["@types/*"],
+    // "types": ["@types"],
     "composite": false
   },
   "include": [
