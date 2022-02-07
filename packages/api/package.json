@@ -6,7 +6,7 @@
     "type": "git",
     "url": "https://github.com/7nimo/balance.git"
   },
-  "version": "0.1.0",
+  "version": "0.0.1",
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "nest build",
