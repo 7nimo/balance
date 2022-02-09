@@ -3,7 +3,7 @@ import { Link } from 'react-location';
 
 import s from './Logo.module.scss';
 
-export default function Logo (): JSX.Element {
+function Logo (): React.ReactElement {
   return (
     <Link
       className={s.link}
@@ -23,3 +23,5 @@ export default function Logo (): JSX.Element {
     </Link>
   );
 }
+
+export default Logo;

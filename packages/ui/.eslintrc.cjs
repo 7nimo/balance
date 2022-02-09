@@ -18,9 +18,10 @@ module.exports = {
     '.prettierrc.cjs',
     '.vscode/**',
     '.yarn/**',
-    'tsconfig.json',
-    'tsconfig.eslint.json',
-    'tsconfig.base.json',
+    '*.json',
+    '*.config.js',
+    '*.config.cjs',
+    '*.yml'
   ],
   extends: [
     'eslint:recommended',
@@ -51,7 +52,7 @@ module.exports = {
     project: "./tsconfig.eslint.json",
     tsconfigRootDir: __dirname,
     // sourceType: "module",
-    extraFileExtensions: [".cjs", ".mjs"],
+    extraFileExtensions: [".cjs", ".mjs", ".json", ".yml"],
     warnOnUnsupportedTypeScriptVersion: false,
   },
   plugins: [

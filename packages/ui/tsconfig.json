@@ -2,16 +2,17 @@
   "extends": "./tsconfig.base.json",
   "compilerOptions": {
     "jsx": "react",
-    "rootDirs": ["src", "app/src"],
-    "baseUrl": ".",
+    "rootDir": "src",
+    "baseUrl": "src",
     "paths": {
       "*": ["*", "app/*"],
-      "@components/*": ["./src/common/components/*"],
-      "@core/*": ["./src/core/*"],
-      "@hooks/*": ["./src/hooks/*"],
+      "@components/*": ["common/components/*"],
+      "@core/*": ["core/*"],
+      "@hooks/*": ["hooks/*"],
+      "@types/*": ["@types"]
     },
-    "typeRoots": ["./src/@types/*"],
-    "types": ["./src/@types"],
+    "typeRoots": ["@types/*"],
+    "types": ["node", "jest", "express"],
     "composite": false
   },
   "include": [

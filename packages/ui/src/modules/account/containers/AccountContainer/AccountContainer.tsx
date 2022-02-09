@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-shadow */
 import Block from '@components/Block/Block';
 import { SearchBar } from '@components/forms/SearchBar/SearchBar';
 import TransactionsTable from '@components/TransactionsTable/TransactionsTable';
