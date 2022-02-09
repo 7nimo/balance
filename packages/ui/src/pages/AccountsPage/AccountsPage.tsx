@@ -1,12 +1,11 @@
 import ColorLine from '@components/ColorLine';
+import Logo from '@components/Logo/Logo';
 import { Account } from '@types';
 import React from 'react';
 // import Block from '@components/Block/Block';
 import { Link, useMatch } from 'react-location';
 import styled from 'styled-components';
 
-import { ReactComponent as Logo } from '../../assets/svg/banks/lloyds.svg';
-// import SvgAdd from '@components/icons/actions/Add';
 import s from './AccountsPage.module.scss';
 
 const Wrapper = styled.div`
@@ -29,7 +28,7 @@ function AccountsPage (): React.ReactElement {
           to={`/account/${account.id}`}
         >
           <div className={s.logoWrapper}>
-            <Logo className={s.logo} />
+            <Logo />
           </div>
           <h2>{account.name}</h2>
           <ColorLine />

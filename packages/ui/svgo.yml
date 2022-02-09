@@ -1,4 +1,3 @@
-# .svgo.yml
 plugins:
   - removeViewBox: false
   - removeDimensions: true # this deletes width/height and adds it to the viewBox
@@ -19,3 +18,4 @@ plugins:
   - removeDesc: true
   - prefixIds: false
   - prefixClassNames: false
+  

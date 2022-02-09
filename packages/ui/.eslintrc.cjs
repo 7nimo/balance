@@ -19,6 +19,9 @@ module.exports = {
     '.vscode/**',
     '.yarn/**',
     '*.json',
+    '*.config.js',
+    '*.config.cjs',
+    '*.yml'
   ],
   extends: [
     'eslint:recommended',
