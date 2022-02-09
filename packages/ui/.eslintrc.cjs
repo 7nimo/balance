@@ -49,7 +49,7 @@ module.exports = {
     project: "./tsconfig.eslint.json",
     tsconfigRootDir: __dirname,
     // sourceType: "module",
-    extraFileExtensions: [".cjs", ".mjs", ".json"],
+    extraFileExtensions: [".cjs", ".mjs", ".json", ".yml"],
     warnOnUnsupportedTypeScriptVersion: false,
   },
   plugins: [
