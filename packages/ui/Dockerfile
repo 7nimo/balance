@@ -9,9 +9,8 @@ RUN yarn set version stable
 
 COPY package.json .
 COPY yarn.lock . 
-COPY .yarn/cache .
 
-RUN yarn
+RUN yarn install
 
 COPY . .
 

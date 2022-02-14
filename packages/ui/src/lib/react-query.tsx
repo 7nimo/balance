@@ -1,8 +1,8 @@
+import { fetchAccounts } from 'api/account';
+import { fetchCurrencies } from 'api/currency';
 import React from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
-import { fetchAccounts } from 'src/api/account';
-import { fetchCurrencies } from 'src/api/currency';
 
 export const queryClient = new QueryClient({
   defaultOptions: {
@@ -14,13 +14,18 @@ export const queryClient = new QueryClient({
   }
 });
 
+async function prefetchData () {
+  await queryClient.prefetchQuery('accounts', fetchAccounts);
+  await queryClient.prefetchQuery('currency', fetchCurrencies);
+}
+
 type Props = {
   children: React.ReactNode;
 };
 
-async function ReactQueryProvider ({ children }: Props): Promise<React.ReactElement> {
-  await queryClient.prefetchQuery('accounts', fetchAccounts);
-  await queryClient.prefetchQuery('currency', fetchCurrencies);
+function ReactQueryProvider ({ children }: Props): React.ReactElement {
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises
+  prefetchData();
 
   return (
     <QueryClientProvider client={queryClient}>

@@ -1,6 +1,0 @@
-.git
-.cache
-docker-compose.yml
-*.md
-test*
-node_modules/

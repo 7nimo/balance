@@ -25,11 +25,5 @@
   "search.exclude": {
     "**/.yarn": true,
     "**/.pnp.*": true
-  },
-  // "import/resolver": {
-  //   "alias": [ 
-  //     ["@components", "./src/common/components"],
-  //     ["@types", "./src/@types"]
-  //   ]
-  // }
+  }
 }
