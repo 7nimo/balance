@@ -1,6 +1,6 @@
 import React from 'react';
-import Block from 'src/common/components/layout/Block/Block';
-import Row from 'src/common/components/layout/Row/Row';
+import Block from 'common/components/layout/Block/Block';
+import Row from 'common/components/layout/Row/Row';
 
 function SettingsPage (): React.ReactElement {
   return (
