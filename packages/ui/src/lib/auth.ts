@@ -1,6 +1,6 @@
 import { Error, LoginCredentials, RegisterCredentials, Status, User } from '@types';
-import { initReactQueryAuth } from 'react-query-auth';
 import { API_URL } from 'api/constants';
+import { initReactQueryAuth } from 'react-query-auth';
 
 import { getUserData, loginWithEmailAndPassword, registerWithEmailAndPassword } from '../api/auth';
 import { post } from '../utils/http.util';

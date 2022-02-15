@@ -14,7 +14,7 @@ import { JwtRefreshTokenStrategy } from './strategies/jwt-refresh-token.strategy
 @Module({
   imports: [
     UsersModule,
-    PassportModule,
+    PassportModule.register({}), // temporary bugfix - added `.register({})`: https://github.com/nestjs/passport/issues/823
     ConfigModule,
     JwtModule.registerAsync({
       imports: [ConfigModule],

@@ -1,6 +1,4 @@
 import { Account, Accounts } from '@types';
-import { queryClient } from 'lib/react-query';
-import React, { useEffect, useState } from 'react';
 import SvgBank from 'common/components/icons/Bank';
 import SvgBtc from 'common/components/icons/Btc';
 import SvgCalendar from 'common/components/icons/Calendar';
@@ -8,6 +6,8 @@ import SvgCoin from 'common/components/icons/Coin';
 import SvgPieChart from 'common/components/icons/PieChart';
 import SvgSettings from 'common/components/icons/Settings';
 import NavButton from 'common/components/navigation/NavButton/NavButton';
+import { queryClient } from 'lib/react-query';
+import React, { useEffect, useState } from 'react';
 
 import Logo from '../../components/Logo/Logo';
 import s from './Drawer.module.scss';

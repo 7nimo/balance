@@ -14,13 +14,11 @@ module.exports = {
     '.eslintrc.cjs',
     '.eslintrc.js',
     '.eslintrc.mjs',
-    '.github/**',
     '.prettierrc.cjs',
+    '.github/**',
     '.vscode/**',
     '.yarn/**',
-    'tsconfig.json',
-    'tsconfig.eslint.json',
-    'tsconfig.base.json',
+    '*.json'
   ],
   extends: [
     'eslint:recommended',

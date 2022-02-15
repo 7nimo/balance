@@ -1,8 +1,8 @@
 import { Account } from '@types';
+import ColorLine from 'common/components/ColorLine';
 import React from 'react';
 // import Block from 'common/components/layout/Block/Block';
 import { Link, useMatch } from 'react-location';
-import ColorLine from 'common/components/ColorLine';
 import styled from 'styled-components';
 
 import { ReactComponent as Logo } from '../../assets/svg/banks/lloyds.svg';
