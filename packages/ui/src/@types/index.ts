@@ -8,3 +8,4 @@ export * from './user';
 export * from './theme';
 export * from './time';
 export * from './d3';
+export * from './error';

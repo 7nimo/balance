@@ -1,7 +1,8 @@
 /* eslint-disable sort-keys */
-import { LoginCredentials } from '@types';
+import { ERROR, LoginCredentials } from '@types';
 import cx from 'classnames';
-import React, { useEffect } from 'react';
+import ErrorMessage from 'common/components/ErrorMessage';
+import React, { useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-location';
 
@@ -9,20 +10,17 @@ import { useAuth } from '../../../../lib/auth';
 import { Button } from '../../Button/Button';
 import s from './SignInForm.module.scss';
 
-type SignInInputs = {
-  email: string;
-  password: string;
-};
-
 function SignInForm (): React.ReactElement {
   const { login } = useAuth();
   const navigate = useNavigate();
+  const [showError, setShowError] = useState(false);
 
   const { clearErrors,
     formState: { dirtyFields, errors, isDirty, isValid },
     handleSubmit,
     register,
-    setFocus } = useForm<SignInInputs>({
+    resetField,
+    setFocus } = useForm<LoginCredentials>({
     mode: 'onChange',
     shouldFocusError: false,
     defaultValues: {
@@ -31,19 +29,39 @@ function SignInForm (): React.ReactElement {
     }
   });
 
-  const onSubmit: SubmitHandler<LoginCredentials> = async (formData: SignInInputs) => {
-    await login(formData).then(() => navigate({ to: '../dashboard', replace: true }));
+  const onSubmit: SubmitHandler<LoginCredentials> = async (formData: LoginCredentials) => {
+    await login(formData)
+      .then(() => navigate({ to: '../dashboard', replace: true }))
+      .catch((e) => {
+        if (e === ERROR.Unauthorized && !showError) {
+          console.log(showError);
+          setShowError(true);
+          resetField('password');
+          setFocus('password');
+        }
+      });
   };
 
   useEffect(() => {
     setFocus('email');
   }, [setFocus]);
 
+  const handleClose = () => {
+    setShowError(false);
+  };
+
   return (
     <div className={s.formWrapper}>
       <div className={s.formContainer}>
         <h1 className={s.title}>Sign in to Balance</h1>
         <form onSubmit={handleSubmit(onSubmit)}>
+          { showError
+            ? <ErrorMessage
+              onClose={handleClose}
+              text={'Incorrect email or password.'}
+              />
+            : null
+          }
           <div className={s.fieldContainer}>
             <div className={s.fieldItem}>
               <label

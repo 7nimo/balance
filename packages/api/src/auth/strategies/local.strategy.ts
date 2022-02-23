@@ -21,7 +21,7 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
     const { password: hashedPassword, ...user } = await this.userService
       .getUserWithPwd(email)
       .catch(() => {
-        throw new UnauthorizedException('Incorrect username or password');
+        throw new UnauthorizedException('Incorrect email or password');
       });
 
     const isEqual = await this.authService.verifyPassword(
@@ -30,7 +30,7 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
     );
 
     if (!isEqual) {
-      throw new UnauthorizedException('Incorrect username or password');
+      throw new UnauthorizedException('Incorrect email or password');
     }
 
     return { user };
