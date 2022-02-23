@@ -47,7 +47,6 @@ function LineChartContainer ({ accountId }: Props): React.ReactElement {
           currentAmount.current = firstElement;
           setAmount(firstElement);
         })
-        // eslint-disable-next-line no-console
         .catch((err) => console.error(err));
     }
   }, [assets, accountId, data]);

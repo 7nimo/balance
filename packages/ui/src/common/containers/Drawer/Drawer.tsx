@@ -34,8 +34,6 @@ function Drawer (): React.ReactElement {
     }
   }, [data]);
 
-  console.log(accounts);
-
   return (
     <nav className={s.sidebar}>
       <Logo />
