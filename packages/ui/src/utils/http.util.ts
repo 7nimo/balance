@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable sort-keys */
 export interface HttpResponse<T> extends Response {
   data?: T;
@@ -53,7 +54,6 @@ export async function get<T> (
 
 export async function post<T> (
   path: string,
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   body?: any,
   args: RequestInit = {
     method: 'post',
@@ -67,9 +67,20 @@ export async function post<T> (
   return http<T>(new Request(path, args));
 }
 
+export async function postFile<T> (
+  path: string,
+  body: any,
+  args: RequestInit = {
+    method: 'post',
+    credentials: 'include',
+    body: body
+  }
+): Promise<T> {
+  return http<T>(new Request(path, args));
+}
+
 export async function put<T> (
   path: string,
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   body: any,
   args: RequestInit = {
     method: 'put',
@@ -77,7 +88,7 @@ export async function put<T> (
       'Content-Type': 'application/json'
     },
     credentials: 'include',
-    body: JSON.stringify(body)
+    body: body
   }
 ): Promise<T> {
   return http<T>(new Request(path, args));
