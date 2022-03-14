@@ -3,7 +3,7 @@ dotenv.config();
 import { HttpAdapterHost, NestFactory, Reflector } from '@nestjs/core';
 import { SwaggerModule } from '@nestjs/swagger';
 import { AppModule } from './app.module';
-import * as helmet from 'helmet';
+import helmet from 'helmet';
 // import * as csurf from 'csurf';
 import * as cookieParser from 'cookie-parser';
 import { ClassSerializerInterceptor } from '@nestjs/common';

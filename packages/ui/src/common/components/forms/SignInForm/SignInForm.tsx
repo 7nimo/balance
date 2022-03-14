@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-misused-promises */
 /* eslint-disable sort-keys */
 import { ERROR, LoginCredentials } from '@types';
 import cx from 'classnames';
