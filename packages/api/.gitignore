@@ -42,3 +42,12 @@ lerna-debug.log*
 # Multer storage
 tmp/uploads/*
 !/tmp/uploads
+
+# Yarn
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
