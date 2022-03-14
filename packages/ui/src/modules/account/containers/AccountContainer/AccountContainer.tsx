@@ -16,7 +16,7 @@ import AccountHeader from '../../components/AccountHeader/AccountHeader';
 
 function AccountContainer (): React.ReactElement {
   const [query, setQuery] = useState<string>('');
-  const [, setTransactions] = useState<Transaction[] | null>(null);
+  const [_transactions, setTransactions] = useState<Transaction[] | null>(null);
   const [account, setAccount] = useState<Account | null>(null);
 
   const { data: { transactions },
@@ -37,7 +37,7 @@ function AccountContainer (): React.ReactElement {
 
   const search = (query: string): void => {
     const q = query.toLowerCase();
-    const result: Transaction[] = data!.transactions.filter((transaction) => {
+    const result: Transaction[] = (transactions as Transaction[]).filter((transaction) => {
       return transaction.transactionDesc.toLowerCase().includes(q);
     });
 
@@ -87,7 +87,7 @@ function AccountContainer (): React.ReactElement {
           />
         </ActionBar>
 
-        <TransactionsTable transactions={transactions as Transaction[]} />
+        <TransactionsTable transactions={_transactions } />
       </Block>
     </>
   );
