@@ -1,26 +1,32 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-import { Module } from '@nestjs/common';
+import { Global, Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { DataSource } from 'typeorm';
 import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
-// import ormConfig from './ormconfig.cjs';
+import { DatabaseService } from './database.service';
+import { dataSource } from './dataSource';
 
-// export const dataSource = new DataSource(ormConfig);
-
-export const dataSource = new DataSource(require('./ormconfig.cjs'));
-
+@Global()
 @Module({
+  providers: [
+    DatabaseService,
+    {
+      provide: 'DataSource',
+      useValue: dataSource,
+    },
+  ],
   imports: [
     TypeOrmModule.forRootAsync({
-      useFactory: async () => {
-        console.log(dataSource.options);
-
-        return Object.assign(dataSource.options, {
+      useFactory: async () =>
+        Object.assign(dataSource.options, {
           autoLoadEntities: true,
           namingStrategy: new SnakeNamingStrategy(),
-        });
-      },
+        }),
     }),
   ],
+  exports: [],
 })
-export class DatabaseModule {}
+export class DatabaseModule {
+  constructor(private databaseService: DatabaseService) {
+    this.databaseService.init();
+  }
+}
