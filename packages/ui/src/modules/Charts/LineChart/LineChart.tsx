@@ -5,10 +5,10 @@ import * as d3 from 'd3';
 import { useDimensions } from 'hooks/useDimensions';
 import React, { useEffect, useRef, useState } from 'react';
 
-import ControlBar from '../components/ControlBar/ControlBar';
-import HorizontalAxis from '../components/HorizontalAxis/HorizontalAxis';
-import { LineChart } from '../components/LineChart/LineChart';
-import s from './LineChartContainer.module.scss';
+import ControlBar from '../common/ControlBar/ControlBar';
+import HorizontalAxis from '../common/HorizontalAxis/HorizontalAxis';
+import { Chart } from './Chart/Chart';
+import s from './LineChart.module.scss';
 
 type Props = {
   accountId: string;
@@ -127,7 +127,7 @@ function LineChartContainer ({ accountId }: Props): React.ReactElement {
         assetAmount={amount}
         currencySymbol='£'
       />
-      <LineChart
+      <Chart
         data={data}
         drawnPath={path!}
         height={height}

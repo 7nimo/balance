@@ -7,10 +7,9 @@ import { useTransactions } from 'core/api/transaction';
 import { useDebounce } from 'hooks/useDebounce';
 import { ActionBar } from 'modules/Account/TransactionsTable/ActionBar/ActionBar';
 import TransactionsTable from 'modules/Account/TransactionsTable/TransactionsTable';
-import LineChartContainer from 'modules/Charts/LineChartContainer';
+import LineChart from 'modules/Charts/LineChart/LineChart';
 import React, { useEffect, useState } from 'react';
 import { useMatch } from 'react-location';
-import { useStore } from 'react-redux';
 
 import AccountHeader from './AccountHeader/AccountHeader';
 
@@ -74,7 +73,7 @@ function AccountContainer (): React.ReactElement {
       />
 
       <Block>
-        <LineChartContainer accountId={accountId} />
+        <LineChart accountId={accountId} />
       </Block>
 
       <Block title='Transactions'>

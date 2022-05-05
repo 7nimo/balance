@@ -3,7 +3,7 @@ import * as d3 from 'd3';
 import { InternMap } from 'd3';
 import React, { forwardRef, SyntheticEvent, useEffect, useRef } from 'react';
 
-import s from './LineChart.module.scss';
+import s from './Chart.module.scss';
 
 type Props = {
   id: string;
@@ -19,7 +19,7 @@ type Props = {
 };
 
 // eslint-disable-next-line react/display-name
-export const LineChart = forwardRef<HTMLDivElement, Props>(
+export const Chart = forwardRef<HTMLDivElement, Props>(
   (
     { data,
       drawnPath,
