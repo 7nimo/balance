@@ -1,0 +1,50 @@
+.searchBar {
+  display: flex;
+  align-items: center;
+
+  height: 48px;
+  width: 50%;
+
+  border: 1px solid var(--line);
+  border-radius: var(--input-border-radius);
+
+  padding: 0 1rem;
+}
+
+.field {
+  width: 100%;
+  border: medium none;
+  background-image: none;
+  background-color: transparent;
+  box-shadow: none;
+  appearance: none;
+
+  color: var(--text-color);
+
+  font-size: 14px;
+
+  &:focus {
+    outline: currentcolor none medium;
+  }
+}
+
+.icon {
+  font-size: 1.75rem;
+  margin-right: 1rem;
+  --icon-accent: var(--gray2);
+  --icon-main: var(--gray3);
+}
+
+.iconWrapper {
+  font-size: 1.5rem;
+}
+
+
+.reset {
+  display: flex;
+  align-items: center;
+  border: none;
+  background-color: transparent;
+  font-size: inherit;
+  cursor: pointer;
+}

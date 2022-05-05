@@ -1,5 +1,5 @@
-import Block from 'common/components/layout/Block/Block';
-import Row from 'common/components/layout/Row/Row';
+import Block from 'components/box/Block/Block';
+import Row from 'components/box/Row/Row';
 import React from 'react';
 
 function CryptoPage (): React.ReactElement {

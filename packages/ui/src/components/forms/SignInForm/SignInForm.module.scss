@@ -1,0 +1,115 @@
+.formWrapper {
+  min-height: 100vh;
+  padding-left: 3rem;
+  padding-right: 3rem;
+  background: #fff;
+}
+
+.formContainer {
+  display: flex;
+  flex-direction: column;
+  max-width: 700px;
+  padding: 0 2.5rem;
+  padding-top: 7.5rem;
+}
+
+.title {
+  margin-bottom: 1.5rem;
+}
+
+/////////////////////////////////////////////
+
+.floatingLabel {
+  position: absolute;
+  left: 0;
+  color: #898989;
+  font-size: 1rem;
+  top: .75rem;
+  transition: font-size .1s, transform .1s ease-out;
+  pointer-events: none;
+}
+
+.fieldDirty {
+  font-size: .75rem;
+  line-height: 1.4;
+  letter-spacing: .3px;
+  color: #656565;
+  transition: font-size .1s, transform .1s ease-in;
+  transform: translateY(-.5rem);
+}
+
+.fieldError {
+  color: #e2444d;
+}
+
+.fieldContainer {
+  margin-bottom: 1.5rem;
+  &:focus-within {
+    .floatingLabel {
+      font-size: .75rem;
+      line-height: 1.4;
+      letter-spacing: .3px;
+      transform: translateY(-.5rem);
+    }
+  }
+}
+
+.fieldItem {
+  position: relative;
+  font-size: .75rem;
+  line-height: 1.4;
+  color: #e2444d;
+}
+
+.fieldInput {
+  background: 0;
+  color: black;
+  box-shadow: none;
+  border: 0;
+  width: 100%;
+  padding-top: calc(1px + 1.5rem);
+  padding-bottom: calc(1px + .5rem);
+  border-bottom: 1px solid #d6d6d6;
+  outline: 0;
+  
+  &:focus {
+    border-color: var(--purple-dark);
+  }
+
+  &.fieldError{
+      border-bottom: 1px solid #e2444d;
+  }
+}
+
+//show password button (******* -> hunter2)
+.fieldIconRight {
+  position: absolute;
+  border-radius: 2px;
+  padding: .25rem;
+  right: .75rem;
+}
+
+.buttons {
+  display: flex;
+  margin-top: 1rem;
+}
+
+//////////////////////////////////
+
+.button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 180px;
+  font-size: 16px;
+  line-height: 1.33;
+  letter-spacing: .3px;
+  padding: .75rem !important;
+  color: #fff;
+  border-radius: 50px;
+  margin-left: auto;
+}
+
+.buttonConfirmation {
+  background: #5841d8;
+}

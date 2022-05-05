@@ -1,0 +1,31 @@
+.container {
+  position: relative;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+
+  &::after {
+    position: absolute;
+    left: 50%;
+    bottom: 2px;
+    transform: translateX(-50%);
+    content: '';
+    display: block;
+    width: 110%;
+    height: 1px;
+    background: var(--line);
+  }
+}
+
+.header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  
+  svg {
+    font-size: 36px;
+  }
+
+  h1 {
+    margin-left: 24px;
+  }
+}

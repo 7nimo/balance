@@ -1,5 +1,5 @@
 import { Account } from '@types';
-import ColorLine from 'common/components/ColorLine';
+import ColorLine from 'components/misc/ColorLine';
 import React from 'react';
 // import Block from 'common/components/layout/Block/Block';
 import { Link, useMatch } from 'react-location';
