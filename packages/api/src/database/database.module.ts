@@ -3,7 +3,7 @@ import { Global, Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 import { DatabaseService } from './database.service';
-import { dataSource } from './dataSource';
+import dataSource from './config';
 
 @Global()
 @Module({
