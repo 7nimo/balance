@@ -3,10 +3,11 @@ import React, { FC } from 'react';
 import s from './IconButton.module.scss';
 
 type Props = React.HTMLProps<HTMLButtonElement> & {
-  icon: JSX.Element;
+  icon: React.ReactNode;
+  onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
 };
 
-export const IconButton: FC<Props> = ({ icon, onClick }) => {
+export function IconButton ({ icon, onClick }: Props): React.ReactElement<Props> {
   return (
     <button
       className={s.iconButton}
@@ -16,4 +17,4 @@ export const IconButton: FC<Props> = ({ icon, onClick }) => {
       {icon}
     </button>
   );
-};
+}

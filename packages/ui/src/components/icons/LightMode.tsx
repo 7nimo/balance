@@ -1,4 +1,12 @@
 import * as React from 'react';
+import styled from 'styled-components';
+
+const Svg = styled.svg`
+  &:hover {
+    --icon-main: rgba(255, 255, 224, .8);
+    --icon-accent: #f47361;
+  }
+`;
 
 interface SVGRProps {
   title?: string;
@@ -7,7 +15,7 @@ interface SVGRProps {
 
 function SvgLightMode ({ title, titleId }: SVGRProps): JSX.Element {
   return (
-    <svg
+    <Svg
       aria-labelledby={titleId}
       fill='none'
       height='1em'
@@ -34,7 +42,7 @@ function SvgLightMode ({ title, titleId }: SVGRProps): JSX.Element {
           fill='var(--icon-accent)'
         />
       </g>
-    </svg>
+    </Svg>
   );
 }
 

@@ -5,8 +5,10 @@
   <meta charset="utf-8" />
   <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <!-- <meta name="theme-color" content="#000000" /> -->
   <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" media="(prefers-color-scheme: light)" content="white">
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="black">
+
   <meta name="description" content="Balance" />
   <!--
       manifest.json provides metadata used when your web app is installed on a
@@ -23,6 +25,15 @@
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
   <title>Balance</title>
+
+  <script>
+    (function () {
+      "use strict";
+      if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.documentElement.classList.add('dark');
+      }
+    })();
+  </script>
 </head>
 
 <body>

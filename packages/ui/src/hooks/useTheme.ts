@@ -7,7 +7,7 @@ export const useTheme = (): {
   themeLoaded: boolean;
   setMode: (mode: Theme) => void;
 } => {
-  const [theme, setTheme] = useState<Theme>('light-theme');
+  const [theme, setTheme] = useState<Theme>('light');
   const [themeLoaded, setThemeLoaded] = useState(false);
 
   const setMode = (mode: Theme): void => {
@@ -21,7 +21,7 @@ export const useTheme = (): {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     localTheme !== null && THEME.indexOf(localTheme as any) !== -1
       ? setTheme(localTheme as Theme)
-      : setTheme('light-theme');
+      : setTheme('light');
     setThemeLoaded(true);
   }, []);
 
