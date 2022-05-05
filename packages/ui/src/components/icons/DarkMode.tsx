@@ -1,4 +1,12 @@
 import * as React from 'react';
+import styled from 'styled-components';
+
+const Svg = styled.svg`
+  &:hover {
+    --icon-main: rgba(79,227,204,.7);
+    --icon-accent: rgba(64,70,140,.7);
+  }
+`;
 
 interface SVGRProps {
   title?: string;
@@ -7,7 +15,7 @@ interface SVGRProps {
 
 function SvgDarkMode ({ title, titleId }: SVGRProps): JSX.Element {
   return (
-    <svg
+    <Svg
       aria-labelledby={titleId}
       fill='none'
       height='1em'
@@ -30,7 +38,7 @@ function SvgDarkMode ({ title, titleId }: SVGRProps): JSX.Element {
           fillRule='evenodd'
         />
       </g>
-    </svg>
+    </Svg>
   );
 }
 

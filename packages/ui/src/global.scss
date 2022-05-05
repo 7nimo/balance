@@ -15,7 +15,6 @@ $colors: (
 
 @mixin default-theme {
   // * backgrounds
-  // --bg: #dbe1e8;
   --bg: var(--gray1);
   --nav-bg: #f4f4f4;
   --card-bg: #f4f4f4;
@@ -52,13 +51,11 @@ $colors: (
   --btn-active-hover: rgba(152, 121, 255, 0.8);
 }
 
-.light-theme {
+.light {
   @include default-theme;
 }
 
-
-.dark-theme {
-
+@mixin dark-theme {
   // * backgrounds
   --bg: var(--gray8);
   --card-bg: #2a2e35;
@@ -174,6 +171,10 @@ $colors: (
 
 html {
   font-size: var(--font-size);
+
+  &.dark {
+    @include dark-theme;
+  }
 }
 
 body {
