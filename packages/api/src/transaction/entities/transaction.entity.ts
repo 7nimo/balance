@@ -4,7 +4,7 @@ import { AccountEntity } from 'src/account/entities/account.entity';
 @Entity('transaction')
 export class TransactionEntity {
   @PrimaryGeneratedColumn()
-  id: number;
+  transactionId: number;
 
   @Column({ type: 'date' })
   transactionDate: string;

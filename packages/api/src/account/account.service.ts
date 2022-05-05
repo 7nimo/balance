@@ -28,28 +28,40 @@ export class AccountService {
 
   async findOne(userId: string, accountId: string) {
     return await this.accountRepository.findOne({
-      where: { user: userId, id: accountId },
-      relations: ['bank', 'currency'],
+      where: {
+        accountId: accountId,
+        user: {
+          userId: userId,
+        },
+      },
+      relations: {
+        bank: true,
+        currency: true,
+        user: true,
+      },
     });
   }
 
   async findAll(userId: string): Promise<AccountsRO> {
     const accounts = await this.accountRepository.find({
-      where: { user: userId },
+      where: {
+        user: {
+          userId: userId,
+        },
+      },
+      relations: {
+        user: true,
+      },
     });
 
     return { accounts };
   }
 
   async update(
-    userId: Pick<UserEntity, 'id'>,
-    accountId: string,
-    updateAccountDto: UpdateAccountDto,
+    account: AccountEntity,
+    updateData: UpdateAccountDto,
   ): Promise<UpdateResult> {
-    return this.accountRepository.update(
-      { user: userId, id: accountId },
-      updateAccountDto,
-    );
+    return this.accountRepository.update(account, updateData);
   }
 
   async remove(userId: string, accountId: string): Promise<DeleteResult> {
