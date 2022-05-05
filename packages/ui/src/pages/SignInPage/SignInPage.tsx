@@ -1,4 +1,4 @@
-import SignInForm from 'common/components/forms/SignInForm/SignInForm';
+import SignInForm from 'components/forms/SignInForm/SignInForm';
 import React from 'react';
 
 import s from './SignInPage.module.scss';

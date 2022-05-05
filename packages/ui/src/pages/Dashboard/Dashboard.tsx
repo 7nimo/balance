@@ -1,6 +1,6 @@
-import Block from 'common/components/layout/Block/Block';
-import Row from 'common/components/layout/Row/Row';
-import { Shrug } from 'common/components/Shrug/Shrug';
+import Block from 'components/box/Block/Block';
+import Row from 'components/box/Row/Row';
+import { Shrug } from 'components/misc/Shrug/Shrug';
 import React from 'react';
 
 function Dashboard (): React.ReactElement {
