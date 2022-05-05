@@ -10,10 +10,12 @@ import { AccountsModule } from './account/account.module';
 import { EventEmitterModule } from '@nestjs/event-emitter';
 import { CurrencyModule } from './currency/currency.module';
 import { RouterModule } from '@nestjs/core';
+import { TypeOrmModule } from '@nestjs/typeorm';
 
 @Module({
   imports: [
     ConfigModule.forRoot(),
+    TypeOrmModule,
     EventEmitterModule.forRoot(),
     UsersModule,
     DatabaseModule,

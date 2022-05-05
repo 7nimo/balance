@@ -1,6 +1,6 @@
-import { DataSource } from 'typeorm';
+import { registerAs } from '@nestjs/config';
 
-export default new DataSource({
+export default registerAs('database', () => ({
   type: 'postgres',
   host: process.env.POSTGRES_HOST,
   username: process.env.POSTGRES_USER,
@@ -9,4 +9,4 @@ export default new DataSource({
   entities: ['dist/**/entities/*.entity{.ts,.js}'],
   migrations: ['dist/database/migrations/*{.ts,.js}'],
   synchronize: true,
-});
+}));
