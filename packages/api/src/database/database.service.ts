@@ -1,14 +1,9 @@
-import { Inject, Injectable } from '@nestjs/common';
-import { DataSource } from 'typeorm';
-import dataSource from './config';
+import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class DatabaseService {
-  constructor(@Inject('DataSource') private AppDataSource: DataSource) {
-    AppDataSource = dataSource;
-  }
+  constructor() {}
+  // private readonly cats: Cat[] = [];
 
-  init(): Promise<DataSource> {
-    return this.AppDataSource.initialize();
-  }
+  runMigrations(): void {}
 }
