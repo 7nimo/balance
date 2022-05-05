@@ -1,11 +1,9 @@
-import * as argon2 from 'argon2';
 import { Exclude } from 'class-transformer';
 import { AccountEntity } from 'src/account/entities/account.entity';
 import {
   Entity,
   Column,
   PrimaryGeneratedColumn,
-  BeforeInsert,
   OneToMany,
   CreateDateColumn,
   UpdateDateColumn,
@@ -14,7 +12,7 @@ import {
 @Entity('user')
 export class UserEntity {
   @PrimaryGeneratedColumn('uuid')
-  id: string;
+  userId: string;
 
   @Column({ unique: true })
   email: string;

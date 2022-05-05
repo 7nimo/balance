@@ -48,21 +48,18 @@ export class AccountsController {
   @HttpCode(204)
   @Patch(':accountId')
   async update(
-    @User('id') userId: Pick<UserEntity, 'id'>,
+    @User('id') userId: string,
     @Param('accountId', new ParseUUIDPipe()) accountId: string,
     @Body() updateAccountDto: UpdateAccountDto,
   ): Promise<void> {
-    const result = await this.accountService.update(
-      userId,
-      accountId,
-      updateAccountDto,
-    );
+    const account = await this.accountService.findOne(userId, accountId);
 
-    if (result.affected === 0) {
+    if (account) {
+      await this.accountService.update(account, updateAccountDto);
+    } else
       throw new NotFoundException(
         `Account with id ${accountId} does not exist`,
       );
-    }
   }
 
   @HttpCode(204)
