@@ -1,11 +1,17 @@
 import './index.scss';
 
+import App from 'components/_App/App';
+import ReactQueryProvider from 'core/lib/react-query';
+import { themeActions } from 'core/store/services/theme/slice';
+import { store } from 'core/store/store';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import ReactQueryProvider from './lib/react-query';
-import App from './App';
 import reportWebVitals from './reportWebVitals';
+
+if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+  store.dispatch(themeActions.changeColorScheme('dark'));
+}
 
 ReactDOM.render(
   <React.StrictMode>

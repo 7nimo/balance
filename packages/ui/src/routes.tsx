@@ -1,15 +1,15 @@
 /* eslint-disable sort-keys */
+import MainView from 'components/_Layout/MainView/MainView';
+import { fetchTransactionsByAccountId } from 'core/api/transaction';
+import { queryClient } from 'core/lib/react-query';
 import React from 'react';
 import { MakeGenerics, Navigate, ReactLocation, Route } from 'react-location';
 
-import { fetchAccounts } from './api/account';
-import { fetchTransactionsByAccountId } from './api/transaction';
-import Nope from './common/components/Nope';
-import MainView from './common/containers/MainView/MainView';
-import { queryClient } from './lib/react-query';
-import AccountContainer from './modules/account/containers/AccountContainer/AccountContainer';
-import AccountSettings from './modules/account/containers/AccountSettings/AccountSettings';
-import NewAccount from './modules/account/containers/NewAccount/NewAccount';
+import Nope from './components/misc/Nope';
+import { fetchAccounts } from './core/api/account';
+import AccountContainer from './modules/Account';
+import AccountSettings from './modules/Account/AccountSettings/AccountSettings';
+import NewAccount from './modules/Account/NewAccount/NewAccount';
 import AccountsPage from './pages/AccountsPage/AccountsPage';
 import CalendarPage from './pages/CalendarPage/CalendarPage';
 import CryptoPage from './pages/CryptoPage/CryptoPage';
