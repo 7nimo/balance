@@ -1,12 +1,15 @@
+import { registerAs } from '@nestjs/config';
 import { DocumentBuilder, SwaggerDocumentOptions } from '@nestjs/swagger';
 
-export const swaggerConfig = new DocumentBuilder()
-  .setTitle('Balance API')
-  .setDescription('Balance API docs')
-  .setVersion('1.0')
-  .addBearerAuth()
-  .build();
+export type SwaggerConfigObject = {
+  config: DocumentBuilder;
+  options: SwaggerDocumentOptions;
+};
 
 export const swaggerOptions: SwaggerDocumentOptions = {
   operationIdFactory: (controllerKey: string, methodKey: string) => methodKey,
 };
+
+export default registerAs('swagger', () => ({
+  ...swaggerOptions,
+}));
