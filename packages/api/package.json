@@ -23,9 +23,10 @@
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "typeorm": "ts-node ./node_modules/typeorm/cli.js",
     "schema:drop": "ts-node ./node_modules/typeorm/cli.js schema:drop",
-    "schema:sync": "ts-node ./node_modules/typeorm/cli.js schema:sync",
-    "seed:config": "ts-node ./node_modules/typeorm-seeding/dist/cli.js config",
-    "seed:run": "ts-node ./node_modules/typeorm-seeding/dist/cli.js seed"
+    "schema:sync": "ts-node ./node_modules/typeorm/cli.js schema:sync -d ./src/database/data-source.ts",
+    "seed:run": "ts-node ./node_modules/typeorm/cli.js migration:show -d ./src/database/data-source.ts",
+    "_eed:config": "ts-node ./node_modules/typeorm-seeding/dist/cli.js config",
+    "_seed:run": "ts-node ./node_modules/typeorm-seeding/dist/cli.js seed"
   },
   "dependencies": {
     "@nestjs/common": "^8.4.4",
