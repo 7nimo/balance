@@ -1,8 +1,10 @@
 import { Unsubscribe } from '@reduxjs/toolkit';
+import { ERROR } from '@types';
 import ReactQueryProvider from 'core/lib/react-query';
 import { setupThemeListeners } from 'core/store/services/theme/listeners';
 import { startAppListening, store } from 'core/store/store';
 import React, { useEffect } from 'react';
+import { useErrorHandler } from 'react-error-boundary';
 import { Outlet, Router } from 'react-location';
 import { ReactLocationDevtools } from 'react-location-devtools';
 import { Provider } from 'react-redux';
@@ -22,13 +24,13 @@ function App (): React.ReactElement {
     <React.StrictMode>
       <ReactQueryProvider>
         <Provider store={store}>
-          <Router
-            location={location}
-            routes={routes}
-          >
-            <Outlet />
-            <ReactLocationDevtools initialIsOpen={true} />
-          </Router>
+            <Router
+              location={location}
+              routes={routes}
+            >
+              <Outlet />
+              <ReactLocationDevtools initialIsOpen={true} />
+            </Router>
         </Provider>
       </ReactQueryProvider>
     </React.StrictMode>

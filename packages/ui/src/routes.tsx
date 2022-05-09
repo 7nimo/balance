@@ -31,9 +31,9 @@ export const routes: Route<LocationGenerics>[] = [
     loader: async () => ({
       user: await getUserData()
     }),
+    element: <Root />,
     errorElement: <Navigate to='./sign-in' />,
     children: [
-      { element: <Root /> },
       {
         path: '/',
         element: <Navigate to='/dashboard' />
