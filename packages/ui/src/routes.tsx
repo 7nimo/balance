@@ -1,11 +1,13 @@
 /* eslint-disable sort-keys */
-import MainView from 'components/_Layout/MainView/MainView';
+import Root from 'components/_Layout/Root/Root';
+import SignInForm from 'components/forms/SignInForm/SignInForm';
+import SignUpForm from 'components/forms/SignUpForm/SignUpForm';
+import { getUserData } from 'core/api/auth';
 import { fetchTransactionsByAccountId } from 'core/api/transaction';
 import { queryClient } from 'core/lib/react-query';
 import React from 'react';
 import { MakeGenerics, Navigate, ReactLocation, Route } from 'react-location';
 
-import Nope from './components/misc/Nope';
 import { fetchAccounts } from './core/api/account';
 import AccountContainer from './modules/Account';
 import AccountSettings from './modules/Account/AccountSettings/AccountSettings';
@@ -15,7 +17,6 @@ import CalendarPage from './pages/CalendarPage/CalendarPage';
 import CryptoPage from './pages/CryptoPage/CryptoPage';
 import Dashboard from './pages/Dashboard/Dashboard';
 import SettingsPage from './pages/SettingsPage/SettingsPage';
-import SignInPage from './pages/SignInPage/SignInPage';
 
 type LocationGenerics = MakeGenerics<{
   Params: { accountId: string };
@@ -24,11 +25,19 @@ type LocationGenerics = MakeGenerics<{
 export const location = new ReactLocation<LocationGenerics>();
 
 export const routes: Route<LocationGenerics>[] = [
-  { path: '/', element: <Navigate to='./dashboard' /> },
-  { path: 'sign-in', element: <SignInPage /> },
+  { path: '/sign-in', element: <SignInForm /> },
+  { path: '/sign-up', element: <SignUpForm /> },
   {
-    element: <MainView />,
+    loader: async () => ({
+      user: await getUserData()
+    }),
+    errorElement: <Navigate to='./sign-in' />,
     children: [
+      { element: <Root /> },
+      {
+        path: '/',
+        element: <Navigate to='/dashboard' />
+      },
       {
         path: 'dashboard',
         element: <Dashboard />
@@ -64,13 +73,9 @@ export const routes: Route<LocationGenerics>[] = [
           }
         ]
       },
-      { path: 'crypto', element: <CryptoPage /> },
       { path: 'calendar', element: <CalendarPage /> },
-      { path: 'settings', element: <SettingsPage /> },
-      {
-        path: '*',
-        element: <Nope />
-      }
+      { path: 'crypto', element: <CryptoPage /> },
+      { path: 'settings', element: <SettingsPage /> }
     ]
   }
 ];

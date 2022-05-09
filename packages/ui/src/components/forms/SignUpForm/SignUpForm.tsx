@@ -1,19 +1,18 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 /* eslint-disable sort-keys */
-import { ERROR, LoginCredentials } from '@types';
+import { ERROR, LoginCredentials, RegisterCredentials } from '@types';
 import cx from 'classnames';
 import ErrorMessage from 'components/status/ErrorMessage';
-import { signIn } from 'core/api/auth';
+import { signIn, signUp } from 'core/api/auth';
 import React, { useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-location';
 
 // import { useAuth } from '../../../core/lib/auth';
-import { Button } from '../../buttons/Button/Button';
-import s from './SignInForm.module.scss';
+import s from './SignUpForm.module.scss';
 
-function SignInForm (): React.ReactElement {
-  // const { login } = useAuth();
+function SignUpForm (): React.ReactElement {
+  // const { login, register: SignUp } = useAuth();
   const navigate = useNavigate();
   const [showError, setShowError] = useState(false);
 
@@ -22,47 +21,71 @@ function SignInForm (): React.ReactElement {
     handleSubmit,
     register,
     resetField,
-    setFocus } = useForm<LoginCredentials>({
+    setFocus } = useForm<RegisterCredentials>({
     mode: 'onChange',
     shouldFocusError: false,
     defaultValues: {
+      username: '',
       email: '',
       password: ''
     }
   });
 
-  const onSubmit: SubmitHandler<LoginCredentials> = async (formData: LoginCredentials) => {
-    await signIn(formData)
+  const onSubmit: SubmitHandler<RegisterCredentials> = async (formData: RegisterCredentials) => {
+    await signUp(formData)
+      .then(async () => await signIn({ email: formData.email, password: formData.password } as LoginCredentials))
       .then(() => navigate({ to: '../dashboard', replace: true }))
-      .catch((e) => {
-        if (e === ERROR.Unauthorized && !showError) {
+      .catch((err) => {
+        console.error(err);
+
+        if (err) {
           setShowError(true);
-          resetField('password');
-          setFocus('password');
         }
       });
   };
-
-  useEffect(() => {
-    setFocus('email');
-  }, [setFocus]);
 
   const handleClose = () => {
     setShowError(false);
   };
 
   return (
-    <div className={s.formWrapper}>
+    <main className={s.wrapper}>
       <div className={s.formContainer}>
-        <h1 className={s.title}>Sign in to Balance</h1>
+        <h1 className={s.title}>Sign up to Balance</h1>
         <form onSubmit={handleSubmit(onSubmit)}>
           { showError
             ? <ErrorMessage
               onClose={handleClose}
-              text={'Incorrect email or password.'}
+              text={'An error occured.'}
               />
             : null
           }
+
+          <div className={s.fieldContainer}>
+            <div className={s.fieldItem}>
+              <label
+                className={cx(s.floatingLabel, {
+                  [s.fieldDirty]: dirtyFields.username,
+                  [s.fieldError]: errors.username
+                })}
+                htmlFor='username'
+              >
+                Username
+              </label>
+              <input
+                // autoComplete='username'
+                autoComplete='false'
+                className={cx(s.fieldInput, { [s.fieldError]: errors.username })}
+                id='username'
+                onFocus={() => clearErrors('username')}
+                type='text'
+                {...register('username', {
+                  required: 'Username is required'
+                })}
+              />
+            </div>
+          </div>
+
           <div className={s.fieldContainer}>
             <div className={s.fieldItem}>
               <label
@@ -75,7 +98,7 @@ function SignInForm (): React.ReactElement {
                 Email
               </label>
               <input
-                autoComplete='email'
+                // autoComplete='email'
                 className={cx(s.fieldInput, { [s.fieldError]: errors.email })}
                 id='email'
                 onFocus={() => clearErrors('email')}
@@ -99,7 +122,7 @@ function SignInForm (): React.ReactElement {
                 Password
               </label>
               <input
-                autoComplete='current-password'
+                // autoComplete='current-password'
                 className={cx(s.fieldInput, { [s.fieldError]: errors.password })}
                 id='password'
                 onFocus={() => clearErrors('password')}
@@ -111,19 +134,17 @@ function SignInForm (): React.ReactElement {
             </div>
           </div>
 
-          <div className={s.buttons}>
-            <Button
+            <button
+              className={s.btn}
               disabled={!isDirty || !isValid}
-              primary
               type='submit'
             >
-              Sign In
-            </Button>
-          </div>
+              &gt;
+            </button>
         </form>
       </div>
-    </div>
+    </main>
   );
 }
 
-export default SignInForm;
+export default SignUpForm;
