@@ -31,7 +31,7 @@ export class AccountService {
       where: {
         accountId: accountId,
         user: {
-          userId: userId,
+          id: userId,
         },
       },
       relations: {
@@ -46,7 +46,7 @@ export class AccountService {
     const accounts = await this.accountRepository.find({
       where: {
         user: {
-          userId: userId,
+          id: userId,
         },
       },
       relations: {

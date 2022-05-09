@@ -18,10 +18,10 @@ export class AuthController {
   @Public()
   @UseGuards(LocalAuthGuard)
   @Post('sign-in')
-  login(@User() user: UserEntity, @Res() res: Response) {
-    const accessToken = this.authService.getAccessToken(user.userId);
-    const refreshToken = this.authService.getRefreshToken(user.userId);
-    this.userService.saveRefreshToken(user.userId, refreshToken);
+  login(@User() user: Partial<UserEntity>, @Res() res: Response) {
+    const accessToken = this.authService.getAccessToken(user.id);
+    const refreshToken = this.authService.getRefreshToken(user.id);
+    this.userService.saveRefreshToken(user.id, refreshToken);
 
     const accessTokenCookie = this.authService.getCookieWithJwt(accessToken);
     const refreshTokenCookie =

@@ -4,7 +4,6 @@ import { UserEntity } from './entities/user.entity';
 import { DeleteResult, Repository } from 'typeorm';
 import { CreateUserDto } from './dto';
 import * as argon2 from 'argon2';
-import { UserRO } from './user.interface';
 
 @Injectable()
 export class UserService {
@@ -13,26 +12,22 @@ export class UserService {
     private readonly userRepository: Repository<UserEntity>,
   ) {}
 
-  async create(createUserDto: CreateUserDto): Promise<UserRO> {
+  async create(createUserDto: CreateUserDto): Promise<UserEntity> {
     createUserDto.password = await argon2.hash(createUserDto.password);
 
     const user = this.userRepository.create(createUserDto);
 
     await this.userRepository.save(user);
 
-    return { user };
+    return user;
   }
 
-  async findById(id: string): Promise<UserRO> {
-    const user = await this.userRepository.findOne({ where: { userId: id } });
-
-    return { user };
+  async findById(id: string): Promise<UserEntity> {
+    return await this.userRepository.findOne({ where: { id: id } });
   }
 
-  async findByEmail(email: string): Promise<UserRO> {
-    const user = await this.userRepository.findOne({ where: { email } });
-
-    return { user };
+  async findByEmail(email: string): Promise<UserEntity> {
+    return await this.userRepository.findOne({ where: { email } });
   }
 
   async remove(id: string): Promise<DeleteResult> {
