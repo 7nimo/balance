@@ -1,10 +1,10 @@
 import { Unsubscribe } from '@reduxjs/toolkit';
-import { AuthProvider } from 'core/lib/auth';
 import ReactQueryProvider from 'core/lib/react-query';
 import { setupThemeListeners } from 'core/store/services/theme/listeners';
 import { startAppListening, store } from 'core/store/store';
 import React, { useEffect } from 'react';
-import { Router } from 'react-location';
+import { Outlet, Router } from 'react-location';
+import { ReactLocationDevtools } from 'react-location-devtools';
 import { Provider } from 'react-redux';
 
 import { location, routes } from '../../routes';
@@ -22,17 +22,17 @@ function App (): React.ReactElement {
     <React.StrictMode>
       <ReactQueryProvider>
         <Provider store={store}>
-          <AuthProvider>
-            <Router
-              location={location}
-              routes={routes}
-            />
-          </AuthProvider>
+          <Router
+            location={location}
+            routes={routes}
+          >
+            <Outlet />
+            <ReactLocationDevtools initialIsOpen={true} />
+          </Router>
         </Provider>
       </ReactQueryProvider>
     </React.StrictMode>
-
-  );
+);
 }
 
 export default App;
