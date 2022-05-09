@@ -73,7 +73,7 @@ export async function postFile<T> (
   args: RequestInit = {
     method: 'post',
     credentials: 'include',
-    body: body
+    body
   }
 ): Promise<T> {
   return http<T>(new Request(path, args));
@@ -88,7 +88,7 @@ export async function put<T> (
       'Content-Type': 'application/json'
     },
     credentials: 'include',
-    body: body
+    body
   }
 ): Promise<T> {
   return http<T>(new Request(path, args));

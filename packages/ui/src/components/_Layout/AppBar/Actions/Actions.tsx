@@ -19,7 +19,7 @@ function Actions ({ children }: Props): React.ReactElement<Props> {
     signOut()
       .then((r) => {
         console.info('user logged out');
-        navigate({ to: '/', replace: true });
+        navigate({ to: './sign-in', replace: true });
       })
       .catch((err) => console.error(err));
   };
