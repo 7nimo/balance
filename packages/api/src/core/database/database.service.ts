@@ -8,7 +8,6 @@ export class DatabaseService {
 
   constructor(private configService: ConfigService) {
     this.dataSource = this.configService.get('database');
-    console.log('db_config: ', this.dataSource);
   }
   runMigrations(): void {
     console.log('hello');

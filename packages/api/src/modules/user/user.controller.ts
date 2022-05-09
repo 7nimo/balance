@@ -5,13 +5,14 @@ import {
   Get,
   HttpCode,
   Post,
+  UnauthorizedException,
   UnprocessableEntityException,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { Public } from 'src/core/common/decorators/public.decorator';
 import { User } from 'src/core/common/decorators/user.decorator';
 import { CreateUserDto } from './dto';
-import { UserRO } from './user.interface';
+import { UserEntity } from './entities/user.entity';
 import { UserService } from './user.service';
 
 @ApiTags('user')
@@ -21,7 +22,7 @@ export class UserController {
 
   @Public()
   @Post()
-  async create(@Body() createUserDto: CreateUserDto): Promise<UserRO> {
+  async create(@Body() createUserDto: CreateUserDto): Promise<UserEntity> {
     try {
       return await this.userService.create(createUserDto);
     } catch (error) {
@@ -32,8 +33,12 @@ export class UserController {
   }
 
   @Get()
-  findById(@User('id') userId: string): Promise<UserRO> {
-    return this.userService.findById(userId);
+  findById(@User('id') userId: string): Promise<UserEntity> {
+    if (userId !== undefined) {
+      return this.userService.findById(userId);
+    } else {
+      throw new UnauthorizedException();
+    }
   }
 
   @HttpCode(204)
