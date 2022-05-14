@@ -1,22 +1,22 @@
 import { Account } from '@types';
+import { IconButton } from 'components/buttons/IconButton/IconButton';
+import SvgAdd from 'components/icons/actions/Add';
 import ColorLine from 'components/misc/ColorLine';
+import { RelativeElements } from 'components/RelativeElements/RelativeElements';
+import { Toolbox } from 'components/RelativeElements/Toolbox';
 import React from 'react';
-// import Block from 'common/components/layout/Block/Block';
 import { Link, useMatch } from 'react-location';
-import styled from 'styled-components';
 
 import { ReactComponent as Logo } from '../../assets/svg/banks/lloyds.svg';
-// import SvgAdd from 'common/components/icons/actions/Add';
+import { Wrapper } from '../../components/_Layout/Root/Wrapper';
 import s from './AccountsPage.module.scss';
-
-const Wrapper = styled.div`
-  display: flex;
-  flex-direction: row;
-  margin: 0 -10px;
-`;
 
 function AccountsPage (): React.ReactElement {
   const { data: { accounts } } = useMatch();
+
+  const handleAddAccount = () => {
+    // open modal
+  };
 
   const renderAccounts = (accounts as Account[]).map((account) => {
     return (
@@ -38,18 +38,25 @@ function AccountsPage (): React.ReactElement {
     );
   });
 
-  // const renderAddNewAccount = (
-  //   <div className={s.wrapper}>
-  //     <Link to="/account/new" className={s.link}>
-  //       <div className={s.create}>
-  //         <h3>Add new account</h3>
-  //         <SvgAdd />
-  //       </div>
-  //     </Link>
-  //   </div>
-  // );
+  const renderActions = (
+    <div>
+      <IconButton
+        icon={<SvgAdd />}
+        onClick={handleAddAccount}
+      />
+    </div>
+  );
 
-  return <Wrapper>{renderAccounts}</Wrapper>;
+  return (
+    <Wrapper>
+      {renderAccounts}
+      <RelativeElements>
+        <Toolbox>
+          {renderActions}
+        </Toolbox>
+      </RelativeElements>
+    </Wrapper>
+  );
 }
 
 export default AccountsPage;
