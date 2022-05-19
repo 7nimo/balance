@@ -1,7 +1,7 @@
 import { Bank } from './bank';
 import { Currency } from './currency';
 
-export interface Account {
+export interface AccountEntity {
   id: string;
   name: string;
   sortCode?: string;
@@ -14,5 +14,5 @@ export interface Account {
 }
 
 export interface Accounts {
-  accounts: Account[] | [];
+  accounts: AccountEntity[] | [];
 }
