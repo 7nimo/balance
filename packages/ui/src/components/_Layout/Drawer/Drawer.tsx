@@ -1,39 +1,15 @@
-import { Account, Accounts } from '@types';
 import NavButton from 'components/buttons/navigation/NavButton/NavButton';
 import SvgBank from 'components/icons/Bank';
 import SvgBtc from 'components/icons/Btc';
 import SvgCalendar from 'components/icons/Calendar';
-import SvgCoin from 'components/icons/Coin';
 import SvgPieChart from 'components/icons/PieChart';
 import SvgSettings from 'components/icons/Settings';
 import Logo from 'components/misc/Logo/Logo';
-import { queryClient } from 'core/lib/react-query';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
 import s from './Drawer.module.scss';
 
 function Drawer (): React.ReactElement {
-  const data = queryClient.getQueryData<Accounts>('accounts');
-  const [accounts, setAccounts] = useState<Account[] | []>();
-
-  const renderAccounts = accounts?.map((account) => {
-    return (
-      <NavButton
-        icon={<SvgCoin />}
-        key={account.id}
-        label={account.name}
-        link={`account/${account.id}`}
-        small
-      />
-    );
-  });
-
-  useEffect(() => {
-    if (data?.accounts) {
-      setAccounts(data.accounts);
-    }
-  }, [data]);
-
   return (
     <nav className={s.sidebar}>
       <Logo />
@@ -46,14 +22,13 @@ function Drawer (): React.ReactElement {
             link='dashboard'
           />
         </li>
-        <ul className={s.listItem}>
+        <li className={s.listItem}>
           <NavButton
             icon={<SvgBank />}
             label='Accounts'
             link='account'
           />
-          {renderAccounts}
-        </ul>
+        </li>
         <li className={s.listItem}>
           <NavButton
             icon={<SvgBtc />}
