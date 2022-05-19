@@ -1,4 +1,4 @@
-import { Account } from '@types';
+import { AccountEntity } from '@types';
 import { IconButton } from 'components/buttons/IconButton/IconButton';
 import SvgAdd from 'components/icons/actions/Add';
 import ColorLine from 'components/misc/ColorLine';
@@ -10,6 +10,7 @@ import { Link, useMatch } from 'react-location';
 import { ReactComponent as Logo } from '../../assets/svg/banks/lloyds.svg';
 import { Wrapper } from '../../components/_Layout/Root/Wrapper';
 import s from './AccountsPage.module.scss';
+import { Wrapper } from './Wrapper';
 
 function AccountsPage (): React.ReactElement {
   const { data: { accounts } } = useMatch();
@@ -55,6 +56,7 @@ function AccountsPage (): React.ReactElement {
           {renderActions}
         </Toolbox>
       </RelativeElements>
+      {renderAccounts}
     </Wrapper>
   );
 }
