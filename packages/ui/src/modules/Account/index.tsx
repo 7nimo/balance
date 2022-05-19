@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-shadow */
-import { Account, Transaction } from '@types';
+import { AccountEntity, Transaction } from '@types';
 import Block from 'components/box/Block/Block';
 import { SearchBar } from 'components/forms/SearchBar/SearchBar';
 import { useAccount } from 'core/api/account';
@@ -16,7 +16,7 @@ import AccountHeader from './AccountHeader/AccountHeader';
 function AccountContainer (): React.ReactElement {
   const [query, setQuery] = useState<string>('');
   const [_transactions, setTransactions] = useState<Transaction[] | null>(null);
-  const [account, setAccount] = useState<Account | null>(null);
+  const [account, setAccount] = useState<AccountEntity | null>(null);
 
   const { data: { transactions },
     params: { accountId } } = useMatch();

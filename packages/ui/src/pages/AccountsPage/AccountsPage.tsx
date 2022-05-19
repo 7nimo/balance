@@ -18,7 +18,7 @@ function AccountsPage (): React.ReactElement {
     // open modal
   };
 
-  const renderAccounts = (accounts as Account[]).map((account) => {
+  const renderAccounts = (accounts as AccountEntity[]).map((account) => {
     return (
       <div
         className={s.wrapper}
