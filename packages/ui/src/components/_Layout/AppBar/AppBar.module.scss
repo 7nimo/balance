@@ -7,9 +7,9 @@
   width: calc(100vw - var(--drawer-width));
   margin-left: var(--drawer-width);
   border-bottom: 1px solid var(--border-color);
-  background: var(--nav-bg);
+  background: var(--main-bg);
   transition: var(--theme-transition);
-  z-index: 10000;
+  z-index: 100;
 }
 
 .section {
