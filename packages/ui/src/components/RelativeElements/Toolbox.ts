@@ -5,10 +5,10 @@ export const Toolbox = styled.div`
   bottom: 40px;
   left: 40px;
   font-size: 24px;
-  z-index: 3;
   display: grid;
   place-items: center;
-  background: rgba(87,120, 120, .3);
+  background: var(--main-bg);
+  border: 1px solid var(--border-color);
   padding: 8px;
   border-radius: 5px;
 `;
