@@ -69,8 +69,7 @@ function SignUpForm (): React.ReactElement {
                 Username
               </label>
               <input
-                // autoComplete='username'
-                autoComplete='false'
+                autoComplete='username'
                 className={cx(s.fieldInput, { [s.fieldError]: errors.username })}
                 id='username'
                 onFocus={() => clearErrors('username')}
@@ -94,7 +93,7 @@ function SignUpForm (): React.ReactElement {
                 Email
               </label>
               <input
-                // autoComplete='email'
+                autoComplete='email'
                 className={cx(s.fieldInput, { [s.fieldError]: errors.email })}
                 id='email'
                 onFocus={() => clearErrors('email')}
