@@ -1,27 +1,23 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 /* eslint-disable sort-keys */
-import { ERROR, LoginCredentials, RegisterCredentials } from '@types';
+import { LoginCredentials, RegisterCredentials } from '@types';
 import cx from 'classnames';
 import ErrorMessage from 'components/status/ErrorMessage';
 import { signIn, signUp } from 'core/api/auth';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-location';
 
-// import { useAuth } from '../../../core/lib/auth';
 import s from './SignUpForm.module.scss';
 
 function SignUpForm (): React.ReactElement {
-  // const { login, register: SignUp } = useAuth();
   const navigate = useNavigate();
   const [showError, setShowError] = useState(false);
 
   const { clearErrors,
     formState: { dirtyFields, errors, isDirty, isValid },
     handleSubmit,
-    register,
-    resetField,
-    setFocus } = useForm<RegisterCredentials>({
+    register } = useForm<RegisterCredentials>({
     mode: 'onChange',
     shouldFocusError: false,
     defaultValues: {
