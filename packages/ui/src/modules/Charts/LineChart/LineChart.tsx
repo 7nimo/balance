@@ -98,7 +98,7 @@ function LineChartContainer ({ accountId }: Props): React.ReactElement {
           Math.abs((x(b) as any) - (hoveredPoint as any))
       );
 
-      const formatDate = d3.timeFormat('%d/%m/%Y');
+      const formatDate = d3.timeFormat('%d/%m/%Y'); // move this to d3 util functions
       const xValue = X[closestIndex!];
       const yValue = Y[closestIndex!];
       const hoveredDate = formatDate(xValue);
