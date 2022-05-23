@@ -5,6 +5,7 @@ import ColorLine from 'components/misc/ColorLine';
 import Modal from 'components/Modal/Modal';
 import { RelativeElements } from 'components/RelativeElements/RelativeElements';
 import { Toolbox } from 'components/RelativeElements/Toolbox';
+import AddAccountModal from 'modules/Account/AddAccount/AddAccountModal';
 import React, { useState } from 'react';
 import { Link, useMatch } from 'react-location';
 
@@ -58,7 +59,7 @@ function AccountsPage (): React.ReactElement {
           isOpen={isOpen}
           title='Add Account'
         >
-          This is Modal Content!
+          <AddAccountModal />
         </Modal>
       </RelativeElements>
       {renderAccounts}
