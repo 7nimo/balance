@@ -17,7 +17,7 @@ import { TransactionEntity } from 'src/modules/transaction/entities/transaction.
 @Entity('account')
 export class AccountEntity {
   @PrimaryGeneratedColumn('uuid')
-  accountId: string;
+  id: string;
 
   @Column()
   name: string;

@@ -1,4 +1,4 @@
-import { Injectable, InternalServerErrorException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Connection, Repository } from 'typeorm';
 import { TransactionEntity } from './entities/transaction.entity';
@@ -14,19 +14,19 @@ export class TransactionService {
     private readonly connection: Connection,
   ) {}
 
-  async create(
-    accountId: string,
-    createTransactionDto: CreateTransactionDto,
-  ): Promise<TransactionRO> {
-    const transaction = this.transactionRepository.create({
-      account: accountId,
-      ...createTransactionDto,
-    });
+  // async create(
+  //   accountId: string,
+  //   createTransactionDto: CreateTransactionDto,
+  // ): Promise<TransactionRO> {
+  //   // const transaction = this.transactionRepository.create({
+  //   //   account: accountId,
+  //   //   ...createTransactionDto,
+  //   // });
 
-    await this.transactionRepository.save(transaction);
+  //   await this.transactionRepository.save(transaction);
 
-    return { transaction };
-  }
+  //   return { transaction };
+  // }
 
   async createMany(transactions: TransactionEntity[]) {
     return await this.transactionRepository

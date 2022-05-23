@@ -4,7 +4,7 @@ import { AccountEntity } from 'src/modules/account/entities/account.entity';
 @Entity('transaction')
 export class TransactionEntity {
   @PrimaryGeneratedColumn()
-  transactionId: number;
+  id: number;
 
   @Column({ type: 'date' })
   transactionDate: string;
@@ -27,5 +27,5 @@ export class TransactionEntity {
   @ManyToOne(() => AccountEntity, (account) => account.transactions, {
     nullable: false,
   })
-  account: AccountEntity | string;
+  account: AccountEntity;
 }

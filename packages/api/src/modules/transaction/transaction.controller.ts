@@ -38,18 +38,18 @@ export class TransactionController {
     this.multerConfig = this.configService.get<MulterOptions>('multer');
   }
 
-  @Post()
-  async create(
-    @User('id') userId: string,
-    @Param('accountId') accountId: string,
-    @Body() createTransactionDto: CreateTransactionDto,
-  ): Promise<TransactionRO> {
-    const account = await this.accountService.findOne(userId, accountId);
-    if (!account) {
-      throw new NotFoundException(`Account with ${accountId} does not exist`);
-    }
-    return this.transactionService.create(accountId, createTransactionDto);
-  }
+  // @Post()
+  // async create(
+  //   @User('id') userId: string,
+  //   @Param('accountId') accountId: string,
+  //   @Body() createTransactionDto: CreateTransactionDto,
+  // ): Promise<TransactionRO> {
+  //   const account = await this.accountService.findOne(userId, accountId);
+  //   if (!account) {
+  //     throw new NotFoundException(`Account with ${accountId} does not exist`);
+  //   }
+  //   return this.transactionService.create(accountId, createTransactionDto);
+  // }
 
   @Post('import')
   @UseInterceptors(FileInterceptor('statement'))
