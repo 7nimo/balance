@@ -9,7 +9,7 @@ export interface ConfigObject<T> {
 }
 type ConfigObj<T> = Record<string, () => T>;
 
-function createConfiguration<T>(
+export function createConfiguration<T>(
   configObject: ConfigObj<T>,
 ): Array<ConfigFactory<T>> {
   const configArray: ConfigFactory<T>[] = [];

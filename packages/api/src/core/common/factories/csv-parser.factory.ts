@@ -44,7 +44,7 @@ export class CsvParserFactory {
       if (record[5]) transaction.debitAmount = record[5];
       if (record[6]) transaction.creditAmount = record[6];
       transaction.balance = record[7];
-      transaction.account = accountId;
+      // transaction.account = accountId;
 
       transactions.push(transaction);
     }
@@ -106,7 +106,7 @@ export class CsvParserFactory {
         transaction.creditAmount = (+record[6]).toFixed(2);
       }
       transaction.balance = (+record[7]).toFixed(2);
-      transaction.account = accountId;
+      // transaction.account = accountId;
 
       transactions.push(transaction);
     }
@@ -139,7 +139,7 @@ export class CsvParserFactory {
             if (record[5]) transaction.debitAmount = record[5];
             if (record[6]) transaction.creditAmount = record[6];
             transaction.balance = record[7];
-            transaction.account = accountId;
+            // transaction.account = accountId;
 
             transactions.push(transaction);
           });

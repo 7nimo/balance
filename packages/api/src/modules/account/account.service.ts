@@ -29,7 +29,7 @@ export class AccountService {
   async findOne(userId: string, accountId: string) {
     return await this.accountRepository.findOne({
       where: {
-        accountId: accountId,
+        id: accountId,
         user: {
           id: userId,
         },

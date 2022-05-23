@@ -11,6 +11,6 @@ export class CsvParserService {
 
     const parser = this.csvParserFactory.getParser(bankName);
 
-    return parser(account.accountId, filePath);
+    return parser(account.id, filePath);
   }
 }
