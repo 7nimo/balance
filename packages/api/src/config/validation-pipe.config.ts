@@ -4,8 +4,9 @@ import {
   ValidationError,
   ValidationPipeOptions,
 } from '@nestjs/common';
+import { registerAs } from '@nestjs/config';
 
-export const validationPipeOptions: ValidationPipeOptions = {
+const validationPipeOptions: ValidationPipeOptions = {
   forbidUnknownValues: true,
   whitelist: true,
   forbidNonWhitelisted: true,
@@ -25,3 +26,7 @@ const mapError = (error: ValidationError) => {
   };
   return mappedError;
 };
+
+export default registerAs('validationPipe', () => ({
+  validationPipeOptions,
+}));

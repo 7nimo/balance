@@ -1,0 +1,28 @@
+.iconButton {
+  display: flex;
+  align-items: center;
+  border: none;
+  background: transparent;
+  font-size: inherit;
+  cursor: pointer;
+
+  &:hover {
+    --icon-main: var(--gray1);
+    --icon-accent: var(--gray5);
+  }
+
+  svg {
+    path {
+      transition: fill .3s ease;
+    }
+  }
+}
+
+[class*="dark-theme"] * .iconButton {
+  --icon-main:  #b2becd;
+  --icon-accent: #6c7983;
+  &:hover {
+    --icon-main: var(--gray0);
+    --icon-accent: var(--gray3);
+  }
+}

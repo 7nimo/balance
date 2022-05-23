@@ -5,12 +5,14 @@ import { diskStorage } from 'multer';
 import { v4 as uuid } from 'uuid';
 import { UnprocessableEntityException } from '@nestjs/common';
 
-export const multerConfig = {
+import { registerAs } from '@nestjs/config';
+
+const multerConfig = {
   path: process.env.MULTER_DEST,
   limit: process.env.MULTER_LIMIT,
 };
 
-export const multerOptions: MulterOptions = {
+const multerOptions: MulterOptions = {
   limits: { fileSize: +multerConfig.limit },
   fileFilter: (req: any, file: any, cb: any) => {
     if (file.originalname.match(/\.(csv)$/)) {
@@ -37,3 +39,8 @@ export const multerOptions: MulterOptions = {
     },
   }),
 };
+
+export default registerAs('multer', () => ({
+  ...multerConfig,
+  ...multerOptions,
+}));

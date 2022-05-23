@@ -1,0 +1,22 @@
+.actionsContainer {
+  display: flex;
+  align-items: center;
+  height: var(--top-bar-height)
+}
+
+%actionsShared {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.themeToggler {
+  @extend %actionsShared;
+  font-size: 32px;
+}
+
+.profileDropdown {
+  @extend %actionsShared;
+  font-size: 48px;
+  margin-left: 1rem;
+}
