@@ -38,6 +38,8 @@ $colors: (
 
   // * typography
   --text-color: var(--gray8);
+  --text-primary: rgb(60, 64, 67);
+  --text-secondary: rgb(95, 99, 104);
   --h-color: var(--gray8);
 
   // * icons
@@ -64,6 +66,8 @@ $colors: (
 
   // * typography
   --text-color: var(--gray2);
+  --text-primary: rgb(232, 234, 237);
+  --text-secondary: rgb(154, 160, 166);
   --h-color: white;
 
   // * borders
@@ -194,6 +198,7 @@ $colors: (
 
 html {
   font-size: var(--font-size);
+  -webkit-font-smoothing: antialiased;
 
   &.dark {
     @include dark-theme;
@@ -225,6 +230,14 @@ body {
 img {
   max-width: 100%;
   height: auto;
+}
+
+hr {
+  height: 0;
+  margin: 0;
+  border: none;
+  border-top: 1px solid var(--border-color);
+  width: 100%;
 }
 
 // Typography
@@ -343,10 +356,6 @@ p, div, pre {
   background:rgba(0, 0, 0, .6);
   pointer-events: auto;
   z-index: 1000;
-}
-
-.modal-content {
-  padding: 8px 24px;
 }
 
 // react-location 

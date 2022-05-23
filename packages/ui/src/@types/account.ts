@@ -7,8 +7,8 @@ export interface AccountEntity {
   sortCode?: string;
   accountNumber?: number;
   balance: number;
-  bank: Bank;
-  currency: Currency;
+  bank: Bank; // bank ID
+  currency: Currency; // currency ID
   createdAt: string;
   updatedAt: string;
 }
