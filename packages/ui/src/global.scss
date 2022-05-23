@@ -1,0 +1,368 @@
+// todo: change import to use
+@import url(https://fonts.googleapis.com/css2?family=Inter:wght@300..700&display=swap);
+@import-normalize;
+
+$colors: (
+  red: #e2444d,
+  blue: #4faef3,
+  orange: #ffa164,
+  green: #2ce35e,
+  purple: #733db4,
+  yellow: #ffdf75,
+  pink: #970858
+);
+
+@mixin default-theme {
+  // * backgrounds
+  --bg: var(--gray1);
+  --main-bg: #f4f4f4;
+  --card-bg: #f4f4f4;
+  
+  
+  // * borders
+  --line: rgba(178, 190, 205, .8);
+
+  --card-border-radius: .33rem;
+  --input-border-radius: .4rem;
+
+  --border-color: #c1c1c1;
+  --border2: rgb(19, 47, 76);
+  
+  // * shadows
+  --nav-shadow: 1px 70px 10px 0 #c1c1c1;
+  --app-bar-shadow: 0 1px 10px 0 #c1c1c1;
+  --card-shadow: 0 4px 8px rgba(0,30,84,0.12);
+  // --shadow: rgba(0, 0, 0, 0.02) 0px 8px 12px;
+
+  --modal-shadow: rgba(60, 64, 67, 0.3) 0px 1px 3px 0px, rgba(60, 64, 67, 0.15) 0px 4px  8px 3px;
+
+  // * typography
+  --text-color: var(--gray8);
+  --text-primary: rgb(60, 64, 67);
+  --text-secondary: rgb(95, 99, 104);
+  --h-color: var(--gray8);
+
+  // * icons
+  --icon-main: rgb(178, 190, 205);
+  --icon-accent: rgb(108, 121, 131);
+  --icon-color-main: rgb(193, 192, 255);
+  --icon-color-accent: rgb(101, 99, 255);
+
+  // * buttons
+  --btn-hover: rgba(152, 121, 255, 0.2);
+  --btn-active: rgba(152, 121, 255, 0.5);
+  --btn-active-hover: rgba(152, 121, 255, 0.8);
+}
+
+.light {
+  @include default-theme;
+}
+
+@mixin dark-theme {
+  // * backgrounds
+  --bg: var(--gray8);
+  --card-bg: #2a2e35;
+  --main-bg: var(--gray5);
+
+  // * typography
+  --text-color: var(--gray2);
+  --text-primary: rgb(232, 234, 237);
+  --text-secondary: rgb(154, 160, 166);
+  --h-color: white;
+
+  // * borders
+  --border-color: var(--line);
+  --border: 1px solid rgba(138,145,158, .2);
+  --border-heavy: 1px solid rgba(138,145,158, .66);
+  --line: rgba(178, 190, 205, .2);
+
+  // * shadows
+  --nav-shadow: 1px 70px 10px 0 rgba(1, 1, 1, .5);
+  --app-bar-shadow: 0 1px 10px 0 rgba(80, 36, 36, 0.5);
+  --card-shadow: 0 4px 16px rgba(245, 248, 255,0.05);
+  --modal-shadow: rgba(0, 0, 0, 0.3) 0px 1px 3px 0px, rgba(0, 0, 0, 0.15) 0px 4px 8px 3px;
+
+  // * icons
+  --icon-main: rgb(108, 121, 131);
+  --icon-accent: rgb(69, 78, 86);
+  --icon-color-main: rgba(44, 227, 94, .8);
+  --icon-color-accent: rgb(219, 225, 232);
+
+  // * buttons
+  --btn-hover: rgba(89, 255, 122, .3);
+  --btn-active: rgba(44, 227, 94, .8);
+  --btn-active-hover: rgba(43, 227, 92, .8);
+
+  .active {
+    background: var(--gray4);
+    --icon-main: var(--icon-color-main);
+    --icon-accent: var(--icon-color-accent);
+
+    &:hover {
+      background: var(--btn-active-hover);
+    }
+  }
+}
+
+:root {
+  --font-family: 'Inter', sans-serif;
+  @supports (font-variation-settings: normal) {
+    --font-family: 'Inter var';
+  }
+
+  --font-size: 16px;
+  --line-height: calc(var(--font-size) * 1.5);
+  --spacing: 2rem;
+  --spacingv: calc(var(--line-height) / 2);
+
+  --drawer-width: 200px;
+  --top-bar-height: 70px;
+
+  --theme-transition: background .5s ease;
+
+  @each $name, $color in $colors {
+    --#{""+$name}: #{$color};
+    --#{""+$name}-dark: #{darken($color, 7%)};
+    --#{""+$name}-light: #{lighten($color, 7%)};
+  }
+
+  // --gray0: #f8f8f8;
+  // --gray1: #eef0f2;
+  // --gray2: #e3e3e3;
+  // --gray3: #d2d2d2;
+  // --gray4: #adadad;
+  // --gray5: #898989;
+  // --gray6: #676767;
+  --gray7: #474747;
+  --gray8: #292929;
+
+  // /*
+  --gray0: #f8f8f8;
+  --gray1: #dbe1e8;
+  --gray2: #b2becd;
+  --gray3: #6c7983;
+  --gray4: #454e56;
+  --gray5: #2a2e35;
+  --gray6: #12181b;
+  // */
+
+  --paper-grey-50: rgb(250, 250, 250);
+  --paper-grey-100: rgb(245, 245, 245);
+  --paper-grey-200: rgb(238, 238, 238);
+  --paper-grey-300: rgb(224, 224, 224);
+  --paper-grey-400: rgb(189, 189, 189);
+  --paper-grey-500: rgb(158, 158, 158);
+  --paper-grey-600: rgb(117, 117, 117);
+  --paper-grey-700: rgb(97, 97, 97);
+  --paper-grey-800: rgb(66, 66, 66);
+  --paper-grey-900: rgb(33, 33, 33);
+  --paper-blue-grey-50: rgb(236, 239, 241);
+  --paper-blue-grey-100: rgb(207, 216, 220);
+  --paper-blue-grey-200: rgb(176, 190, 197);
+  --paper-blue-grey-300: rgb(144, 164, 174);
+  --paper-blue-grey-400: rgb(120, 144, 156);
+  --paper-blue-grey-500: rgb(96, 125, 139);
+  --paper-blue-grey-600: rgb(84, 110, 122);
+  --paper-blue-grey-700: rgb(69, 90, 100);
+  --paper-blue-grey-800: rgb(55, 71, 79);
+  --paper-blue-grey-900: rgb(38, 50, 56);
+
+  --special: 0, 62, 193;
+
+  --green-grad: linear-gradient(
+    to bottom right,
+    var(--green-light),
+    var(--green-dark) 85%
+  );
+
+  // --cosmos
+  --cosmic-grad: radial-gradient(
+    circle,
+    rgba(2,0,36,1) 0%,
+    rgba(99,99,171,1) 35%,
+    rgba(0,212,255,0.22871155298056722) 100%);
+
+
+  --test-grad: radial-gradient(
+    circle,
+    rgba(255,255,255,.5) 0%,
+    rgba(99,99,171,1) 35%,
+    rgba(0,212,255,0.22871155298056722) 100%);
+
+  --random-grad: radial-gradient(circle, rgba(131,58,180,1) 0%, rgba(204,41,89,0.16148466222426472) 36%, rgba(253,29,29,1) 73%, rgba(252,176,69,1) 100%);
+
+  @include default-theme;
+}
+
+* { margin:0; padding:0; font-synthesis: none; box-sizing: border-box; }
+
+html {
+  font-size: var(--font-size);
+  -webkit-font-smoothing: antialiased;
+
+  &.dark {
+    @include dark-theme;
+  }
+}
+
+body {
+  position: relative;
+  background: var(--bg);
+  color: var(--text-color);
+
+  font: 15px/22px var(--font-family), system-ui, sans-serif;
+  font-size: var(--font-size);
+  line-height: var(--line-height);
+  letter-spacing: -0.011em;
+  font-weight: 400;
+
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+
+  font-kerning: normal;
+  font-feature-settings: "ss03","zero","cv08","cv11" 1;
+
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+hr {
+  height: 0;
+  margin: 0;
+  border: none;
+  border-top: 1px solid var(--border-color);
+  width: 100%;
+}
+
+// Typography
+
+h1, h2, h3, h4, h5, h6 {
+  color: var(--h-color);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1 {
+  font-weight: 700;
+  font-size: 2rem;
+  letter-spacing: -0.022em;
+  line-height: calc(var(--spacingv) * 4.5);
+}
+
+h2 {
+  font-weight: 600;
+  font-size: 1.75rem;
+  letter-spacing: -0.021em;
+  line-height: calc(var(--spacingv) * 3);
+}
+
+h3 {
+  font-weight: 500;
+  font-size: 1.5rem;
+  letter-spacing: -0.021em;
+  line-height: calc(var(--spacingv) * 3);
+}
+
+span, p {
+  color: var(--text-color);
+}
+
+p, div, pre {
+  // word-wrap: anywhere;
+  color: var(--text-color);
+}
+
+// Color Utilities
+
+@each $name, $color in $colors {
+  .#{""+$name} {
+    color: $color;
+  }
+
+  .#{""+$name}-bg {
+    background: $color;
+  }
+}
+
+// global classes
+
+.center {
+  display: flex;
+  justify-content: center;
+}
+
+@mixin active-nav-btn {
+  content: "";
+  position: absolute;
+  background-color: var(--icon-color-accent);
+  top: 0;
+  bottom: 0;
+  right: -3px;
+  width: 5px;
+}
+
+.active {
+  background: var(--gray1);
+  --icon-main: var(--icon-color-main);
+  --icon-accent: var(--icon-color-accent); 
+
+  &::after {
+    @include active-nav-btn;
+  }
+
+  &:hover {
+    background: var(--btn-active-hover);
+  }
+
+  // [class*="iconWrapper"] {
+    // background: var(--main-bg);
+    // transition: background .5s ease;
+  // }
+}
+
+// spinner
+#spinner {
+  display: block;
+  height: 1em;
+  width: 1em;
+  border: 4px rgba(0, 0, 0, 0.25) solid;
+  border-top: 4px black solid;
+  border-radius: 50%;
+  animation: spin 1s infinite linear;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(359deg);
+  }
+}
+
+// modal
+#modal-root {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background:rgba(0, 0, 0, .6);
+  pointer-events: auto;
+  z-index: 1000;
+}
+
+// react-location 
+div.ReactLocationDevtoolsPanel {
+  * {
+    color: white;
+  }
+}
+
+// radial-gradient( closest-side, rgba(0, 0, 0, 0.35) 0, rgba(0, 0, 0, 0.14) 35%, transparent 100%);

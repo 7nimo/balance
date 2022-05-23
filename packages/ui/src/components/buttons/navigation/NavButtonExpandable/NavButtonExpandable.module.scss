@@ -1,0 +1,101 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  // border-radius: 1rem;
+}
+
+.item {
+  display: flex;
+  width: 100%;
+  height: 48px;
+}
+
+.focusable {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  text-decoration: none;
+  border-radius: 1rem;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+
+  &:hover {
+    background: var(--btn-hover);
+
+    .iconWrapper {
+      --icon-main: var(--icon-color-main);
+      --icon-accent: var(--icon-color-accent); 
+    }
+  }
+
+  &:focus {
+    outline: 2px solid var(--h-color);
+  }
+}
+
+.iconWrapper {
+  position: absolute;
+  top: -4px;
+  left: -1px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  margin-left: -1px;
+  background: var(--main-bg);
+  transition: var(--theme-transition);
+  border-radius: 0 50% 50% 0;
+  font-size: 32px;
+}
+
+.label { 
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--h-color);
+  margin-left: 4em;
+}
+
+.trailingIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: auto;
+  font-size: 24px;
+  margin-right: 8px;
+
+  svg {
+    --icon-main: transparent;
+    --icon-accent: var(--text-color); 
+  }
+}
+
+.expandableContainer {
+  position: relative;
+  box-sizing: content-box;
+  margin-top: 2px;
+  margin-left: 6px;
+  overflow: hidden;
+  transition: height .3s ease-in-out;
+}
+
+.expandableContent {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  font-size: 12px;
+  width: 100%;
+  padding: 0 2px;
+  bottom: 2px;
+}
+
+.flip {
+  transform: rotateZ(180deg);
+}
+
+.listItem {
+  margin-top: 10px;
+}

@@ -1,13 +1,13 @@
 import { THEME, Theme } from '@types';
+import { storage } from 'core/utils/storage';
 import { useEffect, useState } from 'react';
-import { storage } from 'utils/storage';
 
 export const useTheme = (): {
   theme: Theme;
   themeLoaded: boolean;
   setMode: (mode: Theme) => void;
 } => {
-  const [theme, setTheme] = useState<Theme>('light-theme');
+  const [theme, setTheme] = useState<Theme>('light');
   const [themeLoaded, setThemeLoaded] = useState(false);
 
   const setMode = (mode: Theme): void => {
@@ -21,7 +21,7 @@ export const useTheme = (): {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     localTheme !== null && THEME.indexOf(localTheme as any) !== -1
       ? setTheme(localTheme as Theme)
-      : setTheme('light-theme');
+      : setTheme('light');
     setThemeLoaded(true);
   }, []);
 

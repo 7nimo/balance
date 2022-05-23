@@ -1,0 +1,42 @@
+.focusableLink {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  text-decoration: none;
+  color: inherit;
+  outline: none;
+
+  &:hover {
+    background: var(--btn-hover);
+
+    .iconWrapper {
+      --icon-main: var(--icon-color-main);
+      --icon-accent: var(--icon-color-accent); 
+    }
+  }
+
+  // &:focus {
+    // outline: 2px solid var(--h-color);
+  // }
+}
+
+.iconWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: auto;
+  padding-left: 18px;
+  border-radius: 50%;
+  font-size: 32px;
+  transition: var(--theme-transition);
+}
+
+.label { 
+  font-weight: 600;
+  color: var(--h-color);
+  margin-left: 1rem;
+}
+

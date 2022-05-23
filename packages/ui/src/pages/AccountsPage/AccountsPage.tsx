@@ -1,24 +1,27 @@
-import { Account } from '@types';
-import ColorLine from 'common/components/ColorLine';
-import React from 'react';
-// import Block from 'common/components/layout/Block/Block';
+import { AccountEntity } from '@types';
+import { IconButton } from 'components/buttons/IconButton/IconButton';
+import SvgAdd from 'components/icons/actions/Add';
+import ColorLine from 'components/misc/ColorLine';
+import Modal from 'components/Modal/Modal';
+import { RelativeElements } from 'components/RelativeElements/RelativeElements';
+import { Toolbox } from 'components/RelativeElements/Toolbox';
+import AddAccountModal from 'modules/Account/AddAccount/AddAccountModal';
+import React, { useState } from 'react';
 import { Link, useMatch } from 'react-location';
-import styled from 'styled-components';
 
 import { ReactComponent as Logo } from '../../assets/svg/banks/lloyds.svg';
-// import SvgAdd from 'common/components/icons/actions/Add';
 import s from './AccountsPage.module.scss';
-
-const Wrapper = styled.div`
-  display: flex;
-  flex-direction: row;
-  margin: 0 -10px;
-`;
+import { Wrapper } from './Wrapper';
 
 function AccountsPage (): React.ReactElement {
   const { data: { accounts } } = useMatch();
+  const [isOpen, setIsOpen] = useState(false);
 
-  const renderAccounts = (accounts as Account[]).map((account) => {
+  const handleAddAccount = () => {
+    setIsOpen(true);
+  };
+
+  const renderAccounts = (accounts as AccountEntity[]).map((account) => {
     return (
       <div
         className={s.wrapper}
@@ -38,18 +41,30 @@ function AccountsPage (): React.ReactElement {
     );
   });
 
-  // const renderAddNewAccount = (
-  //   <div className={s.wrapper}>
-  //     <Link to="/account/new" className={s.link}>
-  //       <div className={s.create}>
-  //         <h3>Add new account</h3>
-  //         <SvgAdd />
-  //       </div>
-  //     </Link>
-  //   </div>
-  // );
+  const renderActions = (
+    <IconButton
+      icon={<SvgAdd />}
+      onClick={handleAddAccount}
+    />
+  );
 
-  return <Wrapper>{renderAccounts}</Wrapper>;
+  return (
+    <Wrapper>
+      <RelativeElements>
+        <Toolbox>
+          {renderActions}
+        </Toolbox>
+        <Modal
+          handleClose={() => setIsOpen(false)}
+          isOpen={isOpen}
+          title='Add Account'
+        >
+          <AddAccountModal />
+        </Modal>
+      </RelativeElements>
+      {renderAccounts}
+    </Wrapper>
+  );
 }
 
 export default AccountsPage;
