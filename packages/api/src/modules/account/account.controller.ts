@@ -13,7 +13,7 @@ import {
 import { ApiTags } from '@nestjs/swagger';
 import { User } from 'src/core/common/decorators/user.decorator';
 import { UserEntity } from 'src/modules/user/entities/user.entity';
-import { AccountRO, AccountsRO } from './account.interface';
+import { AccountRO, AccountsRO } from './interfaces/account.interface';
 import { AccountService } from './account.service';
 import { CreateAccountDto, UpdateAccountDto } from './dto';
 

@@ -1,16 +1,19 @@
-import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
+import { Inject, Injectable } from '@nestjs/common';
 import { UserEntity } from 'src/modules/user/entities/user.entity';
-import { DeleteResult, getConnection, Repository, UpdateResult } from 'typeorm';
-import { AccountRO, AccountsRO } from './account.interface';
+import { DataSource, DeleteResult, Repository, UpdateResult } from 'typeorm';
+import { AccountRO, AccountsRO } from './interfaces/account.interface';
 import { CreateAccountDto, UpdateAccountDto } from './dto';
 import { AccountEntity } from './entities/account.entity';
+import { ACCOUNT_REPOSITORY } from './constants';
+import { DATA_SOURCE } from 'src/core/database/constants';
 
 @Injectable()
 export class AccountService {
   constructor(
-    @InjectRepository(AccountEntity)
+    @Inject(ACCOUNT_REPOSITORY)
     private readonly accountRepository: Repository<AccountEntity>,
+    @Inject(DATA_SOURCE)
+    private readonly dataSource: DataSource,
   ) {}
 
   async create(
@@ -65,7 +68,7 @@ export class AccountService {
   }
 
   async remove(userId: string, accountId: string): Promise<DeleteResult> {
-    return getConnection()
+    return await this.dataSource
       .createQueryBuilder()
       .delete()
       .from(AccountEntity)

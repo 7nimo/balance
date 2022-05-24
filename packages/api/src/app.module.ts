@@ -4,7 +4,6 @@ import { AuthModule } from './core/auth/auth.module';
 import { LoggerMiddleware } from './core/common/middleware/logger.middleware';
 import { AccountsModule } from './modules/account/account.module';
 import { RouterModule } from '@nestjs/core';
-import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from './core/config/config.module';
 import { DatabaseModule } from './core/database/database.module';
 import { EventEmitterModule } from '@nestjs/event-emitter';
@@ -32,7 +31,6 @@ import { ContextModule } from './modules/context/context.module';
       },
     ]),
     TransactionsModule,
-    TypeOrmModule,
     UserModule,
   ],
 })
