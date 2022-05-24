@@ -53,10 +53,6 @@ export const routes: Route<LocationGenerics>[] = [
               queryClient.fetchQuery('accounts', () => fetchAccounts())
           },
           {
-            path: '/new',
-            element: <NewAccount />
-          },
-          {
             path: ':accountId/settings',
             element: <AccountSettings />
           },
