@@ -1,0 +1,6 @@
+Code,Name,Symbol,Type
+EUR,Euro,€,fiat
+GBP,Pound Sterling,£,fiat
+PLN,Złoty,fiat
+USD,United States Dollar,$,fiat,
+BTC,Bitcoin,₿,crypto
