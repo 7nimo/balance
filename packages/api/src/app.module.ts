@@ -17,25 +17,25 @@ import swaggerConfig from './config/swagger.config';
 @Module({
   providers: [Logger],
   imports: [
+    AccountsModule,
+    AuthModule,
+    BanksModule,
     ConfigModule.forRoot({
       folder: './',
       load: [multerConfig, swaggerConfig],
     }),
+    CurrencyModule,
     DatabaseModule,
     EventEmitterModule.forRoot(),
-    TypeOrmModule,
-    AccountsModule,
-    AuthModule,
-    BanksModule,
-    CurrencyModule,
-    UserModule,
-    TransactionsModule,
     RouterModule.register([
       {
         path: '/account/:accountId',
         module: TransactionsModule,
       },
     ]),
+    TransactionsModule,
+    TypeOrmModule,
+    UserModule,
   ],
 })
 export class AppModule implements NestModule {
