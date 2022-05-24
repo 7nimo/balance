@@ -1,6 +1,7 @@
 /* eslint-disable sort-keys */
-import { AccountEntity } from '@types';
-import React from 'react';
+import { AccountEntity, ContextData } from '@types';
+import { useContextData } from 'core/api/context';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
 
@@ -81,7 +82,33 @@ const Select = styled.select`
 `;
   // box-shadow: var(--modal-shadow);
 
+type OptionsItem<T> = T & { id: number, name: string };
+
+const renderOptions = (data: OptionsItem<unknown>[]) => {
+  return data.map((item) => (
+    <option
+      key={item.id}
+      value={item.id}
+    >
+      {item.name}
+    </option>
+  ));
+};
+
 export default function AddAccountModal (): React.ReactElement {
+  const { data } = useContextData();
+  const [banks, setBanks] = useState(data?.banks);
+  const [currency, setCurrency] = useState(data?.currency);
+
+  useEffect(() => {
+    if (data) {
+      const { banks, currency } = data;
+
+      setBanks(banks);
+      setCurrency(currency);
+    }
+  }, [data]);
+
   const { clearErrors,
     formState: { dirtyFields, errors, isDirty, isValid },
     handleSubmit,
@@ -134,13 +161,8 @@ export default function AddAccountModal (): React.ReactElement {
                   required: 'Bank is required'
                 })}
               >
-                <option></option>
-                <optgroup label='Poland'>
-                  <option>mBank</option>
-                </optgroup>
-                <optgroup label='United Kingdom'>
-                  <option>Lloyds Bank</option>
-                </optgroup>
+                <option value=''></option>
+                {banks ? renderOptions(banks) : null}
               </Select>
             </Control>
           </Row>
@@ -191,10 +213,8 @@ export default function AddAccountModal (): React.ReactElement {
               <Select
                 {...register('currency')}
               >
-                <option></option>
-                <option>GBP</option>
-                <option>PLN</option>
-                <option>USD</option>
+                <option value=''></option>
+                {currency ? renderOptions(currency) : null}
               </Select>
             </Control>
           </Row>
@@ -203,3 +223,5 @@ export default function AddAccountModal (): React.ReactElement {
     </>
   );
 }
+
+// { /* <option value=''></option> */ }
