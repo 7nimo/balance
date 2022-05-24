@@ -8,8 +8,8 @@ import {
   Matches,
   MaxLength,
 } from 'class-validator';
-import { BankEntity } from 'src/modules/bank/entities/bank.entity';
-import { CurrencyEntity } from 'src/modules/currency/entities/currency.entity';
+import { BankEntity } from 'src/modules/context/entities/bank.entity';
+import { CurrencyEntity } from 'src/modules/context/entities/currency.entity';
 
 export class CreateAccountDto {
   @IsNotEmpty()

@@ -1,9 +1,8 @@
-import { CreateBankDto } from 'src/modules/bank/dto';
-import { BankEntity } from 'src/modules/bank/entities/bank.entity';
 import { CurrencyType } from 'src/core/common/enums/currency-type.enum';
 import { CreateUserDto } from 'src/modules/user/dto';
-import { CurrencyEntity } from 'src/modules/currency/entities/currency.entity';
-import { CreateCurrencyDto } from 'src/modules/currency/dto';
+import { CreateBankDto, CreateCurrencyDto } from 'src/modules/context/dto';
+import { BankEntity } from 'src/modules/context/entities/bank.entity';
+import { CurrencyEntity } from 'src/modules/context/entities/currency.entity';
 
 export const currencyData: CreateCurrencyDto[] = [
   {
@@ -40,8 +39,8 @@ export const currencyData: CreateCurrencyDto[] = [
 ];
 
 export const bankData: CreateBankDto[] = [
-  { name: 'mBank' },
-  { name: 'Lloyds' },
+  { name: 'mBank', country: 'Poland' },
+  { name: 'Lloyds', country: 'United Kingdom' },
 ];
 
 export const CURRENCY: Map<string, CurrencyEntity> = new Map(

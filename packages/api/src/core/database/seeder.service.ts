@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { BankEntity } from 'src/modules/bank/entities/bank.entity';
-import { CurrencyEntity } from 'src/modules/currency/entities/currency.entity';
+import { BankEntity } from 'src/modules/context/entities/bank.entity';
+import { CurrencyEntity } from 'src/modules/context/entities/currency.entity';
 import { DataSource } from 'typeorm';
 import { DATA_SOURCE } from './constants';
 import { bankData, currencyData } from './data/data';

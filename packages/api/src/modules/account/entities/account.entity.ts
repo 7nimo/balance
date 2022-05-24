@@ -10,9 +10,9 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { UserEntity } from 'src/modules/user/entities/user.entity';
-import { BankEntity } from 'src/modules/bank/entities/bank.entity';
-import { CurrencyEntity } from 'src/modules/currency/entities/currency.entity';
 import { TransactionEntity } from 'src/modules/transaction/entities/transaction.entity';
+import { BankEntity } from 'src/modules/context/entities/bank.entity';
+import { CurrencyEntity } from 'src/modules/context/entities/currency.entity';
 
 @Entity('account')
 export class AccountEntity {
