@@ -15,6 +15,7 @@ export const databaseProviders = [
         entities: ['dist/**/entities/*.entity{.ts,.js}'],
         migrations: ['dist/database/migrations/*{.ts,.js}'],
         synchronize: true, // dev
+        logging: true,
         namingStrategy: new SnakeNamingStrategy(),
       });
 

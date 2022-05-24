@@ -7,9 +7,7 @@ async function bootstrap() {
   const app = await NestFactory.createApplicationContext(AppModule);
 
   const command = process.argv[2];
-  const seederService = app
-    .select(DatabaseModule)
-    .get(SeederService, { strict: true });
+  const seederService = app.select(DatabaseModule).get(SeederService);
 
   switch (command) {
     case 'currency':
