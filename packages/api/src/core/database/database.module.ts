@@ -1,14 +1,14 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 import { DataSource, DataSourceOptions } from 'typeorm';
-import { DatabaseService } from './database.service';
 import databaseConfig from '../../config/database.config';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { SeederService } from './seeder.service';
+import { databaseProviders } from './database.providers';
 
 @Module({
-  providers: [DatabaseService, ConfigService],
+  providers: [ConfigService, SeederService, ...databaseProviders],
   imports: [
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule.forRoot({ load: [databaseConfig] })],
@@ -16,7 +16,6 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
       useFactory: async (configService: ConfigService) =>
         Object.assign(configService.get<DataSourceOptions>('database'), {
           autoLoadEntities: true,
-          namingStrategy: new SnakeNamingStrategy(),
         }),
       connectionFactory: async (options) => {
         const AppDataSource = new DataSource(options);
@@ -33,6 +32,6 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
       },
     }),
   ],
-  exports: [TypeOrmModule],
+  exports: [TypeOrmModule, SeederService, ...databaseProviders],
 })
 export class DatabaseModule {}
