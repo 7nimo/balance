@@ -7,23 +7,34 @@ import { CreateCurrencyDto } from 'src/modules/currency/dto';
 
 export const currencyData: CreateCurrencyDto[] = [
   {
-    code: 'GBP',
-    name: 'Pound Sterling',
+    code: 'EUR',
+    name: 'Euro',
+    symbol: '€',
     type: CurrencyType.FIAT,
   },
   {
-    code: 'EUR',
-    name: 'Euro',
+    code: 'GBP',
+    name: 'Pound Sterling',
+    symbol: '£',
     type: CurrencyType.FIAT,
   },
+
   {
     code: 'PLN',
     name: 'Złoty',
+    symbol: 'zł',
+    type: CurrencyType.FIAT,
+  },
+  {
+    code: 'USD',
+    name: 'United States Dollar',
+    symbol: '$',
     type: CurrencyType.FIAT,
   },
   {
     code: 'BTC',
     name: 'Bitcoin',
+    symbol: '₿',
     type: CurrencyType.CRYPTO,
   },
 ];
