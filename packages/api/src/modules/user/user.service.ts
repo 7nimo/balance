@@ -1,16 +1,14 @@
 import { Inject, Injectable } from '@nestjs/common';
-// import { InjectRepository } from '@nestjs/typeorm';
 import { UserEntity } from './entities/user.entity';
 import { DeleteResult, Repository } from 'typeorm';
 import { CreateUserDto } from './dto';
 import * as argon2 from 'argon2';
+import { USER_REPOSITORY } from './constants';
 
 @Injectable()
 export class UserService {
   constructor(
-    // @InjectRepository(UserEntity)
-    // private readonly userRepository: Repository<UserEntity>,
-    @Inject('USER_REPOSITORY')
+    @Inject(USER_REPOSITORY)
     private userRepository: Repository<UserEntity>,
   ) {}
 

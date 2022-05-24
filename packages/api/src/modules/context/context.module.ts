@@ -5,9 +5,9 @@ import { contextProviders } from './context.provider';
 import { DatabaseModule } from 'src/core/database/database.module';
 
 @Module({
+  imports: [DatabaseModule],
   providers: [ContextService, ...contextProviders],
   controllers: [ContextController],
-  imports: [DatabaseModule],
   exports: [ContextService],
 })
 export class ContextModule {}
