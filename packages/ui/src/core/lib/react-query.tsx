@@ -1,5 +1,5 @@
-import { fetchAccounts } from 'core/api/account';
-import { fetchCurrencies } from 'core/api/currency';
+/* eslint-disable @typescript-eslint/no-floating-promises */
+import { fetchContextData } from 'core/api/context';
 import React from 'react';
 import { QueryCache, QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
@@ -7,9 +7,11 @@ import { ReactQueryDevtools } from 'react-query/devtools';
 export const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
+      refetchOnMount: false,
+      refetchOnReconnect: false,
       refetchOnWindowFocus: false,
       retry: false,
-      staleTime: 1000
+      staleTime: 1000 * 60 * 60 * 24
     }
   },
   queryCache: new QueryCache({
@@ -19,16 +21,15 @@ export const queryClient = new QueryClient({
   })
 });
 
-async function prefetchData () {
-  await queryClient.prefetchQuery('accounts', fetchAccounts);
-  await queryClient.prefetchQuery('currency', fetchCurrencies);
-}
+const prefetchData = async () => await queryClient.prefetchQuery('contextData', fetchContextData);
 
 type Props = {
   children: React.ReactNode;
 };
 
 function ReactQueryProvider ({ children }: Props): React.ReactElement {
+  prefetchData();
+
   return (
     <QueryClientProvider client={queryClient}>
       <ReactQueryDevtools />
