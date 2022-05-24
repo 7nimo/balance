@@ -8,6 +8,9 @@ export class CreateCurrencyDto {
   @IsString()
   readonly name: string;
 
+  @IsString()
+  readonly symbol: string;
+
   @IsEnum(CurrencyType)
   readonly type: CurrencyType;
 }
