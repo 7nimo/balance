@@ -6,11 +6,14 @@ export class CurrencyEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({ unique: true })
   code: string;
 
   @Column()
   name: string;
+
+  @Column()
+  symbol: string;
 
   @Column({ default: CurrencyType.FIAT })
   type: CurrencyType;

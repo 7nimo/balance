@@ -97,16 +97,6 @@ export default function AddAccountModal (): React.ReactElement {
     }
   });
 
-const BANKS = [
-  'Lloyds Bank',
-  'mBank'
-];
-
-const CURRENCIES = [
-  'GBP',
-  'PLN'
-];
-
   return (
     <>
       <Header>
