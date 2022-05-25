@@ -50,14 +50,14 @@ export const routes: Route<LocationGenerics>[] = [
       },
       {
         path: 'account',
+        loader: async () => ({
+          accounts: queryClient.getQueryData('accounts') ??
+          await queryClient.fetchQuery('accounts', fetchAccounts)
+        }),
         children: [
           {
             path: '/',
-            element: <AccountsPage />,
-            loader: async () => ({
-              accounts: queryClient.getQueryData('accounts') ??
-              await queryClient.fetchQuery('accounts', fetchAccounts)
-            })
+            element: <AccountsPage />
           },
           {
             path: ':accountId',
