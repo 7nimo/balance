@@ -8,4 +8,5 @@ export const RelativeElements = styled.div`
   top: 0;
   left: 0;
   z-index: 100;
+  pointer-events: none;
 `;

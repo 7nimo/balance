@@ -11,4 +11,5 @@ export const Toolbox = styled.div`
   border: 1px solid var(--border-color);
   padding: 8px;
   border-radius: 5px;
+  pointer-events: auto;
 `;
