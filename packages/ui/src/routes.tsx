@@ -6,11 +6,12 @@ import SignUpForm from 'components/forms/SignUpForm/SignUpForm';
 import { getUserData } from 'core/api/auth';
 import { fetchTransactionsByAccountId } from 'core/api/transaction';
 import { queryClient } from 'core/lib/react-query';
+import AccountOverview from 'modules/Account/AccountOverview';
 import React from 'react';
 import { MakeGenerics, Navigate, ReactLocation, Route } from 'react-location';
 
 import { fetchAccounts } from './core/api/account';
-import AccountContainer from './modules/Account';
+import AccountContainer from './modules/Account/AccountContainer';
 import AccountSettings from './modules/Account/AccountSettings/AccountSettings';
 import AccountsPage from './pages/AccountsPage/AccountsPage';
 import CalendarPage from './pages/CalendarPage/CalendarPage';
@@ -70,10 +71,10 @@ export const routes: Route<LocationGenerics>[] = [
                 () => fetchTransactionsByAccountId(accountId))
             }),
             children: [
-              // {
-              //   path: '/',
-              //   element: <AccountOverview />
-              // },
+              {
+                path: '/',
+                element: <AccountOverview />
+              },
               {
                 path: 'settings',
                 element: <AccountSettings />
