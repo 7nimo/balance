@@ -12,7 +12,7 @@ import { MakeGenerics, Navigate, ReactLocation, Route } from 'react-location';
 
 import { fetchAccounts } from './core/api/account';
 import AccountContainer from './modules/Account/AccountContainer';
-import AccountSettings from './modules/Account/AccountSettings/AccountSettings';
+import AccountSettings from './modules/Account/components/AccountSettings/AccountSettings';
 import AccountsPage from './pages/AccountsPage/AccountsPage';
 import CalendarPage from './pages/CalendarPage/CalendarPage';
 import CryptoPage from './pages/CryptoPage/CryptoPage';
