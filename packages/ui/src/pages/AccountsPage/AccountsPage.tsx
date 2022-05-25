@@ -1,4 +1,3 @@
-import { AccountEntity } from '@types';
 import { IconButton } from 'components/buttons/IconButton/IconButton';
 import SvgAdd from 'components/icons/actions/Add';
 import Modal from 'components/Modal/Modal';
@@ -7,15 +6,16 @@ import { Toolbox } from 'components/RelativeElements/Toolbox';
 import AddAccountForm from 'modules/Account/AddAccount/AddAccountForm';
 import React, { useState } from 'react';
 import { useMatch } from 'react-location';
+import { LocationGenerics } from 'routes';
 
 import { Content, Layout, Row } from '../../components/_Layout/Layout';
 import AccountButton from './AccountButtons/AccountButtons';
 
 function AccountsPage (): React.ReactElement {
-  const { data: { accounts } } = useMatch();
+  const { data: { accounts } } = useMatch<LocationGenerics>();
   const [isOpen, setIsOpen] = useState(false);
 
-  const renderAccounts = (accounts as AccountEntity[]).map((account) => (
+  const renderAccounts = accounts!.map((account) => (
     <AccountButton
       account={account}
       key={account.id}
@@ -34,7 +34,7 @@ function AccountsPage (): React.ReactElement {
       <Layout>
         <Content>
           <Row>
-            {renderAccounts}
+            {accounts ? renderAccounts : null}
           </Row>
         </Content>
       </Layout>
