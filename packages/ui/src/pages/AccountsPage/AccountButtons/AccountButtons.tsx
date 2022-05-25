@@ -1,7 +1,8 @@
+/* eslint-disable @typescript-eslint/no-misused-promises */
 import { AccountEntity } from '@types';
 import ColorLine from 'components/misc/ColorLine';
 import React from 'react';
-import { Link } from 'react-location';
+import { Link, useLoadRoute } from 'react-location';
 import styled from 'styled-components';
 
 import { ReactComponent as Logo } from '../../../assets/svg/banks/lloyds.svg';
@@ -11,8 +12,13 @@ type Props = {
 }
 
 export default function AccountButton ({ account }: Props): React.ReactElement<Props> {
+  const loadRoute = useLoadRoute();
+
   return (
-    <Link to={`/account/${account.id}`}>
+    <Link
+      onMouseEnter={() => loadRoute({ to: account.id })}
+      to={`/account/${account.id}`}
+    >
       <Wrapper>
         <LogoWrapper>
           <Logo />
