@@ -7,13 +7,13 @@ import { Header } from './Header';
 
 type Props = {
   isOpen: boolean;
+  formId: string;
   handleClose: () => void;
-  handleSave?: () => void;
   children: React.ReactNode;
   title: string;
 }
 
-function Modal ({ children, handleClose, handleSave, isOpen, title }: Props): React.ReactElement<Props> | null {
+function Modal ({ children, formId, handleClose, isOpen, title }: Props): React.ReactElement<Props> | null {
   useEffect(() => {
     const closeOnEscapeKey = (e: KeyboardEvent) => e.key === 'Escape' ? handleClose() : null;
 
@@ -30,11 +30,11 @@ function Modal ({ children, handleClose, handleSave, isOpen, title }: Props): Re
     <Portal elementId='modal-root'>
       <Dialog>
         <Header>{title}</Header>
-        <div className='modal-content'>{children}</div>
+        {children}
         <Buttons>
           <Button
             filled
-            onClick={handleSave}
+            form={formId}
             style={{ marginLeft: '8px' }}
           >
             Save

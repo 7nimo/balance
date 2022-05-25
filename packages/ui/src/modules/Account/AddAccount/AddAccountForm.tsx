@@ -1,9 +1,169 @@
+/* eslint-disable @typescript-eslint/no-misused-promises */
 /* eslint-disable sort-keys */
 import { AccountEntity, ContextData } from '@types';
+import { createAccount } from 'core/api/account';
 import { useContextData } from 'core/api/context';
+import { removeEmptyFields } from 'core/utils/helpers';
 import React, { useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { useMutation } from 'react-query';
 import styled from 'styled-components';
+
+type OptionsItem<T> = T & { id: number, name: string };
+
+const renderOptions = (data: OptionsItem<unknown>[]) => {
+  return data.map((item) => (
+    <option
+      key={item.id}
+      value={item.id}
+    >
+      {item.name}
+    </option>
+  ));
+};
+
+export default function AddAccountForm (): React.ReactElement {
+  const { data } = useContextData();
+  const [banks, setBanks] = useState(data?.banks);
+  const [currency, setCurrency] = useState(data?.currency);
+
+  useEffect(() => {
+    if (data) {
+      const { banks, currency } = data;
+
+      setBanks(banks);
+      setCurrency(currency);
+    }
+  }, [data]);
+
+  const { clearErrors,
+    formState: { dirtyFields, errors, isDirty, isValid },
+    handleSubmit,
+    register } = useForm<Partial<AccountEntity>>({
+    mode: 'onChange',
+    shouldFocusError: false,
+    defaultValues: {
+      name: '',
+      bank: undefined,
+      accountNumber: undefined,
+      sortCode: undefined,
+      currency: undefined
+    }
+  });
+
+  const submitForm = useMutation((newAccount: Partial<AccountEntity>) => createAccount(newAccount));
+
+  const onSubmit: SubmitHandler<Partial<AccountEntity>> = (formData: Partial<AccountEntity>, evt) => {
+    evt?.preventDefault();
+    removeEmptyFields(formData);
+    submitForm.mutate(formData);
+  };
+
+  return (
+    <>
+      <Header>
+        General settings
+      </Header>
+      <Form
+        id='add-account'
+        onSubmit={handleSubmit(onSubmit)}
+      >
+        {/* name */}
+        <Item>
+          <Row>
+            <TitleContainer>
+              <Title>Name</Title>
+              <Description>Unique name for your bank account</Description>
+            </TitleContainer>
+            <Control>
+              <Input
+                type='text'
+                {...register('name', {
+                  required: 'Name is required'
+                })}
+              />
+            </Control>
+          </Row>
+        </Item>
+        <hr />
+        {/* bank */}
+        <Item>
+          <Row>
+            <TitleContainer>
+              <Title>Bank</Title>
+              <Description>Bank/financial institution maintaining this account</Description>
+            </TitleContainer>
+            <Control>
+              <Select
+                {...register('bank', {
+                  required: 'Bank is required',
+                  valueAsNumber: true
+                })}
+              >
+                <option value=''></option>
+                {banks ? renderOptions(banks) : null}
+              </Select>
+            </Control>
+          </Row>
+        </Item>
+        <hr />
+        {/* number */}
+        <Item>
+          <Row>
+            <TitleContainer>
+              <Title>Number</Title>
+              <Description>Bank account number (optional)</Description>
+            </TitleContainer>
+            <Control>
+              <Input
+                inputMode='numeric'
+                type='text'
+                {...register('accountNumber')}
+              />
+            </Control>
+          </Row>
+        </Item>
+        <hr />
+        {/* sort code */}
+        <Item>
+          <Row>
+            <TitleContainer>
+              <Title>Sort Code</Title>
+              <Description>UK only (optional)</Description>
+            </TitleContainer>
+            <Control>
+              <Input
+                inputMode='numeric'
+                type='text'
+                {...register('sortCode')}
+              />
+            </Control>
+          </Row>
+        </Item>
+        <hr />
+        {/* currency */}
+        <Item>
+          <Row>
+            <TitleContainer>
+              <Title>Currency</Title>
+              <Description>Currency for this bank account</Description>
+            </TitleContainer>
+            <Control>
+              <Select
+                {...register('currency', {
+                  valueAsNumber: true
+                })}
+              >
+                <option value=''></option>
+                {currency ? renderOptions(currency) : null}
+              </Select>
+            </Control>
+          </Row>
+        </Item>
+      </Form>
+    </>
+  );
+}
 
 const Header = styled.header`
   display: flex;
@@ -81,147 +241,3 @@ const Select = styled.select`
   color: var(--text-primary);
 `;
   // box-shadow: var(--modal-shadow);
-
-type OptionsItem<T> = T & { id: number, name: string };
-
-const renderOptions = (data: OptionsItem<unknown>[]) => {
-  return data.map((item) => (
-    <option
-      key={item.id}
-      value={item.id}
-    >
-      {item.name}
-    </option>
-  ));
-};
-
-export default function AddAccountModal (): React.ReactElement {
-  const { data } = useContextData();
-  const [banks, setBanks] = useState(data?.banks);
-  const [currency, setCurrency] = useState(data?.currency);
-
-  useEffect(() => {
-    if (data) {
-      const { banks, currency } = data;
-
-      setBanks(banks);
-      setCurrency(currency);
-    }
-  }, [data]);
-
-  const { clearErrors,
-    formState: { dirtyFields, errors, isDirty, isValid },
-    handleSubmit,
-    register } = useForm<Partial<AccountEntity>>({
-    mode: 'onChange',
-    shouldFocusError: false,
-    defaultValues: {
-      name: '',
-      bank: undefined,
-      accountNumber: undefined,
-      sortCode: undefined,
-      currency: undefined
-    }
-  });
-
-  return (
-    <>
-      <Header>
-        General settings
-      </Header>
-      <Form>
-        {/* name */}
-        <Item>
-          <Row>
-            <TitleContainer>
-              <Title>Name</Title>
-              <Description>Unique name for your bank account</Description>
-            </TitleContainer>
-            <Control>
-              <Input
-                type='text'
-                {...register('name', {
-                  required: 'Name is required'
-                })}
-              />
-            </Control>
-          </Row>
-        </Item>
-        <hr />
-        {/* bank */}
-        <Item>
-          <Row>
-            <TitleContainer>
-              <Title>Bank</Title>
-              <Description>Bank/financial institution maintaining this account</Description>
-            </TitleContainer>
-            <Control>
-              <Select
-                {...register('bank', {
-                  required: 'Bank is required'
-                })}
-              >
-                <option value=''></option>
-                {banks ? renderOptions(banks) : null}
-              </Select>
-            </Control>
-          </Row>
-        </Item>
-        <hr />
-        {/* number */}
-        <Item>
-          <Row>
-            <TitleContainer>
-              <Title>Number</Title>
-              <Description>Bank account number (optional)</Description>
-            </TitleContainer>
-            <Control>
-              <Input
-                inputMode='numeric'
-                type='text'
-                {...register('accountNumber')}
-              />
-            </Control>
-          </Row>
-        </Item>
-        <hr />
-        {/* sort code */}
-        <Item>
-          <Row>
-            <TitleContainer>
-              <Title>Sort Code</Title>
-              <Description>UK only (optional)</Description>
-            </TitleContainer>
-            <Control>
-              <Input
-                inputMode='numeric'
-                type='text'
-                {...register('sortCode')}
-              />
-            </Control>
-          </Row>
-        </Item>
-        <hr />
-        {/* currency */}
-        <Item>
-          <Row>
-            <TitleContainer>
-              <Title>Currency</Title>
-              <Description>Currency for this bank account</Description>
-            </TitleContainer>
-            <Control>
-              <Select
-                {...register('currency')}
-              >
-                <option value=''></option>
-                {currency ? renderOptions(currency) : null}
-              </Select>
-            </Control>
-          </Row>
-        </Item>
-      </Form>
-    </>
-  );
-}
-
-// { /* <option value=''></option> */ }
