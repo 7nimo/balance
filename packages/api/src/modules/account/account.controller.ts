@@ -13,9 +13,9 @@ import {
 import { ApiTags } from '@nestjs/swagger';
 import { User } from 'src/core/common/decorators/user.decorator';
 import { UserEntity } from 'src/modules/user/entities/user.entity';
-import { AccountRO, AccountsRO } from './interfaces/account.interface';
 import { AccountService } from './account.service';
 import { CreateAccountDto, UpdateAccountDto } from './dto';
+import { AccountEntity } from './entities/account.entity';
 
 @ApiTags('account')
 @Controller('account')
@@ -26,7 +26,7 @@ export class AccountsController {
   create(
     @User('id') userId: Partial<UserEntity>,
     @Body() createAccountDto: CreateAccountDto,
-  ): Promise<AccountRO> {
+  ): Promise<AccountEntity> {
     return this.accountService.create(userId, createAccountDto);
   }
 
@@ -34,14 +34,12 @@ export class AccountsController {
   async findOne(
     @User('userId') userId: string,
     @Param('accountId') accountId: string,
-  ): Promise<AccountRO> {
-    const account = await this.accountService.findOne(userId, accountId);
-
-    return { account };
+  ): Promise<AccountEntity> {
+    return await this.accountService.findOne(userId, accountId);
   }
 
   @Get()
-  findAll(@User('id') userId: string): Promise<AccountsRO> {
+  findAll(@User('id') userId: string): Promise<AccountEntity[]> {
     return this.accountService.findAll(userId);
   }
 

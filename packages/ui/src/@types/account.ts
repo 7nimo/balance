@@ -12,7 +12,3 @@ export interface AccountEntity {
   createdAt: string;
   updatedAt: string;
 }
-
-export interface Accounts {
-  accounts: AccountEntity[] | [];
-}
