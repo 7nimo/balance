@@ -1,19 +1,16 @@
-/* eslint-disable @typescript-eslint/no-shadow */
 import { Transaction } from '@types';
-import { Content, Layout } from 'components/_Layout/Layout';
 import Block from 'components/box/Block/Block';
-import { SearchBar } from 'components/forms/SearchBar/SearchBar';
 import { useDebounce } from 'hooks/useDebounce';
-import { ActionBar } from 'modules/Account/TransactionsTable/ActionBar/ActionBar';
-import TransactionsTable from 'modules/Account/TransactionsTable/TransactionsTable';
+import { SearchBar } from 'modules/Account/components/SearchBar/SearchBar';
 import LineChart from 'modules/Charts/LineChart/LineChart';
 import React, { useEffect, useState } from 'react';
 import { useMatch } from 'react-location';
 import { LocationGenerics } from 'routes';
 
-import AccountHeader from './AccountHeader/AccountHeader';
+import { SearchWrapper } from './components/TransactionsTable/SearchWrapper';
+import TransactionsTable from './components/TransactionsTable/TransactionsTable';
 
-function AccountContainer (): React.ReactElement {
+export default function AccountOverview (): React.ReactElement {
   const { data: { account, transactions } } = useMatch<LocationGenerics>();
 
   // !search
@@ -45,36 +42,26 @@ function AccountContainer (): React.ReactElement {
   }, [query, transactions]);
 
   return (
-    <Layout>
-      <Content>
-        <AccountHeader
-          currency={account?.currency}
-          title={account?.name}
-        />
+    <>
+      <Block>
+        <LineChart />
+      </Block>
 
-        {/* <Outlet /> */}
-        <Block>
-          <LineChart />
-        </Block>
+      <Block title='Transactions'>
+        <SearchWrapper>
+          <SearchBar
+            handleChange={(e) => handleChange(e.target.value)}
+            handleReset={() => setQuery('')}
+            placeholder='Search'
+            value={query}
+          />
+        </SearchWrapper>
 
-        <Block title='Transactions'>
-          <ActionBar>
-            <SearchBar
-              handleChange={(e) => handleChange(e.target.value)}
-              handleReset={() => setQuery('')}
-              placeholder='Search'
-              value={query}
-            />
-          </ActionBar>
-
-          <TransactionsTable transactions={filteredTransactions } />
-        </Block>
-      </Content>
-    </Layout>
+        <TransactionsTable transactions={filteredTransactions} />
+      </Block>
+    </>
   );
 }
-
-export default AccountContainer;
 
 // useEffect(() => {
 //   return () => {
