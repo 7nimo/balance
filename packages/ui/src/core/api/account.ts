@@ -1,8 +1,12 @@
 import { AccountEntity, Accounts } from '@types';
 import { useQuery, UseQueryResult } from 'react-query';
 
-import { get } from '../utils/http.util';
+import { get, post } from '../utils/http.util';
 import { API_URL } from './constants';
+
+export const createAccount = async (accountData: Partial<AccountEntity>): Promise<void> => {
+  await post<Partial<AccountEntity>>(`${API_URL}/account`, accountData);
+};
 
 export const fetchAccountById = async (accountId: string): Promise<AccountEntity> => {
   return get<AccountEntity>(`${API_URL}/account/${accountId}`);
