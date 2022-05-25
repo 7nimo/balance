@@ -1,95 +1,83 @@
 /* eslint-disable @typescript-eslint/no-shadow */
-import { AccountEntity, Transaction } from '@types';
+import { Transaction } from '@types';
+import { Content, Layout } from 'components/_Layout/Layout';
 import Block from 'components/box/Block/Block';
 import { SearchBar } from 'components/forms/SearchBar/SearchBar';
-import { useAccount } from 'core/api/account';
-import { useTransactions } from 'core/api/transaction';
 import { useDebounce } from 'hooks/useDebounce';
 import { ActionBar } from 'modules/Account/TransactionsTable/ActionBar/ActionBar';
 import TransactionsTable from 'modules/Account/TransactionsTable/TransactionsTable';
 import LineChart from 'modules/Charts/LineChart/LineChart';
 import React, { useEffect, useState } from 'react';
 import { useMatch } from 'react-location';
+import { LocationGenerics } from 'routes';
 
 import AccountHeader from './AccountHeader/AccountHeader';
 
 function AccountContainer (): React.ReactElement {
+  const { data: { account, transactions } } = useMatch<LocationGenerics>();
+
+  // !search
   const [query, setQuery] = useState<string>('');
-  const [_transactions, setTransactions] = useState<Transaction[] | null>(null);
-  const [account, setAccount] = useState<AccountEntity | null>(null);
-
-  const { data: { transactions },
-    params: { accountId } } = useMatch();
-
-  const { data: accountData } = useAccount(accountId);
-
-  // const [assets, setAssetData] = useStore((state) => [state.assets, state.setAssetD3Data]);
-
-  const { data } = useTransactions(accountId, (initialData) => {
-    setTransactions(initialData.transactions);
-    // setAssetData(accountId, initialData.transactions, assets);
-  });
-
-  useEffect(() => {
-    if (data && query === '') setTransactions(data.transactions);
-  }, [query, data]);
+  const [filteredTransactions, setFilteredTransactions] = useState<Transaction[] | null>(null);
 
   const search = (query: string): void => {
     const q = query.toLowerCase();
-    const result: Transaction[] = (transactions as Transaction[]).filter((transaction) => {
+    const result: Transaction[] = transactions!.filter((transaction) => {
       return transaction.transactionDesc.toLowerCase().includes(q);
     });
 
-    setTransactions(result);
+    setFilteredTransactions(result);
   };
 
-  const debouncedSearch = useDebounce((query) => search(query), 1000, data);
+  const debouncedSearch = useDebounce((query) => search(query), 1000, transactions);
 
   const handleChange = (query: string): void => {
     setQuery(query);
 
-    if (data && query !== '') {
+    if (transactions && query !== '') {
       debouncedSearch(query);
     }
   };
 
+  // reset transactions when search query is empty
   useEffect(() => {
-    return () => {
-      debouncedSearch.cancel();
-    };
-  }, [debouncedSearch]);
-
-  useEffect(() => {
-    if (accountData !== undefined && !account) {
-      setAccount(accountData.account);
-    }
-  }, [accountData, account]);
+    if (transactions && query === '') setFilteredTransactions(transactions);
+  }, [query, transactions]);
 
   return (
-    <>
-      <AccountHeader
-        currency={account?.currency}
-        title={account?.name}
-      />
+    <Layout>
+      <Content>
+        <AccountHeader
+          currency={account?.currency}
+          title={account?.name}
+        />
 
-      <Block>
-        <LineChart accountId={accountId} />
-      </Block>
+        {/* <Outlet /> */}
+        <Block>
+          <LineChart />
+        </Block>
 
-      <Block title='Transactions'>
-        <ActionBar>
-          <SearchBar
-            handleChange={(e) => handleChange(e.target.value)}
-            handleReset={() => setQuery('')}
-            placeholder='Search'
-            value={query}
-          />
-        </ActionBar>
+        <Block title='Transactions'>
+          <ActionBar>
+            <SearchBar
+              handleChange={(e) => handleChange(e.target.value)}
+              handleReset={() => setQuery('')}
+              placeholder='Search'
+              value={query}
+            />
+          </ActionBar>
 
-        <TransactionsTable transactions={_transactions } />
-      </Block>
-    </>
+          <TransactionsTable transactions={filteredTransactions } />
+        </Block>
+      </Content>
+    </Layout>
   );
 }
 
 export default AccountContainer;
+
+// useEffect(() => {
+//   return () => {
+//     debouncedSearch.cancel();
+//   };
+// }, [debouncedSearch]);
