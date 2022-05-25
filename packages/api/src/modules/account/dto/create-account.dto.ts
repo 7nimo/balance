@@ -2,7 +2,6 @@ import {
   IsAlphanumeric,
   IsInt,
   IsNotEmpty,
-  IsNumber,
   IsOptional,
   IsString,
   Matches,
@@ -31,7 +30,4 @@ export class CreateAccountDto {
 
   @IsInt()
   readonly currency: CurrencyEntity;
-
-  @IsNumber()
-  readonly balance: number;
 }
