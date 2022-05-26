@@ -1,26 +1,14 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 /* eslint-disable sort-keys */
-import { AccountEntity, ContextData } from '@types';
+import { CreateAccountDto } from '@types';
 import { createAccount } from 'core/api/account';
 import { useContextData } from 'core/api/context';
+import { renderOptions } from 'core/utils/form.util';
 import { removeEmptyFields } from 'core/utils/helpers';
 import React, { useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useMutation } from 'react-query';
 import styled from 'styled-components';
-
-type OptionsItem<T> = T & { id: number, name: string };
-
-const renderOptions = (data: OptionsItem<unknown>[]) => {
-  return data.map((item) => (
-    <option
-      key={item.id}
-      value={item.id}
-    >
-      {item.name}
-    </option>
-  ));
-};
 
 export default function AddAccountForm (): React.ReactElement {
   const { data } = useContextData();
@@ -39,21 +27,20 @@ export default function AddAccountForm (): React.ReactElement {
   const { clearErrors,
     formState: { dirtyFields, errors, isDirty, isValid },
     handleSubmit,
-    register } = useForm<Partial<AccountEntity>>({
+    register } = useForm<CreateAccountDto>({
     mode: 'onChange',
     shouldFocusError: false,
     defaultValues: {
       name: '',
       bank: undefined,
       accountNumber: undefined,
-      sortCode: undefined,
       currency: undefined
     }
   });
 
-  const submitForm = useMutation((newAccount: Partial<AccountEntity>) => createAccount(newAccount));
+  const submitForm = useMutation((newAccountData: CreateAccountDto) => createAccount(newAccountData));
 
-  const onSubmit: SubmitHandler<Partial<AccountEntity>> = (formData: Partial<AccountEntity>, evt) => {
+  const onSubmit: SubmitHandler<CreateAccountDto> = (formData: CreateAccountDto, evt) => {
     evt?.preventDefault();
     removeEmptyFields(formData);
     submitForm.mutate(formData);
@@ -119,23 +106,6 @@ export default function AddAccountForm (): React.ReactElement {
                 inputMode='numeric'
                 type='text'
                 {...register('accountNumber')}
-              />
-            </Control>
-          </Row>
-        </Item>
-        <hr />
-        {/* sort code */}
-        <Item>
-          <Row>
-            <TitleContainer>
-              <Title>Sort Code</Title>
-              <Description>UK only (optional)</Description>
-            </TitleContainer>
-            <Control>
-              <Input
-                inputMode='numeric'
-                type='text'
-                {...register('sortCode')}
               />
             </Control>
           </Row>

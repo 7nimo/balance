@@ -23,9 +23,6 @@ export class AccountEntity {
   name: string;
 
   @Column({ nullable: true })
-  sortCode: string;
-
-  @Column({ nullable: true })
   accountNumber: string;
 
   @Column({ type: 'numeric', precision: 15, scale: 6, default: 0 })

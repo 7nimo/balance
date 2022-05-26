@@ -4,7 +4,6 @@ import {
   IsNotEmpty,
   IsOptional,
   IsString,
-  Matches,
   MaxLength,
 } from 'class-validator';
 import { BankEntity } from 'src/modules/context/entities/bank.entity';
@@ -14,10 +13,6 @@ export class CreateAccountDto {
   @IsNotEmpty()
   @IsString()
   readonly name: string;
-
-  @IsOptional()
-  @Matches(/(\d{2}-){2}(\d{2})/)
-  readonly sortCode?: string;
 
   @IsOptional()
   @IsString()

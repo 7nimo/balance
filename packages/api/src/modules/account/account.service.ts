@@ -52,16 +52,17 @@ export class AccountService {
         },
       },
       relations: {
-        user: true,
+        bank: true,
+        currency: true,
       },
     });
   }
 
   async update(
-    account: AccountEntity,
+    accountId: string,
     updateData: UpdateAccountDto,
   ): Promise<UpdateResult> {
-    return this.accountRepository.update(account, updateData);
+    return this.accountRepository.update(accountId, updateData);
   }
 
   async remove(userId: string, accountId: string): Promise<DeleteResult> {

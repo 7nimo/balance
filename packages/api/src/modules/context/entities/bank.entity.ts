@@ -10,4 +10,10 @@ export class BankEntity {
 
   @Column()
   country: string;
+
+  @Column('text', { array: true })
+  colors: string[];
+
+  @Column()
+  img: string;
 }

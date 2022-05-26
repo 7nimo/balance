@@ -53,7 +53,7 @@ export class AccountsController {
     const account = await this.accountService.findOne(userId, accountId);
 
     if (account) {
-      await this.accountService.update(account, updateAccountDto);
+      await this.accountService.update(accountId, updateAccountDto);
     } else
       throw new NotFoundException(
         `Account with id ${accountId} does not exist`,
