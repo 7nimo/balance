@@ -1,7 +1,7 @@
 import Portal from 'components/Portal';
 import React, { useEffect } from 'react';
 
-import { Button, Buttons } from './Buttons';
+import { Button, Buttons } from '../buttons/Buttons';
 import { Dialog } from './Dialog';
 import { Header } from './Header';
 
@@ -44,7 +44,6 @@ function Modal ({ children, formId, handleClose, isOpen, title }: Props): React.
           >
             Close
           </Button>
-
         </Buttons>
       </Dialog>
     </Portal>
