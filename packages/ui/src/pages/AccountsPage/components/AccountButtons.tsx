@@ -5,7 +5,7 @@ import React from 'react';
 import { Link, useLoadRoute } from 'react-location';
 import styled from 'styled-components';
 
-import { ReactComponent as Logo } from '../../../assets/svg/banks/lloyds.svg';
+import { ReactComponent as Logo } from '../../../assets/svg/banks/0pm0xahjtbhcxsul89ypocwgk.svg';
 
 type Props = {
   account: AccountEntity;
