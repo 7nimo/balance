@@ -39,8 +39,18 @@ export const currencyData: CreateCurrencyDto[] = [
 ];
 
 export const bankData: CreateBankDto[] = [
-  { name: 'mBank', country: 'Poland' },
-  { name: 'Lloyds', country: 'United Kingdom' },
+  {
+    name: 'mBank',
+    colors: ['#e90a0a', '#ff8600', '#ae0000', '#0065b1', '#008520'],
+    country: 'Poland',
+    img: '0pm0xahjtbhcxsul89ypocwgk',
+  },
+  {
+    name: 'Lloyds',
+    colors: ['#024731', '#006a4d', '#2d8259', '#FFFFFF', '#77ba00'],
+    country: 'United Kingdom',
+    img: 'tqucp5jbmciedm9773hxqt4y0',
+  },
 ];
 
 export const CURRENCY: Map<string, CurrencyEntity> = new Map(
