@@ -21,12 +21,14 @@ function AccountHeader ({ currency, title }: Props): React.ReactElement {
       <div className={s.btnGroup}>
         <Link
           className={s.btn}
+          getActiveProps={() => ({ className: `${s.active}` })}
           to='./'
         >
           Overview
         </Link>
         <Link
           className={s.btn}
+          getActiveProps={() => ({ className: `${s.active}` })}
           to='./settings'
         >
           Settings
