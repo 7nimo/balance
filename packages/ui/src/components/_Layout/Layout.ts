@@ -16,7 +16,7 @@ export const Content = styled.div`
   flex: 0 1 auto;
   height: 100%;
   width: 100%;
-  padding: 24px 0;
+  padding: 46px 0;
   max-width: 1200px;
 `;
 

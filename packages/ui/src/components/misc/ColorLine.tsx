@@ -15,7 +15,7 @@ const defaultGradient = 'linear-gradient(to right, #9647E6 25%,#7737E6 25%, #773
 const Line = React.memo(styled.div`
   width: 100%;
   height: 10%;
-  magrin-bottom: auto;
+  margin-bottom: auto;
   border-radius: 20px;
   background-image: ${(props: LineProps) => props.gradient || defaultGradient};
 `);
