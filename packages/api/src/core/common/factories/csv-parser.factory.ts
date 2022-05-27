@@ -3,6 +3,7 @@ import * as fs from 'fs';
 import * as readline from 'readline';
 import { EOL } from 'os';
 import { TransactionEntity } from 'src/modules/transaction/entities/transaction.entity';
+import { AccountEntity } from 'src/modules/account/entities/account.entity';
 
 @Injectable()
 export class CsvParserFactory {
@@ -16,7 +17,7 @@ export class CsvParserFactory {
   }
 
   async parseLloydsCsv(
-    accountId: string,
+    account: AccountEntity,
     filePath: string,
   ): Promise<TransactionEntity[]> {
     const transactions: TransactionEntity[] = [];
@@ -44,7 +45,7 @@ export class CsvParserFactory {
       if (record[5]) transaction.debitAmount = record[5];
       if (record[6]) transaction.creditAmount = record[6];
       transaction.balance = record[7];
-      // transaction.account = accountId;
+      transaction.account = account;
 
       transactions.push(transaction);
     }
@@ -52,7 +53,7 @@ export class CsvParserFactory {
   }
 
   async parseMBankCsv(
-    accountId: string,
+    account: AccountEntity,
     filePath: string,
   ): Promise<TransactionEntity[]> {
     const transactions: TransactionEntity[] = [];
@@ -106,7 +107,7 @@ export class CsvParserFactory {
         transaction.creditAmount = (+record[6]).toFixed(2);
       }
       transaction.balance = (+record[7]).toFixed(2);
-      // transaction.account = accountId;
+      transaction.account = account;
 
       transactions.push(transaction);
     }
