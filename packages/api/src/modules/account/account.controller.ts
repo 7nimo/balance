@@ -32,8 +32,8 @@ export class AccountsController {
 
   @Get(':accountId')
   async findOne(
-    @User('userId') userId: string,
-    @Param('accountId') accountId: string,
+    @User('id') userId: string,
+    @Param('accountId', new ParseUUIDPipe()) accountId: string,
   ): Promise<AccountEntity> {
     return await this.accountService.findOne(userId, accountId);
   }
