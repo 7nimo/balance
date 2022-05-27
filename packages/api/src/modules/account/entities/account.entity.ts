@@ -2,10 +2,8 @@ import {
   Column,
   CreateDateColumn,
   Entity,
-  JoinColumn,
   ManyToOne,
   OneToMany,
-  OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -28,12 +26,10 @@ export class AccountEntity {
   @Column({ type: 'numeric', precision: 15, scale: 6, default: 0 })
   balance: number;
 
-  @OneToOne(() => BankEntity)
-  @JoinColumn()
+  @ManyToOne(() => BankEntity, (bank) => bank.accounts)
   bank: BankEntity;
 
-  @OneToOne(() => CurrencyEntity)
-  @JoinColumn()
+  @ManyToOne(() => CurrencyEntity, (currency) => currency.accounts)
   currency: CurrencyEntity;
 
   @OneToMany(() => TransactionEntity, (transaction) => transaction.account)

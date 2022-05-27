@@ -1,8 +1,5 @@
 import { CurrencyType } from 'src/core/common/enums/currency-type.enum';
-import { CreateUserDto } from 'src/modules/user/dto';
 import { CreateBankDto, CreateCurrencyDto } from 'src/modules/context/dto';
-import { BankEntity } from 'src/modules/context/entities/bank.entity';
-import { CurrencyEntity } from 'src/modules/context/entities/currency.entity';
 
 export const currencyData: CreateCurrencyDto[] = [
   {
@@ -52,17 +49,3 @@ export const bankData: CreateBankDto[] = [
     img: 'tqucp5jbmciedm9773hxqt4y0',
   },
 ];
-
-export const CURRENCY: Map<string, CurrencyEntity> = new Map(
-  currencyData.map((v, i) => [v.code, { id: i + 1, ...v }]),
-);
-
-export const BANKS: Map<string, BankEntity> = new Map(
-  bankData.map((v, i) => [v.name, { id: i + 1, ...v }]),
-);
-
-export const userData: CreateUserDto = {
-  username: 'User',
-  email: 'user@email.com',
-  password: 'password',
-};
