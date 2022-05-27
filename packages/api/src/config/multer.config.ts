@@ -8,12 +8,12 @@ import { UnprocessableEntityException } from '@nestjs/common';
 import { registerAs } from '@nestjs/config';
 
 const multerConfig = {
-  path: process.env.MULTER_DEST,
-  limit: process.env.MULTER_LIMIT,
+  destPath: process.env.MULTER_DEST,
+  sizeLimit: process.env.MULTER_LIMIT,
 };
 
-const multerOptions: MulterOptions = {
-  limits: { fileSize: +multerConfig.limit },
+export const multerOptions: MulterOptions = {
+  limits: { fileSize: +multerConfig.sizeLimit },
   fileFilter: (req: any, file: any, cb: any) => {
     if (file.originalname.match(/\.(csv)$/)) {
       cb(null, true);
@@ -28,11 +28,11 @@ const multerOptions: MulterOptions = {
   },
   storage: diskStorage({
     destination: (req: any, file: any, cb: any) => {
-      const uploadPath = multerConfig.path;
-      if (!existsSync(uploadPath)) {
-        mkdirSync(uploadPath);
+      const destPath = multerConfig.destPath;
+      if (!existsSync(destPath)) {
+        mkdirSync(destPath);
       }
-      cb(null, uploadPath);
+      cb(null, destPath);
     },
     filename: (req: any, file: any, cb: any) => {
       cb(null, `${uuid()}${extname(file.originalname)}`);
@@ -41,6 +41,5 @@ const multerOptions: MulterOptions = {
 };
 
 export default registerAs('multer', () => ({
-  ...multerConfig,
   ...multerOptions,
 }));
