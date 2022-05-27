@@ -65,6 +65,10 @@ export class AccountService {
     return this.accountRepository.update(accountId, updateData);
   }
 
+  async patch(accountId: string, updateData: UpdateAccountDto) {
+    return this.accountRepository.update({ id: accountId }, updateData);
+  }
+
   async remove(userId: string, accountId: string): Promise<DeleteResult> {
     return await this.dataSource
       .createQueryBuilder()
