@@ -1,16 +1,22 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 /* eslint-disable sort-keys */
-import { CreateAccountDto } from '@types';
+import { AccountEntity, CreateAccountDto } from '@types';
 import { createAccount } from 'core/api/account';
 import { useContextData } from 'core/api/context';
+import { queryClient } from 'core/lib/react-query';
 import { renderOptions } from 'core/utils/form.util';
 import { removeEmptyFields } from 'core/utils/helpers';
 import React, { useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useMutation } from 'react-query';
-import styled from 'styled-components';
 
-export default function AddAccountForm (): React.ReactElement {
+import { Control, Description, Form, Header, Input, Item, Row, Select, Title, TitleContainer } from './styled';
+
+type Props = {
+  closeModal: () => void;
+}
+
+export default function AddAccountForm ({ closeModal }: Props): React.ReactElement<Props> {
   const { data } = useContextData();
   const [banks, setBanks] = useState(data?.banks);
   const [currency, setCurrency] = useState(data?.currency);
@@ -32,13 +38,18 @@ export default function AddAccountForm (): React.ReactElement {
     shouldFocusError: false,
     defaultValues: {
       name: '',
-      bank: undefined,
-      accountNumber: undefined,
-      currency: undefined
+      bank: -1,
+      accountNumber: '',
+      currency: -1
     }
   });
 
-  const submitForm = useMutation((newAccountData: CreateAccountDto) => createAccount(newAccountData));
+  const submitForm = useMutation((newAccountData: CreateAccountDto) => createAccount(newAccountData), {
+    onSuccess: async () => {
+      await queryClient.refetchQueries('accounts');
+      closeModal();
+    }
+  });
 
   const onSubmit: SubmitHandler<CreateAccountDto> = (formData: CreateAccountDto, evt) => {
     evt?.preventDefault();
@@ -134,80 +145,3 @@ export default function AddAccountForm (): React.ReactElement {
     </>
   );
 }
-
-const Header = styled.header`
-  display: flex;
-  align-items: center;
-  position: relative;
-  border: 1px solid var(--border-color);
-  border-left: none;
-  border-right: none;
-  background-color: rgba(232, 234, 237, 0.05);
-  padding: 8px 24px;
-  font-weight: 600;
-`;
-
-const Form = styled.form`
-  padding: 0 24px;
-`;
-
-const Item = styled.div`
-  margin: 20px 0;
-  &::first-child{
-    margin-top: 0;
-  }
-`;
-
-const Row = styled.div`
-  display: flex;
-  max-height: 64px;
-  align-items: center;
-`;
-
-const TitleContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  font: 400 16px/24px;
-`;
-
-const Title = styled.div`
-  color: var(--text-primary);
-
-`;
-
-const Description = styled.div`
-  color: var(--text-secondary);
-`;
-
-const Control = styled.div`
-  margin-left: auto;
-  max-width: 250px;
-  color: var(--text-secondary);
-`;
-
-const Input = styled.input`
-  display: block;
-  background-color: transparent;
-  border: 1px solid var(--border-color);
-  border-radius: 4px;
-  outline: none;
-  padding: 8px 15px;
-  border-radius: 4px;
-  min-width: 250px;
-  font: 400 16px/24px;
-  color: var(--text-primary);
-`;
-
-const Select = styled.select`
-  display: block;
-  background-color: transparent;
-  border: 1px solid var(--border-color);
-  border-radius: 4px;
-  outline: none;
-  padding: 8px 15px;
-  border-radius: 4px;
-  min-width: 250px;
-  font: 400 16px/24px;
-  color: var(--text-primary);
-`;
-  // box-shadow: var(--modal-shadow);

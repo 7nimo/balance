@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const Header = styled.div`
-  padding-bottom: 12px;
+  padding: 12px 0;
   margin-bottom: 24px;
   border-bottom: 1px solid var(--line);
 `;
