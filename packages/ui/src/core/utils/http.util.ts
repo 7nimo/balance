@@ -10,33 +10,10 @@ export async function http<T> (request: Request): Promise<T> {
   const response: HttpResponse<T> = await fetch(request);
 
   if (response.ok) {
-    const data = await response.json();
-
-    return data;
+    return await response.json();
   }
 
   return Promise.reject(response.statusText);
-}
-
-export async function httppp<T> (request: RequestInfo): Promise<HttpResponse<T>> {
-  const response: HttpResponse<T> = await fetch(request).catch((err) => {
-    throw new Error(err);
-  });
-
-  if (!response.ok) {
-    throw new Error(response.statusText);
-  }
-
-  try {
-    // may error if there is no body
-    response.data = await response.json();
-  } catch (error) {
-    if (error instanceof Error) {
-      throw new Error(error.message);
-    }
-  }
-
-  return response;
 }
 
 export async function get<T> (
@@ -79,6 +56,21 @@ export async function postFile<T> (
   return http<T>(new Request(path, args));
 }
 
+export async function patch<T> (
+  path: string,
+  body: any,
+  args: RequestInit = {
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    credentials: 'include',
+    body: JSON.stringify(body)
+  }
+): Promise<T> {
+  return http<T>(new Request(path, args));
+}
+
 export async function put<T> (
   path: string,
   body: any,
@@ -88,7 +80,7 @@ export async function put<T> (
       'Content-Type': 'application/json'
     },
     credentials: 'include',
-    body
+    body: JSON.stringify(body)
   }
 ): Promise<T> {
   return http<T>(new Request(path, args));
