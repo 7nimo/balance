@@ -27,7 +27,7 @@ function App (): React.ReactElement {
               routes={routes}
             >
               <Outlet />
-              <ReactLocationDevtools initialIsOpen={true} />
+              {/* <ReactLocationDevtools initialIsOpen={true} /> */}
             </Router>
         </Provider>
       </ReactQueryProvider>
