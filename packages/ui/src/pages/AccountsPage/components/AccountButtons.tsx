@@ -5,11 +5,14 @@ import React from 'react';
 import { Link, useLoadRoute } from 'react-location';
 import styled from 'styled-components';
 
-import { ReactComponent as Logo } from '../../../assets/svg/banks/0pm0xahjtbhcxsul89ypocwgk.svg';
-
 type Props = {
   account: AccountEntity;
 }
+
+const Img = styled.img`
+  height: 80%;
+  width: 80%;
+`;
 
 export default function AccountButton ({ account }: Props): React.ReactElement<Props> {
   const loadRoute = useLoadRoute();
@@ -21,10 +24,13 @@ export default function AccountButton ({ account }: Props): React.ReactElement<P
     >
       <Wrapper>
         <LogoWrapper>
-          <Logo />
+          <Img
+            alt={`Logo of ${account.bank.name}`}
+            src={`assets/img/${account.bank.img}.svg`}
+          />
         </LogoWrapper>
         <H2>{account.name}</H2>
-        <ColorLine />
+        <ColorLine colors={account.bank.colors} />
       </Wrapper>
     </Link>
   );
@@ -33,8 +39,8 @@ export default function AccountButton ({ account }: Props): React.ReactElement<P
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-  height: 300px;
-  width: 300px;
+  height: 280px;
+  width: 280px;
   padding: 1rem;
   background: var(--card-bg);
   color: var(--text-color);
@@ -42,6 +48,7 @@ const Wrapper = styled.div`
   border: 1px solid var(--line);
   margin: 10px;
   cursor: pointer;
+  overflow: hidden;
 
   &:hover {
     background-color: rgba(0, 0, 255, .2);
@@ -56,15 +63,17 @@ const LogoWrapper = styled.div`
   height: 66%;
   width: 66%;
   background: var(--bg);
-  font-size: 150px;
 
   [class*="dark"] & {
     background: #eeeeeedc;
   }
 `;
 
-const H2 = styled.h2`  
+const H2 = styled.h2`
+  width: 100%;
   font-weight: 600;
   margin-top: .75rem;
   margin-bottom: 1rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
