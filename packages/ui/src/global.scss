@@ -192,6 +192,12 @@ $colors: (
 
   --random-grad: radial-gradient(circle, rgba(131,58,180,1) 0%, rgba(204,41,89,0.16148466222426472) 36%, rgba(253,29,29,1) 73%, rgba(252,176,69,1) 100%);
 
+  --grad90: linear-gradient(90deg, var(--line) 50%, transparent 50%);
+  --grad0: linear-gradient(0deg, var(--line) 50%, transparent 50%);
+  --c-grad90: linear-gradient(90deg, var(--icon-color-accent) 50%, transparent 50%);
+  --c-grad0: linear-gradient(0deg, var(--icon-color-accent) 50%, transparent 50%);
+
+
   @include default-theme;
 }
 

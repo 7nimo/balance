@@ -3,8 +3,9 @@ import SvgAdd from 'components/icons/actions/Add';
 import Modal from 'components/Modal/Modal';
 import { RelativeElements } from 'components/RelativeElements/RelativeElements';
 import { Toolbox } from 'components/RelativeElements/Toolbox';
-import AddAccountForm from 'modules/Account/forms/AddAccountForm';
-import React, { useState } from 'react';
+import { useAccounts } from 'core/api/account';
+import AddAccountForm from 'modules/Account/forms/AddAccountForm/AddAccountForm';
+import React, { useEffect, useState } from 'react';
 import { useMatch } from 'react-location';
 import { LocationGenerics } from 'routes';
 
@@ -15,7 +16,13 @@ function AccountsPage (): React.ReactElement {
   const { data: { accounts } } = useMatch<LocationGenerics>();
   const [isOpen, setIsOpen] = useState(false);
 
-  const renderAccounts = accounts!.map((account) => (
+  const { data } = useAccounts();
+
+  // useEffect(() => {
+  //   // console.log(data);
+  // }, [data]);
+
+  const renderAccounts = data?.map((account) => (
     <AccountButton
       account={account}
       key={account.id}
@@ -48,7 +55,7 @@ function AccountsPage (): React.ReactElement {
           isOpen={isOpen}
           title='Add Account'
         >
-          <AddAccountForm />
+          <AddAccountForm closeModal={() => setIsOpen(false)} />
         </Modal>
       </RelativeElements>
     </>
