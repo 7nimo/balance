@@ -24,7 +24,7 @@ export type LocationGenerics = MakeGenerics<{
   LoaderData: {
     _account: AccountEntity;
     accounts: AccountEntity[];
-    transactions: Transaction[];
+    _transactions: Transaction[];
     user: UserEntity;
   };
 }>;

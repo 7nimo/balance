@@ -13,7 +13,6 @@ import { TransactionService } from './transaction.service';
 import { ApiTags } from '@nestjs/swagger';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { AccountService } from 'src/modules/account/account.service';
-import { TransactionsRO } from './transaction.interface';
 import { TransactionEntity } from './entities/transaction.entity';
 import { CsvParserService } from 'src/core/common/services/csv-parser/csv-parser.service';
 import { MulterOptions } from '@nestjs/platform-express/multer/interfaces/multer-options.interface';
@@ -60,7 +59,7 @@ export class TransactionController {
   findAll(
     @User('id') userId: string,
     @Param('accountId', new ParseUUIDPipe({ version: '4' })) accountId: string,
-  ): Promise<TransactionsRO> {
+  ): Promise<TransactionEntity[]> {
     return this.transactionService.findAll(userId, accountId);
   }
 

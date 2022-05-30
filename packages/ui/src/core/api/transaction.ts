@@ -1,4 +1,4 @@
-import { Transaction, Transactions } from '@types';
+import { Transaction } from '@types';
 import { get } from 'core/utils/http.util';
 import { useQuery, UseQueryResult } from 'react-query';
 
@@ -10,8 +10,8 @@ export const fetchTransactionsByAccountId = async (accountId: string): Promise<T
 
 export const useTransactions = (
   accountId: string,
-  setTransactions?: ({ transactions }: Transactions) => void
-): UseQueryResult<Transactions> =>
+  setTransactions?: (transactions: Transaction[]) => void
+): UseQueryResult<Transaction[]> =>
   useQuery(['transactions', accountId], () => fetchTransactionsByAccountId(accountId), {
     notifyOnChangeProps: ['data', 'error'],
     onSuccess: setTransactions

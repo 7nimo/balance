@@ -1,5 +1,6 @@
 import { Transaction } from '@types';
 import Block from 'components/box/Block/Block';
+import { useTransactions } from 'core/api/transaction';
 import { useDebounce } from 'hooks/useDebounce';
 import { SearchBar } from 'modules/Account/components/SearchBar/SearchBar';
 import LineChart from 'modules/Charts/LineChart/LineChart';
@@ -11,7 +12,10 @@ import { SearchWrapper } from './components/TransactionsTable/SearchWrapper';
 import TransactionsTable from './components/TransactionsTable/TransactionsTable';
 
 export default function AccountOverview (): React.ReactElement {
-  const { data: { _account, transactions } } = useMatch<LocationGenerics>();
+  const { params: { accountId } } = useMatch<LocationGenerics>();
+  const { data: { _account, _transactions } } = useMatch<LocationGenerics>();
+
+  const { data: transactions } = useTransactions(accountId);
 
   // !search
   const [query, setQuery] = useState<string>('');
