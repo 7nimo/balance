@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 /* eslint-disable sort-keys */
-import { LoginCredentials, RegisterCredentials } from '@types';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { LoginCredentials, RegisterCredentials, registerSchema } from '@types';
 import cx from 'classnames';
 import ErrorMessage from 'components/status/ErrorMessage';
 import { signIn, signUp } from 'core/api/auth';
@@ -8,6 +9,7 @@ import React, { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-location';
 
+import { FieldAlert } from '../styled';
 import s from './SignUpForm.module.scss';
 
 function SignUpForm (): React.ReactElement {
@@ -18,8 +20,10 @@ function SignUpForm (): React.ReactElement {
     formState: { dirtyFields, errors, isDirty, isValid },
     handleSubmit,
     register } = useForm<RegisterCredentials>({
-    mode: 'onChange',
+    mode: 'onBlur',
+    reValidateMode: 'onBlur',
     shouldFocusError: false,
+    resolver: yupResolver(registerSchema),
     defaultValues: {
       username: '',
       email: '',
@@ -69,7 +73,9 @@ function SignUpForm (): React.ReactElement {
                 Username
               </label>
               <input
-                autoComplete='username'
+                autoCapitalize='none'
+                autoComplete='off'
+                autoCorrect='off'
                 className={cx(s.fieldInput, { [s.fieldError]: errors.username })}
                 id='username'
                 onFocus={() => clearErrors('username')}
@@ -78,6 +84,7 @@ function SignUpForm (): React.ReactElement {
                   required: 'Username is required'
                 })}
               />
+                {errors.username && <FieldAlert>{errors.username.message}</FieldAlert>}
             </div>
           </div>
 
@@ -93,7 +100,9 @@ function SignUpForm (): React.ReactElement {
                 Email
               </label>
               <input
-                autoComplete='email'
+                autoCapitalize='none'
+                autoComplete='off'
+                autoCorrect='off'
                 className={cx(s.fieldInput, { [s.fieldError]: errors.email })}
                 id='email'
                 onFocus={() => clearErrors('email')}
@@ -102,6 +111,7 @@ function SignUpForm (): React.ReactElement {
                   required: 'Email is required'
                 })}
               />
+                {errors.email && <FieldAlert>{errors.email.message}</FieldAlert>}
             </div>
           </div>
 
@@ -117,15 +127,20 @@ function SignUpForm (): React.ReactElement {
                 Password
               </label>
               <input
-                // autoComplete='current-password'
+                autoCapitalize='none'
+                autoComplete='off'
+                autoCorrect='off'
                 className={cx(s.fieldInput, { [s.fieldError]: errors.password })}
                 id='password'
                 onFocus={() => clearErrors('password')}
                 type='password'
                 {...register('password', {
-                  required: 'Password is required'
+                  required: 'Password is required',
+                  minLength: 8,
+                  maxLength: 255
                 })}
               />
+                {errors.password && <FieldAlert>{errors.password.message}</FieldAlert>}
             </div>
           </div>
 

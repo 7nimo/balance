@@ -22,5 +22,5 @@ export const fetchAccounts = async (): Promise<AccountEntity[]> => {
 
 export const useAccounts = (): UseQueryResult<AccountEntity[]> => useQuery('accounts', fetchAccounts);
 
-export const useAccount = (accountId: string): UseQueryResult<{ account: AccountEntity }> =>
+export const useAccount = (accountId: string): UseQueryResult<AccountEntity> =>
   useQuery(['account', accountId], () => fetchAccountById(accountId));

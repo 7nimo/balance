@@ -2,38 +2,31 @@
 /* eslint-disable sort-keys */
 import { UpdateAccountDto } from '@types';
 import { Button } from 'components/buttons/Buttons';
-import { updateAccount } from 'core/api/account';
+import Spinner from 'components/status/Spinner/Spinner';
+import { updateAccount, useAccount } from 'core/api/account';
 import { useContextData } from 'core/api/context';
-import { queryClient } from 'core/lib/react-query';
 import { renderOptions } from 'core/utils/form.util';
 import { pick } from 'lodash';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useMatch } from 'react-location';
-import { useMutation } from 'react-query';
+import { useMutation, useQueryClient } from 'react-query';
 import { LocationGenerics } from 'routes';
 
 import { H2, Header } from '../styled';
 import { Field, Form, Input, InputContainer, Label, Select, Wrapper } from './styled';
 
-export default function AccountDetailsForm () {
+export default function AccountDetailsForm (): React.ReactElement {
   const { data } = useContextData();
-  const [banks, setBanks] = useState(data?.banks);
-  const [currency, setCurrency] = useState(data?.currency);
-  const { data: { account } } = useMatch<LocationGenerics>();
+  const { params: { accountId } } = useMatch<LocationGenerics>();
 
-  useEffect(() => {
-    if (data) {
-      const { banks, currency } = data;
-
-      setBanks(banks);
-      setCurrency(currency);
-    }
-  }, [data]);
+  const { data: account, isLoading } = useAccount(accountId);
+  const queryClient = useQueryClient();
 
   const { formState,
     handleSubmit,
-    register } = useForm<UpdateAccountDto>({
+    register,
+    reset } = useForm<UpdateAccountDto>({
     defaultValues: {
       name: account?.name,
       bank: account?.bank.id,
@@ -44,8 +37,9 @@ export default function AccountDetailsForm () {
 
   const { dirtyFields } = formState;
 
-  const submitForm = useMutation((updatedAccountData: UpdateAccountDto) => updateAccount(account!.id, updatedAccountData), {
-    onSuccess: async () => {
+  const submitForm = useMutation((updatedAccountData: UpdateAccountDto) => updateAccount(accountId, updatedAccountData), {
+    onSettled: async () => {
+      await queryClient.invalidateQueries(['account', accountId]);
       await queryClient.refetchQueries('accounts');
     }
   });
@@ -57,6 +51,19 @@ export default function AccountDetailsForm () {
 
     submitForm.mutate(modifiedValues);
   };
+
+  useEffect(() => {
+    reset({
+      name: account?.name,
+      bank: account?.bank.id,
+      accountNumber: account?.accountNumber,
+      currency: account?.currency.id
+    });
+  }, [account, reset]);
+
+  if (isLoading) {
+    return <Spinner />;
+  }
 
   return (
     <Wrapper>
@@ -90,7 +97,7 @@ export default function AccountDetailsForm () {
               })}
             >
               <option value=''></option>
-              {banks ? renderOptions(banks) : null}
+              {data?.banks ? renderOptions(data.banks) : null}
             </Select>
           </InputContainer>
         </Field>
@@ -113,7 +120,7 @@ export default function AccountDetailsForm () {
               })}
             >
               <option value=''></option>
-              {currency ? renderOptions(currency) : null}
+              {data?.currency ? renderOptions(data.currency) : null}
             </Select>
           </InputContainer>
         </Field>

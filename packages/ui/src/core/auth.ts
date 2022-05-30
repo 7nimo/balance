@@ -1,7 +1,6 @@
 /* eslint-disable sort-keys */
-import { ERROR, Error, UserEntity } from '@types';
+import { UserEntity } from '@types';
 import React from 'react';
-import { useNavigate } from 'react-location';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 
 import { getUserData, signIn, signOut, signUp } from './api/auth';

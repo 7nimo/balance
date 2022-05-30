@@ -21,6 +21,7 @@
     "icon-gen": "npx @svgr/cli --icon -d ./src/components/Icons ./src/assets/svg/icons/optimized"
   },
   "dependencies": {
+    "@hookform/resolvers": "^2.8.10",
     "@reduxjs/toolkit": "^1.8.1",
     "classnames": "^2.3.1",
     "d3": "^7.4.4",

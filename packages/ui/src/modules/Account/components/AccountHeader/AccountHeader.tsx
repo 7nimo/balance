@@ -16,7 +16,7 @@ function AccountHeader ({ currency, title }: Props): React.ReactElement {
       <div className={s.header}>
         <SvgCash />
         <h1>{title}</h1>
-        <h1 className={s.lighter}>{currency?.code as string}</h1>
+        <h1 className={s.lighter}>{currency?.code}</h1>
       </div>
       <div className={s.btnGroup}>
         <Link
