@@ -31,20 +31,6 @@ function Modal ({ children, formId, handleClose, isOpen, title }: Props): React.
       <Dialog>
         <Header>{title}</Header>
         {children}
-        <Buttons>
-          <Button
-            filled
-            form={formId}
-            style={{ marginLeft: '8px' }}
-          >
-            Save
-          </Button>
-          <Button
-            onClick={handleClose}
-          >
-            Close
-          </Button>
-        </Buttons>
       </Dialog>
     </Portal>
   );

@@ -55,7 +55,7 @@ export const Input = styled.input`
   background-color: transparent;
   border: 1px solid var(--border-color);
   border-radius: 4px;
-  outline: none;
+  /* outline: none; */
   padding: 8px 15px;
   border-radius: 4px;
   min-width: 250px;
@@ -68,7 +68,7 @@ export const Select = styled.select`
   background-color: transparent;
   border: 1px solid var(--border-color);
   border-radius: 4px;
-  outline: none;
+  /* outline: none; */
   padding: 8px 15px;
   border-radius: 4px;
   min-width: 250px;

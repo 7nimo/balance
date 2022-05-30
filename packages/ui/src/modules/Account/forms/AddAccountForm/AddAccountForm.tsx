@@ -1,34 +1,24 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 /* eslint-disable sort-keys */
-import { AccountEntity, CreateAccountDto } from '@types';
+import { CreateAccountDto } from '@types';
+import { Button, Buttons } from 'components/buttons/Buttons';
 import { createAccount } from 'core/api/account';
 import { useContextData } from 'core/api/context';
-import { queryClient } from 'core/lib/react-query';
 import { renderOptions } from 'core/utils/form.util';
 import { removeEmptyFields } from 'core/utils/helpers';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { useMutation } from 'react-query';
+import { useMutation, useQueryClient } from 'react-query';
 
 import { Control, Description, Form, Header, Input, Item, Row, Select, Title, TitleContainer } from './styled';
 
 type Props = {
-  closeModal: () => void;
+  handleClose: () => void;
 }
 
-export default function AddAccountForm ({ closeModal }: Props): React.ReactElement<Props> {
+export default function AddAccountForm ({ handleClose }: Props): React.ReactElement<Props> {
   const { data } = useContextData();
-  const [banks, setBanks] = useState(data?.banks);
-  const [currency, setCurrency] = useState(data?.currency);
-
-  useEffect(() => {
-    if (data) {
-      const { banks, currency } = data;
-
-      setBanks(banks);
-      setCurrency(currency);
-    }
-  }, [data]);
+  const queryClient = useQueryClient();
 
   const { clearErrors,
     formState: { dirtyFields, errors, isDirty, isValid },
@@ -47,7 +37,7 @@ export default function AddAccountForm ({ closeModal }: Props): React.ReactEleme
   const submitForm = useMutation((newAccountData: CreateAccountDto) => createAccount(newAccountData), {
     onSuccess: async () => {
       await queryClient.refetchQueries('accounts');
-      closeModal();
+      handleClose();
     }
   });
 
@@ -71,7 +61,7 @@ export default function AddAccountForm ({ closeModal }: Props): React.ReactEleme
           <Row>
             <TitleContainer>
               <Title>Name</Title>
-              <Description>Unique name for your bank account</Description>
+              <Description>Unique display name for your bank account</Description>
             </TitleContainer>
             <Control>
               <Input
@@ -99,7 +89,7 @@ export default function AddAccountForm ({ closeModal }: Props): React.ReactEleme
                 })}
               >
                 <option value=''></option>
-                {banks ? renderOptions(banks) : null}
+                {data?.banks ? renderOptions(data.banks) : null}
               </Select>
             </Control>
           </Row>
@@ -127,7 +117,7 @@ export default function AddAccountForm ({ closeModal }: Props): React.ReactEleme
           <Row>
             <TitleContainer>
               <Title>Currency</Title>
-              <Description>Currency for this bank account</Description>
+              <Description> Currency for this bank account</Description>
             </TitleContainer>
             <Control>
               <Select
@@ -136,12 +126,27 @@ export default function AddAccountForm ({ closeModal }: Props): React.ReactEleme
                 })}
               >
                 <option value=''></option>
-                {currency ? renderOptions(currency) : null}
+                {data?.currency ? renderOptions(data.currency) : null}
               </Select>
             </Control>
           </Row>
         </Item>
       </Form>
+      <Buttons>
+        <Button
+          disabled={!isValid}
+          filled
+          form='add-account'
+          type='submit'
+        >
+          Save
+        </Button>
+        <Button
+          onClick={handleClose}
+        >
+          Close
+        </Button>
+      </Buttons>
     </>
   );
 }

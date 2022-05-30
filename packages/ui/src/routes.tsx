@@ -4,6 +4,7 @@ import Root from 'components/_Layout/Root/Root';
 import SignInForm from 'components/forms/SignInForm/SignInForm';
 import SignUpForm from 'components/forms/SignUpForm/SignUpForm';
 import { getUserData } from 'core/api/auth';
+import { fetchContextData } from 'core/api/context';
 import { fetchTransactionsByAccountId } from 'core/api/transaction';
 import { queryClient } from 'core/lib/react-query';
 import AccountOverview from 'modules/Account/AccountOverview';
@@ -21,7 +22,7 @@ import SettingsPage from './pages/SettingsPage/SettingsPage';
 
 export type LocationGenerics = MakeGenerics<{
   LoaderData: {
-    account: AccountEntity;
+    _account: AccountEntity;
     accounts: AccountEntity[];
     transactions: Transaction[];
     user: UserEntity;
@@ -35,7 +36,8 @@ export const routes: Route<LocationGenerics>[] = [
   { path: '/sign-up', element: <SignUpForm /> },
   {
     loader: async () => ({
-      user: await getUserData()
+      user: await getUserData(),
+      context: await queryClient.fetchQuery('contextData', fetchContextData)
     }),
     element: <Root />,
     errorElement: <Navigate to='./sign-in' />,
@@ -63,7 +65,7 @@ export const routes: Route<LocationGenerics>[] = [
             path: ':accountId',
             element: <AccountContainer />,
             loader: async ({ params: { accountId } }, { parentMatch }) => ({
-              account: await parentMatch?.loaderPromise?.then(({ accounts }) =>
+              _account: await parentMatch?.loaderPromise?.then(({ accounts }) =>
                 accounts?.find((account) => account.id === accountId)
               ),
               transactions: queryClient.getQueryData(['transactions', accountId]) ??

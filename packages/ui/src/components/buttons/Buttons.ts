@@ -6,6 +6,10 @@ export const Buttons = styled.div`
   flex-direction: row-reverse;
   padding: 16px 24px;
   border-top: 1px solid var(--border-color);
+
+  & > button:not(:last-child) {
+    margin-left: 1rem;
+  }
 `;
 
 export const Button = styled.button`
@@ -38,7 +42,7 @@ export const Button = styled.button`
     opacity: .04;
   }
 
-  &:hover {
+  &:hover{
     &::before {
       opacity: .08;
     }
@@ -48,11 +52,15 @@ export const Button = styled.button`
     background-color: var(--icon-color-accent);
     color: var(--main-bg);
 
-    &:hover {
+    &:hover::not(::disabled) {
       &::before {
         box-shadow: var(--icon-color-accent) 0px 0.9px 1.9px 0px, var(--icon-color-accent) 0px 0.9px 2.9px 0.9px;
         opacity: .1;
       }
     }
   `}
+
+  &:disabled {
+    cursor: auto;
+  }
 `;

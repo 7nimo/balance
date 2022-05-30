@@ -5,7 +5,7 @@ import { RelativeElements } from 'components/RelativeElements/RelativeElements';
 import { Toolbox } from 'components/RelativeElements/Toolbox';
 import { useAccounts } from 'core/api/account';
 import AddAccountForm from 'modules/Account/forms/AddAccountForm/AddAccountForm';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useMatch } from 'react-location';
 import { LocationGenerics } from 'routes';
 
@@ -17,10 +17,6 @@ function AccountsPage (): React.ReactElement {
   const [isOpen, setIsOpen] = useState(false);
 
   const { data } = useAccounts();
-
-  // useEffect(() => {
-  //   // console.log(data);
-  // }, [data]);
 
   const renderAccounts = data?.map((account) => (
     <AccountButton
@@ -55,7 +51,7 @@ function AccountsPage (): React.ReactElement {
           isOpen={isOpen}
           title='Add Account'
         >
-          <AddAccountForm closeModal={() => setIsOpen(false)} />
+          <AddAccountForm handleClose={() => setIsOpen(false)} />
         </Modal>
       </RelativeElements>
     </>

@@ -60,7 +60,7 @@
   left: 0;
   top: .75rem;
   color: rgba(255,255,255,.7);
-  font-weight: 600;
+  font-weight: 500;
   font-size: 1rem;
   transition: font-size .1s, transform .1s ease-out;
   pointer-events: none;
@@ -77,11 +77,11 @@
 }
 
 .fieldError {
-  color: #e2444d;
+  color: var(--alert);
 }
 
 .fieldContainer {
-  margin-bottom: 1.5rem;
+  margin-bottom: 2rem;
   &:focus-within {
     .floatingLabel {
       font-size: .75rem;
@@ -96,7 +96,6 @@
   position: relative;
   font-size: .75rem;
   line-height: 1.4;
-  color: #e2444d;
 }
 
 .fieldInput {
@@ -117,7 +116,7 @@
   }
 
   &.fieldError{
-      border-bottom: 1px solid #e2444d;
+      border-bottom: 1px solid var(--alert);
   }
 }
 
@@ -139,14 +138,11 @@
   border: none;
   border-radius: 50%;
   box-shadow: 0 0 10px rgba(161,238,243, 0.9);
-  cursor: pointer;
+  cursor: auto;
 
   &:disabled {
     color: rgba(255, 255, 255, .1);
     background: rgba(255, 255, 255, .1);
-    cursor: auto;
-    // box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.5),
-                //  0 0 3px rgba(161,238,243, 0.7);
     box-shadow: inset 0 0 3px rgba(161,238,243, .4);
   }
 }

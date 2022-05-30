@@ -11,7 +11,7 @@ import { SearchWrapper } from './components/TransactionsTable/SearchWrapper';
 import TransactionsTable from './components/TransactionsTable/TransactionsTable';
 
 export default function AccountOverview (): React.ReactElement {
-  const { data: { account, transactions } } = useMatch<LocationGenerics>();
+  const { data: { _account, transactions } } = useMatch<LocationGenerics>();
 
   // !search
   const [query, setQuery] = useState<string>('');
