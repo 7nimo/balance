@@ -8,4 +8,7 @@ export const fetchContextData = async (): Promise<ContextData> => {
   return get<ContextData>(`${API_URL}/context`);
 };
 
-export const useContextData = (): UseQueryResult<ContextData> => useQuery('contextData', () => fetchContextData);
+export const useContextData = (): UseQueryResult<ContextData> => useQuery('contextData', fetchContextData, {
+  cacheTime: Infinity,
+  staleTime: Infinity
+});

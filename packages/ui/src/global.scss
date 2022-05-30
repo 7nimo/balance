@@ -1,5 +1,6 @@
 // todo: change import to use
-@import url(https://fonts.googleapis.com/css2?family=Inter:wght@300..700&display=swap);
+// @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700&display=swap');
+// @import url(https://fonts.googleapis.com/css2?family=Inter:wght@300..700&display=swap);
 @import-normalize;
 
 $colors: (
@@ -190,6 +191,15 @@ $colors: (
     rgba(0,212,255,0.22871155298056722) 100%);
 
   --random-grad: radial-gradient(circle, rgba(131,58,180,1) 0%, rgba(204,41,89,0.16148466222426472) 36%, rgba(253,29,29,1) 73%, rgba(252,176,69,1) 100%);
+
+  --grad90: linear-gradient(90deg, var(--line) 50%, transparent 50%);
+  --grad0: linear-gradient(0deg, var(--line) 50%, transparent 50%);
+  --c-grad90: linear-gradient(90deg, var(--icon-color-accent) 50%, transparent 50%);
+  --c-grad0: linear-gradient(0deg, var(--icon-color-accent) 50%, transparent 50%);
+
+  --alert: rgba(253, 216, 53, 1);
+  --error: rgba(226, 68, 77, 1);
+
 
   @include default-theme;
 }

@@ -6,7 +6,6 @@ import React, { forwardRef, SyntheticEvent, useEffect, useRef } from 'react';
 import s from './Chart.module.scss';
 
 type Props = {
-  id: string;
   data: InternMap<Date, number[]>;
   width: number;
   height: number;
@@ -24,7 +23,6 @@ export const Chart = forwardRef<HTMLDivElement, Props>(
     { data,
       drawnPath,
       height,
-      id,
       onMouseEnter,
       onMouseLeave,
       onMouseMove,
@@ -48,7 +46,6 @@ export const Chart = forwardRef<HTMLDivElement, Props>(
         svg
           .append('g')
           .append('path')
-          .attr('id', id)
           .attr('fill', 'none')
           .attr('stroke', 'var(--orange)')
           .attr('stroke-width', 2)
@@ -82,7 +79,7 @@ export const Chart = forwardRef<HTMLDivElement, Props>(
         // const yAxisGenerator = d3.axisLeft(yScale);
         // const yAxis = svg.append('g').call(yAxisGenerator);
       }
-    }, [data, drawnPath, id]);
+    }, [data, drawnPath]);
 
     return (
       <div

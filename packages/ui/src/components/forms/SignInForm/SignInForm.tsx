@@ -8,12 +8,10 @@ import React, { useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-location';
 
-// import { useAuth } from '../../../core/lib/auth';
 import { Button } from '../../buttons/Button/Button';
 import s from './SignInForm.module.scss';
 
 function SignInForm (): React.ReactElement {
-  // const { login } = useAuth();
   const navigate = useNavigate();
   const [showError, setShowError] = useState(false);
 
@@ -24,6 +22,7 @@ function SignInForm (): React.ReactElement {
     resetField,
     setFocus } = useForm<LoginCredentials>({
     mode: 'onChange',
+    reValidateMode: 'onBlur',
     shouldFocusError: false,
     defaultValues: {
       email: '',
@@ -79,7 +78,7 @@ function SignInForm (): React.ReactElement {
                 className={cx(s.fieldInput, { [s.fieldError]: errors.email })}
                 id='email'
                 onFocus={() => clearErrors('email')}
-                type='email'
+                // type='email'
                 {...register('email', {
                   required: 'Email is required'
                 })}
@@ -113,7 +112,7 @@ function SignInForm (): React.ReactElement {
 
           <div className={s.buttons}>
             <Button
-              disabled={!isDirty || !isValid}
+              disabled={!isValid}
               primary
               type='submit'
             >

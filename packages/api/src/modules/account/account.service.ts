@@ -1,7 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { UserEntity } from 'src/modules/user/entities/user.entity';
 import { DataSource, DeleteResult, Repository, UpdateResult } from 'typeorm';
-import { AccountRO, AccountsRO } from './interfaces/account.interface';
 import { CreateAccountDto, UpdateAccountDto } from './dto';
 import { AccountEntity } from './entities/account.entity';
 import { ACCOUNT_REPOSITORY } from './constants';
@@ -19,14 +18,14 @@ export class AccountService {
   async create(
     userId: Partial<UserEntity>,
     createAccountDto: CreateAccountDto,
-  ): Promise<AccountRO> {
+  ): Promise<AccountEntity> {
     const account = this.accountRepository.create({
       user: userId,
       ...createAccountDto,
     });
     await this.accountRepository.save(account);
 
-    return { account };
+    return account;
   }
 
   async findOne(userId: string, accountId: string) {
@@ -45,26 +44,29 @@ export class AccountService {
     });
   }
 
-  async findAll(userId: string): Promise<AccountsRO> {
-    const accounts = await this.accountRepository.find({
+  async findAll(userId: string): Promise<AccountEntity[]> {
+    return await this.accountRepository.find({
       where: {
         user: {
           id: userId,
         },
       },
       relations: {
-        user: true,
+        bank: true,
+        currency: true,
       },
     });
-
-    return { accounts };
   }
 
   async update(
-    account: AccountEntity,
+    accountId: string,
     updateData: UpdateAccountDto,
   ): Promise<UpdateResult> {
-    return this.accountRepository.update(account, updateData);
+    return this.accountRepository.update(accountId, updateData);
+  }
+
+  async patch(accountId: string, updateData: UpdateAccountDto) {
+    return this.accountRepository.update({ id: accountId }, updateData);
   }
 
   async remove(userId: string, accountId: string): Promise<DeleteResult> {

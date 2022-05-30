@@ -10,12 +10,8 @@ import HorizontalAxis from '../common/HorizontalAxis/HorizontalAxis';
 import { Chart } from './Chart/Chart';
 import s from './LineChart.module.scss';
 
-type Props = {
-  accountId: string;
-};
-
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-function LineChartContainer ({ accountId }: Props): React.ReactElement {
+function LineChartContainer (): React.ReactElement {
   const { height, observe, width } = useDimensions<HTMLDivElement>();
 
   // const assets = useStore((state) => state.assets);
@@ -131,7 +127,6 @@ function LineChartContainer ({ accountId }: Props): React.ReactElement {
         data={data}
         drawnPath={path!}
         height={height}
-        id={accountId}
         onMouseEnter={onMouseEnter}
         onMouseLeave={onMouseLeave}
         onMouseMove={onMouseMove}

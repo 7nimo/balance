@@ -1,21 +1,24 @@
-import { AccountEntity } from '@types';
 import { IconButton } from 'components/buttons/IconButton/IconButton';
 import SvgAdd from 'components/icons/actions/Add';
 import Modal from 'components/Modal/Modal';
 import { RelativeElements } from 'components/RelativeElements/RelativeElements';
 import { Toolbox } from 'components/RelativeElements/Toolbox';
-import AddAccountForm from 'modules/Account/AddAccount/AddAccountForm';
+import { useAccounts } from 'core/api/account';
+import AddAccountForm from 'modules/Account/forms/AddAccountForm/AddAccountForm';
 import React, { useState } from 'react';
 import { useMatch } from 'react-location';
+import { LocationGenerics } from 'routes';
 
 import { Content, Layout, Row } from '../../components/_Layout/Layout';
-import AccountButton from './AccountButtons/AccountButtons';
+import AccountButton from './components/AccountButtons';
 
 function AccountsPage (): React.ReactElement {
-  const { data: { accounts } } = useMatch();
+  const { data: { accounts } } = useMatch<LocationGenerics>();
   const [isOpen, setIsOpen] = useState(false);
 
-  const renderAccounts = (accounts as AccountEntity[]).map((account) => (
+  const { data } = useAccounts();
+
+  const renderAccounts = data?.map((account) => (
     <AccountButton
       account={account}
       key={account.id}
@@ -34,7 +37,7 @@ function AccountsPage (): React.ReactElement {
       <Layout>
         <Content>
           <Row>
-            {renderAccounts}
+            {accounts ? renderAccounts : null}
           </Row>
         </Content>
       </Layout>
@@ -48,7 +51,7 @@ function AccountsPage (): React.ReactElement {
           isOpen={isOpen}
           title='Add Account'
         >
-          <AddAccountForm />
+          <AddAccountForm handleClose={() => setIsOpen(false)} />
         </Modal>
       </RelativeElements>
     </>

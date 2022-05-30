@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { AccountEntity } from 'src/modules/account/entities/account.entity';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity('bank')
 export class BankEntity {
@@ -10,4 +11,13 @@ export class BankEntity {
 
   @Column()
   country: string;
+
+  @Column('text', { array: true })
+  colors: string[];
+
+  @Column()
+  img: string;
+
+  @OneToMany(() => AccountEntity, (account) => account.bank)
+  accounts: AccountEntity[];
 }

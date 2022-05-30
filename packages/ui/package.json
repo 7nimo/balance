@@ -21,12 +21,14 @@
     "icon-gen": "npx @svgr/cli --icon -d ./src/components/Icons ./src/assets/svg/icons/optimized"
   },
   "dependencies": {
+    "@hookform/resolvers": "^2.8.10",
     "@reduxjs/toolkit": "^1.8.1",
     "classnames": "^2.3.1",
     "d3": "^7.4.4",
     "node-sass": "^7.0.1",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
+    "react-dropzone": "^14.2.1",
     "react-dropzone-uploader": "^2.11.0",
     "react-error-boundary": "^3.1.4",
     "react-hook-form": "^7.31.2",

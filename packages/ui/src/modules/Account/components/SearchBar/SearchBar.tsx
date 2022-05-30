@@ -1,7 +1,7 @@
 import React, { FC, useRef } from 'react';
 
-import SvgCross from '../../icons/actions/Cross';
-import SvgSearch from '../../icons/Search';
+import SvgCross from '../../../../components/icons/actions/Cross';
+import SvgSearch from '../../../../components/icons/Search';
 import s from './SearchBar.module.scss';
 
 interface Props extends React.HTMLProps<HTMLInputElement> {

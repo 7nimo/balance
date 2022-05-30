@@ -3,7 +3,6 @@ import {
   Controller,
   Get,
   Post,
-  Body,
   Param,
   UseInterceptors,
   UploadedFile,
@@ -14,45 +13,29 @@ import { TransactionService } from './transaction.service';
 import { ApiTags } from '@nestjs/swagger';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { AccountService } from 'src/modules/account/account.service';
-// import { EventEmitter2 } from '@nestjs/event-emitter';
-// import { StatementSavedEvent } from './events/statement-saved.event';
-import { CreateTransactionDto } from './dto';
-import { TransactionRO, TransactionsRO } from './transaction.interface';
+import { TransactionsRO } from './transaction.interface';
 import { TransactionEntity } from './entities/transaction.entity';
 import { CsvParserService } from 'src/core/common/services/csv-parser/csv-parser.service';
 import { MulterOptions } from '@nestjs/platform-express/multer/interfaces/multer-options.interface';
 import { User } from 'src/core/common/decorators/user.decorator';
 import { ConfigService } from '@nestjs/config';
+import { multerOptions } from 'src/config';
 
 @ApiTags('transaction')
 @Controller('transaction')
 export class TransactionController {
-  private readonly multerConfig: MulterOptions | undefined;
+  private readonly multerOptions: MulterOptions;
   constructor(
-    private readonly transactionService: TransactionService,
     private readonly accountService: AccountService,
-    // private readonly eventEmitter: EventEmitter2,
     private readonly csvParserService: CsvParserService,
     private readonly configService: ConfigService,
+    private readonly transactionService: TransactionService,
   ) {
-    this.multerConfig = this.configService.get<MulterOptions>('multer');
+    this.multerOptions = this.configService.get<MulterOptions>('multer');
   }
 
-  // @Post()
-  // async create(
-  //   @User('id') userId: string,
-  //   @Param('accountId') accountId: string,
-  //   @Body() createTransactionDto: CreateTransactionDto,
-  // ): Promise<TransactionRO> {
-  //   const account = await this.accountService.findOne(userId, accountId);
-  //   if (!account) {
-  //     throw new NotFoundException(`Account with ${accountId} does not exist`);
-  //   }
-  //   return this.transactionService.create(accountId, createTransactionDto);
-  // }
-
   @Post('import')
-  @UseInterceptors(FileInterceptor('statement'))
+  @UseInterceptors(FileInterceptor('statement', multerOptions))
   async import(
     @User('id') userId: string,
     @Param('accountId', new ParseUUIDPipe({ version: '4' })) accountId: string,

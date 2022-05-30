@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React from 'react';
-import { Link } from 'react-location';
+import { Link, useMatchRoute } from 'react-location';
 import styled from 'styled-components';
 
 import s from './NavButton.module.scss';
@@ -30,12 +30,15 @@ const Wrapper = styled.div`
 `;
 
 function NavButton ({ icon, label, link, small = false }: Props): React.ReactElement {
+  const matchRoute = useMatchRoute();
+  const isParentRouteActive = matchRoute({ fuzzy: true, to: `${link}` });
+
   return (
     <Wrapper small={small}>
       <Link
         activeOptions={{ exact: true }}
-        className={s.focusableLink}
-        getActiveProps={() => ({ className: 'active' })}
+        className={`${s.focusableLink} ${isParentRouteActive ? ' active' : ''}`}
+        // getActiveProps={() => ({ className: 'active' })}
         to={`/${link}`}
       >
         <div className={s.iconWrapper}>{icon}</div>
