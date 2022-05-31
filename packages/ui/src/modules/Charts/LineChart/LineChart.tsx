@@ -1,9 +1,13 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Period, Point } from '@types';
+import { useAppSelector } from 'core/store/store';
+import { formatDate, x, y } from 'core/utils/d3.utils';
 import * as d3 from 'd3';
 import { useDimensions } from 'hooks/useDimensions';
 import React, { useEffect, useRef, useState } from 'react';
+import { useMatch } from 'react-location';
+import { LocationGenerics } from 'routes';
 
 import ControlBar from '../common/ControlBar/ControlBar';
 import HorizontalAxis from '../common/HorizontalAxis/HorizontalAxis';
@@ -11,11 +15,9 @@ import { Chart } from './Chart/Chart';
 import s from './LineChart.module.scss';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-function LineChartContainer (): React.ReactElement {
+function LineChart (): React.ReactElement {
+  const { params: { accountId } } = useMatch<LocationGenerics>();
   const { height, observe, width } = useDimensions<HTMLDivElement>();
-
-  // const assets = useStore((state) => state.assets);
-  const assets = useState(new Map());
 
   const [tooltipPosition, setTooltipPosition] = useState<Point>({ x: 0, y: 0 });
   const [tooltipData, setTooltipData] = useState({
@@ -23,43 +25,20 @@ function LineChartContainer (): React.ReactElement {
     value: 0
   });
   const [amount, setAmount] = useState(0);
-  const currentAmount = useRef(0);
+  const currentAmount = useRef(0); // todo: simplify to account.balance
 
-  // // !¬ Data
+  // !¬ Data
   const [data, setData] = useState<d3.InternMap<Date, number[]>>(new Map());
 
-  // useEffect(() => {
-  //   // eslint-disable-next-line @typescript-eslint/require-await
-  //   async function setChartData (): Promise<void> {
-  //     setData(assets.get(accountId)!);
-  //   }
+  //! Account Data
+  const account = useAppSelector((state) => state.accounts.find((acc) => acc.id === accountId));
 
-  //   if (assets.has(accountId)) {
-  //     // todo: !!this should run only when new data appears AAAAAAAAAAAAA
-  //     setChartData()
-  //       .then(() => {
-  //         const [firstElement] = assets.get(accountId)!.values().next().value;
+  //! [X, Y] values
+  const [X, setX] = useState<any>();
+  const [Y, setY] = useState<any>();
 
-  //         currentAmount.current = firstElement;
-  //         setAmount(firstElement);
-  //       })
-  //       .catch((err) => console.error(err));
-  //   }
-  // }, [assets, accountId, data]);
-
-  // !¬ Accesors
-  const x = ([x]: [Date, number[]]): Date => x;
-  const y = ([, y]: [Date, number[]]): number => y[0];
-
-  // Compute values.
-  const X = d3.map(data, x);
-  const Y = d3.map(data, y);
-  // const O = d3.map(data, (d) => d);
-  // const I = d3.map(data, (_, i) => i);
-
-  // Compute which data points are considered defined.
-  // const defined = (d: unknown, i: number): boolean => X[i] instanceof Date && !Number.isNaN(Y[i]);
-  // const D = d3.map(data, defined);
+  //! Path
+  const [path, setPath] = useState<any>();
 
   // !¬ Scales
   const xExtent = d3.extent(data, x) as [Date, Date];
@@ -68,15 +47,47 @@ function LineChartContainer (): React.ReactElement {
   const yExtent = d3.extent(data, y) as [number, number];
   const yScale = d3.scaleLinear().domain(yExtent).range([height, 0]);
 
-  // !¬ Line Generator
-  const lineGenerator = d3
-    .line()
+  const lineGenerator = d3.line()
     // .defined(([i, _]) => D[i])
     .x(([i]) => xScale(X[i]!))
-    .y(([i]) => yScale(Y[i]))
-    .curve(d3.curveBasis);
+    .y(([i]) => yScale(Y[i]));
+    // .curve(d3.curveBasis);
 
-  const path = lineGenerator(d3.map(data, (_, i) => [i, i]));
+  useEffect(() => {
+    if (account) { setData(account.data); }
+  }, [account]);
+
+  useEffect(() => {
+    if (data) {
+      setX(d3.map(data, x));
+      setY(d3.map(data, y));
+    }
+  }, [data]);
+
+  useEffect(() => {
+    if (data && lineGenerator) {
+      setPath(lineGenerator(d3.map(data, (_, i) => [i, i])));
+    }
+  }, [data, lineGenerator]);
+
+  // Compute values.
+
+  // const O = d3.map(data, (d) => d);
+  // const I = d3.map(data, (_, i) => i);
+
+  // Compute which data points are considered defined.
+  // const defined = (d: unknown, i: number): boolean => X[i] instanceof Date && !Number.isNaN(Y[i]);
+  // const D = d3.map(data, defined);
+
+  // !¬ Line Generator
+  // const lineGenerator = d3
+  //   .line()
+  //   // .defined(([i, _]) => D[i])
+  //   .x(([i]) => xScale(X[i]!))
+  //   .y(([i]) => yScale(Y[i]))
+  //   .curve(d3.curveBasis);
+
+  // const path = lineGenerator(d3.map(data!, (_, i) => [i, i]));
 
   // !¬ Mouse Events
   const onMouseEnter = (): void => {
@@ -94,7 +105,6 @@ function LineChartContainer (): React.ReactElement {
           Math.abs((x(b) as any) - (hoveredPoint as any))
       );
 
-      const formatDate = d3.timeFormat('%d/%m/%Y'); // move this to d3 util functions
       const xValue = X[closestIndex!];
       const yValue = Y[closestIndex!];
       const hoveredDate = formatDate(xValue);
@@ -123,21 +133,25 @@ function LineChartContainer (): React.ReactElement {
         assetAmount={amount}
         currencySymbol='£'
       />
-      <Chart
-        data={data}
-        drawnPath={path!}
-        height={height}
-        onMouseEnter={onMouseEnter}
-        onMouseLeave={onMouseLeave}
-        onMouseMove={onMouseMove}
-        ref={observe}
-        tooltipData={tooltipData}
-        tooltipPosition={tooltipPosition}
-        width={width}
-      />
+      { data
+        ? (
+        <Chart
+          data={data}
+          height={height}
+          onMouseEnter={onMouseEnter}
+          onMouseLeave={onMouseLeave}
+          onMouseMove={onMouseMove}
+          path={path}
+          ref={observe}
+          tooltipData={tooltipData}
+          tooltipPosition={tooltipPosition}
+          width={width}
+        />
+      )
+        : null}
       <HorizontalAxis period={Period.all} />
     </div>
   );
 }
 
-export default LineChartContainer;
+export default LineChart;
