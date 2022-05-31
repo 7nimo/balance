@@ -7,7 +7,7 @@ import { getUserData } from 'core/api/auth';
 import { fetchContextData } from 'core/api/context';
 import { fetchTransactionsByAccountId } from 'core/api/transaction';
 import { queryClient } from 'core/lib/react-query';
-import { accountSlice } from 'core/store/services/assets/account/slice';
+import { accountActions } from 'core/store/services/assets/account/slice';
 import { store } from 'core/store/store';
 import AccountOverview from 'modules/Account/AccountOverview';
 import React from 'react';
@@ -74,7 +74,7 @@ export const routes: Route<LocationGenerics>[] = [
                 await queryClient.fetchQuery(['transactions', accountId],
                 () => fetchTransactionsByAccountId(accountId)
                   .then((transactions) => {
-                    store.dispatch(accountSlice.actions.mapTransactionsToD3Data({
+                    store.dispatch(accountActions.mapTransactionsToD3Data({
                       accountId,
                       transactions
                     }));
