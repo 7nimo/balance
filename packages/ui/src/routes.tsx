@@ -7,6 +7,8 @@ import { getUserData } from 'core/api/auth';
 import { fetchContextData } from 'core/api/context';
 import { fetchTransactionsByAccountId } from 'core/api/transaction';
 import { queryClient } from 'core/lib/react-query';
+import { accountSlice } from 'core/store/services/assets/account/slice';
+import { store } from 'core/store/store';
 import AccountOverview from 'modules/Account/AccountOverview';
 import React from 'react';
 import { MakeGenerics, Navigate, ReactLocation, Route } from 'react-location';
@@ -68,9 +70,19 @@ export const routes: Route<LocationGenerics>[] = [
               _account: await parentMatch?.loaderPromise?.then(({ accounts }) =>
                 accounts?.find((account) => account.id === accountId)
               ),
-              transactions: queryClient.getQueryData(['transactions', accountId]) ??
+              _transactions: queryClient.getQueryData(['transactions', accountId]) ??
                 await queryClient.fetchQuery(['transactions', accountId],
-                () => fetchTransactionsByAccountId(accountId))
+                () => fetchTransactionsByAccountId(accountId)
+                  .then((transactions) => {
+                    store.dispatch(accountSlice.actions.mapTransactionsToD3Data({
+                      accountId,
+                      transactions
+                    }));
+
+                    return transactions;
+                  }
+                  )
+                )
             }),
             children: [
               {

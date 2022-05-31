@@ -1,4 +1,6 @@
 import { Transaction } from '@types';
+import { accountSlice } from 'core/store/services/assets/account/slice';
+import { store } from 'core/store/store';
 import { get } from 'core/utils/http.util';
 import { useQuery, UseQueryResult } from 'react-query';
 
@@ -9,10 +11,13 @@ export const fetchTransactionsByAccountId = async (accountId: string): Promise<T
 };
 
 export const useTransactions = (
-  accountId: string,
-  setTransactions?: (transactions: Transaction[]) => void
+  accountId: string
 ): UseQueryResult<Transaction[]> =>
   useQuery(['transactions', accountId], () => fetchTransactionsByAccountId(accountId), {
     notifyOnChangeProps: ['data', 'error'],
-    onSuccess: setTransactions
+    onSuccess:
+      (transactions) => store.dispatch(accountSlice.actions.mapTransactionsToD3Data({
+      accountId,
+      transactions
+    }))
   });

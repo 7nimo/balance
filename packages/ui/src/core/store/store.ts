@@ -2,6 +2,7 @@
 import { addListener, configureStore, createListenerMiddleware, ListenerEffectAPI, TypedAddListener, TypedStartListening } from '@reduxjs/toolkit';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 
+import { accountSlice } from './services/assets/account/slice';
 import { themeSlice } from './services/theme/slice';
 import { userSlice } from './services/user/slice';
 
@@ -11,10 +12,13 @@ const listenerMiddlewareInstance = createListenerMiddleware({
 
 const store = configureStore({
   reducer: {
+    [accountSlice.name]: accountSlice.reducer,
     [userSlice.name]: userSlice.reducer,
     [themeSlice.name]: themeSlice.reducer
   },
-  middleware: (gDM) => gDM().prepend(listenerMiddlewareInstance.middleware)
+  middleware: (gDM) => gDM({
+    serializableCheck: false
+  }).prepend(listenerMiddlewareInstance.middleware)
 });
 
 export { store };

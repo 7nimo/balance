@@ -1,30 +1,36 @@
 
 /* eslint-disable sort-keys */
-import { createEntityAdapter, createSlice, nanoid, PayloadAction } from '@reduxjs/toolkit';
-import { AccountEntity } from '@types';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { DataPoint, Transaction } from '@types';
+import * as d3 from 'd3';
 
 export interface Account {
   id: string;
-  value: Partial<AccountEntity>;
+  data: d3.InternMap<Date, number | number[]>
 }
 
-const accountEntity = createEntityAdapter<Account>();
-
-export interface AccountsState {
-  accounts: Account;
+export interface TransactionsPayload {
+  accountId: string,
+  transactions: Transaction[]
 }
+
+export type AccountsState = Account[];
 
 export const accountSlice = createSlice({
-  name: 'account',
-  initialState: {
-    account: accountEntity.getInitialState()
-  },
+  name: 'accounts',
+  initialState: [] as AccountsState,
   reducers: {
-    addAccount (state, { payload: { initialValue } }: PayloadAction<{ initialValue: Partial<AccountEntity> }>) {
-      accountEntity.addOne(state.account, {
-        value: initialValue,
-        id: nanoid()
-      });
+    mapTransactionsToD3Data (state, action: PayloadAction<TransactionsPayload>) {
+      const account = state.find((account) => account.id === action.payload.accountId);
+
+      if (account) {
+        account.data = mapToD3(action.payload.transactions);
+      } else {
+        state.push({
+          id: action.payload.accountId,
+          data: mapToD3(action.payload.transactions)
+        });
+      }
     }
   }
 });
@@ -35,6 +41,19 @@ export type AccountSlice = {
   [accountSlice.name]: ReturnType<typeof accountSlice['reducer']>
 }
 
-export const accountSelectors = accountEntity.getSelectors<AccountSlice>(
-  (state) => state[accountSlice.name].account
-);
+function mapToD3 (data: Transaction[]): d3.InternMap<Date, number[]> {
+  const dateParser = d3.timeParse('%Y-%m-%d');
+
+  const mappedData: DataPoint[] = data.map((transaction) => ({
+    date: dateParser(transaction.transactionDate)!,
+    value: Math.round((Number(transaction.balance) + Number.EPSILON) * 100) / 100
+  }));
+
+  const reduced = d3.rollup(
+    mappedData,
+    (d) => d.flatMap((v) => v.value),
+    (d) => d.date
+  );
+
+  return reduced;
+}
