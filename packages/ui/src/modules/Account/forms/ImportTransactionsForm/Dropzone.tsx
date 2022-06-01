@@ -2,7 +2,7 @@ import { API_URL } from 'core/api/constants';
 import { postFile } from 'core/utils/http.util';
 import React, { useCallback } from 'react';
 import { useDropzone } from 'react-dropzone';
-import { useMutation } from 'react-query';
+import { useMutation, useQueryClient } from 'react-query';
 
 import { H2, Header } from '../styled';
 import { DropArea } from './styled';
@@ -12,6 +12,7 @@ type Props = {
 }
 
 export default function Dropzone ({ accountId }: Props): React.ReactElement<Props> {
+  const queryClient = useQueryClient();
   const onDrop = useCallback((acceptedFiles: File[]) => {
       // todo: validation
       // validateFile();
@@ -19,8 +20,11 @@ export default function Dropzone ({ accountId }: Props): React.ReactElement<Prop
       // readFile(file);
   }, []);
 
-  const uploadForm = useMutation((form: FormData) => {
-    return postFile(`${API_URL}/account/${accountId}/transaction/import`, form);
+  const uploadForm = useMutation((form: FormData) => postFile(`${API_URL}/account/${accountId}/transaction/import`, form), {
+    onSettled: async () => {
+      // this fails if queried before transactions are saved in db
+      await queryClient.refetchQueries(['transactions', accountId]);
+    }
   });
 
   const onDropAccepted = useCallback((acceptedFiles: File[]) => {
