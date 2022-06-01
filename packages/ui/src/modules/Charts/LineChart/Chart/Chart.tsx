@@ -1,13 +1,11 @@
 import { Point } from '@types';
 import * as d3 from 'd3';
-import { InternMap, svg } from 'd3';
-import React, { forwardRef, SyntheticEvent, useEffect, useRef, useState } from 'react';
+import { useFirstRender } from 'hooks/useFirstRender';
+import React, { forwardRef, SyntheticEvent, useEffect, useRef } from 'react';
 
-import { useFirstRender } from './../../../../hooks/useFirstRender';
 import s from './Chart.module.scss';
 
 type Props = {
-  data: InternMap<Date, number[]>;
   width: number;
   height: number;
   path: string;
@@ -21,8 +19,7 @@ type Props = {
 // eslint-disable-next-line react/display-name
 export const Chart = forwardRef<HTMLDivElement, Props>(
   (
-    { data,
-      height,
+    { height,
       onMouseEnter,
       onMouseLeave,
       onMouseMove,
@@ -79,7 +76,7 @@ export const Chart = forwardRef<HTMLDivElement, Props>(
           style={{ left: tooltipPosition.x ?? 0, top: tooltipPosition.y ?? 0 }}
         >
           <div className={s.tooltipValue}>
-            <span className={s.value}>{`£${tooltipData.value}`}</span>
+            <span className={s.value}>{`${tooltipData.value}`}</span>
             <span className={s.date}>{tooltipData.date}</span>
           </div>
         </div>
