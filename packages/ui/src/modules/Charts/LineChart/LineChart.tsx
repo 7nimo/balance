@@ -38,7 +38,7 @@ function LineChart (): React.ReactElement {
   //! [X, Y] values
   const [X, setX] = useState<any>();
   const [Y, setY] = useState<any>();
-  // const [D, setD] = useState<any>();
+  const [D, setD] = useState<any>();
 
   //! Path
   const [path, setPath] = useState<any>();
@@ -51,11 +51,11 @@ function LineChart (): React.ReactElement {
 
   const lineGenerator = useMemo(
     () => d3.line()
-      // .defined(([i, _]) => D[i])
+      .defined(([i, _]) => D[i])
       .x(([i]) => xScale(X[i]))
       .y(([i]) => yScale(Y[i]))
-      // .curve(d3.curveBasis))
-      , [X, Y, xScale, yScale]
+      .curve(d3.curveStepAfter)
+      , [D, X, Y, xScale, yScale]
     );
 
   useEffect(() => {
@@ -72,12 +72,12 @@ function LineChart (): React.ReactElement {
     }
   }, [data]);
 
-  // useEffect(() => {
-  //     // Compute which data points are considered defined.
-  //     const defined = (d: unknown, i: number): boolean => X[i] instanceof Date && !Number.isNaN(Y[i]);
+  useEffect(() => {
+      // Compute which data points are considered defined.
+      const defined = (d: unknown, i: number): boolean => X[i] instanceof Date && !Number.isNaN(Y[i]);
 
-  //     setD(d3.map(data, defined));
-  // }, [data, X, Y]);
+      setD(d3.map(data, defined));
+  }, [data, X, Y]);
 
   useEffect(() => {
     if (data) {
