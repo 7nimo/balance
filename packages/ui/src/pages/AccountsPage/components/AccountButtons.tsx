@@ -9,11 +9,6 @@ type Props = {
   account: AccountEntity;
 }
 
-const Img = styled.img`
-  height: 80%;
-  width: 80%;
-`;
-
 export default function AccountButton ({ account }: Props): React.ReactElement<Props> {
   const loadRoute = useLoadRoute();
 
@@ -67,6 +62,11 @@ const LogoWrapper = styled.div`
   [class*="dark"] & {
     background: #eeeeeedc;
   }
+`;
+
+const Img = styled.img`
+  height: 80%;
+  width: 80%;
 `;
 
 const H2 = styled.h2`

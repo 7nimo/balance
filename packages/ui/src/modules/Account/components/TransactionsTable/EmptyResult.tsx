@@ -1,14 +1,22 @@
 import React from 'react';
+import styled from 'styled-components';
 
 function EmptyResult () {
   return (
-    <div
-      className='center'
-      style={{ height: '768px', width: '100%' }}
-    >
-      <p>Hmmm, can&apos;t find anything!</p>
-    </div>
+    <Wrapper>
+      <P>Hmmm, can&apos;t find anything!</P>
+    </Wrapper>
   );
 }
 
 export default EmptyResult;
+
+const Wrapper = styled.div`
+  display: grid;
+  place-items: center;
+  min-height: 300px;
+`;
+
+const P = styled.p`
+  font-size: 1.5rem;
+`;

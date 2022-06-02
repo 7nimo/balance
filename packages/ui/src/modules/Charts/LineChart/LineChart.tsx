@@ -8,11 +8,11 @@ import { useDimensions } from 'hooks/useDimensions';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useMatch } from 'react-location';
 import { LocationGenerics } from 'routes';
+import styled from 'styled-components';
 
 import ControlBar from '../common/ControlBar/ControlBar';
 import HorizontalAxis from '../common/HorizontalAxis/HorizontalAxis';
 import { Chart } from './Chart/Chart';
-import s from './LineChart.module.scss';
 
 function LineChart (): React.ReactElement {
   const { params: { accountId } } = useMatch<LocationGenerics>();
@@ -44,7 +44,7 @@ function LineChart (): React.ReactElement {
   const xExtent = useMemo(() => d3.extent(data, x) as [Date, Date], [data]);
   const yExtent = useMemo(() => d3.extent(data, y) as [number, number], [data]);
   const xScale = useMemo(() => d3.scaleTime().domain(xExtent).range([0, width]), [width, xExtent]);
-  const yScale = useMemo(() => d3.scaleLinear().domain(yExtent).range([height, 0]), [height, yExtent]);
+  const yScale = useMemo(() => d3.scaleLinear().domain(yExtent).range([height - 8, 8]), [height, yExtent]);
 
   const lineGenerator = useMemo(
     () => d3.line()
@@ -115,9 +115,9 @@ function LineChart (): React.ReactElement {
         const xPos = xScale(xValue);
         const yPos = yScale(yValue);
 
-        setTooltipPosition({ x: xPos, y: yPos });
         d3.select('#circle').attr('cx', xPos).attr('cy', yPos);
 
+        setTooltipPosition({ x: xPos, y: yPos });
         setTooltipData({ date: hoveredDate, value: yValue });
         setBalance(yValue);
       }
@@ -130,10 +130,10 @@ function LineChart (): React.ReactElement {
     }
 
     setBalance(account?.balance);
-  }, [account?.balance, data.size]);
+  }, [account?.balance, data]);
 
   return (
-    <div className={s.chartContainer}>
+    <ChartWrapper>
       <ControlBar
         balance={balance ?? 0}
         currencySymbol={account?.currency.symbol}
@@ -150,8 +150,12 @@ function LineChart (): React.ReactElement {
           width={width}
         />
       <HorizontalAxis period={Period.all} />
-    </div>
+    </ChartWrapper>
   );
 }
 
 export default LineChart;
+
+const ChartWrapper = styled.div`
+  width: 100%;
+`;

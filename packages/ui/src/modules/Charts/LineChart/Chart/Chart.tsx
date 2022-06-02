@@ -73,7 +73,7 @@ export const Chart = forwardRef<HTMLDivElement, Props>(
         <div
           className={s.tooltip}
           id='tooltip'
-          style={{ left: tooltipPosition.x ?? 0, top: tooltipPosition.y ?? 0 }}
+          style={{ left: tooltipPosition.x, top: tooltipPosition.y }}
         >
           <div className={s.tooltipValue}>
             <span className={s.value}>{`${tooltipData.value}`}</span>

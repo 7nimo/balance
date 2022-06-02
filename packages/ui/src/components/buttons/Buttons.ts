@@ -48,7 +48,7 @@ export const Button = styled.button`
     }
   }
   
-  ${({ filled }: { filled?: boolean}) => filled && css`
+  ${({ filled }: { filled?: boolean }) => filled && css`
     background-color: var(--icon-color-accent);
     color: var(--main-bg);
 

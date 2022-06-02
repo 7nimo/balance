@@ -1,19 +1,27 @@
 import { Transaction } from '@types';
+import { Spinner } from 'components/status/Spinner';
 import React from 'react';
+import styled from 'styled-components';
 
-import Spinner from '../../../../components/status/Spinner/Spinner';
+import EmptyResult from './EmptyResult';
 import s from './TransactionsTable.module.scss';
 
 type Props = {
   transactions?: Transaction[] | null;
 };
 
+const Wrapper = styled.div`
+  display: grid;
+  place-items: center;
+  min-height: 300px;
+`;
+
 function TransactionsTable ({ transactions = null }: Props): React.ReactElement<Props> {
   if (!transactions || !transactions?.length) {
     return (
-      <div className={s.emptyTable}>
-        {transactions === null ? <Spinner size={48} /> : <p>Hmmm, can&apos;t find anything!</p>}
-      </div>
+      <Wrapper>
+        {transactions === null ? <Spinner size={48} /> : <EmptyResult />}
+      </Wrapper>
     );
   }
 

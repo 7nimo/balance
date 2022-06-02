@@ -1,25 +1,32 @@
 import React from 'react';
+import styled from 'styled-components';
 
 import Card from '../Card/Card';
-import s from './Block.module.scss';
 
 interface SectionProps {
   title?: string;
   children: React.ReactNode;
 }
 
-function Block ({ children,
-  title,
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  ...restProps }: SectionProps & Record<string, any>): React.ReactElement {
+function Block ({ children, title }: SectionProps): React.ReactElement {
   return (
-    <div className={s.container}>
-      <Card {...restProps}>
-        {title ? <h3 className={s.title}>{title}</h3> : null}
+    <Wrapper>
+      <Card>
+        {title ? <H3>{title}</H3> : null}
         {children}
       </Card>
-    </div>
+    </Wrapper>
   );
 }
 
 export default Block;
+
+const Wrapper = styled.div`
+  margin: 1rem 0;
+  width: clamp(360px, 80vw, 100%); 
+`;
+
+const H3 = styled.h3`
+  padding: 1.5rem 1.5rem 1rem 1.5rem;
+  font-weight: 500; 
+`;

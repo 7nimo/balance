@@ -19,6 +19,7 @@ $colors: (
   --main-bg: #f4f4f4;
   --card-bg: #f4f4f4;
   
+  --opacity: rgba(0, 0, 0, 0.25);
   
   // * borders
   --line: rgba(178, 190, 205, .8);
@@ -64,6 +65,8 @@ $colors: (
   --bg: var(--gray8);
   --card-bg: #2a2e35;
   --main-bg: var(--gray5);
+
+  --opacity: rgba(255, 255, 255, 0.25);
 
   // * typography
   --text-color: var(--gray2);
@@ -333,22 +336,6 @@ p, div, pre {
   &:hover {
     background: var(--btn-active-hover);
   }
-
-  // [class*="iconWrapper"] {
-    // background: var(--main-bg);
-    // transition: background .5s ease;
-  // }
-}
-
-// spinner
-#spinner {
-  display: block;
-  height: 1em;
-  width: 1em;
-  border: 4px rgba(0, 0, 0, 0.25) solid;
-  border-top: 4px black solid;
-  border-radius: 50%;
-  animation: spin 1s infinite linear;
 }
 
 @keyframes spin {

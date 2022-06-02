@@ -2,7 +2,7 @@
 /* eslint-disable sort-keys */
 import { UpdateAccountDto } from '@types';
 import { Button } from 'components/buttons/Buttons';
-import Spinner from 'components/status/Spinner/Spinner';
+import { Spinner } from 'components/status/Spinner';
 import { updateAccount, useAccount } from 'core/api/account';
 import { useContextData } from 'core/api/context';
 import { renderOptions } from 'core/utils/form.util';
