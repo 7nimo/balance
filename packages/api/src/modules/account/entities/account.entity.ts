@@ -23,7 +23,7 @@ export class AccountEntity {
   @Column({ nullable: true })
   accountNumber: string;
 
-  @Column({ type: 'numeric', precision: 15, scale: 6, default: 0 })
+  @Column({ type: 'numeric', precision: 10, scale: 2, default: 0 })
   balance: number;
 
   @ManyToOne(() => BankEntity, (bank) => bank.accounts)
@@ -35,7 +35,10 @@ export class AccountEntity {
   @OneToMany(() => TransactionEntity, (transaction) => transaction.account)
   transactions: TransactionEntity[];
 
-  @ManyToOne(() => UserEntity, (user) => user.accounts, { nullable: false })
+  @ManyToOne(() => UserEntity, (user) => user.accounts, {
+    nullable: false,
+    onDelete: 'CASCADE',
+  })
   user: UserEntity;
 
   @CreateDateColumn({ type: 'timestamptz' })

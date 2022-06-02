@@ -26,6 +26,7 @@ export class TransactionEntity {
 
   @ManyToOne(() => AccountEntity, (account) => account.transactions, {
     nullable: false,
+    onDelete: 'CASCADE',
   })
   account: AccountEntity;
 }
