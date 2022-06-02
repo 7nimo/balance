@@ -22,7 +22,7 @@
   color: var(--h-color);
 }
 
-[class*="dark-theme"] * .link {
+[class*="dark"] * .link {
   svg {
     fill: var(--h-color);
   }
