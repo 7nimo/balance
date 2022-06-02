@@ -28,9 +28,9 @@ export default function AddAccountForm ({ handleClose }: Props): React.ReactElem
     shouldFocusError: false,
     defaultValues: {
       name: '',
-      bank: -1,
+      bank: undefined,
       accountNumber: '',
-      currency: -1
+      currency: undefined
     }
   });
 
