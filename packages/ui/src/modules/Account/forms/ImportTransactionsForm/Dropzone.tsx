@@ -24,6 +24,7 @@ export default function Dropzone ({ accountId }: Props): React.ReactElement<Prop
     onSettled: async () => {
       // this fails if queried before transactions are saved in db
       await queryClient.refetchQueries(['transactions', accountId]);
+      await queryClient.refetchQueries(['account', accountId]);
     }
   });
 
