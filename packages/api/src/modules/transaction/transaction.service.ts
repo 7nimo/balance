@@ -41,7 +41,7 @@ export class TransactionService {
   ): Promise<TransactionEntity[]> {
     return await this.transactionRepository
       .createQueryBuilder('transaction')
-      .orderBy('transaction_date', 'ASC')
+      .orderBy('transaction_date', 'DESC')
       .leftJoin('transaction.account', 'account')
       .leftJoin('account.user', 'user')
       .where('account.id = :accountId', { accountId: accountId })
