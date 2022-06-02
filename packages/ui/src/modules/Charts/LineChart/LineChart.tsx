@@ -35,7 +35,8 @@ function LineChart (): React.ReactElement {
   //! [X, Y] values
   const [X, setX] = useState<any>();
   const [Y, setY] = useState<any>();
-  // const [D, setD] = useState<any>();
+
+  const [ticks, setTicks] = useState<any>();
 
   //! Path
   const [path, setPath] = useState<string>();
@@ -48,7 +49,6 @@ function LineChart (): React.ReactElement {
 
   const lineGenerator = useMemo(
     () => d3.line()
-      // .defined(([i, _]) => D[i])
       .x(([i]) => xScale(X[i]))
       .y(([i]) => yScale(Y[i]))
       .curve(d3.curveStepAfter)
@@ -64,21 +64,17 @@ function LineChart (): React.ReactElement {
   }, [account]);
 
   useEffect(() => {
-    // Compute values.
-    // const O = d3.map(data, (d) => d);
-
     if (data) {
       setX(d3.map(data, x));
       setY(d3.map(data, y));
     }
   }, [data]);
 
-  // Compute which data points are considered defined.
-  // useEffect(() => {
-  //   const defined = (d: unknown, i: number): boolean => X[i] instanceof Date && !Number.isNaN(Y[i]);
-
-  //   setD(d3.map(data, defined));
-  // }, [data, X, Y]);
+  useEffect(() => {
+    if (xExtent) {
+      setTicks(d3.scaleTime().domain(xExtent).range([0, width]).ticks(5));
+    }
+  }, [width, xExtent]);
 
   useEffect(() => {
     if (data) {
@@ -149,12 +145,12 @@ function LineChart (): React.ReactElement {
           tooltipPosition={tooltipPosition}
           width={width}
         />
-      <HorizontalAxis period={Period.all} />
+      <HorizontalAxis ticks={ticks} />
     </ChartWrapper>
   );
 }
 
-export default LineChart;
+export default React.memo(LineChart);
 
 const ChartWrapper = styled.div`
   width: 100%;
