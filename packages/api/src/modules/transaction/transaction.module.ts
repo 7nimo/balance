@@ -8,6 +8,8 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { transactionProviders } from './transaction.provider';
 import { DatabaseModule } from 'src/core/database/database.module';
 import multerConfig from 'src/config/multer.config';
+import { TransactionImportedListener } from './listeners/transaction-imported.listener';
+import { databaseProviders } from 'src/core/database/database.providers';
 
 @Module({
   imports: [
@@ -19,10 +21,12 @@ import multerConfig from 'src/config/multer.config';
   ],
   controllers: [TransactionController],
   providers: [
-    TransactionService,
     ConfigService,
     CsvParserService,
     CsvParserFactory,
+    ...databaseProviders,
+    TransactionService,
+    TransactionImportedListener,
     ...transactionProviders,
   ],
 })

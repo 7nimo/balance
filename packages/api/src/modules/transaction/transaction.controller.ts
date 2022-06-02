@@ -52,7 +52,7 @@ export class TransactionController {
       file.path,
     );
 
-    this.transactionService.createMany(transactions);
+    this.transactionService.createMany(accountId, userId, transactions);
   }
 
   @Get()

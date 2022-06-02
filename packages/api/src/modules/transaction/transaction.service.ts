@@ -3,21 +3,36 @@ import { Repository } from 'typeorm';
 import { TransactionEntity } from './entities/transaction.entity';
 import { CreateTransactionDto } from './dto';
 import { TRANSACTION_REPOSITORY } from './constants';
+import { EventEmitter2 } from '@nestjs/event-emitter';
+import { TransactionImportedEvent } from './events/transastion-imported.event';
 
 @Injectable()
 export class TransactionService {
   constructor(
     @Inject(TRANSACTION_REPOSITORY)
     private readonly transactionRepository: Repository<TransactionEntity>,
+    private eventEmitter: EventEmitter2,
   ) {}
 
-  async createMany(transactions: CreateTransactionDto[]) {
-    return await this.transactionRepository
+  async createMany(
+    accountId: string,
+    userId: string,
+    transactions: CreateTransactionDto[],
+  ) {
+    const result = await this.transactionRepository
       .createQueryBuilder()
       .insert()
       .into(TransactionEntity)
       .values(transactions)
       .execute();
+
+    const transactionImportedEvent = new TransactionImportedEvent();
+    transactionImportedEvent.accountId = accountId;
+    transactionImportedEvent.userId = userId;
+
+    this.eventEmitter.emit('transaction.imported', transactionImportedEvent);
+
+    return result;
   }
 
   async findAll(
