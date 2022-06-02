@@ -13,6 +13,8 @@
   justify-content: center;
   width: 150px;
   height: 64px;
+  transform-origin: center;
+  transform: translate(-50%, -125%);
 
   padding: 10px 15px;
   text-align: center;
@@ -49,7 +51,7 @@
     position: absolute;
     top: 100%;
     left: 50%;
-    content: " ";
+    content: "";
     height: 0px;
     width: 0px;
     pointer-events: none;

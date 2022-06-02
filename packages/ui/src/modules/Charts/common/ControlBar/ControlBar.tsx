@@ -5,21 +5,18 @@ import s from './ControlBar.module.scss';
 
 type Props = {
   currencySymbol?: string;
-  assetAmount: number;
+  balance: number;
 };
 
-function ControlBar ({ assetAmount, currencySymbol }: Props): React.ReactElement<Props> {
-  // const mainCurrency = Math.floor(assetAmount);
-  // const fractionalCurrency = assetAmount - mainCurrency;
-
-  const [mainCurrency, fractionalCurrency] = assetAmount.toString().split('.');
+function ControlBar ({ balance, currencySymbol }: Props): React.ReactElement<Props> {
+  const [mainCurrency, fractionalCurrency] = balance.toString().split('.');
 
   return (
     <div className={s.controlBar}>
       <div className={s.chartHeader}>
         <span>{currencySymbol}</span>
         <span>{mainCurrency}</span>
-        <span>.{fractionalCurrency}</span>
+        <span>.{fractionalCurrency ?? '00'}</span>
       </div>
       <div className={s.periodSelector}>
         <button type='button'>{Period.week}</button>
