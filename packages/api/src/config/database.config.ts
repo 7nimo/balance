@@ -10,7 +10,8 @@ export default registerAs('database', () => ({
   password: process.env.POSTGRES_PASSWORD,
   database: process.env.POSTGRES_DB,
   entities: ['dist/**/entities/*.entity{.ts,.js}'],
-  migrations: ['dist/database/migrations/*{.ts,.js}'],
+  migrations: ['dist/core/database/migrations/*{.ts,.js}'],
+  subscribers: ['dist/**/subscribers/*.subscriber{.ts,.js}'],
   synchronize: true, // dev
   namingStrategy: new SnakeNamingStrategy(),
 }));
@@ -23,7 +24,8 @@ export function getConfig() {
     password: process.env.POSTGRES_PASSWORD,
     database: process.env.POSTGRES_DB,
     entities: ['dist/**/entities/*.entity{.ts,.js}'],
-    migrations: ['dist/database/migrations/*{.ts,.js}'],
+    migrations: ['dist/core/database/migrations/*{.ts,.js}'],
+    subscribers: ['dist/**/subscribers/*.subscriber{.ts,.js}'],
     synchronize: true, // dev
     namingStrategy: new SnakeNamingStrategy(),
   } as DataSourceOptions;
