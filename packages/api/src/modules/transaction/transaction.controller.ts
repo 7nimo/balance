@@ -18,7 +18,7 @@ import { CsvParserService } from 'src/core/common/services/csv-parser/csv-parser
 import { MulterOptions } from '@nestjs/platform-express/multer/interfaces/multer-options.interface';
 import { User } from 'src/core/common/decorators/user.decorator';
 import { ConfigService } from '@nestjs/config';
-import { multerOptions } from 'src/config';
+import { multerOptions } from 'src/core/etc';
 
 @ApiTags('transaction')
 @Controller('transaction')

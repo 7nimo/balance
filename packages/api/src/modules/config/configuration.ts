@@ -1,6 +1,6 @@
-import dbConfig from '../../config/database.config';
-import multerConfig from 'src/config/multer.config';
-import swaggerConfig from 'src/config/swagger.config';
+import dbConfig from 'src/core/etc/database.config';
+import multerConfig from 'src/core/etc/multer.config';
+import swaggerConfig from 'src/core/etc/swagger.config';
 import { ConfigFactory } from '@nestjs/config';
 
 // type ConfigObject = Record<string, unknown>;

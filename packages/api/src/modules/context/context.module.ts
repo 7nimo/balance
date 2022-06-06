@@ -1,12 +1,13 @@
 import { Module } from '@nestjs/common';
 import { ContextService } from './context.service';
 import { ContextController } from './context.controller';
-import { contextProviders } from './context.provider';
-import { DatabaseModule } from 'src/core/database/database.module';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { BankEntity } from './entities/bank.entity';
+import { CurrencyEntity } from './entities/currency.entity';
 
 @Module({
-  imports: [DatabaseModule],
-  providers: [ContextService, ...contextProviders],
+  imports: [TypeOrmModule.forFeature([BankEntity, CurrencyEntity])],
+  providers: [ContextService],
   controllers: [ContextController],
   exports: [ContextService],
 })

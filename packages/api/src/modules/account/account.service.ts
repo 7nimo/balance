@@ -1,17 +1,15 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { UserEntity } from 'src/modules/user/entities/user.entity';
 import { DataSource, DeleteResult, Repository, UpdateResult } from 'typeorm';
 import { CreateAccountDto, UpdateAccountDto } from './dto';
 import { AccountEntity } from './entities/account.entity';
-import { ACCOUNT_REPOSITORY } from './constants';
-import { DATA_SOURCE } from 'src/core/database/constants';
+import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class AccountService {
   constructor(
-    @Inject(ACCOUNT_REPOSITORY)
+    @InjectRepository(AccountEntity)
     private readonly accountRepository: Repository<AccountEntity>,
-    @Inject(DATA_SOURCE)
     private readonly dataSource: DataSource,
   ) {}
 

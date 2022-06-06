@@ -1,6 +1,5 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { OnEvent } from '@nestjs/event-emitter';
-import { DATA_SOURCE } from 'src/core/database/constants';
 import { AccountEntity } from 'src/modules/account/entities/account.entity';
 import { DataSource } from 'typeorm';
 import { TransactionEntity } from '../entities/transaction.entity';
@@ -8,7 +7,7 @@ import { TransactionImportedEvent } from '../events/transastion-imported.event';
 
 @Injectable()
 export class TransactionImportedListener {
-  constructor(@Inject(DATA_SOURCE) private dataSource: DataSource) {}
+  constructor(private dataSource: DataSource) {}
 
   @OnEvent('transaction.imported')
   async handleTransactionImportedEvent(event: TransactionImportedEvent) {

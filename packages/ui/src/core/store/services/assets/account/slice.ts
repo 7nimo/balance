@@ -41,7 +41,7 @@ export type AccountSlice = {
   [accountSlice.name]: ReturnType<typeof accountSlice['reducer']>
 }
 
-function mapToD3 (data: Transaction[]): d3.InternMap<Date, number[]> {
+function mapToD3 (data: Transaction[]): d3.InternMap<Date, number | number[]> {
   const dateParser = d3.timeParse('%Y-%m-%d');
 
   const mappedData: DataPoint[] = data.map((transaction) => ({

@@ -5,11 +5,11 @@ import { AccountsModule } from 'src/modules/account/account.module';
 import { CsvParserFactory } from 'src/core/common/factories/csv-parser.factory';
 import { CsvParserService } from 'src/core/common/services/csv-parser/csv-parser.service';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { transactionProviders } from './transaction.provider';
 import { DatabaseModule } from 'src/core/database/database.module';
-import multerConfig from 'src/config/multer.config';
+import multerConfig from 'src/core/etc/multer.config';
 import { TransactionImportedListener } from './listeners/transaction-imported.listener';
-import { databaseProviders } from 'src/core/database/database.providers';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { TransactionEntity } from './entities/transaction.entity';
 
 @Module({
   imports: [
@@ -18,16 +18,16 @@ import { databaseProviders } from 'src/core/database/database.providers';
       load: [multerConfig],
     }),
     DatabaseModule,
+    TypeOrmModule.forFeature([TransactionEntity]),
   ],
   controllers: [TransactionController],
   providers: [
     ConfigService,
     CsvParserService,
     CsvParserFactory,
-    ...databaseProviders,
     TransactionService,
     TransactionImportedListener,
-    ...transactionProviders,
   ],
+  exports: [TypeOrmModule],
 })
 export class TransactionsModule {}

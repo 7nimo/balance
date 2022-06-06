@@ -1,20 +1,12 @@
-import { Injectable, OnModuleInit } from '@nestjs/common';
-import { ModuleRef } from '@nestjs/core';
+import { Injectable } from '@nestjs/common';
 import { BankEntity } from 'src/modules/context/entities/bank.entity';
 import { CurrencyEntity } from 'src/modules/context/entities/currency.entity';
 import { DataSource } from 'typeorm';
-import { DATA_SOURCE } from './constants';
 import { bankData, currencyData } from './data/data';
 
 @Injectable()
-export class SeederService implements OnModuleInit {
-  private dataSource: DataSource;
-
-  constructor(private moduleRef: ModuleRef) {}
-
-  async onModuleInit() {
-    this.dataSource = await this.moduleRef.resolve(DATA_SOURCE);
-  }
+export class SeederService {
+  constructor(private dataSource: DataSource) {}
 
   async currency(): Promise<void> {
     try {

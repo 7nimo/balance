@@ -27,7 +27,7 @@ function LineChart (): React.ReactElement {
   const [balance, setBalance] = useState(account?.balance);
 
   // !¬ Data
-  const [data, setData] = useState<d3.InternMap<Date, number[]>>(new Map());
+  const [data, setData] = useState<d3.InternMap<Date, number | number[]>>(new Map());
 
   //! Account Data
   const _account = useAppSelector((state) => state.accounts.find((acc) => acc.id === accountId));

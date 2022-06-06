@@ -3,7 +3,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 type Props = {
-  ticks: any[];
+  ticks: Date[];
 };
 
 function HorizontalAxis ({ ticks }: Props): React.ReactElement<Props> {

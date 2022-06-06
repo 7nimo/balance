@@ -10,7 +10,7 @@ import { ClassSerializerInterceptor } from '@nestjs/common';
 import { InternalExceptionFilter } from './core/common/filters/internal-exception.filter';
 import { ValidationPipe } from './core/common/pipes/validation.pipe';
 import { HttpExceptionFilter } from './core/common/filters/http-exception.filter';
-import { swaggerOptions } from './config';
+import { swaggerOptions } from './core/etc';
 // import { validationPipeOptions } from './config/validation-pipe.config';
 
 async function bootstrap() {

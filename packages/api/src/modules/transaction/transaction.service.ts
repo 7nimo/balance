@@ -1,15 +1,15 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { TransactionEntity } from './entities/transaction.entity';
 import { CreateTransactionDto } from './dto';
-import { TRANSACTION_REPOSITORY } from './constants';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 import { TransactionImportedEvent } from './events/transastion-imported.event';
+import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class TransactionService {
   constructor(
-    @Inject(TRANSACTION_REPOSITORY)
+    @InjectRepository(TransactionEntity)
     private readonly transactionRepository: Repository<TransactionEntity>,
     private eventEmitter: EventEmitter2,
   ) {}
