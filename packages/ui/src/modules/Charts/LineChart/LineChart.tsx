@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Period, Point } from '@types';
+import { Point } from '@types';
 import { useAccount } from 'core/api/account';
 import { useAppSelector } from 'core/store/store';
 import { formatDate, x, y } from 'core/utils/d3.utils';
