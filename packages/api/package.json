@@ -25,7 +25,7 @@
     "seed": "node ./dist/cli.js",
     "migration:up": "./node_modules/.bin/ts-node ./node_modules/.bin/typeorm migration:run -d src/core/database/data-source.ts",
     "schema:drop": "ts-node ./node_modules/typeorm/cli.js schema:drop",
-    "schema:sync": "ts-node ./node_modules/typeorm/cli.js schema:sync -d ./src/database/data-source.ts",
+    "schema:sync": "ts-node ./node_modules/typeorm/cli.js schema:sync -d ./src/database/data-source.ts"
   },
   "dependencies": {
     "@nestjs/common": "^9.0.7",
